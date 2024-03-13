@@ -1,9 +1,9 @@
 Alias: $nz-loinc = https://standards.digital.health.nz/ns/loinc-nz-local-code
 
-Profile: PCObservationVapingStatus
+Profile: PrimaryCareObservationVapingStatus
 Parent: Observation
 Id: pc-observation-vapingstatus
-Title: "PC-Observation-Vaping-Status"
+//Title: "PC-Observation-Vaping-Status"
 Description: "This profile constrains the Observation resource to represent Vaping use"
 * ^version = "0.1.0"
 * ^status = #active
@@ -27,3 +27,7 @@ Description: "This profile constrains the Observation resource to represent Vapi
 //* valueCodeableConcept from $nzps-current-vaping-status-vs (required)
 //* component ..0
 //* component ^mustSupport = false
+
+* extension 0..0
+* modifierExtension 0..0
+* contained 0..0

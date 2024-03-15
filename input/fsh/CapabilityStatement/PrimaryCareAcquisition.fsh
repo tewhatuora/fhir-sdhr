@@ -23,35 +23,54 @@ Usage: #definition
 // allergyIntolerance
 * rest.resource[0].type = #AllergyIntolerance
 * rest.resource[=].profile = "https://standards.digital.health.nz/StructureDefinition/PrimaryCareAllergyIntolerance"
-* rest.resource[=].interaction.code = #read
-* rest.resource[=].interaction.code = #create 
-* rest.resource[=].interaction.code = #update
-* rest.resource[=].interaction.code = #search-type
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #create 
+* rest.resource[=].interaction[+].code = #update
+* rest.resource[=].interaction[+].code = #search-type
 
 // condition
-* rest.resource[0].type = #Condition
+* rest.resource[+].type = #Condition
 * rest.resource[=].profile = "https://standards.digital.health.nz/StructureDefinition/PrimaryCareCondition"
-* rest.resource[=].interaction.code = #read
-* rest.resource[=].interaction.code = #create 
-* rest.resource[=].interaction.code = #update
-* rest.resource[=].interaction.code = #search-type
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #create 
+* rest.resource[=].interaction[+].code = #update
+* rest.resource[=].interaction[+].code = #search-type
 
 
 // consent
-* rest.resource[0].type = #Consent
+* rest.resource[+].type = #Consent
 * rest.resource[=].profile = "https://standards.digital.health.nz/StructureDefinition/PrimaryCareConsent"
-* rest.resource[=].interaction.code = #read
-* rest.resource[=].interaction.code = #create 
-* rest.resource[=].interaction.code = #update
-* rest.resource[=].interaction.code = #search-type
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #create 
+* rest.resource[=].interaction[+].code = #update
+* rest.resource[=].interaction[+].code = #search-type
 
 // encounter
-* rest.resource[0].type = #Encounter
+* rest.resource[+].type = #Encounter
 * rest.resource[=].profile = "https://standards.digital.health.nz/StructureDefinition/PrimaryCareEncounter"
-* rest.resource[=].interaction.code = #read
-* rest.resource[=].interaction.code = #create 
-* rest.resource[=].interaction.code = #update
-* rest.resource[=].interaction.code = #search-type
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #create 
+* rest.resource[=].interaction[+].code = #update
+* rest.resource[=].interaction[+].code = #search-type
 
 // observations
+* rest.resource[+].type = #Observation
+* rest.resource[=].profile = "https://standards.digital.health.nz/StructureDefinition/PrimaryCareObservationVitalSigns"
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #create 
+* rest.resource[=].interaction[+].code = #update
+* rest.resource[=].interaction[+].code = #search-type
 
+* rest.resource[+].type = #Observation
+* rest.resource[=].profile = "https://standards.digital.health.nz/StructureDefinition/PrimaryCareObservationVapingStatus"
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #create 
+* rest.resource[=].interaction[+].code = #update
+* rest.resource[=].interaction[+].code = #search-type
+
+* rest.resource[+].type = #Observation
+* rest.resource[=].profile = "https://standards.digital.health.nz/StructureDefinition/PrimaryCareObservationSmokingStatus"
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #create 
+* rest.resource[=].interaction[+].code = #update
+* rest.resource[=].interaction[+].code = #search-type

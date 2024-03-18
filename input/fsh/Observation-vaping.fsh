@@ -5,8 +5,6 @@ Alias: $shareablevalueset = http://hl7.org/fhir/StructureDefinition/shareableval
 
 Profile: PrimaryCareObservationVapingStatus
 Parent: Observation
-Id: pc-observation-vapingstatus
-//Title: "PC-Observation-Vaping-Status"
 Description: "This profile constrains the Observation resource to represent Vaping use"
 * ^version = "0.1.0"
 * ^status = #active

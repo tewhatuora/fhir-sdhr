@@ -13,8 +13,6 @@ The resources supported are:
 
 For consistency the NZPS profiles for vaping, smoking, and vitalsigns are used for their respective observation profiles. This needs to be reviewed to confirm the profiles are appropriate for the data as held in PMS's. 
 
-{% include dependency-table.xhtml %}
-
 ### FHIR version
 
 {% include cross-version-analysis.xhtml %}

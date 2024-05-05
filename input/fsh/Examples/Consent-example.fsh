@@ -4,6 +4,9 @@ Usage: #example
 
 * status = #active
 
+* identifier[+].use = #secondary
+* identifier[=].value = "93f28be6-4787-40f1-ae39-64233eb2cf7c"
+
 * patient.type = "Patient"
 * patient.identifier.use = #official
 * patient.identifier.system = "https://standards.digital.health.nz/ns/nhi-id"

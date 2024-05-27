@@ -20,3 +20,7 @@ This may be a queued update performed later or performed synchronously as update
 
 If needed bundled batches may be supported - TBC. 
 
+### API Usage Plan
+
+A blanket usage plan of 20 requests per second per client, will be applied to all clients at the connector plane API Gateway.
+

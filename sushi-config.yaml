@@ -82,7 +82,7 @@ menu:
   Home: index.html
   Use cases: use-cases.html
   Artifacts: artifacts.html
-  Consent-based access: consent-based-access.html
+  Consent-based access control: consent-based-access.html
   Support: 
     FHIR Spec: new-tab https://hl7.org/fhir/index.html
     Artefacts (JSON): definitions.json.zip

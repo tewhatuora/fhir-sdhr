@@ -1,17 +1,16 @@
 # Primary Care Acquisition API
 
-This FHIR API supports the submission of Primary Care data for individual patients. Data will be stored and surfaced back to the Health consumers as part of their personal health record and to other health providers with the consent of the patient. The Health consumer will be able to opt-out of sharing information at a global, facility or clinical record level.
+This FHIR API supports the submission of Primary Care data for individual patients. Data will be stored and surfaced back to the Health consumers as part of their personal health record and to other health providers with the consent of the patient. 
 
-The resources supported are:
-* AllergyIntolerance	
+The resources supported are:	
 * Condition
-* Consent	
 * Encounter
-* Observation (profiled for smoking status, vaping status, vital signs)
+* Observation (profiles for smoking status, vaping status, vital signs)
+* and Consent resources to record consent for these resources. 
 
 ### Dependencies and relationship to other standards
 
-For consistency the NZPS profiles for vaping, smoking, and vitalsigns are used for their respective observation profiles. This needs to be reviewed to confirm the profiles are appropriate for the data as held in PMS's. 
+For consistency the NZPS profiles for vaping, smoking, and vitalsigns are used for their respective observation profiles. 
 
 ### FHIR version
 

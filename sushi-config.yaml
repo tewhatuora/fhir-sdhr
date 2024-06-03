@@ -9,7 +9,7 @@ name: primary-care-acquisition
 title: Primary care data acquisition API
 # description: Example Implementation Guide for getting started with SUSHI
 status: draft # draft | active | retired | unknown
-version: 0.1.0
+version: 0.2.0
 fhirVersion: 4.0.1 # https://www.hl7.org/fhir/valueset-FHIR-version.html
 copyrightYear: 2024+
 releaseLabel: ci-build # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use
@@ -51,6 +51,8 @@ pages:
     title: Primary care data acquisition API
   use-cases.md:
     title: Use cases
+  consent-based-access.md:
+    title: Consent based access control
   artifacts.html:
     title: FHIR Artifacts
 #
@@ -80,6 +82,7 @@ menu:
   Home: index.html
   Use cases: use-cases.html
   Artifacts: artifacts.html
+  Consent-based access: consent-based-access.html
   Support: 
     FHIR Spec: new-tab https://hl7.org/fhir/index.html
     Artefacts (JSON): definitions.json.zip

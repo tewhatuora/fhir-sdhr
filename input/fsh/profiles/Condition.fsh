@@ -1,26 +1,35 @@
-Profile: PrimaryCareEncounter
-Parent: Encounter
-Description: "Encounter resource to record an instance of an interaction between patient and healthcare provider"
+Profile: PrimaryCareCondition
+Parent: Condition
+Description: "Condition resource to record problems and conditions affecting a person"
 
-* statusHistory 0..0
-* classHistory 0..0
-//* type 0..0
-* episodeOfCare 0..0
-* basedOn 0..0
-* appointment 0..0
-* length 0..0
-//* reasonCode 0..0
-* reasonReference 0..0 
-//* diagnosis 0..0
-* account 0..0
-* hospitalization 0..0
-//* location 0..0
-* serviceProvider 0..0
-* partOf
+* onset[x] only dateTime
+
+* severity 0..0
+* bodySite 0..0
+* encounter 0..0
+* abatement[x] 0..0
+* recordedDate 0..0
+* severity 0..0
+* encounter 0..0
+* recorder 0..0
+* stage 0..0
+//* evidence 0..1
 
 * extension 0..0
 * modifierExtension 0..0
 * contained 0..0
+
+* subject 1..1
+* subject only Reference(Patient)
+* subject.reference 1..1 
+* subject.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
+* subject.type = "Patient"
+
+* asserter 1..1
+* asserter only Reference(Practitioner)
+* asserter.reference 1..1
+* asserter.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system E.g. https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ"
+
 
 * identifier ^slicing.discriminator.type = #value
 * identifier ^slicing.discriminator.path = "system"

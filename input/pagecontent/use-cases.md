@@ -10,4 +10,10 @@ The information collected includes:
 * and Consent resources to record consent for these resources. 
 
 
+### Data provision
+
+When a patient's record is updated in the patient management system for an encounter, Allergy/Intolerance info, a condition/diagnosis, or a Smoking/Vaping/Vital Signs observation, FHIR resources representing this information should be POSTed to the API. 
+
+This may be a queued update performed later or performed synchronously as updates are made. 
+
 

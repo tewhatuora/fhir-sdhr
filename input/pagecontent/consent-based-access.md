@@ -8,7 +8,9 @@ In support of this, the *Primary Care Data Acquisition API* has implemented the 
 
 It is up to the each health organisation storing/sharing health information through this FHIR API to
 - Operate a process which obtains patient consent, and
-- Arrange for their FHIR-integrated application to call the FHIR API to create appropriate FHIR Consent resources representing the state of patients' consents.
+- Arrange for their FHIR-integrated application to call the FHIR API to create appropriate FHIR Consent resources representing the state of patients' consents with the resources they have created referenced from `.provision.data`.
+
+An [example consent resource](./Consent-PrimaryCareConsentExample.html) is included to show what this should look like. 
 
 ### Consent-based protection measures
 
@@ -24,11 +26,5 @@ When a client application, authorized by TWO to access the FHIR API, tries to ac
 - If the API finds no valid Consent instance that references X, access is denied to all FHIR client applications (including the application that created the resource instance).
 
 
-### Data provision
 
-When a patient's record is updated in the patient management system for an encounter, Allergy/Intolerance info, a condition/diagnosis, or a Smoking/Vaping/Vital Signs observation, FHIR resources representing this information should be POSTed to the API. 
-
-This may be a queued update performed later or performed synchronously as updates are made. 
-
-If needed bundled batches may be supported - TBC. 
 

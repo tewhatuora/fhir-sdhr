@@ -1,2 +1,2 @@
 # fhir-primary-care-acquisition
-FHIR data acquisition API 
+FHIR data acquisition API.

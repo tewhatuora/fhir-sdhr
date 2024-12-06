@@ -7,7 +7,7 @@ id: tewhatuora.fhir.primarycare-acquisition
 canonical: https://standards.digital.health.nz
 name: primary-care-acquisition
 title: Primary care data acquisition API
-# description: Example Implementation Guide for getting started with SUSHI
+description: Primary care data acquisition API
 status: draft # draft | active | retired | unknown
 version: 0.2.0
 fhirVersion: 4.0.1 # https://www.hl7.org/fhir/valueset-FHIR-version.html

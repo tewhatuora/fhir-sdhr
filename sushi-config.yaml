@@ -4,7 +4,7 @@
 # │  see: https://fshschool.org/docs/sushi/configuration/.                                         │
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
 id: tewhatuora.fhir.primarycare-acquisition
-canonical: https://standards.digital.health.nz
+canonical: https://fhir-ig.digital.health.nz/primary-care-acquisition
 name: primary-care-acquisition
 title: Primary care data acquisition API
 description: Primary care data acquisition API
@@ -34,6 +34,7 @@ publisher:
 dependencies:
   tewhatuora.fhir.nzps: current
   fhir.org.nz.ig.base: 3.0.0
+  tewhatuora.digitaltooling: 0.0.11
 
 # The pages property corresponds to IG.definition.page. SUSHI can
 # auto-generate the page list, but if the author includes pages in

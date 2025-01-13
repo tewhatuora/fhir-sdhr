@@ -1,6 +1,7 @@
 Instance: PrimaryCareConsentExample
 InstanceOf: PrimaryCareConsent
 Usage: #example
+Description: "Consent example submitted to allow a patient to opt in to sharing their information, originating from a practice management system"
 
 * status = #active
 

@@ -1,23 +1,27 @@
 Instance: PrimaryCareAcquisitionCapabliityStatement
 InstanceOf: HnzToolingCapabilityStatement
 Usage: #definition
-* version = "4.0.1"
+* version = "0.3.0"
 * name = "PrimaryCareAcquisitionCapabliityStatement"
 * title = "Primary Care Data Acquisition API"
+* contact[+].name = "Health New Zealand Te Whatu Ora"
+* contact[=].telecom.value = "https://www.tewhatuora.govt.nz"
+* contact[=].telecom.system = #url
 * description = "Primary Care Data Acquisition API"
 * status = #draft
 * experimental = true
 * date = "2024-04-15T01:15:23.3688326Z"
 * publisher = "Health NZ"
-* contact.telecom.system = #url
-* contact.telecom.value = "https://www.tewhatuora.govt.nz"
 * kind = #capability
+* implementation.description = "Health NZ | Te Whatu Ora Primary Care Acquisition API"
+* implementation.url = "https://fhir.api.digital.health.nz/R4"
 * software.name = "Primary Care Data Acquisition API"
 * software.version = "1.0.0.0"
 * fhirVersion = #4.0.1
 * format = #application/fhir+json
 * rest.mode = #server
 
+* rest.security.cors = true
 * rest.security.service = #SMART-on-FHIR
 * rest.security.description = "OAuth 2.0 - Client Credential flow.)"
 * rest.security.extension.url = "http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris"

@@ -1,5 +1,5 @@
 Instance: PrimaryCareAcquisitionCapabliityStatement
-InstanceOf: CapabilityStatement
+InstanceOf: HnzToolingCapabilityStatement
 Usage: #definition
 * version = "4.0.1"
 * name = "PrimaryCareAcquisitionCapabliityStatement"

@@ -85,7 +85,7 @@ menu:
   Consent-based access control: consent-based-access.html
   Artifacts: artifacts.html
   Support:
-    View OpenAPI: new-tab https://fhir-ig-uat.digital.health.nz/openapi/index.html?urls.primaryName=Pramary+Care+Data+FHIR+API
+    View OpenAPI: new-tab https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Pramary+Care+Data+FHIR+API
     FHIR Spec: new-tab https://hl7.org/fhir/index.html
     Artefacts (JSON): definitions.json.zip
     Artefacts (XML): definitions.xml.zip

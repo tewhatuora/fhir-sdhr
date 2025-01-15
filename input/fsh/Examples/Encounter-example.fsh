@@ -1,5 +1,6 @@
 Instance: EncounterExample1
-InstanceOf: Encounter
+InstanceOf: PrimaryCareEncounter
+Description: "Example Encounter resource to record an instance of an interaction between patient and healthcare provider"
 Usage: #example
 * meta.lastUpdated = "2024-01-26T10:03:26+13:00"
 * meta.profile = $PrimaryCareEncounterProfile

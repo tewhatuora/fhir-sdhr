@@ -3,9 +3,9 @@ InstanceOf: SDHRAllergyIntolerance
 Usage: #example
 Description: "An example payload for a Primary Care AllergyIntolerance resource indicating an allergy to Penicillin"
 * type = #allergy
-* clinicalStatus = http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical#active "Active"
-* verificationStatus = http://terminology.hl7.org/CodeSystem/allergyintolerance-verification#confirmed "Confirmed"
-* code = http://snomed.info/sct#764146007 "Penicillin (substance)"
+* clinicalStatus = http://hl7.org/fhir/ValueSet/allergyintolerance-clinical#active "Active"
+* verificationStatus = http://hl7.org/fhir/ValueSet/allergyintolerance-verification#confirmed "Confirmed"
+* code = http://snomed.info/sct#764146007 "Substance with penicillin structure (substance)"
 * category = #medication
 * patient.identifier.use = #official
 * patient.identifier.system = "https://standards.digital.health.nz/ns/nhi-id"

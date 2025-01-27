@@ -1,4 +1,4 @@
-Profile: PrimaryCareCondition
+Profile: SDHRCondition
 Parent: NzCondition
 Description: "Condition resource to record problems and conditions affecting a person"
 

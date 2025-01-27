@@ -1,9 +1,9 @@
 Instance: EncounterExample1
-InstanceOf: PrimaryCareEncounter
+InstanceOf: SDHREncounter
 Description: "Example Encounter resource to record an instance of an interaction between patient and healthcare provider"
 Usage: #example
 * meta.lastUpdated = "2024-01-26T10:03:26+13:00"
-* meta.profile = $PrimaryCareEncounterProfile
+* meta.profile = $SDHREncounterProfile
 * subject.identifier.system = "https://standards.digital.health.nz/ns/nhi-id"
 * subject.identifier.value = "ZAT3948"
 * subject.type = "Patient"

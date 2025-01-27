@@ -1,5 +1,5 @@
-Instance: PrimaryCareConsentExample
-InstanceOf: PrimaryCareConsent
+Instance: SDHRConsentExample
+InstanceOf: SDHRConsent
 Usage: #example
 Description: "Consent example submitted to allow a patient to opt in to sharing their information, originating from a practice management system"
 

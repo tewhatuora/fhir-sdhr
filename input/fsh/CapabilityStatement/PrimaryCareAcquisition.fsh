@@ -1,21 +1,21 @@
-Instance: PrimaryCareAcquisitionCapabliityStatement
+Instance: SDHRCapabliityStatement
 InstanceOf: HnzToolingCapabilityStatement
 Usage: #definition
 * version = "0.3.0"
-* name = "PrimaryCareAcquisitionCapabliityStatement"
-* title = "Primary Care Data Acquisition API"
+* name = "SDHRCapabliityStatement"
+* title = "NZ Shared Digital Health Record API"
 * contact[+].name = "Health New Zealand Te Whatu Ora"
 * contact[=].telecom.value = "https://www.tewhatuora.govt.nz"
 * contact[=].telecom.system = #url
-* description = "Primary Care Data Acquisition API"
+* description = "NZ Shared Digital Health Record API"
 * status = #draft
 * experimental = true
 * date = "2024-04-15T01:15:23.3688326Z"
 * publisher = "Health NZ"
 * kind = #capability
-* implementation.description = "Health NZ | Te Whatu Ora Primary Care Acquisition API"
+* implementation.description = "Health NZ | Te Whatu Ora NZ Shared Digital Health Record API"
 * implementation.url = "https://fhir.api.digital.health.nz/R4"
-* software.name = "Primary Care Data Acquisition API"
+* software.name = "NZ Shared Digital Health Record API"
 * software.version = "1.0.0.0"
 * fhirVersion = #4.0.1
 * format = #application/fhir+json
@@ -48,7 +48,7 @@ Usage: #definition
 
 // allergyIntolerance
 * rest.resource[0].type = #AllergyIntolerance
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/PrimaryCareAllergyIntolerance"
+* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRAllergyIntolerance"
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
@@ -56,7 +56,7 @@ Usage: #definition
 
 // condition
 * rest.resource[+].type = #Condition
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/PrimaryCareCondition"
+* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRCondition"
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
@@ -65,7 +65,7 @@ Usage: #definition
 
 // consent
 * rest.resource[+].type = #Consent
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/PrimaryCareConsent"
+* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRConsent"
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
@@ -73,7 +73,7 @@ Usage: #definition
 
 // encounter
 * rest.resource[+].type = #Encounter
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/PrimaryCareEncounter"
+* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHREncounter"
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
@@ -81,21 +81,21 @@ Usage: #definition
 
 // observations
 * rest.resource[+].type = #Observation
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/PrimaryCareObservationVitalSigns"
+* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRObservationVitalSigns"
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
 * rest.resource[=].interaction[+].code = #search-type
 
 //* rest.resource[+].type = #Observation
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/PrimaryCareObservationVapingStatus"
+* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRObservationVapingStatus"
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
 * rest.resource[=].interaction[+].code = #search-type
 
 //* rest.resource[+].type = #Observation
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/PrimaryCareObservationSmokingStatus"
+* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRObservationSmokingStatus"
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update

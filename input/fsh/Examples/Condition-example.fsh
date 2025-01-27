@@ -1,9 +1,9 @@
 Instance: conditionExample1
-InstanceOf: PrimaryCareCondition
+InstanceOf: SDHRCondition
 Description: "Example NzCondition resource to record problems and conditions affecting a person"
 Usage: #example
 * meta.lastUpdated = "2024-01-26T10:03:26+13:00"
-* meta.profile = $PrimaryCareConditionProfile
+* meta.profile = $SDHRConditionProfile
 * extension.url = "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
 * extension.valueBoolean = true
 * clinicalStatus = $condition-clinical#active

@@ -7,8 +7,8 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 //* meta.profile only Canonical(https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRAllergyIntolerance)
 * modifierExtension 0..0
 * contained 0..0
-* clinicalStatus from http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical (required)
-* verificationStatus from http://terminology.hl7.org/CodeSystem/allergyintolerance-verification (required)
+* clinicalStatus from http://hl7.org/fhir/ValueSet/allergyintolerance-clinical (required)
+* verificationStatus from http://hl7.org/fhir/ValueSet/allergyintolerance-verification (required)
 * code 1..1
 * code.coding.userSelected 0..1
 * code.coding.userSelected ^short = "Indicates that the value has been selected by a system user"

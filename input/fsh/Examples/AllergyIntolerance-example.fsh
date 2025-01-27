@@ -3,8 +3,8 @@ InstanceOf: SDHRAllergyIntolerance
 Usage: #example
 Description: "An example payload for a Primary Care AllergyIntolerance resource indicating an allergy to Penicillin"
 * type = #allergy
-* clinicalStatus = http://hl7.org/fhir/ValueSet/allergyintolerance-clinical#active "Active"
-* verificationStatus = http://hl7.org/fhir/ValueSet/allergyintolerance-verification#confirmed "Confirmed"
+* clinicalStatus = http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical#active "Active"
+* verificationStatus = http://terminology.hl7.org/CodeSystem/allergyintolerance-verification#confirmed "Confirmed"
 * code = http://snomed.info/sct#764146007 "Substance with penicillin structure (substance)"
 * category = #medication
 * patient.identifier.use = #official
@@ -13,5 +13,5 @@ Description: "An example payload for a Primary Care AllergyIntolerance resource 
 * recorder.identifier.use = #official
 * recorder.identifier.system = "https://standards.digital.health.nz/ns/hpi-person-id"
 * recorder.identifier.value = "99ZZFX"
-* reaction.manifestation = http://snomed.info/sct#241938005 "Penicillin-induced anaphylaxis (disorder)"
+* reaction.manifestation = http://snomed.info/sct#241938005 "Penicillin-induced anaphylaxis"
 * reaction.severity = #severe

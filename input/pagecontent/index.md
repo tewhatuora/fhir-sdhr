@@ -5,6 +5,7 @@ This FHIR API supports the submission of Primary Care data for individual patien
 The resources supported are:	
 * Condition
 * Encounter
+* AllergyIntolerance
 * Observation (profiles for smoking status, vaping status, vital signs)
 * and Consent resources to record consent for these resources. 
 

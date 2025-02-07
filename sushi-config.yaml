@@ -3,16 +3,16 @@
 # │  used properties are included. For a list of all supported properties and their functions,     │
 # │  see: https://fshschool.org/docs/sushi/configuration/.                                         │
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
-id: tewhatuora.fhir.primarycare-acquisition
-canonical: https://standards.digital.health.nz
-name: primary-care-acquisition
-title: Primary care data acquisition API
-description: Primary care data acquisition API
+id: tewhatuora.fhir.nz-shared-digital-health-record
+canonical: https://fhir-ig.digital.health.nz/nz-shared-digital-health-record
+name: nz-shared-digital-health-record
+title: NZ Shared Digital Health Record API
+description: NZ Shared Digital Health Record API
 status: draft # draft | active | retired | unknown
 version: 0.2.0
 fhirVersion: 4.0.1 # https://www.hl7.org/fhir/valueset-FHIR-version.html
-copyrightYear: 2024+
-releaseLabel: ci-build # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use
+copyrightYear: 2025+
+releaseLabel: draft # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use
 # license: CC0-1.0 # https://www.hl7.org/fhir/valueset-spdx-license.html
 # jurisdiction: urn:iso:std:iso:3166#US "United States of America" # https://www.hl7.org/fhir/valueset-jurisdiction.html
 publisher:
@@ -34,7 +34,8 @@ publisher:
 dependencies:
   tewhatuora.fhir.nzps: current
   fhir.org.nz.ig.base: 3.0.0
-
+  tewhatuora.digitaltooling: 0.0.11
+  
 # The pages property corresponds to IG.definition.page. SUSHI can
 # auto-generate the page list, but if the author includes pages in
 # this file, it is assumed that the author will fully manage the
@@ -48,7 +49,7 @@ dependencies:
 #
 pages:
   index.md:
-    title: Primary care data acquisition API
+    title: NZ Shared Digital Health Record API
   use-cases.md:
     title: Use cases
   consent-based-access.md:
@@ -83,7 +84,8 @@ menu:
   Use cases: use-cases.html
   Consent-based access control: consent-based-access.html
   Artifacts: artifacts.html
-  Support: 
+  Support:
+    View OpenAPI: new-tab https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Pramary+Care+Data+FHIR+API
     FHIR Spec: new-tab https://hl7.org/fhir/index.html
     Artefacts (JSON): definitions.json.zip
     Artefacts (XML): definitions.xml.zip

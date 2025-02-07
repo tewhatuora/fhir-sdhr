@@ -7,7 +7,6 @@ The resources supported are:
 * Encounter
 * AllergyIntolerance
 * Observation
-* AllergyIntolerance
 * and Consent resources to record consent for these resources. 
 
 ### FHIR version

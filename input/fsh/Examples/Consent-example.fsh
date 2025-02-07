@@ -8,10 +8,7 @@ Description: "Consent example submitted to allow a patient to opt in to sharing 
 * identifier[+].use = #secondary
 * identifier[=].value = "93f28be6-4787-40f1-ae39-64233eb2cf7c"
 
-* patient.type = "Patient"
-* patient.identifier.use = #official
-* patient.identifier.system = "https://standards.digital.health.nz/ns/nhi-id"
-* patient.identifier.value = "ZZZ123"
+* patient  insert PatientSubject(ZKC7284, Carrey Carrington)
 
 * policy[+].uri = "https://www.privacy.org.nz/privacy-act-2020"
 * policy[=].authority = "https://www.privacy.org.nz"
@@ -21,7 +18,7 @@ Description: "Consent example submitted to allow a patient to opt in to sharing 
 * provision.period.end = "2028-11-22"
 
 * provision.data[+].meaning = #instance
-* provision.data[=].reference = Reference(conditionExample1)
+* provision.data[=].reference = Reference(HypertensionConditionExample)
 * provision.data[+].meaning = #instance
 * provision.data[=].reference = Reference(EncounterExample1)
 

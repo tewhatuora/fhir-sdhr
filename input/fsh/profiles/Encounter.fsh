@@ -24,9 +24,7 @@ Description: "Encounter resource to record an instance of an interaction between
 
 * subject 1..1
 * subject only Reference(Patient)
-//* subject.reference 1..1 
 * subject.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
-* subject.type = "Patient"
 
 * participant.individual only Reference(Practitioner)
 * participant.individual ^short = "Must be an absolute URL reference to the practitioner on the HPI system E.g. https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ"

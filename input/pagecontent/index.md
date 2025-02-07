@@ -6,12 +6,9 @@ The resources supported are:
 * Condition
 * Encounter
 * AllergyIntolerance
-* Observation (profiles for smoking status, vaping status, vital signs)
+* Observation
+* AllergyIntolerance
 * and Consent resources to record consent for these resources. 
-
-### Dependencies and relationship to other standards
-
-For consistency the NZPS profiles for vaping, smoking, and vitalsigns are used for their respective observation profiles. 
 
 ### FHIR version
 

@@ -35,7 +35,7 @@ dependencies:
   tewhatuora.fhir.nzps: current
   fhir.org.nz.ig.base: 3.0.0
   tewhatuora.digitaltooling: 0.0.11
-
+  
 # The pages property corresponds to IG.definition.page. SUSHI can
 # auto-generate the page list, but if the author includes pages in
 # this file, it is assumed that the author will fully manage the

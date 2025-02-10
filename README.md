@@ -1,2 +1,2 @@
-# fhir-primary-care-acquisition
-FHIR data acquisition API.
+# fhir-sdhr
+Health New Zealand | Te Whatu Ora Shared Digital Health Record FHIR API.

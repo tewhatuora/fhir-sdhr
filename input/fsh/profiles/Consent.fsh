@@ -1,4 +1,4 @@
-Profile: PrimaryCareConsent
+Profile: SDHRConsent
 Parent: Consent
 Description: "Consent resource submitted to allow a patient to opt in to sharing their information, originating from a practice management system
             For more detail on how this resource is used, see the [consent based access control page](./consent-based-access.html)."

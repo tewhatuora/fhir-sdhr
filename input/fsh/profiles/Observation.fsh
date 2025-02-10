@@ -1,9 +1,11 @@
 
-Profile: PrimaryCareObservationSmokingStatus
-Parent: https://standards.digital.health.nz/fhir/StructureDefinition/nzps-observation-smoking-status
+Profile: SDHRObservation
+Parent: Observation
 Description: "This profile constrains the Observation resource to represent Tobacco use assessment."
 * ^version = "0.1.0"
 * ^status = #active
+
+* meta.profile 1..1
 
 * identifier ^slicing.discriminator.type = #value
 * identifier ^slicing.discriminator.path = "system"

@@ -68,7 +68,7 @@ Usage: #definition
 
 // consent
 // * rest.resource[+].type = #Consent
-// * rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRConsent"
+// * rest.resource[=].profile = Canonical(SDHRConsent)
 // * rest.resource[=].interaction[0].code = #read
 // * rest.resource[=].interaction[+].code = #create 
 // * rest.resource[=].interaction[+].code = #update

@@ -51,7 +51,7 @@ Usage: #definition
 
 // allergyIntolerance
 * rest.resource[0].type = #AllergyIntolerance
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRAllergyIntolerance"
+* rest.resource[=].profile = Canonical(SDHRAllergyIntolerance)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
@@ -59,7 +59,7 @@ Usage: #definition
 
 // condition
 * rest.resource[+].type = #Condition
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRCondition"
+* rest.resource[=].profile = Canonical(SDHRCondition)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
@@ -76,7 +76,7 @@ Usage: #definition
 
 // encounter
 * rest.resource[+].type = #Encounter
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHREncounter"
+* rest.resource[=].profile = Canonical(SDHREncounter)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
@@ -84,21 +84,7 @@ Usage: #definition
 
 // observations
 * rest.resource[+].type = #Observation
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRObservationVitalSigns"
-* rest.resource[=].interaction[0].code = #read
-* rest.resource[=].interaction[+].code = #create 
-* rest.resource[=].interaction[+].code = #update
-* rest.resource[=].interaction[+].code = #search-type
-
-//* rest.resource[+].type = #Observation
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRObservationVapingStatus"
-* rest.resource[=].interaction[0].code = #read
-* rest.resource[=].interaction[+].code = #create 
-* rest.resource[=].interaction[+].code = #update
-* rest.resource[=].interaction[+].code = #search-type
-
-//* rest.resource[+].type = #Observation
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRObservationSmokingStatus"
+* rest.resource[=].profile = Canonical(SDHRObservation)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update

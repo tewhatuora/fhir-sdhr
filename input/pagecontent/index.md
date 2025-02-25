@@ -1,8 +1,8 @@
-# NZ Shared Digital Health Record API
+# NZ Shared Digital Health Record (SDHR) API
 
-This FHIR API supports the submission of Primary Care data for patients. Data will be stored and surfaced to [authorised Health consumers](https://apistandards.digital.health.nz/api-concepts/ComponentDefinitions#health-workers) and the [patient](https://apistandards.digital.health.nz/api-concepts/ComponentDefinitions#health-sector-participants) themselves as part of their personal health record. 
+This FHIR API supports authorised submission of and access to Aotearoa patients shared digital health records. Data will be stored and surfaced to [authorised Health consumers](https://apistandards.digital.health.nz/api-concepts/ComponentDefinitions#health-workers) and the [patient](https://apistandards.digital.health.nz/api-concepts/ComponentDefinitions#health-sector-participants) themselves as part of their personal health record. 
 
-The resources supported are:	
+The resources supported are:
 * [AllergyIntolerance](./StructureDefinition-SDHRAllergyIntolerance.html)
 * [Condition](./StructureDefinition-SDHRCondition.html)
 * [Encounter](./StructureDefinition-SDHREncounter.html)

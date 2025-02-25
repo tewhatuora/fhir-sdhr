@@ -3,6 +3,8 @@ InstanceOf: SDHRObservation
 Description: "An example SDHR Vital Signs Observation"
 Usage: #example
 
+* meta insert HPIFacility(F38006-B)
+
 * identifier.system = $HealthRecordKey
 * identifier.value = "f4121d2e-61aa-4222-83ae-b36d26bbbe62"
 

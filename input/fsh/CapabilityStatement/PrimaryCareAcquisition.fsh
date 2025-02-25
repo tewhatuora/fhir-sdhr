@@ -46,6 +46,9 @@ Usage: #definition
 * extension[HnzApiSpecBuilderExtension].extension[licenseName].valueString = "Health New Zealand Digital Services Hub API Access and Use Agreement"
 * extension[HnzApiSpecBuilderExtension].extension[externalDocs].valueUri = "https://fhir-ig.digital.health.nz/shared-care"
 
+* rest.interaction.code = #search-system
+* rest.interaction insert APIStandardsDocumentation 
+
 // allergyIntolerance
 * rest.resource[0].type = #AllergyIntolerance
 * rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRAllergyIntolerance"
@@ -64,12 +67,12 @@ Usage: #definition
 
 
 // consent
-* rest.resource[+].type = #Consent
-* rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRConsent"
-* rest.resource[=].interaction[0].code = #read
-* rest.resource[=].interaction[+].code = #create 
-* rest.resource[=].interaction[+].code = #update
-* rest.resource[=].interaction[+].code = #search-type
+// * rest.resource[+].type = #Consent
+// * rest.resource[=].profile = "https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRConsent"
+// * rest.resource[=].interaction[0].code = #read
+// * rest.resource[=].interaction[+].code = #create 
+// * rest.resource[=].interaction[+].code = #update
+// * rest.resource[=].interaction[+].code = #search-type
 
 // encounter
 * rest.resource[+].type = #Encounter

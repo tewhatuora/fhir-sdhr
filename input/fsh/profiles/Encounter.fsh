@@ -2,6 +2,11 @@ Profile: SDHREncounter
 Parent: Encounter
 Description: "Encounter resource to record an instance of an interaction between patient and healthcare provider"
 
+* meta.profile 1..1
+
+* meta.source 1..1
+* meta insert MetaSource
+
 * statusHistory 0..0
 * classHistory 0..0
 //* type 0..0

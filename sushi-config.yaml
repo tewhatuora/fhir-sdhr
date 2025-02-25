@@ -4,12 +4,12 @@
 # │  see: https://fshschool.org/docs/sushi/configuration/.                                         │
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
 id: tewhatuora.fhir.nz-shared-digital-health-record
-canonical: https://fhir-ig.digital.health.nz/nz-shared-digital-health-record
+canonical: https://fhir-ig.digital.health.nz/sdhr
 name: nz-shared-digital-health-record
 title: NZ Shared Digital Health Record API
 description: NZ Shared Digital Health Record API
 status: draft # draft | active | retired | unknown
-version: 0.2.0
+version: 0.3.0
 fhirVersion: 4.0.1 # https://www.hl7.org/fhir/valueset-FHIR-version.html
 copyrightYear: 2025+
 releaseLabel: draft # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use
@@ -18,7 +18,12 @@ releaseLabel: draft # ci-build | draft | qa-preview | ballot | trial-use | relea
 publisher:
   name: Health New Zealand
   url: https://github.com/tewhatuora
-  # email: test@example.org
+contact:
+   - name: HNZ Integration Team
+     telecom:
+       - system: email 
+         value: integration@tewhatuora.govt.nz
+         use: work
 
 # The dependencies property corresponds to IG.dependsOn. The key is the
 # package id and the value is the version (or dev/current). For advanced
@@ -32,7 +37,7 @@ publisher:
 #     version: 1.0.0
 
 dependencies:
-  tewhatuora.fhir.nzps: current
+  #tewhatuora.fhir.nzps: current
   fhir.org.nz.ig.base: 3.0.0
   tewhatuora.digitaltooling: 0.0.11
   
@@ -52,8 +57,8 @@ pages:
     title: NZ Shared Digital Health Record API
   use-cases.md:
     title: Use cases
-  consent-based-access.md:
-    title: Consent based access control
+  # consent-based-access.md:
+  #   title: Consent based access control
   artifacts.html:
     title: FHIR Artifacts
 #
@@ -82,7 +87,7 @@ pages:
 menu:
   Home: index.html
   Use cases: use-cases.html
-  Consent-based access control: consent-based-access.html
+  # Consent-based access control: consent-based-access.html
   Artifacts: artifacts.html
   Support:
     View OpenAPI: new-tab https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Pramary+Care+Data+FHIR+API

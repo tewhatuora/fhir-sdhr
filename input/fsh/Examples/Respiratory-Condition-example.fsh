@@ -3,7 +3,9 @@ InstanceOf: SDHRCondition
 Description: "Example Respiratory Condition"
 Usage: #example
 * meta.lastUpdated = "2024-01-26T10:03:26+13:00"
-* meta.profile = $SDHRConditionProfile
+
+* meta insert HPIFacility(F38006-B)
+
 * extension.url = "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
 * extension.valueBoolean = false
 * clinicalStatus = $condition-clinical#active

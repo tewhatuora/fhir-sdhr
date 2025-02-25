@@ -1,19 +1,20 @@
 ### Overview
 
-The Shared Digital Health Record (SDHR) API allows collection of a patient's clinical information from practice management systems to allow information to be surfaced back to consumers as part of their personal health record and to other health providers with their consent. 
+[The Shared Digital Health Record (SDHR) API](https://apistandards.digital.health.nz/api-concepts/ComponentDefinitions#api-provider) allows collection of a patient's clinical information from ministry, primary and secondary care systems, allowing information to be surfaced back to [authorised health sector](https://apistandards.digital.health.nz/api-concepts/ComponentDefinitions#health-workers) [API consumers](https://apistandards.digital.health.nz/api-concepts/ComponentDefinitions#api-consumer).
 
-The information collected includes: 
+The information included in the Shared Digital Health Record: 
 	
-* Condition
-* Encounter
-* Observations (for smoking status, vaping status, vital signs)
-* and Consent resources to record consent for these resources. 
+* [AllergyIntolerance](./StructureDefinition-SDHRAllergyIntolerance.html)
+* [Condition](./StructureDefinition-SDHRCondition.html)
+* [Encounter](./StructureDefinition-SDHREncounter.html)
+* [Observation](./StructureDefinition-SDHRObservation.html)
 
+* [Immunization](https://healthnz-prm.gitlab.io/air/air-api-fhir-ig/StructureDefinition-air-immunization.html)
+
+<!-- * and Consent resources to record consent for these resources.  -->
 
 ### Data provision
 
-When a patient's record is updated in the patient management system for an encounter, Allergy/Intolerance info, a condition/diagnosis, or a Smoking/Vaping/Vital Signs observation, FHIR resources representing this information should be POSTed to the API. 
+When a patient's record is created or updated in a system of record for an encounter, allergy/intolerance, condition, or observation, FHIR resources representing this information should be POSTed or PUT to the API. 
 
-This may be a queued update performed later or performed synchronously as updates are made. 
-
-
+This should be performed synchronously as soon as the change is made to the record.

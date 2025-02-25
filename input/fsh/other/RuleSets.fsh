@@ -24,3 +24,16 @@ RuleSet: PractitionerPerformer(hpi-practitioner-id, hpi-practitioner-name)
 * type = "Practitioner"
 * reference = "https://api.hip.digital.health.nz/fhir/Practitioner/{hpi-practitioner-id}"
 * display = "{hpi-practitioner-name}"
+
+/*
+    meta.source
+    HPI Facility
+*/
+RuleSet: HPIFacility(hpi-facility-id)
+* source = "https://api.hip.digital.health.nz/fhir/Location/{hpi-facility-id}"
+
+RuleSet: MetaSource
+* source ^short = "Captures the source of the record - please see description for details"
+* source ^definition = "Captures the source of the record. If the record is sourced from a PMS the value should contain the HPIFacilityID
+                            e.g. HPI Facility https://api.hip.digital.health.nz/fhir/Location/F38006-B
+                            or HNZ System (AIR) https://api.air.digital.health.nz/fhir/"

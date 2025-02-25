@@ -4,8 +4,13 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 * ^version = "0.1.3"
 * implicitRules 0..0
 * language 0..0
-//* meta.profile only Canonical(https://fhir-ig.digital.health.nz/primary-care-acquisition/StructureDefinition/SDHRAllergyIntolerance)
 * modifierExtension 0..0
+
+* meta.profile 1..1
+
+* meta.source 1..1
+* meta insert MetaSource
+
 * contained 0..0
 * clinicalStatus from http://hl7.org/fhir/ValueSet/allergyintolerance-clinical (required)
 * verificationStatus from http://hl7.org/fhir/ValueSet/allergyintolerance-verification (required)

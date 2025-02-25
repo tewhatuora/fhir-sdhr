@@ -1,0 +1,55 @@
+<!-- <menu>
+  <entry>
+    <name>Home</name>
+    <url>index.html</url>
+  </entry>
+  <entry>
+    <name>Artifacts</name>
+    <url>artifacts.html</url>
+    <entry>
+      <name>Profiles</name>
+      <url>artifacts.html#profiles</url>
+      <entry>
+        <name>AllergyIntolerance</name>
+        <url>StructureDefinition-SDHRAllergyIntolerance.html</url>
+      </entry>
+      <entry>
+        <name>Condition</name>
+        <url>StructureDefinition-SDHRCondition.html</url>
+      </entry>
+      <entry>
+        <name>Encounter</name>
+        <url>StructureDefinition-SDHREncounter.html</url>
+      </entry>
+      <entry>
+        <name>Observation</name>
+        <url>StructureDefinition-SDHRObservation.html</url>
+      </entry>
+      <entry>
+        <name>Immunization</name>
+        <url>https://healthnz-prm.gitlab.io/air/air-api-fhir-ig/StructureDefinition-air-immunization.html</url>
+      </entry>
+      <!-- Add custom content here -->
+      <entry>
+        <name>Custom Logical Model</name>
+        <url>StructureDefinition-CustomLogicalModel.html</url>
+      </entry>
+      <entry>
+        <name>Patient Summary</name>
+        <url>StructureDefinition-PatientSummary.html</url>
+      </entry>
+      <entry>
+        <name>Care Plan Summary</name>
+        <url>StructureDefinition-CarePlanSummary.html</url>
+      </entry>
+    </entry>
+  </entry>
+  <entry>
+    <name>Downloads</name>
+    <url>downloads.html</url>
+  </entry>
+  <entry>
+    <name>History</name>
+    <url>history.html</url>
+  </entry>
+</menu> -->

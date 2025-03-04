@@ -61,6 +61,10 @@ pages:
   #   title: Consent based access control
   artifacts.html:
     title: FHIR Artifacts
+  data-models.md:
+    title: Data Models
+  api.md:
+    title: API
 #
 #
 # The parameters property represents IG.definition.parameter. Rather
@@ -89,6 +93,8 @@ menu:
   Use cases: use-cases.html
   # Consent-based access control: consent-based-access.html
   Artifacts: artifacts.html
+  Data Models: data-models.html
+  API: api.html
   Support:
     View OpenAPI: new-tab https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API
     FHIR Spec: new-tab https://hl7.org/fhir/index.html

@@ -1,0 +1,205 @@
+@startuml
+
+skinparam dpi 100 
+scale max 350 width
+
+skinparam ActivityDiamondBackgroundColor #RoyalBlue
+skinparam ArrowColor #RoyalBlue   
+skinparam ArrowFontColor #RoyalBlue   
+skinparam ArrowFontSize 12
+skinparam ArrowMessageAlignment right
+skinparam BoxPadding 10
+skinparam ClassFontSize 16
+skinparam ClassFontStyle bold
+skinparam ClassStereotypeFontSize 16
+skinparam dpi 300
+skinparam FooterFontSize 14
+skinparam FooterFontStyle italic
+skinparam LegendBackgroundColor #Snow
+skinparam LegendFontName Helvetica
+skinparam LegendFontSize 16
+skinparam linetype ortho
+skinparam nodesep 70
+skinparam NoteBackgroundColor #LightYellow
+skinparam NoteFontSize 15
+skinparam NoteTextAlignment left
+skinparam ranksep 60
+skinparam roundcorner 5
+skinparam TitleFontSize 20
+
+
+
+title "Shared Digital Health Record - FHIR data model"
+
+frame "Core Data Services" as SDHRFrame {
+
+class "SDHR:Encounter" as encounter <<Encounter>> #LightSalmon ##[bold] {
+    Represents a SDHR encounter
+    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHREncounter.html]]
+    Inherits FHIR ""Encounter""
+    ----
+    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/Location/{hpi-facilityid}}"
+    * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHREncounter"
+    * **identifier**: ~~1..*~~
+    \t* **identifier[*].system**: "https://standards.digital.health.nz/ns/health-record-key-id"
+    \t* **identifier[*].value**": "health-record-key-id" [[[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHREncounter-definitions.html#key_Encounter.identifier:HealthRecordKey]]]
+    * **status**: ~~1..1~~ Binding: EncounterStatus [[[http://hl7.org/fhir/R4/valueset-encounter-status.html]]]
+    * **class**: ~~1..1~~ Binding: ActEncounterCode (extensible) [[[http://terminology.hl7.org/5.5.0/ValueSet-v3-ActEncounterCode.html]]]
+    * **subject**: ~~1..1~~ Reference NHI Patient
+}
+
+class "SDHR:Condition" as condition <<Condition>> #LightSalmon ##[bold] {
+    Represents a SDHR condition
+    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRCondition.html]]
+    Inherits FHIR ""Condition""
+    ----
+    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/Location/{hpi-facilityid}}"
+    * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
+    * **identifier**: ~~1..*~~
+    \t* **identifier[*].system**: "https://standards.digital.health.nz/ns/health-record-key-id"
+    \t* **identifier[*].value**" : "health-record-key-id" [[[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHREncounter-definitions.html#key_Encounter.identifier:HealthRecordKey]]]
+    * **extension**: ~~1..*~~
+    * **extentension[*].url** : "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
+    * **extension[*].valueBoolean**: boolean true|false
+    * **clinicalStatus**: ~~1..1~~ Binding: ConditionClinicalStatusCodes (required) [[[http://hl7.org/fhir/R4/valueset-condition-clinical.html]]]
+    * **verificationStatus**: ~~1..1~~ Binding: ConditionVerificationStatus (required) [[[http://hl7.org/fhir/R4/valueset-condition-ver-status.html]]]
+    * **code**: Binding: ~~1..1~~ Multiple bindings e.g. SNOMED CT, ReadCodes, MIMS
+    * **subject**: ~~1..1~~ Reference NHI Patient
+    * **onsetDateTime**: ~~0..1~~ Preferred
+    * **recordedDateTime**: ~~0..1~~ Preferred
+    * **recorder**: ~~0..1~~ Reference Practitioner (preferred)
+    * **asserter**: ~~1..1~~ Reference Practitioner
+}
+
+class "SDHR:AllergyIntolerance" as allergyintolerance <<AllergyIntolerance>> #LightSalmon ##[bold] {
+    Represents a SDHR allergy intolerance
+    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRAllergyIntolerance.html]]
+    Inherits FHIR ""AllergyIntolerance""
+    ----
+    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/Location/{hpi-facilityid}}"
+    * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRAllergyIntolerance"
+    * **identifier**: ~~1..*~~
+    \t * **identifier[*].system**: "https://standards.digital.health.nz/ns/health-record-key-id"
+    \t * **identifier[*].value**" : "health-record-key-id" [[[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHREncounter-definitions.html#key_Encounter.identifier:HealthRecordKey]]]
+    * **clinicalStatus**: ~~1..1~~ Binding: AllergyIntoleranceClinicalStatus (required) [[[http://hl7.org/fhir/R4/valueset-allergyintolerance-clinical.html]]]
+    * **verificationStatus**: ~~1..1~~ Binding: AllergyIntoleranceVerificationStatus (required) [[[http://hl7.org/fhir/R4/valueset-allergyintolerance-ver-status.html]]]
+    * **code**: ~~1..1~~ Binding: Multiple bindings e.g. SNOMED CT, ReadCodes, MIMS
+    * **subject**: ~~1..1~~ Reference NHI Patient
+    * **category**: ~~0..*~~ Binding: AllergyIntoleranceCategory (preferred) [[[http://hl7.org/fhir/R4/valueset-allergy-intolerance-category.html]]]
+    * **recordedDateTime**: 0..1 (preferred)
+    * **recorder**: 0..1 Reference Practitioner (preferred)
+}
+
+class "SDHR:Observation" as observation <<Observation>> #LightSalmon ##[bold] {
+    Represents a SDHR observation
+    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRObservation.html]]
+    Inherits FHIR ""Observation""
+    ----
+    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/Location/{hpi-facilityid}}"
+    * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRObservation"
+    * **identifier**: ~~1..*~~
+    \t* **identifier[*].system**: "https://standards.digital.health.nz/ns/health-record-key-id"
+    \t* **identifier[*].value**" : "health-record-key-id" [[[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHREncounter-definitions.html#key_Encounter.identifier:HealthRecordKey]]]
+    * **code**: Binding: Multiple bindings e.g. SNOMED CT, ReadCodes, MIMS
+    * **subject**: Reference NHI Patient
+    * **effectiveDateTime**: Preferred
+    * **value[x]**: Binding: Multiple bindings e.g. SNOMED CT, ReadCodes, MIMS
+    * **interpretation**: Binding: ObservationInterpretation (extensible) [[[http://hl7.org/fhir/R4/valueset-observation-interpretation.html]]]
+    * **status**: Binding: ObservationStatus (required) [[[http://hl7.org/fhir/R4/valueset-observation-status.html]]]
+}
+
+
+frame "Te Whatu Ora NHI/HPI" as NationalIdentifier {
+
+  class "Patient (NHI)" as Patient <<Reference>> #SkyBlue {
+    * logical id: NHI
+  }
+
+  class "HPI" as HPI <<Reference>> #SkyBlue {
+    org identifier format
+      ""GXXNNN-C"" HPI Org Id
+  }
+
+  Patient -[hidden]l- HPI
+}
+
+rectangle "Notes" as Notes {
+    note as N1
+    **Notes**
+    The following resources are sourced from primary care systems:
+    - AllergyIntolerance
+    - Condition
+    - Encounter
+    - Observation
+    The following resources are existing national data services:
+    - Immunization (AIR)
+    - Patient (NHI)
+    - Practitioner/Organizaion/Location (HPI)
+    - MedicationRequest/MedicationDispense (MDR)
+    **Coding/Terminology:**
+    In some cases an attempt may be made to map a source
+    code to a standard code such as read code --> SNOMEDCT.
+    In these scenarios the "source" code will always be preserved
+    and marked as "user selected".
+    e.g.
+    {
+        "code" : {
+            "coding" : [
+            {
+                "system" : "http://snomed.info/sct",
+                "code" : "373784005",
+                "display" : "Penicillin allergy",
+                "userSelected" : false
+            },
+            {
+                "system" : "http://mims.co.nz",
+                "code" : "m00286",
+                "display" : "Penicillins",
+                "userSelected" : true
+            }
+        ]
+    }
+  }
+end note
+}
+}
+
+' ********
+' * Entities outside any frame are in other bounded contexts
+
+
+' ********
+' plantuml positioning
+
+' ********
+' * resource linkages
+
+encounter "subject" -[#SkyBlue,dashed]up-- Patient
+encounter "participant" -[#SkyBlue,dashed]up-- HPI
+condition "subject" -[#SkyBlue,dashed]down-- Patient
+condition "recorder | asserter" --[#SkyBlue,dashed]down-- HPI
+allergyintolerance "subject" -[#SkyBlue,dashed]up-- Patient
+allergyintolerance "recorder" -[#SkyBlue,dashed]up-- HPI
+observation "subject" -[#SkyBlue,dashed]down-- Patient
+observation "performer" --[#SkyBlue,dashed]down-- HPI
+Notes -[hidden]left- Patient
+
+'NationalIdentifier -[hidden]- SDHRFrame
+
+legend right
+  **Notes**
+  - (preferred) indicates that whilst not mandatory it highly desirable.
+  '- Arrows show direction of FHIR reference.
+  '- Solid/open bullets indicate mandatory/optional data elements.
+
+  **Key to datatype colours**
+  |= colour |= stereotype |
+  | <back:#GhostWhite>ghost white\n | Standard FHIR resource in TWO IG |
+  | <back:#LightSalmon>salmon\n | Profiled FHIR resource |
+  | <back:#OrangeRed>orange red\n | Canonical shared resource defined by TWO |
+  | <back:#SkyBlue>sky blue\n| Logical identifier reference to records in national systems |
+endlegend
+
+footer "Health NZ/Te Whatu Ora.  Generated from PlantUML source on %date('dd/MM/yyyy')"
+
+@enduml

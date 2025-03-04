@@ -1,0 +1,121 @@
+@startuml
+title: SDHR API - Logical View
+
+' Define colour scheme and styling for the diagram
+' Standard HNZ colours
+skinparam {
+    defaultFontColor #4080a9
+    defaultBackgroundColor #d7f8ff
+    defaultComponentColour #61d9de
+    defaultActorColour #61d9de
+    defaultFontSize 16
+    defaultArrowThickness 6
+    actorStyle awesome
+    linetype polyline
+}
+
+allowmixing
+
+!$ICONURL = "https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons"
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include <C4/C4_Container>
+!include FONTAWESOME/users.puml
+!include FONTAWESOME/key.puml
+!include DEVICONS/postgresql.puml
+!include $ICONURL/devicons2/salesforce.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+'LAYOUT_LEFT_RIGHT()
+LAYOUT_LANDSCAPE()
+
+AddElementTag("New-Component", $bgColor="green",$fontColor="white")
+AddSystemTag("New-Capability", $bgColor="lightgreen",$fontColor="black")
+AddSystemTag("Existing-Capability", $bgColor="lightcoral",$fontColor="black")
+AddElementTag("Deprecated-Component", $bgColor="salmon",$fontColor="white")
+AddRelTag("NewRelationship", $lineColor="darkgreen", $textColor="darkgreen",$lineStyle = BoldLine() )
+AddRelTag("ExistingRelationship", $lineColor="orange", $lineStyle = BoldLine(), $textColor="orange")
+AddRelTag("DeprecatedRelationship", $lineColor="red", $lineStyle = DashedLine(), $textColor="orange")
+
+
+Person(patients, "Patients", "Patients using health care services", $sprite="users")
+
+System(APIConsumers, "Secondary Care API Consumers"){
+    Person(emergencydepartments, "e.g. Emergency Departments, Hospitals", "Medical professionals involved in secondary care delivery", $sprite="users")
+    System(SecondaryCareSystems,"Secondary Care Systems"){
+        Container(SecCareSystems, "Regional Clinical Portals")
+        Container(RegionalSHER, "Regional SHERs")
+    }
+}
+
+System(pco, "Primary Care API Consumers") {
+    Person(practitioners, "e.g. General Practice", "Medical professionals involved in primary care delivery.", $sprite="users")
+    System(PrimaryCareSystems, "Primary Care Systems"){
+    Container(pms,"Patient Management Systems",)
+  }
+}
+
+System_Boundary(HNZ,"Health NZ | Te Whatu Ora") {
+    System_Boundary(CP, "HNZ Connector Plane"){
+            System_Boundary(sdhr, "SDHR Data Services") {
+              System(FHIRAPIs, "FHIR APIs", $tags="New-Capability"){
+                interface "SDHR Condition FHIR API" as sdhrconditionapi {
+                  Condition
+                  methods(GET, POST, PUT)
+                }
+              
+                interface "SDHR Encounter FHIR API" as sdhrencounterapi {
+                  Encounter
+                  methods(GET, POST, PUT)
+                }
+              interface "SDHR Observation FHIR API" as sdhrobservationapi {
+                Observation
+                methods(GET, POST, PUT)
+              }
+              interface "SDHR AllergyIntolerance FHIR API" as sdhrallergyintolleranceapi {
+                AllergyIntolerance
+                methods(GET, POST, PUT)
+              }
+            }
+            }
+    System_Boundary(nationaldataservices, "National Dataservices"){
+        System(NationalFHIRAPIs, "FHIR APIs", $tags="Existing-Capability"){
+        interface "AIR Immunization FHIR API" as air {
+            Immunization
+            methods(GET, POST, PUT)
+        }
+        interface "Medicine Data Repository FHIR API" as mdr {
+            Medication
+            methods(GET, POST, PUT)
+        }
+        interface "Medical Warning System FHIR API" as mws {
+            Alert
+            methods(GET, POST, PUT) 
+        }
+        interface "National Health Index" as nhi {
+            Patient
+            methods(GET, POST, PUT)
+        }
+    }
+    }
+}
+}
+
+
+' Rel(patients, practitioners, "Access Health Services")
+
+patients --> pco
+patients --> APIConsumers
+'emergencydepartments --> SecCareSystems
+'practitioners --> pms
+APIConsumers --> FHIRAPIs
+APIConsumers --> NationalFHIRAPIs
+pco --> FHIRAPIs
+pco --> NationalFHIRAPIs
+
+
+
+'SHOW_LEGEND()
+SHOW_LEGEND(false)
+
+@enduml

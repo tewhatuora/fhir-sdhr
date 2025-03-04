@@ -8,7 +8,9 @@ The resources supported are:
 * [Encounter](./StructureDefinition-SDHREncounter.html)
 * [Observation](./StructureDefinition-SDHRObservation.html)
 
-* [Immunization](https://healthnz-prm.gitlab.io/air/air-api-fhir-ig/StructureDefinition-air-immunization.html)
+
+
+<!-- * [Immunization](https://healthnz-prm.gitlab.io/air/air-api-fhir-ig/StructureDefinition-air-immunization.html) -->
 <!-- * and Consent resources to record consent for these resources.  -->
 
 ### FHIR version

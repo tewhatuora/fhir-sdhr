@@ -2,6 +2,7 @@
 
 This section provides an overview of the design of the FHIR data representations that authorised applications can use to record and interchange shared digital health record information.
 
+This IG is a Draft only. Please be aware it is subject to change. Profiles are being updated regularly. Please do not rely on the current version for development decisions.
 
 
 #### Overview

@@ -10,6 +10,8 @@ Description: "This profile constrains the Observation resource to represent Toba
 * meta.source 1..1
 * meta insert MetaSource
 
+* insert LocalIdentifierDocs
+
 * identifier ^slicing.discriminator.type = #value
 * identifier ^slicing.discriminator.path = "system"
 * identifier ^slicing.rules = #open

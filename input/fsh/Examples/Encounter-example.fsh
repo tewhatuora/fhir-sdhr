@@ -6,6 +6,8 @@ Usage: #example
 
 * meta insert HPIFacility(F38006-B)
 
+* insert LocalIdentifierExample
+
 * subject insert PatientSubject(ZKC7284, Carrey Carrington)
 
 * identifier.system = $HealthRecordKey

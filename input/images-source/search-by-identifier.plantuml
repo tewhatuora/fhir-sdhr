@@ -1,0 +1,52 @@
+@startuml
+
+skinparam dpi 100 
+scale max 350 width
+
+skinparam ActivityDiamondBackgroundColor #RoyalBlue
+skinparam ArrowColor #RoyalBlue   
+skinparam ArrowFontColor #RoyalBlue   
+skinparam ArrowFontSize 12
+skinparam ArrowMessageAlignment right
+skinparam BoxPadding 10
+skinparam ClassFontSize 16
+skinparam ClassFontStyle bold
+skinparam ClassStereotypeFontSize 16
+skinparam dpi 300
+skinparam FooterFontSize 14
+skinparam FooterFontStyle italic
+skinparam LegendBackgroundColor #Snow
+skinparam LegendFontName Helvetica
+skinparam LegendFontSize 16
+skinparam linetype ortho
+skinparam nodesep 70
+skinparam NoteBackgroundColor #LightYellow
+skinparam NoteFontSize 15
+skinparam NoteTextAlignment left
+skinparam ranksep 60
+skinparam roundcorner 5
+skinparam TitleFontSize 20
+
+title "Shared Digital Health Record - FHIR Search by identifier"
+
+participant "API Consumer" as Client
+participant "SDHR FHIR Server" as Server
+
+Client -> Server: POST /Condition (Create, including local identifier)
+activate Server
+Server --> Client: 201 Created, serverResourceId returned
+deactivate Server
+
+note over Client, Server: Time passes, the resource has been updated at source
+
+Client -> Server: **GET /Condition?identifier=https://example.org|some-local-id&_source=https://api.hip.digital.health.nz/fhir/Location/F38006-B** (Search by identifier and facilityId)
+activate Server
+Server --> Client: Bundle (Containing Condition Resource)
+deactivate Server
+Client -> Client: Make changes to resource, e.g. update status
+Client -> Server: PUT /Condition/{serverResourceId} (Update)
+activate Server
+Server --> Client: 200 OK
+deactivate Server
+
+@enduml

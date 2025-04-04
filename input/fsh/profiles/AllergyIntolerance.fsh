@@ -11,6 +11,8 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 * meta.source 1..1
 * meta insert MetaSource
 
+* insert LocalIdentifierDocs
+
 * contained 0..0
 * clinicalStatus from http://hl7.org/fhir/ValueSet/allergyintolerance-clinical (required)
 * verificationStatus from http://hl7.org/fhir/ValueSet/allergyintolerance-verification (required)

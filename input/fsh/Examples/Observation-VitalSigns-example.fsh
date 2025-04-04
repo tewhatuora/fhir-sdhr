@@ -5,6 +5,8 @@ Usage: #example
 
 * meta insert HPIFacility(F38006-B)
 
+* insert LocalIdentifierExample
+
 * identifier.system = $HealthRecordKey
 * identifier.value = "f4121d2e-61aa-4222-83ae-b36d26bbbe62"
 

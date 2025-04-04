@@ -5,6 +5,9 @@ Description: "An example payload for a Primary Care AllergyIntolerance resource 
 * meta.lastUpdated = "2024-01-26T10:03:26+13:00"
 * meta insert HPIFacility(F38006-B)
 //* meta.profile = $SDHRAllergyIntoleranceProfile
+
+* insert LocalIdentifierExample
+
 * type = #allergy
 * clinicalStatus = http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical#active "Active"
 * verificationStatus = http://terminology.hl7.org/CodeSystem/allergyintolerance-verification#confirmed "Confirmed"

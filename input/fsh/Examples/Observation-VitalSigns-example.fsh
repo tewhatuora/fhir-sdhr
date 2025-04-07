@@ -7,8 +7,8 @@ Usage: #example
 
 * insert LocalIdentifierExample
 
-* identifier.system = $HealthRecordKey
-* identifier.value = "f4121d2e-61aa-4222-83ae-b36d26bbbe62"
+* identifier[+].system = $HealthRecordKey
+* identifier[=].value = "f4121d2e-61aa-4222-83ae-b36d26bbbe62"
 
 * code = $sct#122869004 "Measurement procedure (procedure)"
 * category = http://terminology.hl7.org/CodeSystem/observation-category#vital-signs

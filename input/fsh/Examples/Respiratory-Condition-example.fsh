@@ -21,7 +21,7 @@ Usage: #example
 * onsetDateTime = "2011-02-05T00:00:00+13:00"
 * recordedDate = "2023-11-26T10:02:45+13:00"
 
-* identifier.system = $HealthRecordKey
-* identifier.value = "ef5b3aad-14c2-4904-aa25-7411dcb21327"
+* identifier[+].system = $HealthRecordKey
+* identifier[=].value = "ef5b3aad-14c2-4904-aa25-7411dcb21327"
 
 * asserter insert PractitionerPerformer(99ZZZZ, Dottie McStuffins)

@@ -37,3 +37,22 @@ RuleSet: MetaSource
 * source ^definition = "Captures the source of the record. If the record is sourced from a PMS the value should contain the HPIFacilityID
                             e.g. HPI Facility https://api.hip.digital.health.nz/fhir/Location/F38006-B
                             or HNZ System (AIR) https://api.air.digital.health.nz/fhir/"
+
+RuleSet: LocalIdentifierDocs
+* identifier 0..*
+* identifier.system 1..1
+* identifier.value 1..1
+* identifier.use ^short = "The local identifier use SHOULD be set to secondary, where the SDHR resource id is considered the primary identifier."
+* identifier.system ^short = "System for the local identifier. This MUST be consistent per PMS/Health Application"
+* identifier.value ^short = "The actual local identifier value, e.g. ec2d6cad-1e19-46ee-accf-dc460a680710"
+* identifier ^short = "A local identifier MAY be added to this section. If used, system MUST be specified."
+* identifier ^definition = "A local identifier MAY be added to this section. This can be used to correlate the SDHR resource with a local system identifier to perform updates."
+* identifier.system ^example[0].label = "Local Identifier System"
+* identifier.system ^example[0].valueUri = "https://fhir.example.co.nz"
+* identifier.value ^example[0].label = "Local Identifier Value"
+* identifier.value ^example[0].valueString = "ec2d6cad-1e19-46ee-accf-dc460a680710"
+
+RuleSet: LocalIdentifierExample
+* identifier[+].system = "https://fhir.examplepms.co.nz"
+* identifier[=].value = "ec2d6cad-1e19-46ee-accf-dc460a680710"
+* identifier[=].use = #secondary

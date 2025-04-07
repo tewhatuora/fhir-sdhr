@@ -6,10 +6,12 @@ Usage: #example
 
 * meta insert HPIFacility(F38006-B)
 
+* insert LocalIdentifierExample
+
 * subject insert PatientSubject(ZKC7284, Carrey Carrington)
 
-* identifier.system = $HealthRecordKey
-* identifier.value = "f4121d2e-61aa-4222-83ae-b36d26bbbe62"
+* identifier[+].system = $HealthRecordKey
+* identifier[=].value = "f4121d2e-61aa-4222-83ae-b36d26bbbe62"
 * serviceType = http://terminology.hl7.org/CodeSystem/service-type#124 "General Practice"
 
 * status = #finished

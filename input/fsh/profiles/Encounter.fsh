@@ -7,6 +7,8 @@ Description: "Encounter resource to record an instance of an interaction between
 * meta.source 1..1
 * meta insert MetaSource
 
+* insert LocalIdentifierDocs
+
 * statusHistory 0..0
 * classHistory 0..0
 //* type 0..0

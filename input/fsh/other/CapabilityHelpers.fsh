@@ -34,7 +34,7 @@ RuleSet: APIStandardsDocumentation
 * documentation = """
   ### Request-Context custom header
 
-  All screening FHIR API requests must include the HNZ request context *custom header* supplying identifiers for the health user 
+  All FHIR API requests must include the HNZ request context *custom header* supplying identifiers for the health user 
   and organisation behind the API request.
 
   This context is supplied using the 'Request-Context' custom header in the form of a base64-encoded JSON object.
@@ -43,14 +43,7 @@ RuleSet: APIStandardsDocumentation
   |:------------------|:---------|
   | `userIdentifier`  | The userid of the user as authenticated by the PMS/health application (REQUIRED) |
   | `secondaryIdentifier` | The secondary identifier for the user - this **MUST** be the end users Common Person Number (aka HPI Practitioner identifier) of the practitioner using the application (REQUIRED) |
-  | `purposeOfUse`    | One of [
-                                    "PATRQT",
-                                    "POPHLTH",
-                                    "TREAT",
-                                    "ETREAT",
-                                    "PUBHLTH",
-                                    "SYSDEV"
-                                ] (REQUIRED)                             |
+  | `purposeOfUse`    | One of [ "PATRQT", "POPHLTH", "TREAT", "ETREAT", "PUBHLTH", "SYSDEV" ] (REQUIRED)                             |
   | `userFullName`    | Full name of the user of the PMS/health application.` (REQUIRED)    |
   | `userRole`        | Role of the user of the PMS/health application. Set to `"PROV" (Provider) or "PAT" (Patient) (REQUIRED)                        |
   | `orgIdentifier`   | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed (REQUIRED) |

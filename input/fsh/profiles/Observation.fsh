@@ -26,9 +26,7 @@ Description: "This profile constrains the Observation resource to represent Toba
 * identifier[HealthRecordKey] ^short = "Health Record Key - unique persistent identifier for this clinical FHIR resource"
 * identifier[HealthRecordKey] ^definition = "This identifier should be created for each resource at the time of sending to the central repository and persisted by source systems against their view of the information. This allows a unique identifier for updates and tracking of the resource independent of the resource id and between systems"
 
-* subject.reference 1..1 
-* subject.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
-* subject.type = "Patient"
+* insert ProfileSubjectPatient
 
 * performer 1..1
 * performer only Reference(Practitioner)

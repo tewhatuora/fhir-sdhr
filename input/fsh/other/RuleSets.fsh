@@ -5,10 +5,32 @@
 */
 
 /*
+    Re-usable Patient component for use in profiles containing a `subject` json property.
+    `insert ProfileSubjectPatient` will insert the following:
+*/
+RuleSet: ProfileSubjectPatient
+* subject 1..1
+* subject only Reference(Patient)
+* subject.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
+* subject.type = "Patient"
+
+/*
+    Re-usable Patient component for use in profiles containing a `patient` json property.
+    `insert ProfilePatientPatient` will insert the following:
+*/
+RuleSet: ProfilePatientPatient
+* patient 1..1
+* patient only Reference(Patient)
+* patient.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
+* patient.type = "Patient"
+
+
+/*
     Sets up reference elements for an NHI Patient
     Usage in a FSH Instance:
     * subject insert PatientSubject(ZKC7284, Carrey Carrington)
 */
+
 RuleSet: PatientSubject(nhi-id, nhi-name)
 * type = "Patient"
 * reference = "https://api.hip.digital.health.nz/fhir/Patient/{nhi-id}"

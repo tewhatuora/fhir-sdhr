@@ -15,27 +15,21 @@ Description: "Condition resource to record problems and conditions affecting a p
 * bodySite 0..0
 * encounter 0..0
 * abatement[x] 0..0
-//* recordedDate 0..0
 * severity 0..0
 * encounter 0..0
-//* recorder 0..0
 * stage 0..0
-//* evidence 0..1
 
 * modifierExtension 0..0
 * contained 0..0
 
-* subject 1..1
-* subject only Reference(Patient)
-//* subject.reference 1..1 
-* subject.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
-* subject.type = "Patient"
+* insert ProfileSubjectPatient
 
 * asserter 1..1
 * asserter only Reference(Practitioner)
-//* asserter.reference 1..1
 * asserter.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system E.g. https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ"
 
+* code 1..1 
+* code from http://hl7.org/fhir/ValueSet/condition-code (preferred)
 
 * identifier ^slicing.discriminator.type = #value
 * identifier ^slicing.discriminator.path = "system"

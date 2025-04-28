@@ -32,10 +32,6 @@ Description: "Encounter resource to record an instance of an interaction between
 * modifierExtension 0..0
 * contained 0..0
 
-// Modified
-
-* class 0..1
-
 * insert ProfileSubjectPatient
 
 * participant.individual only Reference(Practitioner)

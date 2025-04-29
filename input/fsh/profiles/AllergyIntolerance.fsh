@@ -13,13 +13,12 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 
 * insert LocalIdentifierDocs
 
-* insert ProfilePatientPatient
+* insert ProfilePatient(patient)
 
 * contained 0..0
 * clinicalStatus from http://hl7.org/fhir/ValueSet/allergyintolerance-clinical (required)
 * verificationStatus from http://hl7.org/fhir/ValueSet/allergyintolerance-verification (required)
 * code 1..1
-* code.coding.userSelected 0..1
-* code.coding.userSelected ^short = "Indicates that the value has been selected by a system user"
-* code.coding.userSelected ^definition = "This field is used to maintain the code as selected by the source systems end user. For example, where a patient management system uses local codes or a non-common code set to record a substance or allergen this field indicates that the value is as selected by the system user. Some level of clinical interpretation may be required."
+* code from http://hl7.org/fhir/ValueSet/allergyintolerance-code (preferred)
+* insert UserSelected
 * recorder.identifier only Identifier

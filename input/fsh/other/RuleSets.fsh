@@ -4,34 +4,41 @@
     as Patient(subject) and Practitioner(performer) references.
 */
 
-/*
-    Re-usable Patient component for use in profiles containing a `subject` json property.
-    `insert ProfileSubjectPatient` will insert the following:
-*/
-RuleSet: ProfileSubjectPatient
-* subject 1..1
-* subject only Reference(Patient)
-* subject.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
-* subject.type = "Patient"
 
 /*
-    Re-usable Patient component for use in profiles containing a `patient` json property.
-    `insert ProfilePatientPatient` will insert the following:
+    Re-usable Patient component for use in profiles.
+    Note that Patient and Practitioner references are used throughout the profiles
+    The JSON property may differ dependong on the profile so insert the reference in the profile using the following syntax.
+    `insert ProfilePatient(property)` where property is the json property:
+    e.g. `insert ProfilePatient(subject)` or `insert ProfilePatient(patient)`
 */
-RuleSet: ProfilePatientPatient
-* patient 1..1
-* patient only Reference(Patient)
-* patient.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
-* patient.type = "Patient"
+RuleSet: ProfilePatient(property)
+* {property} 1..1
+* {property} only Reference(Patient)
+* {property}.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
+* {property}.type = "Patient"
 
+
+/*
+    Re-usable Practitioner component for use in profiles.
+    Note that Patient and Practitioner references are used throughout the profiles
+    The JSON property may differ dependong on the profile so insert the reference in the profile using the following syntax.
+    `insert ProfilePractitioner(property)` where property is the json property:
+    e.g. `insert ProfilePractitioner(asserter)` or `insert ProfilePractitioner(participant.individual)`
+*/
+RuleSet: ProfilePractitioner(property)
+* {property} 1..1
+* {property} only Reference(Practitioner)
+* {property}.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system E.g. https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ"
+* {property}.type = "Practitioner"
 
 /*
     Sets up reference elements for an NHI Patient
     Usage in a FSH Instance:
-    * subject insert PatientSubject(ZKC7284, Carrey Carrington)
+    * subject insert Patient(ZKC7284, Carrey Carrington)
 */
 
-RuleSet: PatientSubject(nhi-id, nhi-name)
+RuleSet: Patient(nhi-id, nhi-name)
 * type = "Patient"
 * reference = "https://api.hip.digital.health.nz/fhir/Patient/{nhi-id}"
 * display = "{nhi-name}"
@@ -40,9 +47,9 @@ RuleSet: PatientSubject(nhi-id, nhi-name)
     HPI Practitioner
     Sets up reference elements for an HPI PPractitioner
     Usage in a FSH Instance:
-    * subject insert PractitionerPerformer(91ZZXZ, DR Beverly Crusher)
+    * subject insert Practitioner(91ZZXZ, DR Beverly Crusher)
 */
-RuleSet: PractitionerPerformer(hpi-practitioner-id, hpi-practitioner-name)
+RuleSet: Practitioner(hpi-practitioner-id, hpi-practitioner-name)
 * type = "Practitioner"
 * reference = "https://api.hip.digital.health.nz/fhir/Practitioner/{hpi-practitioner-id}"
 * display = "{hpi-practitioner-name}"
@@ -78,3 +85,21 @@ RuleSet: LocalIdentifierExample
 * identifier[+].system = "https://fhir.examplepms.co.nz"
 * identifier[=].value = "ec2d6cad-1e19-46ee-accf-dc460a680710"
 * identifier[=].use = #secondary
+
+RuleSet: HealthRecordKey
+* identifier ^slicing.discriminator.type = #value
+* identifier ^slicing.discriminator.path = "system"
+* identifier ^slicing.rules = #open
+* identifier ^slicing.description = "Health Record Key - unique persistent identifier for this clinical FHIR resource"
+* identifier contains HealthRecordKey 0..1 MS
+* identifier[HealthRecordKey].system = "https://standards.digital.health.nz/ns/health-record-key-id" (exactly)
+* identifier[HealthRecordKey].use = #offical (exactly)
+* identifier[HealthRecordKey].use ^short = "fixed to official"
+* identifier[HealthRecordKey].value ^short = "The value of the identifier. Must be a GUID that is randomly generated to ensure collisions are avoided"
+* identifier[HealthRecordKey] ^short = "Health Record Key - unique persistent identifier for this clinical FHIR resource"
+* identifier[HealthRecordKey] ^definition = "This identifier should be created for each resource at the time of sending to the central repository and persisted by source systems against their view of the information. This allows a unique identifier for updates and tracking of the resource independent of the resource id and between systems"
+
+RuleSet: UserSelected
+* code.coding.userSelected 0..1
+* code.coding.userSelected ^short = "Indicates that the value has been selected by a system user"
+* code.coding.userSelected ^definition = "This field is used to maintain the code as selected by the source systems end user. For example, where a patient management system uses local codes or a non-common code set to record a substance or allergen this field indicates that the value is as selected by the system user. Some level of clinical interpretation may be required."

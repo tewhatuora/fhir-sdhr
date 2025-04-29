@@ -12,7 +12,6 @@ Description: "Encounter resource to record an instance of an interaction between
 // Excluded Elements
 * implicitRules 0..0
 * language 0..0
-* appointment 0..0
 * length 0..0
 * account 0..0
 * hospitalization 0..0

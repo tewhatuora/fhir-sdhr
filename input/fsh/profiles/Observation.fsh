@@ -12,6 +12,9 @@ Description: "A Shared Digital Health Record Observation."
 
 * insert LocalIdentifierDocs
 
+* modifierExtension 0..0
+* contained 0..0
+
 * insert ProfilePatient(subject)
 
 * insert ProfilePractitioner(performer)

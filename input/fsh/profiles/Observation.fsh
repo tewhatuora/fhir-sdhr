@@ -12,25 +12,33 @@ Description: "This profile constrains the Observation resource to represent Toba
 
 * insert LocalIdentifierDocs
 
-* identifier ^slicing.discriminator.type = #value
-* identifier ^slicing.discriminator.path = "system"
-* identifier ^slicing.rules = #open
-* identifier ^slicing.description = "Health Record Key - unique persistent identifier for this clinical FHIR resource"
+* insert ProfilePatient(subject)
 
-* identifier contains HealthRecordKey 0..1 MS
+* insert ProfilePractitioner(performer)
 
-* identifier[HealthRecordKey].system = "https://standards.digital.health.nz/ns/health-record-key-id" (exactly)
-* identifier[HealthRecordKey].use = #offical (exactly)
-* identifier[HealthRecordKey].use ^short = "fixed to official"
-* identifier[HealthRecordKey].value ^short = "The value of the identifier. Must be a GUID that is randomly generated to ensure collisions are avoided"
-* identifier[HealthRecordKey] ^short = "Health Record Key - unique persistent identifier for this clinical FHIR resource"
-* identifier[HealthRecordKey] ^definition = "This identifier should be created for each resource at the time of sending to the central repository and persisted by source systems against their view of the information. This allows a unique identifier for updates and tracking of the resource independent of the resource id and between systems"
+* code 1..1 
+* code from http://hl7.org/fhir/ValueSet/observation-codes (preferred)
+* code ^short = "Observation code. Note that when the observation is an individual observation (singular) LOINC should be used. If, however, the Observation is a grouping (e.g. vital-signs) the code can be from SNOMED CT e.g. `122869004`. See https://fhir-ig.digital.health.nz/sdhr/Observation-ObservationVitalSignsExample.html for example"
+* insert UserSelected
 
-* subject.reference 1..1 
-* subject.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
-* subject.type = "Patient"
+// * code 1..1
+// * code ^slicing.discriminator.type = #pattern
+// * code ^slicing.discriminator.path = "coding.system"
+// * code ^slicing.rules = #open
+// * code contains IndividualObservation 1..1 and ObservationCollection 1..1
+// * insert UserSelected
 
-* performer 1..1
-* performer only Reference(Practitioner)
-* performer.reference 1..1
-* performer.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system E.g. https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ"
+// * code[IndividualObservation].coding from http://hl7.org/fhir/ValueSet/observation-codes (preferred)
+// * code[IndividualObservation] ^short = "Code for individual observations."
+// * code[IndividualObservation] ^definition = "This code is used for individual observations, such as a single tobacco use assessment."
+
+// * code[ObservationCollection].coding[0].system = "http://snomed.info/sct" (exactly)
+// * code[ObservationCollection].coding[0].code = "122869004" (exactly)
+// * code[ObservationCollection].coding[0].display = "Measurement procedure (procedure)" (exactly)
+// * code[ObservationCollection] ^short = "Code for observation collections."
+// * code[ObservationCollection] ^definition = "This code is used for collections of observations, such as vital signs."
+
+* component 0..*
+* component.code from http://hl7.org/fhir/ValueSet/observation-codes (preferred)
+* component.value[x] 0..1
+* component insert UserSelected

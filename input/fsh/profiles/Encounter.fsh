@@ -9,7 +9,6 @@ Description: "Encounter resource to record an instance of an interaction between
 
 * insert LocalIdentifierDocs
 
-
 // Excluded Elements
 * implicitRules 0..0
 * language 0..0
@@ -34,5 +33,3 @@ Description: "Encounter resource to record an instance of an interaction between
 * insert ProfilePractitioner(participant.individual)
 * participant.individual.extension 0..0
 * participant.individual.identifier 0..0
-
-* insert HealthRecordKey

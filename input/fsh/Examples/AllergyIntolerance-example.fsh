@@ -15,6 +15,6 @@ Description: "An example payload for a Primary Care AllergyIntolerance resource 
 * code.coding.userSelected = true
 * category = #medication
 
-* patient insert Patient(ZKC7284, Carrey Carrington)
+* patient insert Patient(ZKC7284, Sage Westbrook)
 
 * recorder insert Practitioner(91ZZXN, DR Julian Subatoi Bashir)

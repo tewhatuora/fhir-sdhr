@@ -35,7 +35,7 @@ RuleSet: ProfilePractitioner(property)
 /*
     Sets up reference elements for an NHI Patient
     Usage in a FSH Instance:
-    * subject insert Patient(ZKC7284, Carrey Carrington)
+    * subject insert Patient(ZKC7284, Sage Westbrook)
 */
 
 RuleSet: Patient(nhi-id, nhi-name)

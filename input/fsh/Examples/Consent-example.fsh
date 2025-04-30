@@ -8,7 +8,7 @@
 // * identifier[+].use = #secondary
 // * identifier[=].value = "93f28be6-4787-40f1-ae39-64233eb2cf7c"
 
-// * patient  insert PatientSubject(ZKC7284, Carrey Carrington)
+// * patient  insert PatientSubject(ZKC7284, Sage Westbrook)
 
 // * policy[+].uri = "https://www.privacy.org.nz/privacy-act-2020"
 // * policy[=].authority = "https://www.privacy.org.nz"

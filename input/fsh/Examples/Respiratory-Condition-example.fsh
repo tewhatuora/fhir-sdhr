@@ -14,7 +14,7 @@ Usage: #example
 * verificationStatus = $condition-ver-status#confirmed
 * code = http://health.govt.nz/read-codes#H051.00 "Acute up resp tract infection"
 
-* subject insert Patient(ZKC7284, Carrey Carrington)
+* subject insert Patient(ZKC7284, Sage Westbrook)
 
 * recorder insert Practitioner(91ZZXN, DR Julian Subatoi Bashir)
 

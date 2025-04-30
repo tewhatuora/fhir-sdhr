@@ -15,7 +15,7 @@ Usage: #example
 * code = $sct#38341003 "HT - Hypertension"
 * code.text = "Hypertension"
 
-* subject insert Patient(ZKC7284, Carrey Carrington)
+* subject insert Patient(ZKC7284, Sage Westbrook)
 
 * recorder insert Practitioner(99ZZZZ, Dottie McStuffins)
 

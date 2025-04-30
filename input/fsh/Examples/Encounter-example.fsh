@@ -8,7 +8,7 @@ Usage: #example
 
 * insert LocalIdentifierExample
 
-* subject insert Patient(ZKC7284, Carrey Carrington)
+* subject insert Patient(ZKC7284, Sage Westbrook)
 
 // * identifier[+].system = $HealthRecordKey
 // * identifier[=].value = "f4121d2e-61aa-4222-83ae-b36d26bbbe62"
@@ -17,7 +17,7 @@ Usage: #example
 
 * status = #finished
 
-* class = http://terminology.hl7.org/CodeSystem/v3-ActCode#GENRL "General"
+* class = http://terminology.hl7.org/CodeSystem/v3-ActCode#ENC "Encounter"
 
 * period.start = "2024-03-26T10:13:26+13:00" 
 

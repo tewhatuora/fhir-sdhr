@@ -10,7 +10,7 @@ Usage: #example
 * code = $sct#122869004 "Measurement procedure (procedure)"
 * category = http://terminology.hl7.org/CodeSystem/observation-category#vital-signs "Vital Signs"
 
-* subject insert Patient(ZKC7284, Carrey Carrington)
+* subject insert Patient(ZKC7284, Sage Westbrook)
 
 * performer insert Practitioner(91ZZXZ, DR Beverly Crusher)
 

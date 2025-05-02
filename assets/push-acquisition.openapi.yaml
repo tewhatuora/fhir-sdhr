@@ -107,7 +107,7 @@ paths:
                           subject:
                             reference: "https://api.hip.digital.health.nz/fhir/Patient/ZKC7284"
                             type: Patient
-                            display: Carrey Carrington
+                            display: Sage Westbrook
                           participant:
                             - type:
                                 - coding:

@@ -1,7 +1,7 @@
 @startuml
 
 skinparam dpi 100 
-scale max 350 width
+scale max 300 width
 
 skinparam ActivityDiamondBackgroundColor #RoyalBlue
 skinparam ArrowColor #RoyalBlue   

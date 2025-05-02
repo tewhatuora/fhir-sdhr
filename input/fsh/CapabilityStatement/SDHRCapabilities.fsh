@@ -188,10 +188,6 @@ Usage: #definition
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-date"
 * rest.resource[=].searchParam[=].type = #date
 * rest.resource[=].searchParam[=].documentation = "Observation.effective \n Obtained date/time. If the obtained element is a period, a date that falls in the period"
-* rest.resource[=].searchParam[+].name = "identifier"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
-* rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this observation."
 * rest.resource[=].searchParam[+].name = "patient"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
 * rest.resource[=].searchParam[=].type = #reference

@@ -125,10 +125,6 @@ Usage: #definition
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Condition-severity"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "The severity of the condition"
-* rest.resource[=].searchParam[+].name = "_profile"
-* rest.resource[=].searchParam[=].definition = "https://hl7.org/fhir/searchparameter-registry.html#Resource-profile"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Filter **RheumaticFeverCondition instances** using ?Resource-profile=https://build.fhir.org/ig/tewhatuora/cinc-fhir-ig/StructureDefinition/cinc-rheumaticfever-condition"
 * rest.resource[=].searchParam[+].name = "identifier"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
 * rest.resource[=].searchParam[=].type = #token

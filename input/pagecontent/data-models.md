@@ -9,7 +9,7 @@ This IG is a Draft only. Please be aware it is subject to change. Profiles are b
 
 <!-- markdownlint-disable MD033 -->
 <div width="100%">
-<!-- Generated from `input/images-source/FHIR-resource-model-rheumaticfever-pilot.plantuml` -->
+<!-- Generated from `input/images-source/fhir-sdhr-resource-model.plantuml` -->
 {% include fhir-sdhr-resource-model.svg %}
 </div>
 <br clear="all">

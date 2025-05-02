@@ -11,9 +11,6 @@ Description: "Condition resource to record problems and conditions affecting a p
 
 * onset[x] only dateTime
 
-* severity 0..0
-* encounter 0..0
-
 * modifierExtension 0..0
 * contained 0..0
 

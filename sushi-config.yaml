@@ -64,7 +64,7 @@ pages:
   data-models.md:
     title: Data Models
   api.md:
-    title: API
+    title: API Docs
 #
 #
 # The parameters property represents IG.definition.parameter. Rather

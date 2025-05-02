@@ -1,6 +1,12 @@
 # API Documentation
 
-The SDHR API is comprised of multiple FHIR resources.
+The SDHR API is comprised of multiple FHIR resources. This page provides technical guidance for applicaiton developers who wish to integrate their applications with the Shared Digital Health Record APIs
+
+| **Resource** | **Description** |
+| --- | --- |
+| [API Capability Statement](./CapabilityStatement-SDHRCapabliityStatement.html) | FHIR API Capability Statement |
+| [API Artifacts](./artifacts.html) | List of FHIR Artifacts for this API |
+| [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) | Machine readable OpenAPI specification for this API |
 
 ## Logical View
 
@@ -8,6 +14,305 @@ The SDHR API is comprised of multiple FHIR resources.
 <div width="100%">
 <!-- Generated from `input/images-source/api-logical-overview.plantuml` -->
 {% include api-logical-overview.svg %}
+</div>
+<br clear="all">
+
+## API Search Behaviour
+
+The Shared Digital Health Record FHIR API supports the [FHIR search pattern](https://hl7.org/fhir/R4B/search.html). See below for some example search queries.
+
+### Search for Conditions by Patient and Source
+
+This query will return all Condition resources for a given `Patient` and `meta.source`.
+
+`GET /Condition?patient=https://api.hip.digital.health.nz/fhir/Patient/ZKC7284&_source=https://api.hip.digital.health.nz/fhir/Location/F38006-B`
+
+<div width="100%">
+<details>
+<summary><b><u>Click to view example response</u></b></summary>
+<br>
+In this example the search returns 2 active conditions for the patient `ZKC7284` that were sourced from the HPI location `F38006-B`
+<br>
+<pre><code class="language-json">
+{
+    "resourceType": "Bundle",
+    "id": "92e3f5a6-2f8e-4e9d-a8f9-e5e6c578dd53",
+    "meta": {
+        "lastUpdated": "2025-05-01T21:23:04.818Z"
+    },
+    "type": "searchset",
+    "total": 2,
+    "link": [
+        {
+            "relation": "self",
+            "url": "https://server.url/Condition?_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FLocation%2FF38006-B&patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FPatient%2FZKC7284"
+        }
+    ],
+    "entry": [
+        {
+            "search": {
+                "mode": "match"
+            },
+            "fullUrl": "https://server.url/Condition/635b2a1c-bdd1-4a20-8c2f-6d8348352f6a",
+            "resource": {
+                "identifier": [
+                    {
+                        "system": "https://standards.digital.health.nz/ns/health-record-key-id",
+                        "value": "ef5b3aad-14c2-4904-aa25-7411dcb21327"
+                    }
+                ],
+                "extension": [
+                    {
+                        "valueBoolean": true,
+                        "url": "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
+                    }
+                ],
+                "recorder": {
+                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ",
+                    "display": "Dottie McStuffins",
+                    "type": "Practitioner"
+                },
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "38341003",
+                            "display": "HT - Hypertension"
+                        }
+                    ],
+                    "text": "Hypertension"
+                },
+                "verificationStatus": {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                            "code": "confirmed"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "https://api.hip.digital.health.nz/fhir/Patient/ZKC7284",
+                    "display": "Carrey Carrington",
+                    "type": "Patient"
+                },
+                "recordedDate": "2023-11-26T10:02:45+13:00",
+                "clinicalStatus": {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                            "code": "active"
+                        }
+                    ]
+                },
+                "onsetDateTime": "2011-02-05T00:00:00+13:00",
+                "asserter": {
+                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXN",
+                    "display": "DR Julian Subatoi Bashir",
+                    "type": "Practitioner"
+                },
+                "meta": {
+                    "lastUpdated": "2025-03-21T00:34:52.819Z",
+                    "versionId": "1",
+                    "profile": [
+                        "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
+                    ],
+                    "source": "https://api.hip.digital.health.nz/fhir/Location/F38006-B"
+                },
+                "id": "635b2a1c-bdd1-4a20-8c2f-6d8348352f6a",
+                "resourceType": "Condition"
+            }
+        },
+        {
+            "search": {
+                "mode": "match"
+            },
+            "fullUrl": "https://server.url/Condition/c3605e85-6785-4fa9-94a5-6d8015416c53",
+            "resource": {
+                "identifier": [
+                    {
+                        "system": "https://standards.digital.health.nz/ns/health-record-key-id",
+                        "value": "ef5b3aad-14c2-4904-aa25-7411dcb21327"
+                    }
+                ],
+                "extension": [
+                    {
+                        "valueBoolean": true,
+                        "url": "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
+                    }
+                ],
+                "recorder": {
+                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ",
+                    "display": "Dottie McStuffins",
+                    "type": "Practitioner"
+                },
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "13645005",
+                            "display": "Chronic obstructive pulmonary disease"
+                        }
+                    ],
+                    "text": "Hypertension"
+                },
+                "verificationStatus": {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                            "code": "confirmed"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "https://api.hip.digital.health.nz/fhir/Patient/ZKC7284",
+                    "display": "Carrey Carrington",
+                    "type": "Patient"
+                },
+                "recordedDate": "2023-11-26T10:02:45+13:00",
+                "clinicalStatus": {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                            "code": "active"
+                        }
+                    ]
+                },
+                "onsetDateTime": "2011-02-05T00:00:00+13:00",
+                "asserter": {
+                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXN",
+                    "display": "DR Julian Subatoi Bashir",
+                    "type": "Practitioner"
+                },
+                "meta": {
+                    "lastUpdated": "2025-03-21T00:41:35.416Z",
+                    "versionId": "1",
+                    "profile": [
+                        "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
+                    ],
+                    "source": "https://api.hip.digital.health.nz/fhir/Location/F38006-B"
+                },
+                "id": "c3605e85-6785-4fa9-94a5-6d8015416c53",
+                "resourceType": "Condition"
+            }
+        }
+    ]
+}
+</code></pre>
+</details>
+</div>
+<br clear="all">
+
+### Search for Resources by Patient and Identifier
+
+In this API `identifier` can be used to track source system unique identifiers. This should enable systems such as Patient Management Systems to track the provenance of resources. There is no limit on the number of identifiers that a resource can contain.
+
+> Request `Condition` resources for a specific identifier
+> `GET Condition?patient=https://api.hip.digital.health.nz/fhir/Patient/ZKC7284&identifier=38cb6f26-9534-46e5-b659-536992faf0cc`
+
+> Request `Condition` resources for a specific identifier AND system,
+> `GET /Condition?patient=https://api.hip.digital.health.nz/fhir/Patient/ZKC7284&identifier=https://some.local.system/ehr-key%7Cd2ed3bc7-da4a-45b8-ae3f-82176f5c64a4`
+
+<div width="100%">
+<details>
+<summary><b><u>Click to view example response</u></b></summary>
+<br>
+In this example the above query returns a single result. Note that in most cases omission of the `patient` would return a single result but to avoid any possiblility of identifier non-uniqueness the `patient` modifier **SHOULD** be used.
+<br>
+<pre><code class="language-json">
+
+{
+    "resourceType": "Bundle",
+    "id": "4c3cf2a4-4424-46f4-b4af-00c46812ec7e",
+    "meta": {
+        "lastUpdated": "2025-05-01T22:23:57.904Z"
+    },
+    "type": "searchset",
+    "total": 1,
+    "link": [
+        {
+            "relation": "self",
+            "url": "https://server.url/Condition?identifier=38cb6f26-9534-46e5-b659-536992faf0cc&patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FPatient%2FZKC7284"
+        }
+    ],
+    "entry": [
+        {
+            "search": {
+                "mode": "match"
+            },
+            "fullUrl": "https://server.url/Condition/72ca633a-23cc-4848-a512-5111750508fb",
+            "resource": {
+                "identifier": [
+                    {
+                        "system": "https://some.local.system/ehr-key",
+                        "value": "38cb6f26-9534-46e5-b659-536992faf0cc"
+                    }
+                ],
+                "extension": [
+                    {
+                        "valueBoolean": true,
+                        "url": "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
+                    }
+                ],
+                "recorder": {
+                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ",
+                    "display": "Dottie McStuffins",
+                    "type": "Practitioner"
+                },
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://health.govt.nz/read-codes",
+                            "code": "SN3..",
+                            "display": "Local pressure"
+                        }
+                    ],
+                    "text": "Hypertension"
+                },
+                "verificationStatus": {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                            "code": "confirmed"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "https://api.hip.digital.health.nz/fhir/Patient/ZKC7284",
+                    "display": "Carrey Carrington",
+                    "type": "Patient"
+                },
+                "recordedDate": "2023-11-26T10:02:45+13:00",
+                "clinicalStatus": {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                            "code": "active"
+                        }
+                    ]
+                },
+                "onsetDateTime": "2011-02-05T00:00:00+13:00",
+                "asserter": {
+                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXN",
+                    "display": "DR Julian Subatoi Bashir",
+                    "type": "Practitioner"
+                },
+                "meta": {
+                    "lastUpdated": "2025-05-01T22:23:37.587Z",
+                    "versionId": "1",
+                    "profile": [
+                        "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
+                    ],
+                    "source": "https://api.hip.digital.health.nz/fhir/Location/F38006-B"
+                },
+                "id": "72ca633a-23cc-4848-a512-5111750508fb",
+                "resourceType": "Condition"
+            }
+        }
+    ]
+}
+
+</code></pre>
+</details>
 </div>
 <br clear="all">
 

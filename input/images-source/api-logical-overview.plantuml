@@ -1,6 +1,9 @@
 @startuml
 title: SDHR API - Logical View
 
+skinparam dpi 100 
+scale max 700 width
+
 ' Define colour scheme and styling for the diagram
 ' Standard HNZ colours
 skinparam {

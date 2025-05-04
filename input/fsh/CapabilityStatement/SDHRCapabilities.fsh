@@ -117,6 +117,10 @@ Usage: #definition
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Condition-onset-date"
 * rest.resource[=].searchParam[=].type = #date
 * rest.resource[=].searchParam[=].documentation = "Date the condition started"
+* rest.resource[=].searchParam[+].name = "participant"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/AllergyIntolerance-participant"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "Persons involved in the encounter other than the patient."
 * rest.resource[=].searchParam[+].name = "patient"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
 * rest.resource[=].searchParam[=].type = #reference
@@ -162,15 +166,15 @@ Usage: #definition
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "Location the encounter takes place."
 * rest.resource[=].searchParam[+].name = "participant"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/location"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-participant"
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "Persons involved in the encounter other than the patient."
 * rest.resource[=].searchParam[+].name = "patient"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "The patient or group present at the encounter"
-* rest.resource[=].searchParam[+].name = "practitioner"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/location"
+* rest.resource[=].searchParam[+].name = "participant-actor"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Condition-participant-actor"
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "Persons involved in the encounter other than the patient."
 * rest.resource[=].searchParam[+].name = "status"

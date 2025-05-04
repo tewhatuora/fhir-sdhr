@@ -19,7 +19,11 @@ The SDHR API is comprised of multiple FHIR resources. This page provides technic
 
 ## API Search Behaviour
 
-The Shared Digital Health Record FHIR API supports the [FHIR search pattern](https://hl7.org/fhir/R4B/search.html). See below for some example search queries.
+The Shared Digital Health Record FHIR API supports the [FHIR search pattern](https://hl7.org/fhir/R4B/search.html).
+
+You can see the supported search parameters for this API in the [API Capability Statement](./CapabilityStatement-SDHRCapabliityStatement.html#resourcesCap1)
+
+See below for some example search queries.
 
 ### Search for Conditions by Patient and Source
 

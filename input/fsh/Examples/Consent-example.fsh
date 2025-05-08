@@ -17,10 +17,10 @@ Description: "Consent example submitted to allow a patient to opt in to sharing 
 * provision.period.start = "2023-10-04"
 * provision.period.end = "2028-11-22"
 
-* provision.data[+].meaning = #instance
-* provision.data[=].reference = Reference(HypertensionConditionExample)
-* provision.data[+].meaning = #instance
-* provision.data[=].reference = Reference(EncounterExample1)
+// * provision.data[+].meaning = #instance
+// * provision.data[=].reference = Reference(HypertensionConditionExample)
+// * provision.data[+].meaning = #instance
+// * provision.data[=].reference = Reference(EncounterExample1)
 
 * scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL

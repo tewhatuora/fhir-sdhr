@@ -11,6 +11,16 @@ It is up to the each health organisation storing/sharing health information thro
 
 An [example consent resource](./Consent-SDHRConsentExample.html) is included to show what this should look like. 
 
+## Overview
+
+
+<!-- markdownlint-disable MD033 -->
+<div width="100%">
+<!-- Generated from `input/images-source/consent-sequence.plantuml` -->
+{% include consent-sequence.svg %}
+</div>
+<br clear="all">
+
 ### Consent-based protection measures
 
 #### Access control measure

@@ -5,6 +5,7 @@ This FHIR API supports authorised submission of and access to Aotearoa patients 
 The resources supported are:
 * [AllergyIntolerance](./StructureDefinition-SDHRAllergyIntolerance.html)
 * [Condition](./StructureDefinition-SDHRCondition.html)
+* [Consent](./StructureDefinition-SDHRConsent.html)
 * [Encounter](./StructureDefinition-SDHREncounter.html)
 * [Observation](./StructureDefinition-SDHRObservation.html)
 

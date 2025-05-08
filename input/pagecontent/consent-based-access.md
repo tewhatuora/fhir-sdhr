@@ -2,9 +2,8 @@ Like any NZ organisation collecting/sharing patient health information, Te Whatu
 
 In support of this, the *NZ Shared Digital Health Record API* has implemented the following measures:
 
-1. Client applications **MUST** record the patient's actual consent to Te Whatu Ora Health New Zealand collecting their health information using instances of the [SDHRConsent](./StructureDefinition-SDHRConsent.html) resource on this server, and
-2. For all FHIR resource types that may contain patient health information, the FHIR API controls access to resource instances based on presence of a valid referencing Consent resource instances, and  
-3. The actual FHIR resource instances to be protected **MUST** be referenced in FHIR `.provision.data.` references in an associated Consent instance.
+1. Client applications **MUST** record the patient's consent to Te Whatu Ora Health New Zealand collecting their health information using instances of the [SDHRConsent](./StructureDefinition-SDHRConsent.html) resource on this server, and
+2. For all FHIR resource types that may contain patient health information, the FHIR API controls access to resource instances based on presence of a valid referencing Consent resource
 
 It is up to the each health organisation storing/sharing health information through this FHIR API to
 - Operate a process which obtains patient consent, and

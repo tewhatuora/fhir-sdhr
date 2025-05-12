@@ -40,6 +40,7 @@ Further information may become available to be accessed over time.
 # Who can use this API
 
 The SDHR API is for:
+
 * Accredited health care providers
 * health software developers
 * developers of practice management systems, consumer-facing patient portals or third-party integrators
@@ -50,6 +51,7 @@ Healthcare professionals using clinical workstations or PMSs that have the SDHR 
 # Use cases
 
 SDHR will enable:
+
 * health professionals to access patient information to support the care of that patient, wherever in the country the person or health professional is
 * health professionals to have a summary view of a patient’s health record, copied from their general practice’s PMS
 * someone’s information to be accessed in emergency situations. For example, if a person is unconscious in the emergency department, the SDHR will give rapid access to potentially life-saving information about their allergies, medications, and medical history

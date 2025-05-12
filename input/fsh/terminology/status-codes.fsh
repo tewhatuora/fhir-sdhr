@@ -12,9 +12,9 @@ Id: sdhr-verification-status-valueset
 Title: "ValueSet for AllergyIntolerance Verification Status"
 * include codes from valueset http://hl7.org/fhir/ValueSet/allergyintolerance-verification
 * include codes from system SDHROtherStatus
-* include http://snomed.info/sct#466541000210104 "Unconfirmed"
-* include http://snomed.info/sct#410605003 "Confirmed present"
-* include http://snomed.info/sct#723511001 "Refuted"
+* include $sct-nz#466541000210104 "Unconfirmed"
+* include $sct-nz#410605003 "Confirmed present"
+* include $sct-nz#723511001 "Refuted"
 
 
 CodeSystem: SDHROtherStatus

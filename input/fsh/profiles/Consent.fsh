@@ -5,6 +5,11 @@ Description: "Consent resource created to reflect a patient has agreed to share 
 
 * status ^short = "The state of the Consent. This must be active to release data from the server"
 
+* category 1..1
+* category ^short = "The category of the consent, which is a code that indicates the type of consent"
+* category ^definition = "The category of the consent, which is a code that indicates the type of consent"
+* category ^fixedCode = $sct#887031000000108
+
 * patient.type = "Patient"
 * patient.identifier.use = #official
 * patient.identifier.system = "https://standards.digital.health.nz/ns/nhi-id"
@@ -14,11 +19,16 @@ Description: "Consent resource created to reflect a patient has agreed to share 
 
 * policy 1..*
 
-* provision.type = #permit
-* provision.period.start 1..1 
+* provision 1..1
+* provision ^short = "The provision of the consent, which may be a permit or deny"
+* provision.type 1..1
+* provision.type ^short = "The type of consent, either permit or deny"
+* provision.period.start 1..1
 * provision.period.start ^short = "The date and time the Consent is considered to be in effect"
 * provision.period.end 1..1
 * provision.period.end ^short = "The date and time the Consent is considered to be expired"
+* provision.action 1..*
+* provision.action ^short = "The action that is being permitted or denied"
 
 * scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
-* category = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
+//* category = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL

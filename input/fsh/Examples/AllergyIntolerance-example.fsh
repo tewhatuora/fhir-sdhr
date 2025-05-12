@@ -4,16 +4,15 @@ Usage: #example
 Description: "An example payload for a Primary Care AllergyIntolerance resource indicating an allergy to Penicillin"
 * meta.lastUpdated = "2024-01-26T10:03:26+13:00"
 * meta insert HPIFacility(F38006-B)
-//* meta.profile = $SDHRAllergyIntoleranceProfile
 
 * insert LocalIdentifierExample
 
 * type = #allergy
-* clinicalStatus = http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical#active "Active"
-* verificationStatus = http://terminology.hl7.org/CodeSystem/allergyintolerance-verification#confirmed "Confirmed"
-* code = http://mims.co.nz#m00286 "Penicillins"
+* clinicalStatus = $sct-nz#443601000210103 "Active Phase"
+* verificationStatus = $sct-nz#410605003 "Confirmed present"
+* code = $sct-nz#91936005 "Allergy to penicillin (finding)"
 * code.coding.userSelected = true
-* category = #medication
+* category = $sct-nz#62014003 "Adverse reaction caused by drug (disorder)"
 
 * patient insert Patient(ZKC7284, Sage Westbrook)
 

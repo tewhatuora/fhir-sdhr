@@ -1,0 +1,1075 @@
+{
+	"info": {
+		"_postman_id": "cec6806d-ee9e-408f-9a2c-f770e3d203b9",
+		"name": "Mock+ SDHR Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26960160",
+		"_collection_link": "https://grey-station-358477.postman.co/workspace/MoH~247d87ae-b9f2-40cb-9ac1-4cd0f1f44e61/collection/26960160-cec6806d-ee9e-408f-9a2c-f770e3d203b9?action=share&source=collection_link&creator=26960160"
+	},
+	"item": [
+		{
+			"name": "API access - Keycloak PPD Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.environment.set(\"KEYCLOAK_TOKEN\", jsonData['access_token']);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{API_CLIENT_ID}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{API_CLIENT_SECRET}}",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "system/Condition.crus system/Observation.crus system/Encounter.crus system/AllergyIntolerance.crus",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.ppd.auth.digital.health.nz/realms/hnz-integration/protocol/openid-connect/token",
+					"protocol": "https",
+					"host": [
+						"api",
+						"ppd",
+						"auth",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"realms",
+						"hnz-integration",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin access -- Keycloak PPD Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.environment.set(\"KEYCLOAK_ADMIN_TOKEN\", jsonData['access_token']);",
+							"// Extract JWT from a variable or response",
+							"let jwtToken = pm.response.json().access_token;",
+							"",
+							"// Function to decode Base64Url",
+							"function base64UrlDecode(str) {",
+							"    return decodeURIComponent(atob(str.replace(/-/g, \"+\").replace(/_/g, \"/\")).split('').map(function(c) {",
+							"        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);",
+							"    }).join(''));",
+							"}",
+							"",
+							"// Decode JWT payload",
+							"if (jwtToken) {",
+							"    let parts = jwtToken.split(\".\");",
+							"    if (parts.length === 3) {",
+							"        let payload = JSON.parse(base64UrlDecode(parts[1]));",
+							"",
+							"        // Convert payload to table format",
+							"        let tableData = Object.keys(payload).map(key => ({",
+							"            \"Claim\": key,",
+							"            \"Value\": JSON.stringify(payload[key], null, 2) // Handle nested objects",
+							"        }));",
+							"",
+							"        // Template for Postman Visualizer",
+							"        let template = `",
+							"            <style>",
+							"                table { width: 100%; border-collapse: collapse; }",
+							"                th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }",
+							"                th { background-color: #f4f4f4; }",
+							"                pre { margin: 0; }",
+							"            </style>",
+							"            <table>",
+							"                <thead>",
+							"                    <tr>",
+							"                        <th>Claim</th>",
+							"                        <th>Value</th>",
+							"                    </tr>",
+							"                </thead>",
+							"                <tbody>",
+							"                    {{#each tableData}}",
+							"                    <tr>",
+							"                        <td>{{Claim}}</td>",
+							"                        <td><pre>{{Value}}</pre></td>",
+							"                    </tr>",
+							"                    {{/each}}",
+							"                </tbody>",
+							"            </table>",
+							"        `;",
+							"",
+							"        // Render Visualizer",
+							"        pm.visualizer.set(template, { tableData });",
+							"",
+							"        pm.test(\"JWT Claims Parsed\", function () {",
+							"            pm.expect(true).to.be.true;",
+							"        });",
+							"    } else {",
+							"        pm.visualizer.set(`<h3 style=\"color:red;\">Invalid JWT format</h3>`);",
+							"    }",
+							"} else {",
+							"    pm.visualizer.set(`<h3 style=\"color:red;\">JWT not found</h3>`);",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{API_CLIENT_ID}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{API_CLIENT_SECRET}}",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "system/*.crus",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.ppd.auth.digital.health.nz/realms/hnz-integration/protocol/openid-connect/token",
+					"protocol": "https",
+					"host": [
+						"api",
+						"ppd",
+						"auth",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"realms",
+						"hnz-integration",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "$reset",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{KEYCLOAK_ADMIN_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Correlation-Id",
+						"value": "{{$guid}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.test.mockplus.digital.health.nz/s2s/$reset",
+					"protocol": "https",
+					"host": [
+						"api",
+						"test",
+						"mockplus",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"$reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "$seed",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{KEYCLOAK_ADMIN_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Correlation-id",
+						"value": "{{$guid}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\": \"Parameters\",\n  \"parameter\": [\n    {\n      \"name\": \"api\",\n      \"valueString\": \"sdhr\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.test.mockplus.digital.health.nz/s2s/$seed",
+					"protocol": "https",
+					"host": [
+						"api",
+						"test",
+						"mockplus",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"$seed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "$provisionDashboard",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{KEYCLOAK_ADMIN_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Correlation-id",
+						"value": "{{$guid}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\": \"Parameters\",\n  \"parameter\": [\n    {\n      \"name\": \"email\",\n      \"valueString\": \"jeremy.warne@middleware.co.nz\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.test.mockplus.digital.health.nz/s2s/$provisionDashboard",
+					"protocol": "https",
+					"host": [
+						"api",
+						"test",
+						"mockplus",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"$provisionDashboard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Create condition",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"isoDateNow\", new Date().toISOString());",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\" : \"Condition\",\n  \"meta\" : {\n    \"lastUpdated\" : \"2024-01-26T10:03:26+13:00\",\n    \"source\" : \"https://api.hip.digital.health.nz/fhir/Location/F38006-B\",\n    \"profile\" : [\"https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition\"]\n  },\n  \"extension\" : [{\n    \"url\" : \"http://hl7.org.nz/fhir/StructureDefinition/long-term-condition\",\n    \"valueBoolean\" : true\n  }],\n  \"identifier\" : [{\n    \"system\" : \"https://standards.digital.health.nz/ns/health-record-key-id\",\n    \"value\" : \"ef5b3aad-14c2-4904-aa25-7411dcb21327\"\n  }],\n  \"clinicalStatus\" : {\n    \"coding\" : [{\n      \"system\" : \"http://terminology.hl7.org/CodeSystem/condition-clinical\",\n      \"code\" : \"active\"\n    }]\n  },\n  \"verificationStatus\" : {\n    \"coding\" : [{\n      \"system\" : \"http://terminology.hl7.org/CodeSystem/condition-ver-status\",\n      \"code\" : \"confirmed\"\n    }]\n  },\n  \"code\" : {\n    \"coding\" : [{\n    \"system\": \"http://health.govt.nz/read-codes\",\n    \"code\": \"SN3..\",\n    \"display\": \"Local pressure\"\n  }],\n    \"text\" : \"Hypertension\"\n  },\n  \"subject\" : {\n    \"reference\" : \"https://api.hip.digital.health.nz/fhir/Patient/ZKC7284\",\n    \"type\" : \"Patient\",\n    \"display\" : \"Carrey Carrington\"\n  },\n  \"onsetDateTime\" : \"2011-02-05T00:00:00+13:00\",\n  \"recordedDate\" : \"2023-11-26T10:02:45+13:00\",\n  \"recorder\" : {\n    \"reference\" : \"https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ\",\n    \"type\" : \"Practitioner\",\n    \"display\" : \"Dottie McStuffins\"\n    },\n    \"asserter\" : {\n        \"reference\" : \"https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXN\",\n        \"type\" : \"Practitioner\",\n        \"display\" : \"DR Julian Subatoi Bashir\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.mock.sdhr.digital.health.nz/s2s/Condition",
+					"protocol": "https",
+					"host": [
+						"api",
+						"mock",
+						"sdhr",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"Condition"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Create observation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"isoDateNow\", new Date().toISOString());",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\" : \"Observation\",\n  \"id\" : \"ObservationVitalSignsExample\",\n  \"meta\" : {\n    \"versionId\" : \"1\",\n    \"lastUpdated\" : \"2025-01-26T00:21:56.607Z\",\n    \"source\" : \"https://api.hip.digital.health.nz/fhir/Location/F38006-B\",\n    \"profile\" : [\"https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRObservation\"]\n  },\n  \"identifier\" : [{\n    \"system\" : \"https://standards.digital.health.nz/ns/health-record-key-id\",\n    \"value\" : \"f4121d2e-61aa-4222-83ae-b36d26bbbe62\"\n  }],\n  \"status\" : \"final\",\n  \"category\" : [{\n    \"coding\" : [{\n      \"system\" : \"http://terminology.hl7.org/CodeSystem/observation-category\",\n      \"code\" : \"vital-signs\"\n    }]\n  }],\n  \"code\" : {\n    \"coding\" : [{\n      \"system\" : \"http://snomed.info/sct\",\n      \"code\" : \"122869004\",\n      \"display\" : \"Measurement procedure (procedure)\"\n    }]\n  },\n  \"subject\" : {\n    \"reference\" : \"https://api.hip.digital.health.nz/fhir/Patient/ZKC7284\",\n    \"type\" : \"Patient\",\n    \"display\" : \"Carrey Carrington\"\n  },\n  \"effectiveDateTime\" : \"2024-12-12T04:22:55.965Z\",\n  \"issued\" : \"2024-12-12T04:22:55.965Z\",\n  \"performer\" : [{\n    \"reference\" : \"https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXZ\",\n    \"type\" : \"Practitioner\",\n    \"display\" : \"DR Beverly Crusher\"\n  }],\n  \"component\" : [{\n    \"code\" : {\n      \"coding\" : [{\n        \"system\" : \"http://loinc.org\",\n        \"code\" : \"8480-6\",\n        \"display\" : \"Systolic blood pressure\"\n      }]\n    },\n    \"valueQuantity\" : {\n      \"value\" : 73,\n      \"unit\" : \"mmHg\",\n      \"system\" : \"http://unitsofmeasure.org\",\n      \"code\" : \"mm[Hg]\"\n    }\n  },\n  {\n    \"code\" : {\n      \"coding\" : [{\n        \"system\" : \"http://loinc.org\",\n        \"code\" : \"8462-4\",\n        \"display\" : \"Diastolic blood pressure\"\n      }]\n    },\n    \"valueQuantity\" : {\n      \"value\" : 73,\n      \"unit\" : \"mmHg\",\n      \"system\" : \"http://unitsofmeasure.org\",\n      \"code\" : \"mm[Hg]\"\n    }\n  },\n  {\n    \"code\" : {\n      \"coding\" : [{\n        \"system\" : \"http://loinc.org\",\n        \"code\" : \"8867-4\",\n        \"display\" : \"Heart rate\"\n      }]\n    },\n    \"valueQuantity\" : {\n      \"value\" : 44,\n      \"unit\" : \"beats/minute\",\n      \"system\" : \"http://unitsofmeasure.org\",\n      \"code\" : \"/min\"\n    }\n  },\n  {\n    \"code\" : {\n      \"coding\" : [{\n        \"system\" : \"http://loinc.org\",\n        \"code\" : \"80404-7\",\n        \"display\" : \"R-R interval.standard deviation (Heart rate variability)\"\n      }]\n    },\n    \"valueQuantity\" : {\n      \"value\" : 44,\n      \"unit\" : \"milliseconds\",\n      \"system\" : \"http://unitsofmeasure.org\",\n      \"code\" : \"ms\"\n    }\n  },\n  {\n    \"code\" : {\n      \"coding\" : [{\n        \"system\" : \"http://loinc.org\",\n        \"code\" : \"9279-1\",\n        \"display\" : \"Respiratory rate\"\n      }]\n    },\n    \"valueQuantity\" : {\n      \"value\" : 17,\n      \"unit\" : \"breaths/minute\",\n      \"system\" : \"http://unitsofmeasure.org\",\n      \"code\" : \"/min\"\n    }\n  },\n  {\n    \"code\" : {\n      \"coding\" : [{\n        \"system\" : \"http://loinc.org\",\n        \"code\" : \"8310-5\",\n        \"display\" : \"Body temperature\"\n      }]\n    },\n    \"valueQuantity\" : {\n      \"value\" : 38,\n      \"unit\" : \"degree Celsius\",\n      \"system\" : \"http://unitsofmeasure.org\",\n      \"code\" : \"Cel\"\n    }\n  }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.mock.sdhr.digital.health.nz/s2s/Observation",
+					"protocol": "https",
+					"host": [
+						"api",
+						"mock",
+						"sdhr",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"Observation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Create encounter",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"isoDateNow\", new Date().toISOString());",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\" : \"Encounter\",\n  \"meta\" : {\n    \"lastUpdated\" : \"2024-01-26T10:03:26+13:00\",\n    \"source\" : \"https://api.hip.digital.health.nz/fhir/Location/F38006-B\",\n    \"profile\" : [\"https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHREncounter\"]\n  },\n  \"identifier\" : [{\n    \"system\" : \"https://standards.digital.health.nz/ns/health-record-key-id\",\n    \"value\" : \"f4121d2e-61aa-4222-83ae-b36d26bbbe62\"\n  }],\n  \"status\" : \"finished\",\n  \"class\" : {\n    \"system\" : \"http://terminology.hl7.org/CodeSystem/v3-ActCode\",\n    \"code\" : \"GENRL\",\n    \"display\" : \"General\"\n  },\n  \"serviceType\" : {\n    \"coding\" : [{\n      \"system\" : \"http://terminology.hl7.org/CodeSystem/service-type\",\n      \"code\" : \"124\",\n      \"display\" : \"General Practice\"\n    }]\n  },\n  \"subject\" : {\n    \"reference\" : \"https://api.hip.digital.health.nz/fhir/Patient/ZKC7284\",\n    \"type\" : \"Patient\",\n    \"display\" : \"Carrey Carrington\"\n  },\n  \"participant\" : [{\n    \"type\" : [{\n      \"coding\" : [{\n        \"system\" : \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\",\n        \"code\" : \"PPRF\",\n        \"display\" : \"primary performer\"\n      }]\n    }],\n    \"individual\" : {\n      \"type\" : \"Practitioner\",\n      \"identifier\" : {\n        \"system\" : \"https://standards.digital.health.nz/ns/hpi-person-id\",\n        \"value\" : \"91ZABY\"\n      },\n      \"display\" : \"Dr Andrea Welby\"\n    }\n  }],\n  \"period\" : {\n    \"start\" : \"2024-03-26T10:13:26+13:00\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.mock.sdhr.digital.health.nz/s2s/Encounter",
+					"protocol": "https",
+					"host": [
+						"api",
+						"mock",
+						"sdhr",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"Encounter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Create allergyintolerance",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"isoDateNow\", new Date().toISOString());",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\" : \"AllergyIntolerance\",\n  \"id\" : \"AllergyIntoleranceExample\",\n  \"meta\" : {\n    \"lastUpdated\" : \"2024-01-26T10:03:26+13:00\",\n    \"source\" : \"https://api.hip.digital.health.nz/fhir/Location/F38006-B\",\n    \"profile\" : [\"https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRAllergyIntolerance\"]\n  },\n  \"text\" : {\n    \"status\" : \"generated\",\n    \"div\" : \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><p class=\\\"res-header-id\\\"><b>Generated Narrative: AllergyIntolerance AllergyIntoleranceExample</b></p><a name=\\\"AllergyIntoleranceExample\\\"> </a><a name=\\\"hcAllergyIntoleranceExample\\\"> </a><a name=\\\"AllergyIntoleranceExample-en-US\\\"> </a><div style=\\\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\\\"><p style=\\\"margin-bottom: 0px\\\">Last updated: 2024-01-26 10:03:26+1300; </p><p style=\\\"margin-bottom: 0px\\\">Information Source: <a href=\\\"https://simplifier.net/resolve?scope=fhir.org.nz.ig.base@3.0.0&amp;canonical=https://api.hip.digital.health.nz/fhir/Location/F38006-B\\\">https://api.hip.digital.health.nz/fhir/Location/F38006-B</a></p><p style=\\\"margin-bottom: 0px\\\">Profile: <a href=\\\"StructureDefinition-SDHRAllergyIntolerance.html\\\">SDHRAllergyIntolerance</a></p></div><p><b>clinicalStatus</b>: <span title=\\\"Codes:{http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical active}\\\">Active</span></p><p><b>verificationStatus</b>: <span title=\\\"Codes:{http://terminology.hl7.org/CodeSystem/allergyintolerance-verification confirmed}\\\">Confirmed</span></p><p><b>type</b>: Allergy</p><p><b>category</b>: Medication</p><p><b>code</b>: <span title=\\\"Codes:{http://mims.co.nz m00286}\\\">Penicillins</span></p><p><b>patient</b>: <a href=\\\"https://simplifier.net/resolve?scope=fhir.org.nz.ig.base@3.0.0&amp;canonical=https://api.hip.digital.health.nz/fhir/Patient/ZKC7284\\\">Carrey Carrington</a></p><p><b>recorder</b>: <a href=\\\"https://simplifier.net/resolve?scope=fhir.org.nz.ig.base@3.0.0&amp;canonical=https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXN\\\">DR Julian Subatoi Bashir</a></p></div>\"\n  },\n  \"clinicalStatus\" : {\n    \"coding\" : [{\n      \"system\" : \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n      \"code\" : \"active\",\n      \"display\" : \"Active\"\n    }]\n  },\n  \"verificationStatus\" : {\n    \"coding\" : [{\n      \"system\" : \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n      \"code\" : \"confirmed\",\n      \"display\" : \"Confirmed\"\n    }]\n  },\n  \"type\" : \"allergy\",\n  \"category\" : [\"medication\"],\n  \"code\" : {\n    \"coding\" : [{\n      \"system\" : \"http://mims.co.nz\",\n      \"code\" : \"m00286\",\n      \"display\" : \"Penicillins\",\n      \"userSelected\" : true\n    }]\n  },\n  \"patient\" : {\n    \"reference\" : \"https://api.hip.digital.health.nz/fhir/Patient/ZKC7284\",\n    \"type\" : \"Patient\",\n    \"display\" : \"Carrey Carrington\"\n  },\n  \"recorder\" : {\n    \"reference\" : \"https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXN\",\n    \"type\" : \"Practitioner\",\n    \"display\" : \"DR Julian Subatoi Bashir\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.mock.sdhr.digital.health.nz/s2s/AllergyIntolerance",
+					"protocol": "https",
+					"host": [
+						"api",
+						"mock",
+						"sdhr",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"AllergyIntolerance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Get Condition",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>Service Type</th>",
+							"        <th>Start Period</th>",
+							"        <th>Subject Display</th>",
+							"        <th>Participant Type</th>",
+							"    </tr>",
+							"    ",
+							"    {{#each response.entry}}",
+							"    <tr>",
+							"        <td>{{resource.serviceType.text}}</td>",
+							"        <td>{{resource.period.start}}</td>",
+							"        <td>{{resource.subject.display}}</td>",
+							"        <td>{{resource.participant.[0].type.[0].coding.[0].code}}</td>",
+							"    </tr>",
+							"    {{/each}}",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return { response: pm.response.json() }",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.mock.sdhr.digital.health.nz/s2s/Condition",
+					"protocol": "https",
+					"host": [
+						"api",
+						"mock",
+						"sdhr",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"Condition"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Search condition by patient and code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>Service Type</th>",
+							"        <th>Start Period</th>",
+							"        <th>Subject Display</th>",
+							"        <th>Participant Type</th>",
+							"    </tr>",
+							"    ",
+							"    {{#each response.entry}}",
+							"    <tr>",
+							"        <td>{{resource.serviceType.text}}</td>",
+							"        <td>{{resource.period.start}}</td>",
+							"        <td>{{resource.subject.display}}</td>",
+							"        <td>{{resource.participant.[0].type.[0].coding.[0].code}}</td>",
+							"    </tr>",
+							"    {{/each}}",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return { response: pm.response.json() }",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.mock.sdhr.digital.health.nz/s2s/Condition",
+					"protocol": "https",
+					"host": [
+						"api",
+						"mock",
+						"sdhr",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"Condition"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Get Observation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>Service Type</th>",
+							"        <th>Start Period</th>",
+							"        <th>Subject Display</th>",
+							"        <th>Participant Type</th>",
+							"    </tr>",
+							"    ",
+							"    {{#each response.entry}}",
+							"    <tr>",
+							"        <td>{{resource.serviceType.text}}</td>",
+							"        <td>{{resource.period.start}}</td>",
+							"        <td>{{resource.subject.display}}</td>",
+							"        <td>{{resource.participant.[0].type.[0].coding.[0].code}}</td>",
+							"    </tr>",
+							"    {{/each}}",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return { response: pm.response.json() }",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.mock.sdhr.digital.health.nz/s2s/Condition",
+					"protocol": "https",
+					"host": [
+						"api",
+						"mock",
+						"sdhr",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"Condition"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Get Encounter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>Service Type</th>",
+							"        <th>Start Period</th>",
+							"        <th>Subject Display</th>",
+							"        <th>Participant Type</th>",
+							"    </tr>",
+							"    ",
+							"    {{#each response.entry}}",
+							"    <tr>",
+							"        <td>{{resource.serviceType.text}}</td>",
+							"        <td>{{resource.period.start}}</td>",
+							"        <td>{{resource.subject.display}}</td>",
+							"        <td>{{resource.participant.[0].type.[0].coding.[0].code}}</td>",
+							"    </tr>",
+							"    {{/each}}",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return { response: pm.response.json() }",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.mock.sdhr.digital.health.nz/s2s/Encounter",
+					"protocol": "https",
+					"host": [
+						"api",
+						"mock",
+						"sdhr",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"Encounter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Get AllergyIntolerance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>Service Type</th>",
+							"        <th>Start Period</th>",
+							"        <th>Subject Display</th>",
+							"        <th>Participant Type</th>",
+							"    </tr>",
+							"    ",
+							"    {{#each response.entry}}",
+							"    <tr>",
+							"        <td>{{resource.serviceType.text}}</td>",
+							"        <td>{{resource.period.start}}</td>",
+							"        <td>{{resource.subject.display}}</td>",
+							"        <td>{{resource.participant.[0].type.[0].coding.[0].code}}</td>",
+							"    </tr>",
+							"    {{/each}}",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return { response: pm.response.json() }",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.mock.sdhr.digital.health.nz/s2s/AllergyIntolerance",
+					"protocol": "https",
+					"host": [
+						"api",
+						"mock",
+						"sdhr",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						"AllergyIntolerance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Bundle example",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"batch\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:anyIdentifier1\",\n      \"resource\": {\n        \"resourceType\" : \"Condition\",\n        \"id\" : \"HypertensionConditionExample\",\n        \"meta\" : {\n            \"lastUpdated\" : \"2024-01-26T10:03:26+13:00\",\n            \"source\" : \"https://api.hip.digital.health.nz/fhir/Location/F38006-B\",\n            \"profile\" : [\"https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition\"]\n        },\n        \"extension\" : [{\n            \"url\" : \"http://hl7.org.nz/fhir/StructureDefinition/long-term-condition\",\n            \"valueBoolean\" : true\n        }],\n        \"identifier\" : [{\n            \"system\" : \"https://standards.digital.health.nz/ns/health-record-key-id\",\n            \"value\" : \"ef5b3aad-14c2-4904-aa25-7411dcb21327\"\n        }],\n        \"clinicalStatus\" : {\n            \"coding\" : [{\n            \"system\" : \"http://terminology.hl7.org/CodeSystem/condition-clinical\",\n            \"code\" : \"active\"\n            }]\n        },\n        \"verificationStatus\" : {\n            \"coding\" : [{\n            \"system\" : \"http://terminology.hl7.org/CodeSystem/condition-ver-status\",\n            \"code\" : \"confirmed\"\n            }]\n        },\n        \"code\" : {\n            \"coding\" : [{\n            \"system\" : \"http://snomed.info/sct\",\n            \"code\" : \"38341003\",\n            \"display\" : \"HT - Hypertension\"\n            }],\n            \"text\" : \"Hypertension\"\n        },\n        \"subject\" : {\n            \"reference\" : \"https://api.hip.digital.health.nz/fhir/Patient/ZKC7284\",\n            \"type\" : \"Patient\",\n            \"display\" : \"Carrey Carrington\"\n        },\n        \"onsetDateTime\" : \"2011-02-05T00:00:00+13:00\",\n        \"recordedDate\" : \"2023-11-26T10:02:45+13:00\",\n        \"recorder\" : {\n            \"reference\" : \"https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ\",\n            \"type\" : \"Practitioner\",\n            \"display\" : \"Dottie McStuffins\"\n        },\n        \"asserter\" : {\n            \"reference\" : \"https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXN\",\n            \"type\" : \"Practitioner\",\n            \"display\" : \"DR Julian Subatoi Bashir\"\n        }\n        },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Condition\"  \n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:anyIdentifier2\",\n      \"resource\": {\n        \"resourceType\" : \"Observation\",\n        \"meta\" : {\n            \"source\" : \"https://api.hip.digital.health.nz/fhir/Location/F38006-B\",\n            \"profile\" : [\"https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRObservation\"]\n        },\n        \"identifier\" : [{\n            \"system\" : \"https://standards.digital.health.nz/ns/health-record-key-id\",\n            \"value\" : \"f4121d2e-61aa-4222-83ae-b36d26bbbe62\"\n        }],\n        \"status\" : \"final\",\n        \"category\" : [{\n            \"coding\" : [{\n            \"system\" : \"http://terminology.hl7.org/CodeSystem/observation-category\",\n            \"code\" : \"vital-signs\"\n            }]\n        }],\n        \"code\" : {\n            \"coding\" : [{\n            \"system\" : \"http://snomed.info/sct\",\n            \"code\" : \"122869004\",\n            \"display\" : \"Measurement procedure (procedure)\"\n            }]\n        },\n        \"subject\" : {\n            \"reference\" : \"https://api.hip.digital.health.nz/fhir/Patient/ZKC7284\",\n            \"type\" : \"Patient\",\n            \"display\" : \"Carrey Carrington\"\n        },\n        \"effectiveDateTime\" : \"2024-12-12T04:22:55.965Z\",\n        \"issued\" : \"2024-12-12T04:22:55.965Z\",\n        \"performer\" : [{\n            \"reference\" : \"https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXZ\",\n            \"type\" : \"Practitioner\",\n            \"display\" : \"DR Beverly Crusher\"\n        }],\n        \"component\" : [{\n            \"code\" : {\n            \"coding\" : [{\n                \"system\" : \"http://loinc.org\",\n                \"code\" : \"8480-6\",\n                \"display\" : \"Systolic blood pressure\"\n            }]\n            },\n            \"valueQuantity\" : {\n            \"value\" : 73,\n            \"unit\" : \"mmHg\",\n            \"system\" : \"http://unitsofmeasure.org\",\n            \"code\" : \"mm[Hg]\"\n            }\n        },\n        {\n            \"code\" : {\n            \"coding\" : [{\n                \"system\" : \"http://loinc.org\",\n                \"code\" : \"8462-4\",\n                \"display\" : \"Diastolic blood pressure\"\n            }]\n            },\n            \"valueQuantity\" : {\n            \"value\" : 73,\n            \"unit\" : \"mmHg\",\n            \"system\" : \"http://unitsofmeasure.org\",\n            \"code\" : \"mm[Hg]\"\n            }\n        },\n        {\n            \"code\" : {\n            \"coding\" : [{\n                \"system\" : \"http://loinc.org\",\n                \"code\" : \"8867-4\",\n                \"display\" : \"Heart rate\"\n            }]\n            },\n            \"valueQuantity\" : {\n            \"value\" : 44,\n            \"unit\" : \"beats/minute\",\n            \"system\" : \"http://unitsofmeasure.org\",\n            \"code\" : \"/min\"\n            }\n        },\n        {\n            \"code\" : {\n            \"coding\" : [{\n                \"system\" : \"http://loinc.org\",\n                \"code\" : \"80404-7\",\n                \"display\" : \"R-R interval.standard deviation (Heart rate variability)\"\n            }]\n            },\n            \"valueQuantity\" : {\n            \"value\" : 44,\n            \"unit\" : \"milliseconds\",\n            \"system\" : \"http://unitsofmeasure.org\",\n            \"code\" : \"ms\"\n            }\n        },\n        {\n            \"code\" : {\n            \"coding\" : [{\n                \"system\" : \"http://loinc.org\",\n                \"code\" : \"9279-1\",\n                \"display\" : \"Respiratory rate\"\n            }]\n            },\n            \"valueQuantity\" : {\n            \"value\" : 17,\n            \"unit\" : \"breaths/minute\",\n            \"system\" : \"http://unitsofmeasure.org\",\n            \"code\" : \"/min\"\n            }\n        },\n        {\n            \"code\" : {\n            \"coding\" : [{\n                \"system\" : \"http://loinc.org\",\n                \"code\" : \"8310-5\",\n                \"display\" : \"Body temperature\"\n            }]\n            },\n            \"valueQuantity\" : {\n            \"value\" : 38,\n            \"unit\" : \"degree Celsius\",\n            \"system\" : \"http://unitsofmeasure.org\",\n            \"code\" : \"Cel\"\n            }\n        }]\n        },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Immunization\"  \n      }\n    }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.mock.sdhr.digital.health.nz/s2s/",
+					"protocol": "https",
+					"host": [
+						"api",
+						"mock",
+						"sdhr",
+						"digital",
+						"health",
+						"nz"
+					],
+					"path": [
+						"s2s",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{KEYCLOAK_TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"// Include Request-Context on all requests",
+					"pm.request.headers.add({key: 'Request-Context', value: 'ewogICJ1c2VySWRlbnRpZmllciI6ICIxMUFBYmJAIyIsCiAgInVzZXJSb2xlIjogIlByYWN0aXRpb25lciIsCiAgInNlY29uZGFyeUlkZW50aWZpZXJzIjogewogICAgInVzZSI6ICJvZmZpY2lhbCIsCiAgICAic3lzdGVtIjogImh0dHBzOi8vc3RhbmRhcmRzLmRpZ2l0YWwuaGVhbHRoLm56L25zL2hwaS1wZXJzb24taWQiLAogICAgInZhbHVlIjogIjk5WlpGWCIKICB9Cn0=' });",
+					"",
+					"",
+					"pm.environment.set(\"REQUEST-CONTEXT\",'ewogICJ1c2VySWRlbnRpZmllciI6ICIxMUFBYmJAIyIsCiAgInVzZXJSb2xlIjogIlByYWN0aXRpb25lciIsCiAgInNlY29uZGFyeUlkZW50aWZpZXJzIjogewogICAgInVzZSI6ICJvZmZpY2lhbCIsCiAgICAic3lzdGVtIjogImh0dHBzOi8vc3RhbmRhcmRzLmRpZ2l0YWwuaGVhbHRoLm56L25zL2hwaS1wZXJzb24taWQiLAogICAgInZhbHVlIjogIjk5WlpGWCIKICB9Cn0='",
+					");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,91 @@
+@startuml
+
+skinparam dpi 100 
+scale max 300 width
+
+skinparam ActivityDiamondBackgroundColor #RoyalBlue
+skinparam ArrowColor #RoyalBlue   
+skinparam ArrowFontColor #RoyalBlue   
+skinparam ArrowFontSize 12
+skinparam ArrowMessageAlignment right
+skinparam BoxPadding 10
+skinparam ClassFontSize 16
+skinparam ClassFontStyle bold
+skinparam ClassStereotypeFontSize 16
+skinparam dpi 300
+skinparam FooterFontSize 14
+skinparam FooterFontStyle italic
+skinparam LegendBackgroundColor #Snow
+skinparam LegendFontName Helvetica
+skinparam LegendFontSize 16
+skinparam linetype ortho
+skinparam nodesep 70
+skinparam NoteBackgroundColor #LightYellow
+skinparam NoteFontSize 15
+skinparam NoteTextAlignment left
+skinparam ranksep 60
+skinparam roundcorner 5
+skinparam TitleFontSize 20
+
+title "Consent Sequence"
+
+participant "API Consumer" as Client
+note over Client
+  See [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHREncounter.html]] for component definitions.
+end note
+participant "SDHR FHIR API (API Provider)" as Server
+== START Create (POST) SDHR Resources ==
+Client -> Server : POST /{ResourceType}
+note over Client
+  The API Consumer creates a new resource by sending a POST request to the server.
+  The request must include the resource type and the resource data in JSON format.
+  The server processes the request and returns a response with the status of the operation.
+end note
+alt#Red Error
+    Server -x Client : Error Response
+end
+
+alt#Green Success
+    Server -> Client : 201 Created
+    note over Client
+        The server creates the resource and returns a 201 Created response.
+        The response includes the location of the newly created resource.
+    end note
+end
+Client -> Server : GET /Consent?patient={NHI}
+note over Client
+  The API Consumer retrieves the consent status of a patient by sending a GET request to the server.
+  The request includes the patient's NHI as a query parameter.
+  The server processes the request and returns a response with the consent status.
+end note
+alt#Orange No Consent Exists
+    Server -> Client : 200 OK
+    note over Client
+        The server returns a 200 OK response with an empty Bundle.
+        {
+            "type": "searchset",
+            "total": 0,
+        }
+    end note
+    Client -> Server : POST /Consent
+    note over Client
+        The API Consumer creates a new consent resource by sending a POST request to the server.
+        The request must include the resource type (Consent) and the resource data in JSON format.
+        The server processes the request and returns a response with the status of the operation.
+    end note
+end
+
+alt#Green Consent Exists
+    Server -> Client : 200 OK
+    note over Client
+        The server returns a 200 OK response with an searchset Bundle containing a Consent resource.
+        {
+            "type": "searchset",
+            "total": 1,
+        }
+    end note
+end
+
+== END Create (POST) SDHR Resources ==
+
+@enduml

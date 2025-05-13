@@ -9,7 +9,7 @@ Usage: #definition
 * contact[=].telecom.system = #url
 * description = "NZ Shared Digital Health Record API"
 * status = #draft
-* experimental = true
+* experimental = false
 * date = "2024-04-15T01:15:23.3688326Z"
 * publisher = "Health NZ"
 * kind = #capability

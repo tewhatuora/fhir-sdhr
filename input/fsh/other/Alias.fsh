@@ -2,6 +2,7 @@
 Alias: $condition-clinical = http://terminology.hl7.org/CodeSystem/condition-clinical
 Alias: $condition-ver-status = http://terminology.hl7.org/CodeSystem/condition-ver-status
 Alias: $sct = http://snomed.info/sct
+//Alias: $sct-nz = http://snomed.info/sct/21000210109/
 Alias: $loinc = http://loinc.org
 //Re-usable properties
 Alias: $HealthRecordKey = https://standards.digital.health.nz/ns/health-record-key-id

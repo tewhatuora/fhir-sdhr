@@ -3,18 +3,18 @@ Id: sdhr-allergyintolerance-clinical-status-valueset
 Title: "ValueSet for AllergyIntolerance Status"
 * include codes from valueset http://hl7.org/fhir/ValueSet/allergyintolerance-clinical
 * include codes from system SDHROtherStatus
-* include $sct-nz#443601000210103 "Active phase"
-* include $sct-nz#443611000210101 "Inactive phase"
-* include $sct-nz#443821000210107 "Resolved phase"
+* include $sct#443601000210103 "Active phase"
+* include $sct#443611000210101 "Inactive phase"
+* include $sct#443821000210107 "Resolved phase"
 
 ValueSet: SDHRVerificationStatusValueSet
 Id: sdhr-verification-status-valueset
 Title: "ValueSet for AllergyIntolerance Verification Status"
 * include codes from valueset http://hl7.org/fhir/ValueSet/allergyintolerance-verification
 * include codes from system SDHROtherStatus
-* include $sct-nz#466541000210104 "Unconfirmed"
-* include $sct-nz#410605003 "Confirmed present"
-* include $sct-nz#723511001 "Refuted"
+* include $sct#466541000210104 "Unconfirmed"
+* include $sct#410605003 "Confirmed present"
+* include $sct#723511001 "Refuted"
 
 
 CodeSystem: SDHROtherStatus

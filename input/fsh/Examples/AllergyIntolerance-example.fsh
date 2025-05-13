@@ -8,11 +8,11 @@ Description: "An example payload for a Primary Care AllergyIntolerance resource 
 * insert LocalIdentifierExample
 
 * type = #allergy
-* clinicalStatus = $sct-nz#443601000210103 "Active Phase"
-* verificationStatus = $sct-nz#410605003 "Confirmed present"
-* code = $sct-nz#91936005 "Allergy to penicillin (finding)"
+* clinicalStatus = $sct#443601000210103 "Active Phase"
+* verificationStatus = $sct#410605003 "Confirmed present"
+* code = $sct#91936005 "Allergy to penicillin (finding)"
 * code.coding.userSelected = true
-* category = $sct-nz#62014003 "Adverse reaction caused by drug (disorder)"
+* category = $sct#62014003 "Adverse reaction caused by drug (disorder)"
 
 * patient insert Patient(ZKC7284, Sage Westbrook)
 

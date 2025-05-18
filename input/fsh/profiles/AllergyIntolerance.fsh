@@ -23,3 +23,5 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 * insert UserSelected
 * recorder.identifier only Identifier
 * category from sdhr-allergyintolerance-category-valueset (required)
+* reaction.manifestation from sdhr-allergyintolerance-manifestation-valueset (required)
+* reaction.severity from sdhr-allergyintolerance-severity-valueset (required)

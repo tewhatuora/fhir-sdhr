@@ -15,3 +15,13 @@ Description: """
 * issue[=].code = #suppressed
 * issue[=].details = #UNAUTHORISED
 * issue[=].diagnostics = "Unauthorised."
+
+// Confidential records are not accessible
+Instance: APIError-Confidential
+InstanceOf: OperationOutcome
+Usage: #example
+Description: "Example OperationOutcome API response, returned when a resource has been flagged as confidential, and so cannot be accessed."
+
+* issue[+].severity = #error
+* issue[=].code = #security
+* issue[=].diagnostics = "Resource access is forbidden"

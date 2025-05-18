@@ -367,3 +367,41 @@ When a local identifier is not submitted to a resource, the search parameters fo
 {% include search-by-parameters.svg %}
 </div>
 <br clear="all">
+
+## SDHR Confidential Record API behaviour
+
+When a record is created or updated to be marked as confidential using [FHIR Security labels](https://build.fhir.org/security-labels.html), read or search operations that would return the  record will result in no access to the record.
+
+When the data sensitivity tags using the confidentiality system `http://terminology.hl7.org/CodeSystem/v3-Confidentiality` are be applied to any SDHR resource, by adding the tag in the resource `meta.security` array, the API will use the follow behaviours when the resources are subject to FHIR API Requests.
+
+The behaviours are valid for resources containing an security label using the `http://terminology.hl7.org/CodeSystem/v3-Confidentiality` `system` and `R` (Restricted) or `V` (Very Restricted). SDHR resources which do not contain this confidentiality tag will not be subject to these behaviours.
+
+## Sample confidential resource
+
+<details>
+<summary><b><u>Click to view example confidential resource</u></b></summary>
+{% fragment AllergyIntolerance/AllergyIntoleranceExample JSON %}
+</details>
+
+#### FHIR Search example
+`GET /AllergyIntolerance?_id=AllergyIntoleranceExample`
+
+Response status: `200`
+
+Response body:
+
+{% fragment Bundle/ConfidentialRecordsSearchResponseExample JSON %}
+
+In this request example, a request is made to return AllergyIntolerance resources for a patient using FHIR Search. As a confidential resource was matched with this search, the search result set has been redacted due to confidentiality tags on the resource, resulting in the `meta.security` `REDACTED` tag being added to the search result `Bundle`. This indicates to the API Consumer that some portion of the searchset has been filtered due to confidentiality and not included in the content returned. The `total` within the response reflects the total of resources before filtering occurs.
+
+#### FHIR read, vread example
+
+`GET /AllergyIntolerance/{id}`
+
+Response status: `403`
+
+Response body:
+
+{% fragment OperationOutcome/APIError-Confidential JSON %}
+
+In this example, a request is made to a single resource which contains a confidentiality flag. This returns a 403 error.

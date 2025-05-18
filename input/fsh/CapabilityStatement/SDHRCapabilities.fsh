@@ -46,8 +46,11 @@ Usage: #definition
 * extension[HnzApiSpecBuilderExtension].extension[licenseName].valueString = "Health New Zealand Digital Services Hub API Access and Use Agreement"
 * extension[HnzApiSpecBuilderExtension].extension[externalDocs].valueUri = "https://fhir-ig.digital.health.nz/shared-care"
 
+// system interactions
 * rest.interaction.code = #search-system
 * rest.interaction insert APIStandardsDocumentation 
+* rest.interaction[+].code = #transaction
+* rest.interaction[+].code = #batch
 
 // allergyIntolerance
 * rest.resource[0].type = #AllergyIntolerance

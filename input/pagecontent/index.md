@@ -52,7 +52,7 @@ SDHR will enable:
 
 To begin the onboarding process for this API, please visit the [Consumer onboarding page](https://www.tewhatuora.govt.nz/health-services-and-programmes/digital-health/digital-services-hub/consumer-onboarding/).
 
-For more information on integrating, please review the Implementation guide \[<https://fhir-ig.digital.health.nz/sdhr/index.html\>].
+For more information on integrating, please review the [Implementation guide](https://fhir-ig.digital.health.nz/sdhr/index.html).
 
 # API Types
 

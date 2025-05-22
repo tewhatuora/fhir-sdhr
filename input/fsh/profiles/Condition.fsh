@@ -6,6 +6,7 @@ Description: "Condition resource to record problems and conditions affecting a p
 
 * meta.source 1..1
 * meta insert MetaSource
+* meta insert MetaTag
 
 * insert LocalIdentifierDocs
 

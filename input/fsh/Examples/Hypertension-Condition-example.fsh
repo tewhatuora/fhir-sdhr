@@ -6,6 +6,8 @@ Usage: #example
 
 * meta insert HPIFacility(F38006-B)
 
+* meta insert MetaTagExample
+
 * insert LocalIdentifierExample
 
 * extension.url = "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"

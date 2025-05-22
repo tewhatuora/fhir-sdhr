@@ -62,3 +62,8 @@ Title: "ValueSet for AllergyIntolerance Severity"
 // Title: "ValueSet for SNOMED Reference Set 351000210106"
 // Description: "A ValueSet containing all codes from the SNOMED CT reference set 351000210106."
 // * include codes from system http://snomed.info/sct where refset = #351000210106
+
+ValueSet: SDHRResourceTagsValueSet
+Id: sdhr-resource-tags-valueset
+Title: "ValueSet for SDHR Resource Tags"
+* include nz-sdhr-codesystem#highlighted

@@ -15,7 +15,5 @@ Note: When available these codes will be sourced from the NZHTS Implementation G
 
 * ^status = #active
 
-// condition diagnosis summary concepts
-* #condition-summary-codes "These codes are used in NZ to summarise the condition diagnosis" "These code values originate in SNOMED CT but are defined only in the SNOMED NZ Edition" 
-  * #302471000210100 "Rheumatic heart disease with absence of signs and symptoms of acute rheumatic fever (situation)" "Can be used to summarise the diagnosis of a patient with a rheumatic fever condition"
-  * #299171000210109 "History of acute rheumatic fever without heart disease" "Can be used to summarise the diagnosis of a patient with a rheumatic fever condition"
+* #sdhr-usability-flags "These codes are intended to be applied as `Meta.tag` indicators so that API Consumers are able apply local visibility or usability rules."
+  * #highlighted "Highlighted" "This code indicates that the resource is important and, for example, should be highlighted in a user interface."

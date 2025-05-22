@@ -67,6 +67,17 @@ RuleSet: MetaSource
                             e.g. HPI Facility https://api.hip.digital.health.nz/fhir/Location/F38006-B
                             or HNZ System (AIR) https://api.air.digital.health.nz/fhir/"
 
+RuleSet: MetaTag
+* tag 0..*
+* tag ^short = "Tag the resource with a code to indicate usability components of the resource"
+* tag ^definition = "Tag the resource with a code to indicate usability components of the resource. This is used to indicate that the resource is important and, for example, should be highlighted in a user interface."
+* tag from sdhr-resource-tags-valueset (preferred)
+
+RuleSet: MetaTagExample
+* tag[+].system = "https://standards.digital.health.nz/ns/sdhr-resource-tags"
+* tag[=].code = #highlighted
+* tag[=].display = "Highlighted"
+
 RuleSet: LocalIdentifierDocs
 * identifier 0..*
 * identifier.system 1..1

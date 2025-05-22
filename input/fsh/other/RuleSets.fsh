@@ -67,6 +67,17 @@ RuleSet: MetaSource
                             e.g. HPI Facility https://api.hip.digital.health.nz/fhir/Location/F38006-B
                             or HNZ System (AIR) https://api.air.digital.health.nz/fhir/"
 
+RuleSet: MetaTag
+* tag 0..*
+* tag ^short = "Tag the resource with a code to indicate usability components of the resource"
+* tag ^definition = "Tag the resource with a code to indicate usability components of the resource. This is used to indicate that the resource is important and, for example, should be highlighted in a user interface."
+* tag from sdhr-resource-tags-valueset (preferred)
+
+RuleSet: MetaTagExample
+* tag[+].system = "https://standards.digital.health.nz/ns/sdhr-resource-tags"
+* tag[=].code = #highlighted
+* tag[=].display = "Highlighted"
+
 RuleSet: LocalIdentifierDocs
 * identifier 0..*
 * identifier.system 1..1
@@ -103,3 +114,9 @@ RuleSet: UserSelected
 * code.coding.userSelected 0..1
 * code.coding.userSelected ^short = "Indicates that the value has been selected by a system user"
 * code.coding.userSelected ^definition = "This field is used to maintain the code as selected by the source systems end user. For example, where a patient management system uses local codes or a non-common code set to record a substance or allergen this field indicates that the value is as selected by the system user. Some level of clinical interpretation may be required."
+
+// sets up Coding referencing a code in the local RF codesystem
+RuleSet: SDHRCoding(code-value,display)
+* coding.system = Canonical(SDHRCodeSystem)
+* coding.code = #{code-value}
+* coding.display = "{display}"

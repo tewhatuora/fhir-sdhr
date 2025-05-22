@@ -38,7 +38,7 @@ RuleSet: APIStandardsDocumentation
   and organisation behind the API request.
 
   This context is supplied using the 'Request-Context' custom header in the form of a base64-encoded JSON object.
-  The value of the header has differing forms based on the type of request being made in a user context (e.g. a clinical user searching for patient records) or a system context (e.g. a system submitting data to the API in a bulk load scenario).
+  The value of the header has differing forms based on the type of request being made, namely whether it is in a user context (e.g. a clinical user searching for patient records), or a system context (e.g. a system submitting data to the API in a bulk load scenario).
   
   #### Requests with user context
   | **Context property**     | **Mandatory** | **Read/search access value**                                                                                                                          |

@@ -384,7 +384,7 @@ The behaviours are valid for resources containing an security label using the `h
 </details>
 
 #### FHIR Search example
-`GET /AllergyIntolerance?_id=AllergyIntoleranceExample`
+`GET /AllergyIntolerance?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FPatient%2FZKC7284`
 
 Response status: `200`
 

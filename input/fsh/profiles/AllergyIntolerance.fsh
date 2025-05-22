@@ -22,6 +22,6 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 * code from http://hl7.org/fhir/ValueSet/allergyintolerance-code (preferred)
 * insert UserSelected
 * recorder.identifier only Identifier
-* category from sdhr-allergyintolerance-category-valueset (required)
+//* category from sdhr-allergyintolerance-category-valueset (required)
 * reaction.manifestation from sdhr-allergyintolerance-manifestation-valueset (required)
 * reaction.severity from sdhr-allergyintolerance-severity-valueset (required)

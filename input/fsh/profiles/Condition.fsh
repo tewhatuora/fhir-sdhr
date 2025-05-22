@@ -16,7 +16,7 @@ Description: "Condition resource to record problems and conditions affecting a p
 
 * insert ProfilePatient(subject)
 
-* insert ProfilePractitioner(asserter)
+//* insert ProfilePractitioner(asserter)
 
 * code 1..1 
 * code from http://hl7.org/fhir/ValueSet/condition-code (preferred)

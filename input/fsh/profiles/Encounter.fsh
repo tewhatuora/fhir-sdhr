@@ -31,3 +31,5 @@ Description: "Encounter resource to record an instance of an interaction between
 * insert ProfilePractitioner(participant.individual)
 * participant.individual.extension 0..0
 * participant.individual.identifier 0..0
+
+* period 1..*

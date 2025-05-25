@@ -34,31 +34,30 @@ RuleSet: APIStandardsDocumentation
 * documentation = """
   ### Request-Context custom header
 
-  All FHIR API requests must include the HNZ request context *custom header* which supplies identifiers for the health user 
-  and organisation behind the API request.
+  All FHIR API requests MUST include the HNZ request context *custom header* which supplies identifiers for the health user 
+  and organisation, or system behind the API request.
 
-  This context is supplied using the 'Request-Context' custom header in the form of a base64-encoded JSON object.
+  This context is supplied using the 'Request-Context' custom HTTP header in the form of a base64-encoded JSON object.
   The value of the header has differing forms based on the type of request being made, namely whether it is in a user context (e.g. a clinical user searching for patient records), or a system context (e.g. a system submitting data to the API in a bulk load scenario).
   
   #### Requests with user context
-  | **Context property**     | **Mandatory** | **Read/search access value**                                                                                                                          |
+  | **Context property**     | **Mandatory** | **Value**                                                                                                                          |
   |:-------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|
   | `userIdentifier`         | Yes         | The userid of the user as authenticated by the PMS/health application                                                                                   |
-  | `secondaryIdentifier`    | Yes         | The secondary identifier for the user - this **MUST** be the end users Common Person Number (aka HPI Practitioner identifier) of the practitioner using the application |
+  | `secondaryIdentifier`    | Yes         | The secondary identifier for the user - this **MUST** be the end users Common Person Number (aka HPI Practitioner identifier) of the practitioner using the application where available. Otherwise, any secondary identifier that is held for the user |
   | `purposeOfUse`           | Yes         | One of [ "PATRQT", "POPHLTH", "TREAT", "ETREAT", "PUBHLTH", "SYSDEV" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                                 |
   | `userFullName`           | Yes         | Full name of the user of the PMS/health application.                                                                                                     |
   | `userRole`               | Yes         | Role of the user of the PMS/health application. Set to `"PROV"` (Provider) or `"PAT"` (Patient)                                                         |
-  | `orgIdentifier`          | Yes         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
-  | `facilityIdentifier`     | Yes         | HPI identifier for the facility where the user is located                                                                                                |
+  | `orgIdentifier`          | No (preferred)         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
+  | `facilityIdentifier`     | No (preferred)         | HPI identifier for the facility where the user is located                                                                                                |
 
   #### Requests with system context
-  | **Context property**     | **Mandatory** | **Write access value**                                                                                                                          |
+  | **Context property**     | **Mandatory** | **Value**                                                                                                                          |
   |:-------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|
   | `userIdentifier`         | Yes         | The oAuth clientId of the system submitting data to the API                                                                                   |
-  | `secondaryIdentifier`    | Yes         |    ?          |
   | `purposeOfUse`           | Yes         | [ "SYSDEV" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                              |
   | `userFullName`           | Yes         | Name of the PMS/health application.                                                                                                    |
-  | `userRole`               | Yes         | Role of the PMS/health application. Set to `"PROV"` (Provider)                                                 |
+  | `userRole`               | Yes         | Role of the PMS/health application. Set to `"110150"` (Application)                                                 |
 
   A schema definition and examples for `Request-Context` can be [found here](https://github.com/tewhatuora/schemas/blob/main/json-schema/Request-Context.json)
 
@@ -88,18 +87,13 @@ RuleSet: APIStandardsDocumentation
     #### Example Request-Context Header Payload for a system submitting data to the API, where there is no end user
   **Base64 Encoded**
   ```
-  ICB7CiAgICAidXNlcklkZW50aWZpZXIiOiAiMWI4MjAwZDctM2E4Yy00ZmI2LThlNWMtY2VjNDU0MDk5OWQ1IiwKICAgICJ1c2VyUm9sZSI6ICJQUk9WIiwKICAgICJzZWNvbmRhcnlJZGVudGlmaWVyIjogewogICAgICAidXNlIjogIm9mZmljaWFsIiwKICAgICAgInN5c3RlbSI6ICJ0b2RvIiwKICAgICAgInZhbHVlIjogInRvZG8iCiAgICB9LAogICAgInB1cnBvc2VPZlVzZSI6IFsKICAgICAgIlNZU0RFViIKICAgIF0sCiAgICAidXNlckZ1bGxOYW1lIjogIlNhbXBsZSBQTVMgSW50ZWdyYXRpb24gQXBwbGljYXRpb24iCiAgfQ==
+  ICB7CiAgICAidXNlcklkZW50aWZpZXIiOiAiMWI4MjAwZDctM2E4Yy00ZmI2LThlNWMtY2VjNDU0MDk5OWQ1IiwKICAgICJ1c2VyUm9sZSI6ICIxMTAxNTAiLAogICAgInB1cnBvc2VPZlVzZSI6IFsKICAgICAgIlNZU0RFViIKICAgIF0sCiAgICAidXNlckZ1bGxOYW1lIjogIlNhbXBsZSBQTVMgSW50ZWdyYXRpb24gQXBwbGljYXRpb24iCiAgfQ==
   ```
   **Decoded JSON**
   ```json
   {
     "userIdentifier": "1b8200d7-3a8c-4fb6-8e5c-cec4540999d5",
-    "userRole": "PROV",
-    "secondaryIdentifier": {
-      "use": "official",
-      "system": "todo",
-      "value": "todo"
-    },
+    "userRole": "110150",
     "purposeOfUse": [
       "SYSDEV"
     ],

@@ -101,6 +101,8 @@ RuleSet: APIStandardsDocumentation
   }
   ```
 
+  ### Mandatory search parameters
+  All FHIR API search requests must include the HNZ mandatory search parameters. These are listed in the Combined Search Parameters section of each resource below.
 
   ### Error status codes
 

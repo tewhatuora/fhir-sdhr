@@ -7,7 +7,324 @@
 	},
 	"item": [
 		{
-			"name": "0) Get oAuth Token",
+			"name": "Mock+ only resources",
+			"item": [
+				{
+					"name": "0) Get Mock+ Admin oAuth Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"pm.environment.set(\"KEYCLOAK_ADMIN_TOKEN\", jsonData['access_token']);",
+									"// Extract JWT from a variable or response",
+									"let jwtToken = pm.response.json().access_token;",
+									"",
+									"// Function to decode Base64Url",
+									"function base64UrlDecode(str) {",
+									"    return decodeURIComponent(atob(str.replace(/-/g, \"+\").replace(/_/g, \"/\")).split('').map(function(c) {",
+									"        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);",
+									"    }).join(''));",
+									"}",
+									"",
+									"// Decode JWT payload",
+									"if (jwtToken) {",
+									"    let parts = jwtToken.split(\".\");",
+									"    if (parts.length === 3) {",
+									"        let payload = JSON.parse(base64UrlDecode(parts[1]));",
+									"",
+									"        // Convert payload to table format",
+									"        let tableData = Object.keys(payload).map(key => ({",
+									"            \"Claim\": key,",
+									"            \"Value\": JSON.stringify(payload[key], null, 2) // Handle nested objects",
+									"        }));",
+									"",
+									"        // Template for Postman Visualizer",
+									"        let template = `",
+									"            <style>",
+									"                table { width: 100%; border-collapse: collapse; }",
+									"                th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }",
+									"                th { background-color: #f4f4f4; }",
+									"                pre { margin: 0; }",
+									"            </style>",
+									"            <table>",
+									"                <thead>",
+									"                    <tr>",
+									"                        <th>Claim</th>",
+									"                        <th>Value</th>",
+									"                    </tr>",
+									"                </thead>",
+									"                <tbody>",
+									"                    {{#each tableData}}",
+									"                    <tr>",
+									"                        <td>{{Claim}}</td>",
+									"                        <td><pre>{{Value}}</pre></td>",
+									"                    </tr>",
+									"                    {{/each}}",
+									"                </tbody>",
+									"            </table>",
+									"        `;",
+									"",
+									"        // Render Visualizer",
+									"        pm.visualizer.set(template, { tableData });",
+									"",
+									"        pm.test(\"JWT Claims Parsed\", function () {",
+									"            pm.expect(true).to.be.true;",
+									"        });",
+									"    } else {",
+									"        pm.visualizer.set(`<h3 style=\"color:red;\">Invalid JWT format</h3>`);",
+									"    }",
+									"} else {",
+									"    pm.visualizer.set(`<h3 style=\"color:red;\">JWT not found</h3>`);",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{ADMIN_API_CLIENT_ID}}",
+									"description": "Admin/Mock+ clientID",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{ADMIN_API_CLIENT_SECRET}}",
+									"description": "Admin/Mock+ clientSecret",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "system/*.crus",
+									"description": "Request full access",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.ppd.auth.digital.health.nz/realms/hnz-integration/protocol/openid-connect/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"ppd",
+								"auth",
+								"digital",
+								"health",
+								"nz"
+							],
+							"path": [
+								"realms",
+								"hnz-integration",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mock+ $reset - removes all resources from Mock+ tenant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{KEYCLOAK_ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Correlation-Id",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.test.mockplus.digital.health.nz/s2s/$reset",
+							"protocol": "https",
+							"host": [
+								"api",
+								"test",
+								"mockplus",
+								"digital",
+								"health",
+								"nz"
+							],
+							"path": [
+								"s2s",
+								"$reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mock+ $seed - populate sample resources",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{KEYCLOAK_ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Correlation-id",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"resourceType\": \"Parameters\",\n  \"parameter\": [\n    {\n      \"name\": \"api\",\n      \"valueString\": \"sdhr\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.test.mockplus.digital.health.nz/s2s/$seed",
+							"protocol": "https",
+							"host": [
+								"api",
+								"test",
+								"mockplus",
+								"digital",
+								"health",
+								"nz"
+							],
+							"path": [
+								"s2s",
+								"$seed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mock+ $provisionDashboard - create an OpenSearch Dashboards user to visualise FHIR resources",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{KEYCLOAK_ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Correlation-id",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"resourceType\": \"Parameters\",\n  \"parameter\": [\n    {\n      \"name\": \"email\",\n      \"valueString\": \"{{DEVELOPER_EMAIL_ADDRESS}}\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.test.mockplus.digital.health.nz/s2s/$provisionDashboard",
+							"protocol": "https",
+							"host": [
+								"api",
+								"test",
+								"mockplus",
+								"digital",
+								"health",
+								"nz"
+							],
+							"path": [
+								"s2s",
+								"$provisionDashboard"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "0) Get SDHR oAuth Token",
 			"event": [
 				{
 					"listen": "test",

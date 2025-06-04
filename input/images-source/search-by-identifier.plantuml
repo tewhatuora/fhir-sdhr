@@ -39,7 +39,7 @@ deactivate Server
 
 note over Client, Server: Time passes, the resource has been updated at source
 
-Client -> Server: **GET /Condition?identifier={{some-local-id}}&_source=https://api.hip.digital.health.nz/fhir/Location/F38006-B** (Search by identifier and facilityId)
+Client -> Server: **GET /Condition?identifier={{some-local-id}}&_source=https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B** (Search by identifier and facilityId)
 activate Server
 Server --> Client: Bundle (Containing Condition Resource)
 deactivate Server

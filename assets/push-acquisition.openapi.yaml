@@ -105,7 +105,7 @@ paths:
                                 code: "124"
                                 display: General Practice
                           subject:
-                            reference: "https://api.hip.digital.health.nz/fhir/Patient/ZKC7284"
+                            reference: "https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284"
                             type: Patient
                             display: Sage Westbrook
                           participant:

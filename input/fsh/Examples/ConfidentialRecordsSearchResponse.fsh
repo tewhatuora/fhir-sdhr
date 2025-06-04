@@ -12,7 +12,7 @@ Usage: #example
 * type = #searchset
 * total = 2
 * link.relation = "self"
-* link.url = "https://api.mock.sdhr.digital.health.nz/s2s/AllergyIntolerance?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FPatient%2FZKC7284"
+* link.url = "https://api.mock.sdhr.digital.health.nz/s2s/AllergyIntolerance?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC7284"
 * entry[+].resource = AllergyIntoleranceExample2
 * entry[=].fullUrl = "https://api.mock.sdhr.digital.health.nz/s2s/AllergyIntolerance/AllergyIntoleranceExample2"
 * entry[=].search.mode = #match

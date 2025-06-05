@@ -78,9 +78,7 @@ Any additional requirements for consuming the SDHR APIs will be released once th
 
 # Postman Collection
 
-We provide some Postman collections for the Mock+ and UAT environments. These environments contain placeholder values for the client ID and secret, which you will need to replace with your own values. The Postman collections are available in the following locations:
+We provide a Postman collection for the Mock+ and UAT environments. These environments contain placeholder values for the client ID, client secret, and developer email address which you will need to replace with your own values. The Postman collections are available in the following locations:
 
-* [Mock+ Collection](postman/Mock-SDHR.postman_collection.json)
-* [Mock+ Environment](postman/Mock-SDHR-example.postman_environment.json)
 * [UAT Collection](postman/UAT-SDHR.postman_collection.json)
 * [UAT Environment](postman/UAT-SDHR-example.postman_environment.json)

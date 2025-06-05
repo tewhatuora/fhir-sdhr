@@ -38,7 +38,7 @@ deactivate Server
 
 note over Client, Server: Time passes, the resource has been updated at source
 
-Client -> Server: **GET /Condition?code=http://snomed.info/sct|442387007&status=active&subject=https://api.hip.digital.health.nz/fhir/Patient/ZKC7284** (Search by subject, status and code)
+Client -> Server: **GET /Condition?code=http://snomed.info/sct|442387007&status=active&subject=https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284** (Search by subject, status and code)
 activate Server
 Server --> Client: Bundle (Containing Condition Resource)
 deactivate Server

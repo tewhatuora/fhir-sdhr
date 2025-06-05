@@ -38,7 +38,7 @@ class "SDHR:Encounter" as encounter <<Encounter>> #LightSalmon ##[bold] {
     [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHREncounter.html]]
     Inherits FHIR ""Encounter""
     ----
-    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/Location/{hpi-facilityid}}"
+    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facilityid}}"
     * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHREncounter"
     * **status**: ~~1..1~~ Binding: EncounterStatus [[[http://hl7.org/fhir/R4/valueset-encounter-status.html]]]
     * **class**: ~~1..1~~ Binding: ActEncounterCode (extensible) [[[http://terminology.hl7.org/5.5.0/ValueSet-v3-ActEncounterCode.html]]]
@@ -51,7 +51,7 @@ class "SDHR:Condition" as condition <<Condition>> #LightSalmon ##[bold] {
     [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRCondition.html]]
     Inherits FHIR ""Condition""
     ----
-    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/Location/{hpi-facilityid}}"
+    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facilityid}}"
     * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
     * **extension**: ~~1..*~~
     * **extentension[*].url** : "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
@@ -69,7 +69,7 @@ class "SDHR:AllergyIntolerance" as allergyintolerance <<AllergyIntolerance>> #Li
     [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRAllergyIntolerance.html]]
     Inherits FHIR ""AllergyIntolerance""
     ----
-    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/Location/{hpi-facilityid}}"
+    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facilityid}}"
     * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRAllergyIntolerance"
     * **clinicalStatus**: ~~1..1~~ Binding: AllergyIntoleranceClinicalStatus (required) [[[http://hl7.org/fhir/R4/valueset-allergyintolerance-clinical.html]]]
     * **code**: ~~1..1~~ Binding: Multiple bindings e.g. SNOMED CT, ReadCodes, MIMS
@@ -84,7 +84,7 @@ class "SDHR:Observation" as observation <<Observation>> #LightSalmon ##[bold] {
     [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRObservation.html]]
     Inherits FHIR ""Observation""
     ----
-    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/Location/{hpi-facilityid}}"
+    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facilityid}}"
     * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRObservation"
     * **code**: Binding: LOINCCodes (preferred) [[[http://hl7.org/fhir/ValueSet/observation-codes]]]
     * **subject**: ~~1..1~~ Reference NHI Patient

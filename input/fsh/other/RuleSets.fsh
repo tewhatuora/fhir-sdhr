@@ -15,7 +15,7 @@
 RuleSet: ProfilePatient(property)
 * {property} 1..1
 * {property} only Reference(Patient)
-* {property}.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
+* {property}.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZZZ0008"
 * {property}.type = "Patient"
 
 
@@ -29,7 +29,7 @@ RuleSet: ProfilePatient(property)
 RuleSet: ProfilePractitioner(property)
 * {property} 1..1
 * {property} only Reference(Practitioner)
-* {property}.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system E.g. https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ"
+* {property}.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system E.g. https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/99ZZZZ"
 * {property}.type = "Practitioner"
 
 /*
@@ -40,7 +40,7 @@ RuleSet: ProfilePractitioner(property)
 
 RuleSet: Patient(nhi-id, nhi-name)
 * type = "Patient"
-* reference = "https://api.hip.digital.health.nz/fhir/Patient/{nhi-id}"
+* reference = "https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/{nhi-id}"
 * display = "{nhi-name}"
 
 /*
@@ -51,7 +51,7 @@ RuleSet: Patient(nhi-id, nhi-name)
 */
 RuleSet: Practitioner(hpi-practitioner-id, hpi-practitioner-name)
 * type = "Practitioner"
-* reference = "https://api.hip.digital.health.nz/fhir/Practitioner/{hpi-practitioner-id}"
+* reference = "https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/{hpi-practitioner-id}"
 * display = "{hpi-practitioner-name}"
 
 /*
@@ -59,12 +59,12 @@ RuleSet: Practitioner(hpi-practitioner-id, hpi-practitioner-name)
     HPI Facility
 */
 RuleSet: HPIFacility(hpi-facility-id)
-* source = "https://api.hip.digital.health.nz/fhir/Location/{hpi-facility-id}"
+* source = "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facility-id}"
 
 RuleSet: MetaSource
 * source ^short = "Captures the source of the record - please see description for details"
 * source ^definition = "Captures the source of the record. If the record is sourced from a PMS the value should contain the HPIFacilityID
-                            e.g. HPI Facility https://api.hip.digital.health.nz/fhir/Location/F38006-B
+                            e.g. HPI Facility https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B
                             or HNZ System (AIR) https://api.air.digital.health.nz/fhir/"
 
 RuleSet: MetaTag

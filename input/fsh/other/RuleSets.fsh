@@ -22,7 +22,7 @@ RuleSet: ProfilePatient(property)
 * {property}.reference obeys nhi-url-format
 
 Invariant: nhi-url-format
-Description: "Reference must be an NHI Patient URL with format https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/AAA1111 or AAA11AA"
+Description: "Reference must be an NHI Patient URL with format https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZZZ1111 or ZZZ11AA"
 Expression: "matches('^https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/[A-Z]{3}([0-9]{4}|[0-9]{2}[A-Z]{2})$')"
 Severity: #error
 
@@ -141,9 +141,9 @@ RuleSet: SDHRCoding(code-value,display)
 * coding.display = "{display}"
 
 RuleSet: HNZSDHRClientLastUpdated(dateTime)
-* url = "https://standards.digital.health.nz/ns/sdhr-client-last-updated"
+* url = "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-sdhr-client-last-updated-extension"
 * valueDateTime = "{dateTime}"
 
 RuleSet: HNZSDHRHighlighted(highlighted)
-* url = "https://standards.digital.health.nz/ns/sdhr-highlighted"
+* url = "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-sdhr-highlighted-extension"
 * valueBoolean = {highlighted}

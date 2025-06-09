@@ -23,7 +23,7 @@ RuleSet: ProfilePatient(property)
 
 Invariant: nhi-url-format
 Description: "Reference must be an NHI Patient URL with format https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/AAA1111 or AAA11AA"
-Expression: "matches('^https://api\\.hip\\.digital\\.health\\.nz/fhir/nhi/v1/Patient/[A-Z]{3}([0-9]{4}|[0-9]{2}[A-Z]{2})$')"
+Expression: "matches('^https:\/\/api.hip.digital.health.nz\/fhir\/nhi\/v1\/Patient\/[A-Z]{3}([0-9]{4}|[0-9]{2}[A-Z]{2})$')"
 Severity: #error
 
 /*
@@ -42,7 +42,7 @@ RuleSet: ProfilePractitioner(property)
 
 Invariant: hpi-url-format
 Description: "Reference must be an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
-Expression: "matches('^https://api\\.hip\\.digital\\.health\\.nz/fhir/hpi/v1/Practitioner/[0-9]{2}[A-Z]{4}$')"
+Expression: "matches('^https:\/\/api.hip.digital.health.nz\/fhir\/hpi\/v1\/Practitioner\/[0-9]{2}[A-Z]{4}$')"
 Severity: #error
 
 

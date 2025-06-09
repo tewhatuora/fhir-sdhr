@@ -6,10 +6,15 @@ Usage: #example
 
 * meta insert HPIFacility(F38006-B)
 
+//* meta insert MetaTagExample
+
 * insert LocalIdentifierExample
 
 * extension.url = "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
 * extension.valueBoolean = true
+* extension[+] insert HNZSDHRClientLastUpdated(2023-11-26T10:02:45+13:00)
+* extension[+] insert HNZSDHRHighlighted(true)
+
 * clinicalStatus = $condition-clinical#active
 * verificationStatus = $condition-ver-status#confirmed
 * code = $sct#38341003 "HT - Hypertension"

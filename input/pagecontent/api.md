@@ -4,7 +4,7 @@ The SDHR API is comprised of multiple FHIR resources. This page provides technic
 
 | **Resource** | **Description** |
 | --- | --- |
-| [API Capability Statement](./CapabilityStatement-SDHRCapabliityStatement.html) | FHIR API Capability Statement |
+| [API Capability Statement](./CapabilityStatement-SDHRCapabliityStatement.html) | FHIR API Capability Statement. Developers should review this to understand the available API interactions and request requirements such as the Request-Context header |
 | [API Artifacts](./artifacts.html) | List of FHIR Artifacts for this API |
 | [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) | Machine readable OpenAPI specification for this API |
 
@@ -29,7 +29,7 @@ See below for some example search queries.
 
 This query will return all Condition resources for a given `Patient` and `meta.source`.
 
-`GET /Condition?patient=https://api.hip.digital.health.nz/fhir/Patient/ZKC7284&_source=https://api.hip.digital.health.nz/fhir/Location/F38006-B`
+`GET /Condition?patient=https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284&_source=https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B`
 
 <div width="100%">
 <details>
@@ -49,7 +49,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
     "link": [
         {
             "relation": "self",
-            "url": "https://server.url/Condition?_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FLocation%2FF38006-B&patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FPatient%2FZKC7284"
+            "url": "https://server.url/Condition?_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fhpi%2Fv1%2FLocation%2FF38006-B&patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC7284"
         }
     ],
     "entry": [
@@ -72,7 +72,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
                     }
                 ],
                 "recorder": {
-                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ",
+                    "reference": "https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/99ZZZZ",
                     "display": "Dottie McStuffins",
                     "type": "Practitioner"
                 },
@@ -95,7 +95,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
                     ]
                 },
                 "subject": {
-                    "reference": "https://api.hip.digital.health.nz/fhir/Patient/ZKC7284",
+                    "reference": "https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284",
                     "display": "Carrey Carrington",
                     "type": "Patient"
                 },
@@ -110,7 +110,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
                 },
                 "onsetDateTime": "2011-02-05T00:00:00+13:00",
                 "asserter": {
-                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXN",
+                    "reference": "https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/91ZZXN",
                     "display": "DR Julian Subatoi Bashir",
                     "type": "Practitioner"
                 },
@@ -120,7 +120,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
                     "profile": [
                         "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
                     ],
-                    "source": "https://api.hip.digital.health.nz/fhir/Location/F38006-B"
+                    "source": "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B"
                 },
                 "id": "635b2a1c-bdd1-4a20-8c2f-6d8348352f6a",
                 "resourceType": "Condition"
@@ -132,12 +132,6 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
             },
             "fullUrl": "https://server.url/Condition/c3605e85-6785-4fa9-94a5-6d8015416c53",
             "resource": {
-                "identifier": [
-                    {
-                        "system": "https://standards.digital.health.nz/ns/health-record-key-id",
-                        "value": "ef5b3aad-14c2-4904-aa25-7411dcb21327"
-                    }
-                ],
                 "extension": [
                     {
                         "valueBoolean": true,
@@ -145,7 +139,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
                     }
                 ],
                 "recorder": {
-                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ",
+                    "reference": "https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/99ZZZZ",
                     "display": "Dottie McStuffins",
                     "type": "Practitioner"
                 },
@@ -168,7 +162,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
                     ]
                 },
                 "subject": {
-                    "reference": "https://api.hip.digital.health.nz/fhir/Patient/ZKC7284",
+                    "reference": "https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284",
                     "display": "Carrey Carrington",
                     "type": "Patient"
                 },
@@ -183,7 +177,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
                 },
                 "onsetDateTime": "2011-02-05T00:00:00+13:00",
                 "asserter": {
-                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXN",
+                    "reference": "https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/91ZZXN",
                     "display": "DR Julian Subatoi Bashir",
                     "type": "Practitioner"
                 },
@@ -193,7 +187,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
                     "profile": [
                         "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
                     ],
-                    "source": "https://api.hip.digital.health.nz/fhir/Location/F38006-B"
+                    "source": "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B"
                 },
                 "id": "c3605e85-6785-4fa9-94a5-6d8015416c53",
                 "resourceType": "Condition"
@@ -211,16 +205,16 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
 In this API `identifier` can be used to track source system unique identifiers. This should enable systems such as Patient Management Systems to track the provenance of resources. There is no limit on the number of identifiers that a resource can contain.
 
 > Request `Condition` resources for a specific identifier
-> `GET Condition?patient=https://api.hip.digital.health.nz/fhir/Patient/ZKC7284&identifier=38cb6f26-9534-46e5-b659-536992faf0cc`
+> `GET Condition?patient=https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284&identifier=38cb6f26-9534-46e5-b659-536992faf0cc`
 
 > Request `Condition` resources for a specific identifier AND system,
-> `GET /Condition?patient=https://api.hip.digital.health.nz/fhir/Patient/ZKC7284&identifier=https://some.local.system/ehr-key%7Cd2ed3bc7-da4a-45b8-ae3f-82176f5c64a4`
+> `GET /Condition?patient=https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284&identifier=https://some.local.system/ehr-key%7Cd2ed3bc7-da4a-45b8-ae3f-82176f5c64a4`
 
 <div width="100%">
 <details>
 <summary><b><u>Click to view example response</u></b></summary>
 <br>
-In this example the above query returns a single result. Note that in most cases omission of the `patient` would return a single result but to avoid any possiblility of identifier non-uniqueness the `patient` modifier **SHOULD** be used.
+In this example the above query returns a single result. Note that in most cases omission of the `patient` would return a single result but to avoid any possibility of identifier non-uniqueness the `patient` modifier **SHOULD** be used.
 <br>
 <pre><code class="language-json">
 
@@ -235,7 +229,7 @@ In this example the above query returns a single result. Note that in most cases
     "link": [
         {
             "relation": "self",
-            "url": "https://server.url/Condition?identifier=38cb6f26-9534-46e5-b659-536992faf0cc&patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FPatient%2FZKC7284"
+            "url": "https://server.url/Condition?identifier=38cb6f26-9534-46e5-b659-536992faf0cc&patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC7284"
         }
     ],
     "entry": [
@@ -258,7 +252,7 @@ In this example the above query returns a single result. Note that in most cases
                     }
                 ],
                 "recorder": {
-                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ",
+                    "reference": "https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/99ZZZZ",
                     "display": "Dottie McStuffins",
                     "type": "Practitioner"
                 },
@@ -281,7 +275,7 @@ In this example the above query returns a single result. Note that in most cases
                     ]
                 },
                 "subject": {
-                    "reference": "https://api.hip.digital.health.nz/fhir/Patient/ZKC7284",
+                    "reference": "https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284",
                     "display": "Carrey Carrington",
                     "type": "Patient"
                 },
@@ -296,7 +290,7 @@ In this example the above query returns a single result. Note that in most cases
                 },
                 "onsetDateTime": "2011-02-05T00:00:00+13:00",
                 "asserter": {
-                    "reference": "https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXN",
+                    "reference": "https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/91ZZXN",
                     "display": "DR Julian Subatoi Bashir",
                     "type": "Practitioner"
                 },
@@ -306,7 +300,7 @@ In this example the above query returns a single result. Note that in most cases
                     "profile": [
                         "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
                     ],
-                    "source": "https://api.hip.digital.health.nz/fhir/Location/F38006-B"
+                    "source": "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B"
                 },
                 "id": "72ca633a-23cc-4848-a512-5111750508fb",
                 "resourceType": "Condition"
@@ -384,7 +378,7 @@ The behaviours are valid for resources containing an security label using the `h
 </details>
 
 #### FHIR Search example
-`GET /AllergyIntolerance?_id=AllergyIntoleranceExample`
+`GET /AllergyIntolerance?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC7284`
 
 Response status: `200`
 

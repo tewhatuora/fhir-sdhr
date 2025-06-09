@@ -6,6 +6,8 @@ Usage: #example
 
 * meta insert HPIFacility(F38006-B)
 
+* extension insert HNZSDHRClientLastUpdated(2023-11-26T10:02:45+13:00)
+
 * insert LocalIdentifierExample
 
 * subject insert Patient(ZKC7284, Sage Westbrook)

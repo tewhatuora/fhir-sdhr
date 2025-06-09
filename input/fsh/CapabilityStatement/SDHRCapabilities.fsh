@@ -1,7 +1,7 @@
 Instance: SDHRCapabliityStatement
 InstanceOf: HnzToolingCapabilityStatement
 Usage: #definition
-* version = "0.3.0"
+* version = "0.5.0"
 * name = "SDHRCapabliityStatement"
 * title = "NZ Shared Digital Health Record API"
 * contact[+].name = "Health New Zealand Te Whatu Ora"
@@ -9,21 +9,21 @@ Usage: #definition
 * contact[=].telecom.system = #url
 * description = "NZ Shared Digital Health Record API"
 * status = #draft
-* experimental = true
+* experimental = false
 * date = "2024-04-15T01:15:23.3688326Z"
 * publisher = "Health NZ"
 * kind = #capability
 * implementation.description = "Health NZ | Te Whatu Ora NZ Shared Digital Health Record API"
-* implementation.url = "https://fhir.api.digital.health.nz/R4"
+* implementation.url = "https://api.uat.sdhr.digital.health.nz/s2s"
 * software.name = "NZ Shared Digital Health Record API"
-* software.version = "1.0.0.0"
+* software.version = "1.0.0"
 * fhirVersion = #4.0.1
 * format = #application/fhir+json
 * rest.mode = #server
 
 * rest.security.cors = true
 * rest.security.service = #SMART-on-FHIR
-* rest.security.description = "OAuth 2.0 - Client Credential flow.)"
+* rest.security.description = "OAuth 2.0 - Client Credential flow."
 * rest.security.extension.url = "http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris"
 * rest.security.extension.extension[0].url = "token"
 * rest.security.extension.extension[=].valueUri = "https://ppd.auth.services.health.nz/realms/hnz-integration/protocol/openid-connect/token"
@@ -36,19 +36,16 @@ Usage: #definition
 * extension[HnzApiSpecBuilderExtension].extension[globalHeaders].extension[=].extension[key].valueString = "X-Correlation-Id"
 * extension[HnzApiSpecBuilderExtension].extension[globalHeaders].extension[=].extension[value].valueUri = "https://raw.githubusercontent.com/tewhatuora/schemas/main/shared-care/Correlation-Id.json"
 * extension[HnzApiSpecBuilderExtension].extension[globalHeaders].extension[=].extension[required].valueBoolean = false
-//* extension[HnzApiSpecBuilderExtension].extension[globalHeaders].extension[+].extension[key].valueString = "x-api-key"
-* extension[HnzApiSpecBuilderExtension].extension[globalHeaders].extension[=].extension[value].valueUri = "https://raw.githubusercontent.com/tewhatuora/schemas/main/shared-care/Api-Key.json"
-* extension[HnzApiSpecBuilderExtension].extension[globalHeaders].extension[=].extension[required].valueBoolean = true
 * extension[HnzApiSpecBuilderExtension].extension[globalHeaders].extension[+].extension[key].valueString = "Request-Context"
 * extension[HnzApiSpecBuilderExtension].extension[globalHeaders].extension[=].extension[value].valueUri = "https://raw.githubusercontent.com/tewhatuora/schemas/main/shared-care/Request-Context.json"
 * extension[HnzApiSpecBuilderExtension].extension[globalHeaders].extension[=].extension[required].valueBoolean = true
 * extension[HnzApiSpecBuilderExtension].extension[licenseURL].valueUri = "https://www.tewhatuora.govt.nz/assets/Our-health-system/Digital-health/Digital-Service-Hub/API-Access-and-Use-Agreement.docx"
 * extension[HnzApiSpecBuilderExtension].extension[licenseName].valueString = "Health New Zealand Digital Services Hub API Access and Use Agreement"
-* extension[HnzApiSpecBuilderExtension].extension[externalDocs].valueUri = "https://fhir-ig.digital.health.nz/shared-care"
+* extension[HnzApiSpecBuilderExtension].extension[externalDocs].valueUri = "https://fhir-ig.digital.health.nz/sdhr"
 
+* rest insert APIStandardsDocumentation 
 // system interactions
 * rest.interaction.code = #search-system
-* rest.interaction insert APIStandardsDocumentation 
 * rest.interaction[+].code = #transaction
 * rest.interaction[+].code = #batch
 
@@ -59,7 +56,16 @@ Usage: #definition
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
 * rest.resource[=].interaction[+].code = #search-type
-* rest.resource[=].searchParam[0].name = "category"
+* rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
+* rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
+* rest.resource[=].extension[=].extension[=].valueCode = #SHALL
+* rest.resource[=].extension[=].extension[+].url = "required"
+* rest.resource[=].extension[=].extension[=].valueString = "patient"
+* rest.resource[=].searchParam[+].name = "patient"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "MANDATORY\n  Who the sensitivity is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"
+* rest.resource[=].searchParam[+].name = "category"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/AllergyIntolerance-category"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "Must be one of \n* food\n* medication\n* environment\n* biologic \n [AllergyIntolerance Category ValueSet](http://hl7.org/fhir/ValueSet/allergy-intolerance-category)"
@@ -75,10 +81,6 @@ Usage: #definition
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
-* rest.resource[=].searchParam[+].name = "patient"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Who the sensitivity is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"
 * rest.resource[=].searchParam[+].name = "recorder"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/AllergyIntolerance-recorder"
 * rest.resource[=].searchParam[=].type = #reference
@@ -100,7 +102,16 @@ Usage: #definition
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
 * rest.resource[=].interaction[+].code = #search-type
-* rest.resource[=].searchParam[0].name = "category"
+* rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
+* rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
+* rest.resource[=].extension[=].extension[=].valueCode = #SHALL
+* rest.resource[=].extension[=].extension[+].url = "required"
+* rest.resource[=].extension[=].extension[=].valueString = "patient"
+* rest.resource[=].searchParam[+].name = "patient"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  Who has the condition?"
+* rest.resource[=].searchParam[+].name = "category"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Condition-category"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "The category of the condition"
@@ -108,7 +119,7 @@ Usage: #definition
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-code"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "The code for the condition"
-* rest.resource[=].searchParam[+].name = "enounter"
+* rest.resource[=].searchParam[+].name = "encounter"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Condition-encounter"
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "Encounter associated with the condition"
@@ -124,10 +135,6 @@ Usage: #definition
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/AllergyIntolerance-participant"
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "Persons involved in the encounter other than the patient."
-* rest.resource[=].searchParam[+].name = "patient"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Who has the condition?"
 * rest.resource[=].searchParam[+].name = "severity"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Condition-severity"
 * rest.resource[=].searchParam[=].type = #token
@@ -143,15 +150,17 @@ Usage: #definition
 //* rest.resource[=].searchInclude[0] = "*"
 * rest.resource[=].searchInclude[0] = "Condition:encounter"
 
-
-
-// consent
-// * rest.resource[+].type = #Consent
-// * rest.resource[=].profile = Canonical(SDHRConsent)
-// * rest.resource[=].interaction[0].code = #read
-// * rest.resource[=].interaction[+].code = #create 
-// * rest.resource[=].interaction[+].code = #update
-// * rest.resource[=].interaction[+].code = #search-type
+//consent
+* rest.resource[+].type = #Consent
+* rest.resource[=].profile = Canonical(SDHRConsent)
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #create 
+* rest.resource[=].interaction[+].code = #update
+* rest.resource[=].interaction[+].code = #search-type
+* rest.resource[=].searchParam[+].name = "patient"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "Who does the consent relate to"
 
 // encounter
 * rest.resource[+].type = #Encounter
@@ -160,6 +169,15 @@ Usage: #definition
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
 * rest.resource[=].interaction[+].code = #search-type
+* rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
+* rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
+* rest.resource[=].extension[=].extension[=].valueCode = #SHALL
+* rest.resource[=].extension[=].extension[+].url = "required"
+* rest.resource[=].extension[=].extension[=].valueString = "patient"
+* rest.resource[=].searchParam[+].name = "patient"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  The patient or group present at the encounter"
 * rest.resource[=].searchParam[+].name = "identifier"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
 * rest.resource[=].searchParam[=].type = #token
@@ -172,10 +190,6 @@ Usage: #definition
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-participant"
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "Persons involved in the encounter other than the patient."
-* rest.resource[=].searchParam[+].name = "patient"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "The patient or group present at the encounter"
 * rest.resource[=].searchParam[+].name = "participant-actor"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Condition-participant-actor"
 * rest.resource[=].searchParam[=].type = #reference
@@ -200,6 +214,15 @@ Usage: #definition
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
 * rest.resource[=].interaction[+].code = #search-type
+* rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
+* rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
+* rest.resource[=].extension[=].extension[=].valueCode = #SHALL
+* rest.resource[=].extension[=].extension[+].url = "required"
+* rest.resource[=].extension[=].extension[=].valueString = "patient"
+* rest.resource[=].searchParam[+].name = "patient"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  Who the observation is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"
 * rest.resource[=].searchParam[+].name = "category"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Observation-category"
 * rest.resource[=].searchParam[=].type = #token
@@ -220,10 +243,6 @@ Usage: #definition
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
-* rest.resource[=].searchParam[+].name = "patient"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Who the observation is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"
 * rest.resource[=].searchParam[+].name = "performer"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Observation-performer"
 * rest.resource[=].searchParam[=].type = #reference

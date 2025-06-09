@@ -15,9 +15,16 @@
 RuleSet: ProfilePatient(property)
 * {property} 1..1
 * {property} only Reference(Patient)
-* {property}.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/Patient/ZZZ0008"
+* {property}.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. See constraints for details."
 * {property}.type = "Patient"
+* {property}.type 1..1
+* {property}.reference 1..1
+* {property}.reference obeys nhi-url-format
 
+Invariant: nhi-url-format
+Description: "Reference must be an NHI Patient URL with format https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZZZ1111 or ZZZ11AA"
+Expression: "matches('^https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/[A-Z]{3}([0-9]{4}|[0-9]{2}[A-Z]{2})$')"
+Severity: #error
 
 /*
     Re-usable Practitioner component for use in profiles.
@@ -29,8 +36,15 @@ RuleSet: ProfilePatient(property)
 RuleSet: ProfilePractitioner(property)
 * {property} 1..1
 * {property} only Reference(Practitioner)
-* {property}.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system E.g. https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ"
+* {property}.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system. See constraints for details."
 * {property}.type = "Practitioner"
+* {property}.reference obeys hpi-url-format
+
+Invariant: hpi-url-format
+Description: "Reference must be an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
+Expression: "matches('^https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/[0-9]{2}[A-Z]{4}$')"
+Severity: #error
+
 
 /*
     Sets up reference elements for an NHI Patient
@@ -40,7 +54,7 @@ RuleSet: ProfilePractitioner(property)
 
 RuleSet: Patient(nhi-id, nhi-name)
 * type = "Patient"
-* reference = "https://api.hip.digital.health.nz/fhir/Patient/{nhi-id}"
+* reference = "https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/{nhi-id}"
 * display = "{nhi-name}"
 
 /*
@@ -51,7 +65,7 @@ RuleSet: Patient(nhi-id, nhi-name)
 */
 RuleSet: Practitioner(hpi-practitioner-id, hpi-practitioner-name)
 * type = "Practitioner"
-* reference = "https://api.hip.digital.health.nz/fhir/Practitioner/{hpi-practitioner-id}"
+* reference = "https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/{hpi-practitioner-id}"
 * display = "{hpi-practitioner-name}"
 
 /*
@@ -59,16 +73,32 @@ RuleSet: Practitioner(hpi-practitioner-id, hpi-practitioner-name)
     HPI Facility
 */
 RuleSet: HPIFacility(hpi-facility-id)
-* source = "https://api.hip.digital.health.nz/fhir/Location/{hpi-facility-id}"
+* source = "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facility-id}"
 
 RuleSet: MetaSource
 * source ^short = "Captures the source of the record - please see description for details"
 * source ^definition = "Captures the source of the record. If the record is sourced from a PMS the value should contain the HPIFacilityID
-                            e.g. HPI Facility https://api.hip.digital.health.nz/fhir/Location/F38006-B
+                            e.g. HPI Facility https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B
                             or HNZ System (AIR) https://api.air.digital.health.nz/fhir/"
 
+Invariant: hpi-location-url-format
+Description: "Reference must be an HPI Location URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A"
+Expression: "matches('^https://api.hip.digital.health.nz/fhir/hpi/v1/Location/[A-Z]{1}[0-9]{5}-[A-Z]{1}$')"
+Severity: #error
+
+RuleSet: MetaTag
+* tag 0..*
+* tag ^short = "Tag the resource with a code to indicate usability components of the resource"
+* tag ^definition = "Tag the resource with a code to indicate usability components of the resource. This is used to indicate that the resource is important and, for example, should be highlighted in a user interface."
+* tag from sdhr-resource-tags-valueset (preferred)
+
+RuleSet: MetaTagExample
+* tag[+].system = "https://standards.digital.health.nz/ns/sdhr-resource-tags"
+* tag[=].code = #highlighted
+* tag[=].display = "Highlighted"
+
 RuleSet: LocalIdentifierDocs
-* identifier 0..*
+* identifier 1..*
 * identifier.system 1..1
 * identifier.value 1..1
 * identifier.use ^short = "The local identifier use SHOULD be set to secondary, where the SDHR resource id is considered the primary identifier."
@@ -103,3 +133,17 @@ RuleSet: UserSelected
 * code.coding.userSelected 0..1
 * code.coding.userSelected ^short = "Indicates that the value has been selected by a system user"
 * code.coding.userSelected ^definition = "This field is used to maintain the code as selected by the source systems end user. For example, where a patient management system uses local codes or a non-common code set to record a substance or allergen this field indicates that the value is as selected by the system user. Some level of clinical interpretation may be required."
+
+// sets up Coding referencing a code in the local RF codesystem
+RuleSet: SDHRCoding(code-value,display)
+* coding.system = Canonical(SDHRCodeSystem)
+* coding.code = #{code-value}
+* coding.display = "{display}"
+
+RuleSet: HNZSDHRClientLastUpdated(dateTime)
+* url = "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-sdhr-client-last-updated-extension"
+* valueDateTime = "{dateTime}"
+
+RuleSet: HNZSDHRHighlighted(highlighted)
+* url = "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-sdhr-highlighted-extension"
+* valueBoolean = {highlighted}

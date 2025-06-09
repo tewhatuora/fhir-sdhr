@@ -23,7 +23,7 @@ RuleSet: ProfilePatient(property)
 
 Invariant: nhi-url-format
 Description: "Reference must be an NHI Patient URL with format https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/AAA1111 or AAA11AA"
-Expression: "matches('^https:\/\/api.hip.digital.health.nz\/fhir\/nhi\/v1\/Patient\/[A-Z]{3}([0-9]{4}|[0-9]{2}[A-Z]{2})$')"
+Expression: "matches('^https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/[A-Z]{3}([0-9]{4}|[0-9]{2}[A-Z]{2})$')"
 Severity: #error
 
 /*
@@ -42,7 +42,7 @@ RuleSet: ProfilePractitioner(property)
 
 Invariant: hpi-url-format
 Description: "Reference must be an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
-Expression: "matches('^https:\/\/api.hip.digital.health.nz\/fhir\/hpi\/v1\/Practitioner\/[0-9]{2}[A-Z]{4}$')"
+Expression: "matches('^https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/[0-9]{2}[A-Z]{4}$')"
 Severity: #error
 
 
@@ -80,6 +80,11 @@ RuleSet: MetaSource
 * source ^definition = "Captures the source of the record. If the record is sourced from a PMS the value should contain the HPIFacilityID
                             e.g. HPI Facility https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B
                             or HNZ System (AIR) https://api.air.digital.health.nz/fhir/"
+
+Invariant: hpi-location-url-format
+Description: "Reference must be an HPI Location URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A"
+Expression: "matches('^https://api.hip.digital.health.nz/fhir/hpi/v1/Location/[A-Z]{1}[0-9]{5}-[A-Z]{1}$')"
+Severity: #error
 
 RuleSet: MetaTag
 * tag 0..*

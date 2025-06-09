@@ -15,9 +15,16 @@
 RuleSet: ProfilePatient(property)
 * {property} 1..1
 * {property} only Reference(Patient)
-* {property}.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. E.g. https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZZZ0008"
+* {property}.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. See constraints for details."
 * {property}.type = "Patient"
+* {property}.type 1..1
+* {property}.reference 1..1
+* {property}.reference obeys nhi-url-format
 
+Invariant: nhi-url-format
+Description: "Reference must be an NHI Patient URL with format https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/AAA1111 or AAA11AA"
+Expression: "matches('^https://api\\.hip\\.digital\\.health\\.nz/fhir/nhi/v1/Patient/[A-Z]{3}([0-9]{4}|[0-9]{2}[A-Z]{2})$')"
+Severity: #error
 
 /*
     Re-usable Practitioner component for use in profiles.
@@ -29,8 +36,15 @@ RuleSet: ProfilePatient(property)
 RuleSet: ProfilePractitioner(property)
 * {property} 1..1
 * {property} only Reference(Practitioner)
-* {property}.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system E.g. https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/99ZZZZ"
+* {property}.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system. See constraints for details."
 * {property}.type = "Practitioner"
+* {property}.reference obeys hpi-url-format
+
+Invariant: hpi-url-format
+Description: "Reference must be an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
+Expression: "matches('^https://api\\.hip\\.digital\\.health\\.nz/fhir/hpi/v1/Practitioner/[0-9]{2}[A-Z]{4}$')"
+Severity: #error
+
 
 /*
     Sets up reference elements for an NHI Patient

@@ -10,12 +10,14 @@ Description: "Consent resource created to reflect a patient has agreed to share 
 * category ^definition = "The category of the consent, which is a code that indicates the type of consent"
 * category ^fixedCode = $sct#887031000000108
 
-* patient.type = "Patient"
-* patient.identifier.use = #official
-* patient.identifier.system = "https://standards.digital.health.nz/ns/nhi-id"
-* patient.identifier.value 1..1
+// * patient.type = "Patient"
+// * patient.identifier.use = #official
+// * patient.identifier.system = "https://standards.digital.health.nz/ns/nhi-id"
+// * patient.identifier.value 1..1
 
-* patient.identifier.value ^short = "The NHI number of the patient"
+* insert ProfilePatient(patient)
+
+// * patient.identifier.value ^short = "The NHI number of the patient"
 
 * policy 1..*
 

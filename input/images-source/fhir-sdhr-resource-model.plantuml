@@ -56,6 +56,8 @@ class "SDHR:Condition" as condition <<Condition>> #LightSalmon ##[bold] {
     * **extension**: ~~1..*~~
     * **extentension[*].url** : "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
     * **extension[*].valueBoolean**: boolean true|false
+    * **extension[+].url** : "https://standards.digital.health.nz/ns/sdhr-client-last-updated"
+    * **extension[+].valueDateTime**: "2023-11-26T10:02:45+13:00"
     * **code**: ~~1..1~~ Binding: Condition/Problem/DiagnosisCodes (preferred) [[[http://hl7.org/fhir/ValueSet/condition-code]]]
     * **subject**: ~~1..1~~ Reference NHI Patient
     * **onsetDateTime**: ~~0..1~~ Preferred

@@ -8,6 +8,11 @@ Description: "Condition resource to record problems and conditions affecting a p
 * meta insert MetaSource
 * meta insert MetaTag
 
+* extension contains
+  hnz-sdhr-client-last-updated-extension named ClientLastUpdated 0..1
+  and
+  hnz-sdhr-highlighted-extension named Highlighted 0..1
+
 * insert LocalIdentifierDocs
 
 * onset[x] only dateTime

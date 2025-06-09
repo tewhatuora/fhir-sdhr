@@ -6,6 +6,8 @@ Description: "An example payload for a Primary Care AllergyIntolerance resource 
 * meta insert HPIFacility(F38006-B)
 * meta.security = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#R "Restricted"
 
+* extension[+] insert HNZSDHRClientLastUpdated(2023-11-26T10:02:45+13:00)
+
 * insert LocalIdentifierExample
 
 * type = #allergy

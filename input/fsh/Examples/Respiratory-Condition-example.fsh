@@ -10,6 +10,7 @@ Usage: #example
 
 * extension.url = "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
 * extension.valueBoolean = false
+* extension[+] insert HNZSDHRClientLastUpdated(2025-01-26T10:02:45+13:00)
 * clinicalStatus = $condition-clinical#active
 * verificationStatus = $condition-ver-status#confirmed
 * code = http://health.govt.nz/read-codes#H051.00 "Acute up resp tract infection"

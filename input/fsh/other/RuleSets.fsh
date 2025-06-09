@@ -79,7 +79,7 @@ RuleSet: MetaTagExample
 * tag[=].display = "Highlighted"
 
 RuleSet: LocalIdentifierDocs
-* identifier 0..*
+* identifier 1..*
 * identifier.system 1..1
 * identifier.value 1..1
 * identifier.use ^short = "The local identifier use SHOULD be set to secondary, where the SDHR resource id is considered the primary identifier."
@@ -120,3 +120,11 @@ RuleSet: SDHRCoding(code-value,display)
 * coding.system = Canonical(SDHRCodeSystem)
 * coding.code = #{code-value}
 * coding.display = "{display}"
+
+RuleSet: HNZSDHRClientLastUpdated(dateTime)
+* url = "https://standards.digital.health.nz/ns/sdhr-client-last-updated"
+* valueDateTime = "{dateTime}"
+
+RuleSet: HNZSDHRHighlighted(highlighted)
+* url = "https://standards.digital.health.nz/ns/sdhr-highlighted"
+* valueBoolean = {highlighted}

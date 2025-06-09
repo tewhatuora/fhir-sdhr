@@ -150,15 +150,17 @@ Usage: #definition
 //* rest.resource[=].searchInclude[0] = "*"
 * rest.resource[=].searchInclude[0] = "Condition:encounter"
 
-
-
-// consent
-// * rest.resource[+].type = #Consent
-// * rest.resource[=].profile = Canonical(SDHRConsent)
-// * rest.resource[=].interaction[0].code = #read
-// * rest.resource[=].interaction[+].code = #create 
-// * rest.resource[=].interaction[+].code = #update
-// * rest.resource[=].interaction[+].code = #search-type
+//consent
+* rest.resource[+].type = #Consent
+* rest.resource[=].profile = Canonical(SDHRConsent)
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #create 
+* rest.resource[=].interaction[+].code = #update
+* rest.resource[=].interaction[+].code = #search-type
+* rest.resource[=].searchParam[+].name = "patient"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "Who does the consent relate to"
 
 // encounter
 * rest.resource[+].type = #Encounter

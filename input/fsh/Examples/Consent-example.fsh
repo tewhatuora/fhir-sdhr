@@ -14,9 +14,9 @@ Description: "Consent example submitted to allow a patient to opt in to sharing 
 * policy[+].uri = "https://www.privacy.org.nz/privacy-act-2020"
 * policy[=].authority = "https://www.privacy.org.nz"
 
-* provision.type = #permit
+* provision.type = #deny
 * provision.period.start = "2023-10-04"
-* provision.period.end = "2028-11-22"
+//* provision.period.end = "2028-11-22"
 * provision.action.coding.code = #access "Access. Retrieval without permitting collection, use or disclosure."
 //* provision.action.coding.code.text = "Retrieval without permitting collection, use or disclosure. e.g., no screen-scraping for collection, use or disclosure (view-only access)"
 

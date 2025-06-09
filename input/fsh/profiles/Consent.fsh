@@ -25,7 +25,7 @@ Description: "Consent resource created to reflect a patient has agreed to share 
 * provision.type ^short = "The type of consent, either permit or deny"
 * provision.period.start 1..1
 * provision.period.start ^short = "The date and time the Consent is considered to be in effect"
-* provision.period.end 1..1
+* provision.period.end 0..1
 * provision.period.end ^short = "The date and time the Consent is considered to be expired"
 * provision.action 1..*
 * provision.action ^short = "The action that is being permitted or denied"

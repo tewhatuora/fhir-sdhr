@@ -8,7 +8,8 @@ Description: "Consent resource created to reflect a patient has agreed to share 
 * category 1..1
 * category ^short = "The category of the consent, which is a code that indicates the type of consent"
 * category ^definition = "The category of the consent, which is a code that indicates the type of consent"
-* category ^fixedCode = $sct#887031000000108
+* category ^fixedCodeableConcept.coding[0].system = "http://snomed.info/sct"
+* category ^fixedCodeableConcept.coding[0].code = #887031000000108
 
 // * patient.type = "Patient"
 // * patient.identifier.use = #official

@@ -8,6 +8,9 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 
 * meta.profile 1..1
 
+* extension contains
+  hnz-sdhr-client-last-updated-extension named ClientLastUpdated 0..1
+
 * meta.source 1..1
 * meta insert MetaSource
 

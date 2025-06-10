@@ -12,6 +12,9 @@ Description: "A Shared Digital Health Record Observation."
 
 * insert LocalIdentifierDocs
 
+* extension contains
+  hnz-sdhr-client-last-updated-extension named ClientLastUpdated 0..1
+
 * modifierExtension 0..0
 * contained 0..0
 

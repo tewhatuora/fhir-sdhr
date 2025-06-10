@@ -9,6 +9,9 @@ Description: "Encounter resource to record an instance of an interaction between
 
 * insert LocalIdentifierDocs
 
+* extension contains
+  hnz-sdhr-client-last-updated-extension named ClientLastUpdated 0..1
+
 // Excluded Elements
 * implicitRules 0..0
 * language 0..0

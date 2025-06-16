@@ -36,3 +36,4 @@ Description: "Encounter resource to record an instance of an interaction between
 * participant.individual.identifier 0..0
 
 * period 1..1
+* period.start 1..1

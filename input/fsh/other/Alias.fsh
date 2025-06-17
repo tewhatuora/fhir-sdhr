@@ -4,6 +4,7 @@ Alias: $condition-ver-status = http://terminology.hl7.org/CodeSystem/condition-v
 Alias: $sct = http://snomed.info/sct
 //Alias: $sct-nz = http://snomed.info/sct/21000210109/
 Alias: $loinc = http://loinc.org
+Alias: $sdhr-participation-reason = https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-participation-reason
 //Re-usable properties
 Alias: $HealthRecordKey = https://standards.digital.health.nz/ns/health-record-key-id
 

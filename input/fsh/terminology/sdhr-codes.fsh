@@ -17,3 +17,14 @@ Note: When available these codes will be sourced from the NZHTS Implementation G
 
 * #sdhr-usability-flags "These codes are intended to be applied as `Meta.tag` indicators so that API Consumers are able apply local visibility or usability rules."
   * #highlighted "Highlighted" "This code indicates that the resource is important and, for example, should be highlighted in a user interface."
+
+
+CodeSystem: SDHRParticipationReason
+Id: sdhr-participation-reason
+Title: "SDHR Participation Reason Codes"
+* ^meta.versionId = "1"
+* ^status = #draft
+* ^experimental = false
+* ^publisher = "Health NZ | Te Whatu Ora"
+* #sdhr-records-withheld "Records withheld" "Records withheld from the patient for privacy or confidentiality reasons."
+* #sdhr-do-not-participate "Do not participate" "Patient does not wish to participate in the Shared Digital Health Record service."

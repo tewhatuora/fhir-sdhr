@@ -49,6 +49,10 @@ Usage: #definition
 * rest.interaction[+].code = #transaction
 * rest.interaction[+].code = #batch
 
+//participate operation
+* rest.operation[0].name = "participate"
+* rest.operation[=].definition = Canonical(SDHRParticipateOperation)
+
 // allergyIntolerance
 * rest.resource[0].type = #AllergyIntolerance
 * rest.resource[=].profile = Canonical(SDHRAllergyIntolerance)

@@ -7,6 +7,7 @@ The SDHR API is comprised of multiple FHIR resources. This page provides technic
 | [API Capability Statement](./CapabilityStatement-SDHRCapabliityStatement.html) | FHIR API Capability Statement. Developers should review this to understand the available API interactions and request requirements such as the Request-Context header |
 | [API Artifacts](./artifacts.html) | List of FHIR Artifacts for this API |
 | [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) | Machine readable OpenAPI specification for this API |
+| [Participate Operation](./OperationDefinition-SDHRParticipateOperation.html)| Custom operation designed to capture participation information from API Consumers e.g. Patient Management Systems |
 
 ## Logical View
 
@@ -361,6 +362,48 @@ When a local identifier is not submitted to a resource, the search parameters fo
 {% include search-by-parameters.svg %}
 </div>
 <br clear="all">
+
+## SDHR Custom Operations
+
+The SDHR service includes the following FHIR custom operations
+
+### Participate Operation
+
+This operation is designed to enable API Consumers such as PMS systems to notify the SDHR service that a patient has withheld records from the service.
+To call the operation a `POST` request is made to the base API with a `Parameters` payload.
+e.g.
+```json
+{
+  "resourceType" : "Parameters",
+  "id" : "DoNotParticipateParameters",
+  "parameter" : [
+    {
+      "name" : "patient",
+      "valueReference" : {
+        "reference" : "https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284",
+        "type" : "Patient",
+        "display" : "Susan Westbrook"
+      }
+    },
+    {
+      "name" : "participation-indicator",
+      "valueBoolean" : false
+    },
+    {
+      "name" : "reason-code",
+      "valueCodeableConcept" : {
+        "coding" : [
+          {
+            "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-participation-reason",
+            "code" : "sdhr-do-not-participate",
+            "display" : "Do not participate"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
 
 ## SDHR Confidential Record API behaviour
 

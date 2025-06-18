@@ -7,6 +7,7 @@ It can be used to indicate whether the patient wishes to participate, whether an
 Examples where this operation might be used include:
 - A patient who chooses note to participate in the Shared Digital Health Record service and informs their healthcare provider of this choice.
 - A patient who has some confidential records, held at their healthcare provider, that are withheld from the service.
+
 For example payloads that might be used with this operation see:
 - [Parameters resource for total non-participation](./Parameters-DoNotParticipateParameters.html)
 - [Parameters resource for partial participation with withheld records](./Parameters-RecordsWithheldParticipateParameters.html)

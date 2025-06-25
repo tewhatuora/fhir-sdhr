@@ -1,4 +1,4 @@
-Instance: RecordsWithheldParticipateParameters
+Instance: RecordWithheldParticipateParameters
 InstanceOf: Parameters
 Usage: #example
 Description: "Example parameters content to POST to the Participate operation where a patient has individual records that are withheld - e.g. records marked as `Confidential`."
@@ -6,7 +6,11 @@ Description: "Example parameters content to POST to the Participate operation wh
 * parameter[=].valueReference = Reference(https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284)
 * parameter[=].valueReference.display = "Susan Westbrook"
 * parameter[=].valueReference.type = "Patient"
-* parameter[+].name = "participation-indicator"
+* parameter[+].name = "participationIndicator"
 * parameter[=].valueBoolean = false
-* parameter[+].name = "reason-code"
-* parameter[=].valueCodeableConcept = $sdhr-participation-reason#sdhr-records-withheld "Records withheld"
+* parameter[+].name = "resourceType"
+* parameter[=].valueString = "Condition"
+* parameter[+].name = "localResourceId"
+* parameter[=].valueString = "12345AAABBBccc"
+* parameter[+].name = "reasonCode"
+* parameter[=].valueCodeableConcept = $sdhr-participation-reason#sdhr-record-withheld "Records withheld"

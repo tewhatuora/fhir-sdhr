@@ -20,6 +20,28 @@ Usage: #definition
 * fhirVersion = #4.0.1
 * format = #application/fhir+json
 * rest.mode = #server
+//participate operation
+* rest.operation[0].name = "participate"
+* rest.operation[=].definition = Canonical(SDHRParticipateOperation)
+* rest.operation[=].documentation = """
+This operation allows a patient to choose to participate in the Shared Digital Health Record service.
+It can be used to indicate whether the patient wishes to participate, whether any resources are withheld, and the reason for participation.
+
+Examples where this operation might be used include:
+- A patient who chooses not to participate in the Shared Digital Health Record service and informs their healthcare provider of this choice.
+- A patient who has some confidential records, held at their healthcare provider, that are withheld from the service.
+
+For example payloads that might be used with this operation see:
+- [Parameters resource for total non-participation](./Parameters-DoNotParticipateParameters.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
+- [Parameters resource for partial participation with withheld records](./Parameters-RecordWithheldParticipateParameters.html) : This example shows how to indicate that a patient has some confidential records that are withheld from the Shared Digital Health Record service.
+- [Parameters resource for releasing withheld records](./Parameters-RecordReleasedParticipateParameters.html) : This example shows how to indicate that a patient has previously withheld records but has now released them to the Shared Digital Health Record service.
+
+To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participate`).
+
+The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
+The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
+The operation will return an OperationOutcome resource indicating the result of the operation.
+"""
 
 * rest.security.cors = true
 * rest.security.service = #SMART-on-FHIR
@@ -48,10 +70,6 @@ Usage: #definition
 * rest.interaction.code = #search-system
 * rest.interaction[+].code = #transaction
 * rest.interaction[+].code = #batch
-
-//participate operation
-* rest.operation[0].name = "participate"
-* rest.operation[=].definition = Canonical(SDHRParticipateOperation)
 
 // allergyIntolerance
 * rest.resource[0].type = #AllergyIntolerance

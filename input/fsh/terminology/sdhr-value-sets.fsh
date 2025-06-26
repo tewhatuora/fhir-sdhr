@@ -1,6 +1,7 @@
 ValueSet: SDHREncounterClassValueSet
 Id: sdhr-encounter-class-valueset
 Title: "ValueSet for EncounterStatus"
+Description: "A ValueSet containing all codes from the Encounter Class system."
 * include codes from valueset http://terminology.hl7.org/ValueSet/v3-ActEncounterCode
 * include codes from system SDHROther
 
@@ -8,11 +9,13 @@ Title: "ValueSet for EncounterStatus"
 ValueSet: SDHRAllergyIntoleranceManifestationValueSet
 Id: sdhr-allergyintolerance-manifestation-valueset
 Title: "ValueSet for AllergyIntolerance Manifestation"
+Description: "A ValueSet containing all codes from the AllergyIntolerance Manifestation system."
 * include codes from system http://snomed.info/sct/21000210109 where refset = #351000210106
 
 ValueSet: SDHRAllergyIntoleranceSeverityValueSet
 Id: sdhr-allergyintolerance-severity-valueset
 Title: "ValueSet for AllergyIntolerance Severity"
+Description: "A ValueSet containing all codes from the AllergyIntolerance Severity system."
 * include codes from valueset http://hl7.org/fhir/ValueSet/reaction-event-severity
 * include $sct#255604002 "Mild (qualifier value)"
 * include $sct#1255665007 "Moderate (qualifier value)"
@@ -28,9 +31,11 @@ Title: "ValueSet for AllergyIntolerance Severity"
 ValueSet: SDHRResourceTagsValueSet
 Id: sdhr-resource-tags-valueset
 Title: "ValueSet for SDHR Resource Tags"
+Description: "A ValueSet containing all codes from the SDHR Resource Tags system."
 * include nz-sdhr-codesystem#highlighted
 
 ValueSet: SDHRParticipationReasonValueSet
 Id: sdhr-participation-reason-valueset
 Title: "ValueSet for SDHR Participation Reason"
+Description: "A ValueSet containing all codes from the SDHR Participation Reason system."
 * include codes from system sdhr-participation-reason

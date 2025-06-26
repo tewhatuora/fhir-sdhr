@@ -76,11 +76,20 @@ The `reasonCode` parameter must be used to indicate the reason for withholding r
 It indicates the reason for withholding records or not participating in the Shared Digital Health Record service.
 Valid codes include:
 - `sdhr-record-withheld`: Records withheld from the patient for privacy or confidentiality reasons.
-- `sdhr-do-not-participate`: Patient does not wish to participate in the Shared Digital Health Record service."""
+- `sdhr-do-not-participate`: Patient does not wish to participate in the Shared Digital Health Record service.
+- `sdhr-record-released`: Record that was previously withheld has been released (is no longer confidential or restricted) to the service by the patient."""
 
 * parameter[+].name = #return
 * parameter[=].use = #out
 * parameter[=].min = 1
 * parameter[=].max = "1"
 * parameter[=].type = #OperationOutcome
-* parameter[=].documentation = "The result of the operation"
+* parameter[=].documentation = """The result of the operation. 
+This parameter will contain an OperationOutcome resource indicating the success or failure of the operation.
+If the operation is successful, the OperationOutcome will contain a success message.
+If the operation fails, the OperationOutcome will contain an error message indicating the reason for the failure.
+The OperationOutcome resource will be returned in the response body of the operation request.
+See the following examples for possible OperationOutcome responses:
+- [OperationOutcome for invalid patient reference](./OperationOutcome-ParticipateInvalidPatientOutcome.html)
+- [OperationOutcome for missing reason code](./OperationOutcome-ParticipateMissingReasonOutcome.html)
+- [OperationOutcome for successful participation](./OperationOutcome-ParticipateSuccessOutcome.html)"""

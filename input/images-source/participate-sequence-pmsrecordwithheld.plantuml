@@ -1,6 +1,6 @@
-@startuml seq-fhir-sdhr-participate-operation-record-withheld
+@startuml
 
-title: SDHR Participate Operation Record Withheld Sequence
+title SDHR Participate Operation Record Withheld Sequence
 
 autonumber "<color:Black>[00]"
 

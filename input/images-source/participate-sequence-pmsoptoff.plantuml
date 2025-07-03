@@ -1,6 +1,6 @@
-@startuml seq-fhir-sdhr-participate-operation
+@startuml
 
-title: SDHR Participate Operation PMS Opt Off Sequence Diagram
+title SDHR Participate Operation PMS Opt Off Sequence Diagram
 
 autonumber "<color:Black>[00]"
 

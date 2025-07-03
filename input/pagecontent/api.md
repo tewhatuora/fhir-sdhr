@@ -405,6 +405,23 @@ e.g.
 }
 ```
 
+### Example Participation Flows
+
+<!-- markdownlint-disable MD033 -->
+<div width="100%">
+<!-- Generated from `input/images-source/participate-sequence-pmsoptoff.plantuml` -->
+{% include participate-sequence-pmsoptoff.svg %}
+</div>
+<br clear="all">\
+
+<!-- markdownlint-disable MD033 -->
+<div width="100%">
+<!-- Generated from `input/images-source/participate-sequence-pmsrecordwithheld.plantuml` -->
+{% include participate-sequence-pmsrecordwithheld.svg %}
+</div>
+<br clear="all">
+
+
 ## SDHR Confidential Record API behaviour
 
 When a record is created or updated to be marked as confidential using [FHIR Security labels](https://build.fhir.org/security-labels.html), read or search operations that would return the  record will result in no access to the record.

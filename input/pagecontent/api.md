@@ -395,8 +395,8 @@ e.g.
         "coding" : [
           {
             "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-participation-reason",
-            "code" : "sdhr-do-not-participate",
-            "display" : "Do not participate"
+            "code" : "sdhr-participation",
+            "display" : "SDHR participation"
           }
         ]
       }

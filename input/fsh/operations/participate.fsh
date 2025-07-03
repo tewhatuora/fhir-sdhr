@@ -56,6 +56,15 @@ The `reasonCode` parameter must be used to indicate the reason for withholding r
     This parameter is optional and should only be used to specify the type of resource that is withheld from the Shared Digital Health Record service.
     This parameter MUST be used when the `reasonCode` is `sdhr-record-withheld` to indicate which resources are withheld."""
 
+* parameter[+].name = #facilityId
+* parameter[=].use = #in
+* parameter[=].min = 1
+* parameter[=].max = "1"
+* parameter[=].type = #string
+* parameter[=].documentation = """The HPI Facility ID of the healthcare provider that is withholding the resource.
+    This parameter is mandatory and must be provided to indicate the healthcare provider that is withholding the resource from the Shared Digital Health Record service.
+    The HPI Facility ID must be a valid HPI Facility ID in the format `https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facility-id}`."""
+
 * parameter[+].name = #localResourceId
 * parameter[=].use = #in
 * parameter[=].min = 0
@@ -76,7 +85,7 @@ The `reasonCode` parameter must be used to indicate the reason for withholding r
 It indicates the reason for withholding records or not participating in the Shared Digital Health Record service.
 Valid codes include:
 - `sdhr-record-withheld`: Records withheld from the patient for privacy or confidentiality reasons.
-- `sdhr-do-not-participate`: Patient does not wish to participate in the Shared Digital Health Record service.
+- `sdhr-participation`: Patient participation preference for the Shared Digital Health Record service. In conjunction with `participationIndicator` set to false, this indicates that the patient does not wish to participate in the service. If the `participationIndicator` is true, this code indicates that the patient is participating in the service.
 - `sdhr-record-released`: Record that was previously withheld has been released (is no longer confidential or restricted) to the service by the patient."""
 
 * parameter[+].name = #return

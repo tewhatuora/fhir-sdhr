@@ -9,4 +9,4 @@ Description: "Example parameters content to POST to the Participate operation wh
 * parameter[+].name = "participationIndicator"
 * parameter[=].valueBoolean = false
 * parameter[+].name = "reasonCode"
-* parameter[=].valueCodeableConcept = $sdhr-participation-reason#sdhr-do-not-participate "Do not participate"
+* parameter[=].valueCodeableConcept = $sdhr-participation-reason#sdhr-participation "SDHR participation"

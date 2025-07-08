@@ -1,7 +1,7 @@
 Instance: RecordReleasedParticipateParameters
 InstanceOf: Parameters
 Usage: #example
-Description: "Example parameters content to POST to the Participate operation where a patient has individual records that are withheld - e.g. records marked as `Confidential`."
+Description: "Example parameters content to POST to the Participate operation where a patient has individual records that are no longer withheld."
 * parameter[0].name = "patient"
 * parameter[=].valueReference = Reference(https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284)
 * parameter[=].valueReference.display = "Susan Westbrook"

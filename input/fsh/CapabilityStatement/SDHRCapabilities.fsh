@@ -7,7 +7,7 @@ Usage: #definition
 * contact[+].name = "Health New Zealand Te Whatu Ora"
 * contact[=].telecom.value = "https://www.tewhatuora.govt.nz"
 * contact[=].telecom.system = #url
-* description = "NZ Shared Digital Health Record API"
+* description = "NZ Shared Digital Health Record API Capability Statement"
 * status = #draft
 * experimental = false
 * date = "2024-04-15T01:15:23.3688326Z"
@@ -74,6 +74,7 @@ The operation will return an OperationOutcome resource indicating the result of 
 
 // allergyIntolerance
 * rest.resource[0].type = #AllergyIntolerance
+* rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHRAllergyIntolerance)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
@@ -121,6 +122,7 @@ The operation will return an OperationOutcome resource indicating the result of 
 
 // condition
 * rest.resource[+].type = #Condition
+* rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHRCondition)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
@@ -177,6 +179,7 @@ The operation will return an OperationOutcome resource indicating the result of 
 
 //consent
 * rest.resource[+].type = #Consent
+* rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHRConsent)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
@@ -190,6 +193,7 @@ The operation will return an OperationOutcome resource indicating the result of 
 
 // encounter
 * rest.resource[+].type = #Encounter
+* rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHREncounter)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
@@ -236,6 +240,7 @@ The operation will return an OperationOutcome resource indicating the result of 
 
 // observations
 * rest.resource[+].type = #Observation
+* rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHRObservation)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 

@@ -50,7 +50,7 @@ note left of PARTICIPATE
   - participationIndicator: false
   - resourceType: Resource Type
   - localResourceId: Resource ID
-  - reasonCode: sdhr-participation
+  - reasonCode: sdhr-record-withheld
 end note
 PARTICIPATE -> FHIRAPI : Write Participation
 FHIRAPI -> SDHR : Persist

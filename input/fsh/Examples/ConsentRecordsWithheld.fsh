@@ -1,0 +1,28 @@
+Instance: SDHRConsentExampleRecordsWithheld
+InstanceOf: SDHRConsent
+Usage: #example
+Description: "Consent example to allow a patient to opt in to sharing their information, while withholding some records from the service"
+
+* status = #active
+* category = $sct#887031000000108 "Consent for information sharing"
+
+* identifier[+].use = #secondary
+* identifier[=].value = "93f28be6-4787-40f1-ae39-64233eb2cf7c"
+
+* patient  insert Patient(ZKC7284, Sage Westbrook)
+
+* policy[+].uri = "https://www.privacy.org.nz/privacy-act-2020"
+* policy[=].authority = "https://www.privacy.org.nz"
+
+// total participation
+* provision.type = #permit
+* provision.period.start = "2023-10-04"
+* provision.action.coding.code = #access "Access. Retrieval without permitting collection, use or disclosure."
+
+// some records withheld
+* provision.provision[+].type = #deny
+* provision.provision[=].data[+].reference = Reference(Condition/local-pms-id)
+* provision.provision[=].data[=].meaning = #instance
+* provision.provision[=].data[+].reference = Reference(Condition/another-local-pms-id)
+* provision.provision[=].data[=].meaning = #instance
+* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy

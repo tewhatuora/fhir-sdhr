@@ -9,5 +9,5 @@ Usage: #example
 * issue[0].code = #suppressed
 * issue[0].details.coding[0].system = "http://terminology.hl7.org/CodeSystem/operation-outcome"
 * issue[0].details.coding[0].code = #MSG_RESOURCE_NOT_ALLOWED
-* issue[0].details.coding[0].display = "Operation successful"
+* issue[0].details.coding[0].display = "Not allowed to submit a resource for this operation"
 * issue[0].details.text = "Patient has opted out of participating in the service."

@@ -1,4 +1,4 @@
-Instance: SDHRDenyConsentExample
+Instance: SDHRConsentExampleDeny
 InstanceOf: SDHRConsent
 Usage: #example
 Description: "Consent example submitted to allow a patient to opt out of sharing their information, originating from a practice management system. This indicates total non participation."

@@ -5,6 +5,7 @@ Alias: $sct = http://snomed.info/sct
 //Alias: $sct-nz = http://snomed.info/sct/21000210109/
 Alias: $loinc = http://loinc.org
 Alias: $sdhr-participation-reason = https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-participation-reason
+Alias: $sdhr-outcome-codes = https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes
 //Re-usable properties
 Alias: $HealthRecordKey = https://standards.digital.health.nz/ns/health-record-key-id
 

@@ -22,6 +22,7 @@ Note: When available these codes will be sourced from the NZHTS Implementation G
 CodeSystem: SDHRParticipationReason
 Id: sdhr-participation-reason
 Title: "SDHR Participation Reason Codes"
+Description: "This code system defines the reasons for a patient to participate in the Shared Digital Health Record service."
 * ^meta.versionId = "1"
 * ^status = #draft
 * ^experimental = false

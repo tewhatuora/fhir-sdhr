@@ -1,4 +1,4 @@
-Instance: RecordReleasedParticipateParameters
+Instance: ParametersParticipateRecordReleased
 InstanceOf: Parameters
 Usage: #example
 Description: "Example parameters content to POST to the Participate operation where a patient has individual records that are no longer withheld."

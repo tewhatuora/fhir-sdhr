@@ -1,4 +1,4 @@
-Instance: HypertensionConditionExample
+Instance: ConditionHypertensionExample
 InstanceOf: SDHRCondition
 Description: "Example Hypertension Condition"
 Usage: #example

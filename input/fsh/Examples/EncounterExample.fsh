@@ -1,4 +1,4 @@
-Instance: SDHREncounterExample
+Instance: EncounterExample
 InstanceOf: SDHREncounter
 Description: "Example Encounter resource to record an instance of an interaction between patient and healthcare provider"
 Usage: #example

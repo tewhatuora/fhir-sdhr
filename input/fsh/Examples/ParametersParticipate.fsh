@@ -1,4 +1,4 @@
-Instance: ParticipateParameters
+Instance: ParametersParticipate
 InstanceOf: Parameters
 Usage: #example
 Description: "Example parameters content to POST to the Participate operation where a patient now wishes to participate in the Shared Digital Health Record service."

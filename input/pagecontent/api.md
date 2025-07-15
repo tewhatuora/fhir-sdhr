@@ -375,7 +375,7 @@ e.g.
 ```json
 {
   "resourceType" : "Parameters",
-  "id" : "DoNotParticipateParameters",
+  "id" : "ParametersDoNotParticipate",
   "parameter" : [
     {
       "name" : "patient",

@@ -32,10 +32,10 @@ Examples where this operation might be used include:
 - A patient who has some confidential records, held at their healthcare provider, that are withheld from the service.
 
 For example payloads that might be used with this operation see:
-- [Parameters resource for total non-participation](./Parameters-DoNotParticipateParameters.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
-- [Parameters resource for participation](./Parameters-ParticipateParameters.html) : This example shows how to indicate that a patient wishes to participate in the Shared Digital Health Record service, where previously opted out (opt-in).
-- [Parameters resource for partial participation with withheld records](./Parameters-RecordWithheldParticipateParameters.html) : This example shows how to indicate that a patient has some confidential records that are withheld from the Shared Digital Health Record service.
-- [Parameters resource for releasing withheld records](./Parameters-RecordReleasedParticipateParameters.html) : This example shows how to indicate that a patient has previously withheld records but has now released them to the Shared Digital Health Record service.
+- [Parameters resource for total non-participation](./Parameters-ParametersDoNotParticipate.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
+- [Parameters resource for participation](./Parameters-ParametersParticipate.html) : This example shows how to indicate that a patient wishes to participate in the Shared Digital Health Record service, where previously opted out (opt-in).
+- [Parameters resource for partial participation with withheld records](./Parameters-ParametersParticipateRecordWithheld.html) : This example shows how to indicate that a patient has some confidential records that are withheld from the Shared Digital Health Record service.
+- [Parameters resource for releasing withheld records](./Parameters-ParametersParticipateRecordReleased.html) : This example shows how to indicate that a patient has previously withheld records but has now released them to the Shared Digital Health Record service.
 
 To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participate`).
 

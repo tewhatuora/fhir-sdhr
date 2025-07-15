@@ -21,6 +21,7 @@
 CodeSystem: SDHROther
 Id: sdhr-other-codes
 Title: "SDHR Codes where the appropriate code is not known or can not be determined."
+Description: "This code system is used when the appropriate code is not known or can not be determined."
 * ^meta.versionId = "1"
 * ^status = #draft
 * ^experimental = false

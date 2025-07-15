@@ -31,7 +31,8 @@ Description: "Encounter resource to record an instance of an interaction between
 * participant.extension 0..0
 * participant.modifierExtension 0..0
 
-* insert ProfilePractitioner(participant.individual)
+* participant.individual ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
+//* insert ProfilePractitioner(participant.individual)
 * participant.individual.extension 0..0
 * participant.individual.identifier 0..0
 

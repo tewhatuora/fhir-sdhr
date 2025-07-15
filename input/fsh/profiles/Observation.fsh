@@ -20,7 +20,10 @@ Description: "A Shared Digital Health Record Observation."
 
 * insert ProfilePatient(subject)
 
-* insert ProfilePractitioner(performer)
+//* insert ProfilePractitioner(performer)
+
+* performer ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
+
 
 * code 1..1 
 * code from http://hl7.org/fhir/ValueSet/observation-codes (preferred)

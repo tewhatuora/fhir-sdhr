@@ -21,6 +21,8 @@ Description: "Consent example to allow a patient to opt in to sharing their info
 
 // some records withheld
 * provision.provision[+].type = #deny
+* provision.provision[=].actor[+].role = #PROV
+* provision.provision[=].actor[=].reference = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A)
 * provision.provision[=].data[+].reference = Reference(Condition/local-pms-id)
 * provision.provision[=].data[=].meaning = #instance
 * provision.provision[=].data[+].reference = Reference(Condition/another-local-pms-id)

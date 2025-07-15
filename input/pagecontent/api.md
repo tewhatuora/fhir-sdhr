@@ -444,7 +444,7 @@ Response status: `200`
 
 Response body:
 
-{% fragment Bundle/ConfidentialRecordsSearchResponseExample JSON %}
+{% fragment Bundle/SearchConfidentialRecordsResponseExample JSON %}
 
 In this request example, a request is made to return AllergyIntolerance resources for a patient using FHIR Search. As a confidential resource was matched with this search, the search result set has been redacted due to confidentiality tags on the resource, resulting in the `meta.security` `REDACTED` tag being added to the search result `Bundle`. This indicates to the API Consumer that some portion of the searchset has been filtered due to confidentiality and not included in the content returned. The `total` within the response reflects the total of resources before filtering occurs.
 

@@ -8,7 +8,7 @@ For the Shared Digital Health Record, if a health consumer elects **NOT** to par
 
 For clarity, in general, the `Consent` scope is not available to consuming application and should be considered an administrative function.
 
-An [example consent resource](./Consent-SDHRConsentExample.html) is included to show what this should look like. 
+An [example consent resource](./Consent-ConsentExample.html) is included to show what this should look like. 
 
 
 

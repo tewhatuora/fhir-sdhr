@@ -2,17 +2,17 @@ Instance: SearchWithRecordsWithheldExample
 
 InstanceOf: Bundle
 Description: """
-              Example of a searchset API response for an AllergyIntolerance resource search.
-              In this case, the search response returns one entry item, with a total count of 2. This is because the API will not return the confidential record.
-              The redacted security label is applied to the Bundle response, to indicate that confidential records have been removed from the result set.
-              See the [API documentation](./api.html#sdhr-confidential-record-api-behaviour) for more information.
+              Example of a searchset API response for an Condition resource search where the patient has withheld records at their PMS.
+              In this case, the search response returns one entry `'total':1`.
+              The response also includes an entry which is an `OperationOutcome` resource indicating that some records were withheld at source.
+              This is indicated by the `search.mode` being set to `outcome` for the `OperationOutcome` entry.
             """
 Usage: #example
 * meta.lastUpdated = "2025-04-29T23:35:29.795Z"
 * type = #searchset
 * total = 1
 * link.relation = "self"
-* link.url = "https://api.mock.sdhr.digital.health.nz/s2s/AllergyIntolerance?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC7284"
+* link.url = "https://api.mock.sdhr.digital.health.nz/s2s/Condition?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC7284"
 * entry[+].resource = ConditionHypertensionExample
 * entry[=].fullUrl = "https://api.mock.sdhr.digital.health.nz/s2s/Condition/ConditionHypertensionExample"
 * entry[=].search.mode = #match

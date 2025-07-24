@@ -448,6 +448,24 @@ Response body:
 
 In this request example, a request is made to return AllergyIntolerance resources for a patient using FHIR Search. As a confidential resource was matched with this search, the search result set has been redacted due to confidentiality tags on the resource, resulting in the `meta.security` `REDACTED` tag being added to the search result `Bundle`. This indicates to the API Consumer that some portion of the searchset has been filtered due to confidentiality and not included in the content returned. The `total` within the response reflects the total of resources before filtering occurs.
 
+#### FHIR Search Example Where Matched Records Are Withheld
+
+In the following search the parameters below are supplied
+
+- `patient` | https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC4633
+- `source` | https://api.hip.digital.health.nz/fhir/Location/F38006-B
+- `identifier` | 6b8a6cc1-612f-456e-89df-9fbcd753acb2
+
+`GET /Condition?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC4633&_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FLocation%2FF38006-B&identifier=6b8a6cc1-612f-456e-89df-9fbcd753acb2`
+
+In this example the spplied parameters are an exact match for a singe record that has been indicated as wiithheld by the source system. in this scenario the server does not have the record however it is able to uniquely match to a record that has been withheld using the [$participate operation](./OperationDefinition-SDHRParticipateOperation.html)
+
+The search response will contain an `OperationOutcome` with `"mode":"outcome"` as below
+
+{% fragment Bundle/SearchExactMatchRecordWithheldExample JSON %}
+
+[See example details](./Bundle-SearchExactMatchRecordWithheldExample.html)
+
 #### FHIR read, vread example
 
 `GET /AllergyIntolerance/{id}`

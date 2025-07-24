@@ -372,38 +372,8 @@ The SDHR service includes the following FHIR custom operations
 This operation is designed to enable API Consumers such as PMS systems to notify the SDHR service that a patient has withheld records from the service.
 To call the operation a `POST` request is made to the base API with a `Parameters` payload.
 e.g.
-```json
-{
-  "resourceType" : "Parameters",
-  "id" : "ParametersDoNotParticipate",
-  "parameter" : [
-    {
-      "name" : "patient",
-      "valueReference" : {
-        "reference" : "https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284",
-        "type" : "Patient",
-        "display" : "Susan Westbrook"
-      }
-    },
-    {
-      "name" : "participation-indicator",
-      "valueBoolean" : false
-    },
-    {
-      "name" : "reason-code",
-      "valueCodeableConcept" : {
-        "coding" : [
-          {
-            "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-participation-reason",
-            "code" : "sdhr-participation",
-            "display" : "SDHR participation"
-          }
-        ]
-      }
-    }
-  ]
-}
-```
+
+{% fragment Parameters/ParametersParticipate JSON %}
 
 ### Example Participation Flows
 

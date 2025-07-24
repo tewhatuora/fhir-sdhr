@@ -7,9 +7,3 @@ In support of this, the *NZ Shared Digital Health Record API* has implemented th
 For the Shared Digital Health Record, if a health consumer elects **NOT** to participate this will be done by contacting the Health New Zealand assisted channel. The result of this action will be a `Consent` record created for this patient with a `provision.type` property set to `deny`
 
 For clarity, in general, the `Consent` scope is not available to consuming application and should be considered an administrative function.
-
-An [example consent resource](./Consent-ConsentExample.html) is included to show what this should look like. 
-
-
-
-

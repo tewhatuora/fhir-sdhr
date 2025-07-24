@@ -22,7 +22,7 @@ The SDHR API will initially access the following information from PMSs.
 * [Health conditions.](./StructureDefinition-SDHRCondition.html)
 * [Encounters (when someone has interacted with the health system).](./StructureDefinition-SDHREncounter.html)
 * [Observations.](./StructureDefinition-SDHRObservation.html)
-* [Consent](./StructureDefinition-SDHRConsent.html)
+<!-- * [Consent](./StructureDefinition-SDHRConsent.html) -->
 
 Further information may become available to be accessed over time.
 

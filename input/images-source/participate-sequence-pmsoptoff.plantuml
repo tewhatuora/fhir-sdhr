@@ -73,9 +73,9 @@ alt Patient has **NOT** opted in
   ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
   note left of PARTICIPATE
     Parameters:
-    - patient: Patient ID
-    - facilityId: Facility ID
-    - participationIndicator: true
+    - patient: Patient ID (NHI)
+    - facilityId: Facility ID (HPI FacilityID)
+    - globalParticipationIndicator: true
   end note
   PARTICIPATE -> FHIRAPI : Write Participation
   FHIRAPI -> SDHR : Persist
@@ -121,21 +121,21 @@ ORCHESTRATOR -> ORCHESTRATOR : Prepare participation\nparameters
 ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
 note left of PARTICIPATE
   Parameters:
-  - patient: Patient ID
-  - facilityId: Facility ID
-  - participationIndicator: false
+  - patient: Patient ID (NHI)
+  - facilityId: Facility ID (HPI FacilityID)
+  - globalParticipationIndicator: false
 end note
 PARTICIPATE -> FHIRAPI : Write Participation
 FHIRAPI -> SDHR : Persist
 PARTICIPATE -> ORCHESTRATOR : Return OperationOutcome
 
-==Optional==
+==Search for a Resource==
 ORCHESTRATOR -> FHIRAPI : Search Resource (e.g. Condition)
 FHIRAPI -> SDHR : Query Resource
 SDHR -> FHIRAPI : Return
 FHIRAPI -> ORCHESTRATOR : Return Search result with REDACTED data
 note right of ORCHESTRATOR
-In this example the patient was previously opted in and uploaded 1 COndition resource.
+In this example the patient was previously opted in and uploaded 1 Condition resource.
 The SDHR service indicates that the search resulted in 1 `match` but the data is redacted
 due to the patient's participation preferences.
 
@@ -153,7 +153,7 @@ due to the patient's participation preferences.
   "entry": []
 end note
 
-==Optional==
+==GET a Single Resource by ID==
 ORCHESTRATOR -> FHIRAPI : GET **ANY** Resource by ID (e.g. /Condition/{ID})
 FHIRAPI -> SDHR : Query Resource by ID
 SDHR -> FHIRAPI : Return 403
@@ -171,7 +171,7 @@ note right of ORCHESTRATOR
   ]
 end note
 
-==Optional Create Resource==
+==Create a Resource==
 ORCHESTRATOR -> FHIRAPI : Create Resource (e.g. Condition)
 FHIRAPI -> ORCHESTRATOR : Return OperationOutcome
 note right of ORCHESTRATOR

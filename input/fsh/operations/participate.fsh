@@ -55,13 +55,13 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].type = #string
 * parameter[=].documentation = """The resource type that is being withheld. Must be a valid FHIR resource type supported by the SDHR service, such as `Condition`, `Encounter` `Observation` etc. Note that `AllergyIntolerance` resources MUST NOT be withheld.
     This parameter is optional and should only be used to specify the type of resource that is withheld from the Shared Digital Health Record service.
-    When this paramter is used the request MUST contain a `reasonCode` parameter."""
+    When this paramter is used the request MUST contain a `reasonCode` parameter and a `localResourceId` parameter."""
 
 * parameter[+].name = #facilityId
 * parameter[=].use = #in
 * parameter[=].min = 1
 * parameter[=].max = "1"
-* parameter[=].type = #string
+* parameter[=].type = #Reference
 * parameter[=].documentation = """The HPI Facility ID of the healthcare provider that is withholding the resource.
     This parameter is mandatory and must be provided to indicate the healthcare provider that is withholding the resource from the Shared Digital Health Record service.
     The HPI Facility ID must be a valid HPI Facility ID in the format `https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facility-id}`."""
@@ -73,7 +73,7 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].type = #string
 * parameter[=].documentation = """The local resource ID that is withheld from the Shared Digital Health Record service.
     This parameter is optional and should only be used to specify the local ID of the resource that is withheld.
-    When this paramter is used the request MUST contain a `reasonCode` parameter."""
+    When this paramter is used the request MUST contain a `reasonCode` parameter and a `resourceType` parameter."""
 
 * parameter[+].name = #reasonCode
 * parameter[=].use = #in
@@ -82,8 +82,7 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].type = #Coding
 * parameter[=].binding.strength = #required
 * parameter[=].binding.valueSet = Canonical(SDHRParticipationReasonValueSet)
-* parameter[=].documentation = """The reason code for participation. This **MUST** be provided when the intent is to indicate withheld records.
-It indicates the reason for withholding records or not participating in the Shared Digital Health Record service.
+* parameter[=].documentation = """The reason code for participation. This **MUST** be provided when the intent is to indicate a withheld record or when releasing a record.
 Valid codes include:
 - `sdhr-record-withheld`: Records withheld from the patient for privacy or confidentiality reasons.
 - `sdhr-record-released`: Record that was previously withheld has been released (is no longer confidential or restricted) to the service by the patient."""

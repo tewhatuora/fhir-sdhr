@@ -25,5 +25,6 @@ See [SDHR Participate Operation](https://fhir-ig.digital.health.nz/sdhr/Operatio
 * #sdhr-parameter-invalid "SDHR parameter invalid" "This code is used when a parameter is invalid in the request."
 * #sdhr-participation-status-invalid "SDHR Participation Status Invalid"
 * #sdhr-operation-success "SDHR Operation Success" "This code is used when the operation was successful, such as when a patient's participation status was successfully recorded."
+* #sdhr-participation-unknown "SDHR Participation Unknown" "This code is used when the Shared Digital Health Record service has no record of participation preferences for this patient. Please use the $participate operation to indicate the patient's participation preferences."
 
 

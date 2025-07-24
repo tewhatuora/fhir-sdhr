@@ -8,8 +8,8 @@ Description: "Example parameters content to POST to the Participate operation wh
 * parameter[=].valueReference.type = "Patient"
 * parameter[+].name = "facilityId"
 * parameter[=].valueString = "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A"
-* parameter[+].name = "participationIndicator"
-* parameter[=].valueBoolean = true
+// * parameter[+].name = "participationIndicator"
+// * parameter[=].valueBoolean = true
 * parameter[+].name = "resourceType"
 * parameter[=].valueString = "Condition"
 * parameter[+].name = "localResourceId"

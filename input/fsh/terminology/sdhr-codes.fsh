@@ -28,5 +28,5 @@ Description: "This code system defines the reasons for a patient to participate 
 * ^experimental = false
 * ^publisher = "Health NZ | Te Whatu Ora"
 * #sdhr-record-withheld "Record withheld" "Record withheld from the service for privacy or confidentiality reasons."
-* #sdhr-participation "SDHR participation" "Patient paticipation code for the Shared Digital Health Record service."
+// * #sdhr-participation "SDHR participation" "Patient paticipation code for the Shared Digital Health Record service."
 * #sdhr-record-released "Record released" "Record that was previously withheld has been released (is no longer confidential or restricted) to the service by the patient."

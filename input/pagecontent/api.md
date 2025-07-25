@@ -7,6 +7,7 @@ The SDHR API is comprised of multiple FHIR resources. This page provides technic
 | [API Capability Statement](./CapabilityStatement-SDHRCapabliityStatement.html) | FHIR API Capability Statement. Developers should review this to understand the available API interactions and request requirements such as the Request-Context header |
 | [API Artifacts](./artifacts.html) | List of FHIR Artifacts for this API |
 | [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) | Machine readable OpenAPI specification for this API |
+| [Participate Operation](./OperationDefinition-SDHRParticipateOperation.html)| Custom operation designed to capture participation information from API Consumers e.g. Patient Management Systems |
 
 ## Logical View
 
@@ -362,6 +363,35 @@ When a local identifier is not submitted to a resource, the search parameters fo
 </div>
 <br clear="all">
 
+## SDHR Custom Operations
+
+The SDHR service includes the following FHIR custom operations
+
+### Participate Operation
+
+This operation is designed to enable API Consumers such as PMS systems to notify the SDHR service that a patient has withheld records from the service.
+To call the operation a `POST` request is made to the base API with a `Parameters` payload.
+e.g.
+
+{% fragment Parameters/ParametersParticipate JSON %}
+
+### Example Participation Flows
+
+<!-- markdownlint-disable MD033 -->
+<div width="100%">
+<!-- Generated from `input/images-source/participate-sequence-pmsoptoff.plantuml` -->
+{% include participate-sequence-pmsoptoff.svg %}
+</div>
+<br clear="all">\
+
+<!-- markdownlint-disable MD033 -->
+<div width="100%">
+<!-- Generated from `input/images-source/participate-sequence-pmsrecordwithheld.plantuml` -->
+{% include participate-sequence-pmsrecordwithheld.svg %}
+</div>
+<br clear="all">
+
+
 ## SDHR Confidential Record API behaviour
 
 When a record is created or updated to be marked as confidential using [FHIR Security labels](https://build.fhir.org/security-labels.html), read or search operations that would return the  record will result in no access to the record.
@@ -384,9 +414,27 @@ Response status: `200`
 
 Response body:
 
-{% fragment Bundle/ConfidentialRecordsSearchResponseExample JSON %}
+{% fragment Bundle/SearchConfidentialRecordsResponseExample JSON %}
 
 In this request example, a request is made to return AllergyIntolerance resources for a patient using FHIR Search. As a confidential resource was matched with this search, the search result set has been redacted due to confidentiality tags on the resource, resulting in the `meta.security` `REDACTED` tag being added to the search result `Bundle`. This indicates to the API Consumer that some portion of the searchset has been filtered due to confidentiality and not included in the content returned. The `total` within the response reflects the total of resources before filtering occurs.
+
+#### FHIR Search Example Where Matched Records Are Withheld
+
+In the following search the parameters below are supplied
+
+- `patient` | https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC4633
+- `source` | https://api.hip.digital.health.nz/fhir/Location/F38006-B
+- `identifier` | 6b8a6cc1-612f-456e-89df-9fbcd753acb2
+
+`GET /Condition?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC4633&_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FLocation%2FF38006-B&identifier=6b8a6cc1-612f-456e-89df-9fbcd753acb2`
+
+In this example the spplied parameters are an exact match for a singe record that has been indicated as wiithheld by the source system. in this scenario the server does not have the record however it is able to uniquely match to a record that has been withheld using the [$participate operation](./OperationDefinition-SDHRParticipateOperation.html)
+
+The search response will contain an `OperationOutcome` with `"mode":"outcome"` as below
+
+{% fragment Bundle/SearchExactMatchRecordWithheldExample JSON %}
+
+[See example details](./Bundle-SearchExactMatchRecordWithheldExample.html)
 
 #### FHIR read, vread example
 

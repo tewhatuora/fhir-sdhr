@@ -9,6 +9,9 @@ Description: "Encounter resource to record an instance of an interaction between
 
 * insert LocalIdentifierDocs
 
+* extension contains
+  hnz-sdhr-client-last-updated-extension named ClientLastUpdated 0..1
+
 // Excluded Elements
 * implicitRules 0..0
 * language 0..0
@@ -28,8 +31,10 @@ Description: "Encounter resource to record an instance of an interaction between
 * participant.extension 0..0
 * participant.modifierExtension 0..0
 
-* insert ProfilePractitioner(participant.individual)
+* participant.individual ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
+//* insert ProfilePractitioner(participant.individual)
 * participant.individual.extension 0..0
 * participant.individual.identifier 0..0
 
 * period 1..1
+* period.start 1..1

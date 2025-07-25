@@ -29,6 +29,9 @@ RuleSet: SearchOnlyInteraction
 RuleSet: ResourceDocumentation(markdown)
 * documentation = "{markdown}"
 
+RuleSet: LimitedInteractionsDocumentation
+* documentation = "Note that the supported interactions of the API will vary per API Consumer, depending on the consuming system's role."
+
 // documents errors per HNZ standard (https://apistandards.digital.health.nz/api-development/Synchronous%20APIs/Error%20Handling)
 RuleSet: APIStandardsDocumentation
 * documentation = """

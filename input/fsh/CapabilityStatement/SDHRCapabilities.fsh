@@ -1,13 +1,13 @@
 Instance: SDHRCapabliityStatement
 InstanceOf: HnzToolingCapabilityStatement
 Usage: #definition
-* version = "0.5.0"
+* version = "0.6.0"
 * name = "SDHRCapabliityStatement"
 * title = "NZ Shared Digital Health Record API"
 * contact[+].name = "Health New Zealand Te Whatu Ora"
 * contact[=].telecom.value = "https://www.tewhatuora.govt.nz"
 * contact[=].telecom.system = #url
-* description = "NZ Shared Digital Health Record API"
+* description = "NZ Shared Digital Health Record API Capability Statement"
 * status = #draft
 * experimental = false
 * date = "2024-04-15T01:15:23.3688326Z"
@@ -20,6 +20,29 @@ Usage: #definition
 * fhirVersion = #4.0.1
 * format = #application/fhir+json
 * rest.mode = #server
+//participate operation
+* rest.operation[0].name = "participate"
+* rest.operation[=].definition = Canonical(SDHRParticipateOperation)
+* rest.operation[=].documentation = """
+This operation allows a patient to choose to participate in the Shared Digital Health Record service.
+It can be used to indicate whether the patient wishes to participate, whether any resources are withheld, and the reason for participation.
+
+Examples where this operation might be used include:
+- A patient who chooses not to participate in the Shared Digital Health Record service and informs their healthcare provider of this choice.
+- A patient who has some confidential records, held at their healthcare provider, that are withheld from the service.
+
+For example payloads that might be used with this operation see:
+- [Parameters resource for total non-participation](./Parameters-ParametersDoNotParticipate.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
+- [Parameters resource for participation](./Parameters-ParametersParticipate.html) : This example shows how to indicate that a patient wishes to participate in the Shared Digital Health Record service, where previously opted out (opt-in).
+- [Parameters resource for partial participation with withheld records](./Parameters-ParametersParticipateRecordWithheld.html) : This example shows how to indicate that a patient has some confidential records that are withheld from the Shared Digital Health Record service.
+- [Parameters resource for releasing withheld records](./Parameters-ParametersParticipateRecordReleased.html) : This example shows how to indicate that a patient has previously withheld records but has now released them to the Shared Digital Health Record service.
+
+To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participate`).
+
+The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
+The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
+The operation will return an OperationOutcome resource indicating the result of the operation.
+"""
 
 * rest.security.cors = true
 * rest.security.service = #SMART-on-FHIR
@@ -51,11 +74,13 @@ Usage: #definition
 
 // allergyIntolerance
 * rest.resource[0].type = #AllergyIntolerance
+* rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHRAllergyIntolerance)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
 * rest.resource[=].interaction[+].code = #search-type
+* rest.resource[=].interaction[+].code = #delete
 * rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
 * rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
 * rest.resource[=].extension[=].extension[=].valueCode = #SHALL
@@ -97,11 +122,13 @@ Usage: #definition
 
 // condition
 * rest.resource[+].type = #Condition
+* rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHRCondition)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
 * rest.resource[=].interaction[+].code = #search-type
+* rest.resource[=].interaction[+].code = #delete
 * rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
 * rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
 * rest.resource[=].extension[=].extension[=].valueCode = #SHALL
@@ -151,24 +178,28 @@ Usage: #definition
 * rest.resource[=].searchInclude[0] = "Condition:encounter"
 
 //consent
-* rest.resource[+].type = #Consent
-* rest.resource[=].profile = Canonical(SDHRConsent)
-* rest.resource[=].interaction[0].code = #read
-* rest.resource[=].interaction[+].code = #create 
-* rest.resource[=].interaction[+].code = #update
-* rest.resource[=].interaction[+].code = #search-type
-* rest.resource[=].searchParam[+].name = "patient"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Who does the consent relate to"
+// * rest.resource[+].type = #Consent
+// * rest.resource[=] insert LimitedInteractionsDocumentation
+// * rest.resource[=].profile = Canonical(SDHRConsent)
+// * rest.resource[=].interaction[0].code = #read
+// * rest.resource[=].interaction[+].code = #create 
+// * rest.resource[=].interaction[+].code = #update
+// * rest.resource[=].interaction[+].code = #search-type
+// * rest.resource[=].interaction[+].code = #delete
+// * rest.resource[=].searchParam[+].name = "patient"
+// * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
+// * rest.resource[=].searchParam[=].type = #reference
+// * rest.resource[=].searchParam[=].documentation = "Who does the consent relate to"
 
 // encounter
 * rest.resource[+].type = #Encounter
+* rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHREncounter)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
 * rest.resource[=].interaction[+].code = #search-type
+* rest.resource[=].interaction[+].code = #delete
 * rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
 * rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
 * rest.resource[=].extension[=].extension[=].valueCode = #SHALL
@@ -209,11 +240,13 @@ Usage: #definition
 
 // observations
 * rest.resource[+].type = #Observation
+* rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHRObservation)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #create 
 * rest.resource[=].interaction[+].code = #update
 * rest.resource[=].interaction[+].code = #search-type
+* rest.resource[=].interaction[+].code = #delete
 * rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
 * rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
 * rest.resource[=].extension[=].extension[=].valueCode = #SHALL

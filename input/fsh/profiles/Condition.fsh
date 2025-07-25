@@ -27,3 +27,5 @@ Description: "Condition resource to record problems and conditions affecting a p
 * code 1..1 
 * code from http://hl7.org/fhir/ValueSet/condition-code (preferred)
 * insert UserSelected
+* recorder ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
+* asserter ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"

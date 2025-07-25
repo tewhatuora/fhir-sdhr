@@ -1,0 +1,190 @@
+@startuml
+
+title SDHR Participate Operation PMS Opt Off Sequence Diagram
+
+autonumber "<color:Black>[00]"
+
+skinparam ActorFontSize 16
+skinparam ArrowFontSize 12
+skinparam ArrowFontSize 16
+skinparam BoxPadding 5
+skinparam DatabaseFontSize 16
+skinparam dpi 400
+skinparam EntityFontSize 16
+skinparam MaxMessageSize 375
+skinparam NoteFontSize 14
+skinparam ParticipantFontSize 16
+skinparam ParticipantPadding 5
+skinparam responseMessageBelowArrow true
+skinparam roundcorner 15
+skinparam sequenceArrowThickness 2
+skinparam SequenceBoxFontSize 16
+skinparam sequencegroupfontsize 14
+skinparam SequenceMessageAlignment left
+skinparam sequenceStyle uml2
+skinparam TitleFontSize 20
+' semi-transparent sequence groups!
+' see https://sarafian.github.io/tips/2021/03/11/plantuml-tips-tricks-1.html#:~:text=responseMessageBelowArrow-,Semi,-transparent%20group%20backgrounds
+skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
+
+scale max 400 width
+scale 300*500
+
+actor "Patient" as Patient
+actor "Health Practitioner" as USER
+participant "PMS" as APIC #Orange
+participant "PMS Orchestrator" as ORCHESTRATOR #Orange
+control "Participate Operation\n$participate" as PARTICIPATE #LightBlue
+control "SDHR FHIR API" as FHIRAPI #LightBlue
+database "SDHR FHIR Server" as SDHR #LightGreen
+
+== Patient opts in to SDHR participation ==
+Patient -> USER : Consultation
+USER -> APIC : Record patient data e.g. Condition
+APIC -> ORCHESTRATOR : Trigger new condition event
+ORCHESTRATOR -> APIC : Retrieve Condition details
+ORCHESTRATOR ->FHIRAPI : Write Condition
+FHIRAPI -> SDHR : Check patient participation preferences
+note left of SDHR
+  The SDHR service checks if the patient has opted in to the Shared Digital Health Record service
+  If the patient has not opted in, the SDHR service returns an OperationOutcome with a participation status unknown.
+  The API consumer should then use the $participate operation to indicate the patient's participation preferences.
+end note
+alt Patient has **NOT** opted in
+  SDHR -> FHIRAPI : Return OperationOutcome
+  FHIRAPI -> ORCHESTRATOR : Return OperationOutcome
+  note right of ORCHESTRATOR
+    "resourceType" : "OperationOutcome",
+    "issue" : [
+      {
+        "severity" : "error",
+        "code" : "forbidden",
+        "details" : {
+          "text" : "Patient participation preferences are not known. 
+          Please use the $participate operation to indicate the patient's participation preferences."
+        }
+      }
+    ]
+  end note
+  ORCHESTRATOR -> APIC : Return OperationOutcome
+  APIC -> ORCHESTRATOR : Trigger patient event
+  ORCHESTRATOR -> APIC : Retrieve patient details
+  ORCHESTRATOR -> ORCHESTRATOR : Prepare participation\nparameters
+  ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
+  note left of PARTICIPATE
+    Parameters:
+    - patient: Patient ID (NHI)
+    - facilityId: Facility ID (HPI FacilityID)
+    - globalParticipationIndicator: true
+  end note
+  PARTICIPATE -> FHIRAPI : Write Participation
+  FHIRAPI -> SDHR : Persist
+  PARTICIPATE -> ORCHESTRATOR : Return OperationOutcome
+  note over PARTICIPATE
+  {
+    "resourceType" : "OperationOutcome",
+    "issue" : [
+      {
+        "severity" : "information",
+        "code" : "informational",
+        "details" : {
+          "coding" : [
+            {
+              "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
+              "code" : "sdhr-operation-success",
+              "display" : "SDHR Operation Success"
+            }
+          ],
+          "text" : "Patient participation status successfully recorded."
+        }
+      }
+    ]
+  }
+  end note
+  ORCHESTRATOR ->FHIRAPI : Retry write Condition
+  FHIRAPI -> SDHR : Persist Condition
+  FHIRAPI -x ORCHESTRATOR : Return created Condition resource
+else Patient has opted in
+  FHIRAPI -> SDHR : Persist Condition
+  SDHR -> FHIRAPI : Return Condition resource
+  FHIRAPI -x ORCHESTRATOR : Return created Condition resource
+
+
+end
+
+== Patient opts out of SDHR participation ==
+Patient -> USER : Request to opt out\nof SDHR participation
+USER -> APIC : Request to opt out\nof SDHR participation
+APIC -> ORCHESTRATOR : Trigger patient event
+ORCHESTRATOR -> APIC : Retrieve patient details
+ORCHESTRATOR -> ORCHESTRATOR : Prepare participation\nparameters
+ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
+note left of PARTICIPATE
+  Parameters:
+  - patient: Patient ID (NHI)
+  - facilityId: Facility ID (HPI FacilityID)
+  - globalParticipationIndicator: false
+end note
+PARTICIPATE -> FHIRAPI : Write Participation
+FHIRAPI -> SDHR : Persist
+PARTICIPATE -> ORCHESTRATOR : Return OperationOutcome
+
+==Search for a Resource==
+ORCHESTRATOR -> FHIRAPI : Search Resource (e.g. Condition)
+FHIRAPI -> SDHR : Query Resource
+SDHR -> FHIRAPI : Return
+FHIRAPI -> ORCHESTRATOR : Return Search result with REDACTED data
+note right of ORCHESTRATOR
+In this example the patient was previously opted in and uploaded 1 Condition resource.
+The SDHR service indicates that the search resulted in 1 `match` but the data is redacted
+due to the patient's participation preferences.
+
+  "meta" : {
+    "security" : [
+      {
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+        "code" : "redacted",
+        "display" : "REDACTED"
+      }
+    ]
+  },
+  "type" : "searchset",
+  "total" : 1,
+  "entry": []
+end note
+
+==GET a Single Resource by ID==
+ORCHESTRATOR -> FHIRAPI : GET **ANY** Resource by ID (e.g. /Condition/{ID})
+FHIRAPI -> SDHR : Query Resource by ID
+SDHR -> FHIRAPI : Return 403
+FHIRAPI -> ORCHESTRATOR : Return OperationOutcome UNAUTHORIZED
+note right of ORCHESTRATOR
+  "resourceType" : "OperationOutcome",
+  "issue" : [
+    {
+      "severity" : "error",
+      "code" : "forbidden",
+      "details" : {
+        "text" : "Access to the resource is forbidden due to patient participation preferences."
+      }
+    }
+  ]
+end note
+
+==Create a Resource==
+ORCHESTRATOR -> FHIRAPI : Create Resource (e.g. Condition)
+FHIRAPI -> ORCHESTRATOR : Return OperationOutcome
+note right of ORCHESTRATOR
+  "resourceType" : "OperationOutcome",
+  "issue" : [
+    {
+      "severity" : "error",
+      "code" : "forbidden",
+      "details" : {
+        "text" : "Resource creation is forbidden due to patient participation preferences."
+      }
+    }
+  ]
+end note
+
+@enduml

@@ -1,4 +1,4 @@
-Instance: SDHRConsentExample
+Instance: ConsentExample
 InstanceOf: SDHRConsent
 Usage: #example
 Description: "Consent example submitted to allow a patient to opt in to sharing their information, originating from a practice management system"
@@ -14,14 +14,14 @@ Description: "Consent example submitted to allow a patient to opt in to sharing 
 * policy[+].uri = "https://www.privacy.org.nz/privacy-act-2020"
 * policy[=].authority = "https://www.privacy.org.nz"
 
-* provision.type = #deny
+* provision.type = #permit
 * provision.period.start = "2023-10-04"
 //* provision.period.end = "2028-11-22"
 * provision.action.coding.code = #access "Access. Retrieval without permitting collection, use or disclosure."
 //* provision.action.coding.code.text = "Retrieval without permitting collection, use or disclosure. e.g., no screen-scraping for collection, use or disclosure (view-only access)"
 
 // * provision.data[+].meaning = #instance
-// * provision.data[=].reference = Reference(HypertensionConditionExample)
+// * provision.data[=].reference = Reference(ConditionHypertensionExample)
 // * provision.data[+].meaning = #instance
 // * provision.data[=].reference = Reference(EncounterExample1)
 

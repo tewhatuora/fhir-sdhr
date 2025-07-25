@@ -1,4 +1,4 @@
-Instance: RespiratoryConditionExample
+Instance: ConditionRespiratoryExample
 InstanceOf: SDHRCondition
 Description: "Example Respiratory Condition"
 Usage: #example

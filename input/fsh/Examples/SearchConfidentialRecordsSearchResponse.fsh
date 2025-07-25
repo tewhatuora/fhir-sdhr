@@ -1,4 +1,4 @@
-Instance: ConfidentialRecordsSearchResponseExample
+Instance: SearchConfidentialRecordsResponseExample
 InstanceOf: Bundle
 Description: """
               Example of a searchset API response for an AllergyIntolerance resource search.

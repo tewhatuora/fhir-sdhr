@@ -55,7 +55,7 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].type = #string
 * parameter[=].documentation = """The resource type that is being withheld. Must be a valid FHIR resource type supported by the SDHR service, such as `Condition`, `Encounter` `Observation` etc. Note that `AllergyIntolerance` resources MUST NOT be withheld.
     This parameter is optional and should only be used to specify the type of resource that is withheld from the Shared Digital Health Record service.
-    When this paramter is used the request MUST contain a `reasonCode` parameter and a `localResourceId` parameter."""
+    When this parameter is used the request MUST contain a `reasonCode` parameter and a `localResourceId` parameter."""
 
 * parameter[+].name = #facilityId
 * parameter[=].use = #in
@@ -73,7 +73,7 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].type = #string
 * parameter[=].documentation = """The local resource ID that is withheld from the Shared Digital Health Record service.
     This parameter is optional and should only be used to specify the local ID of the resource that is withheld.
-    When this paramter is used the request MUST contain a `reasonCode` parameter and a `resourceType` parameter."""
+    When this parameter is used the request MUST contain a `reasonCode` parameter and a `resourceType` parameter."""
 
 * parameter[+].name = #reasonCode
 * parameter[=].use = #in

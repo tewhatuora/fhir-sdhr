@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "46268716-52b6-4fda-985e-9d86925257ba",
+		"_postman_id": "2e5c6e7d-b168-4088-b99e-830b691b3d8f",
 		"name": "UAT SDHR",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26238032"
@@ -379,7 +379,7 @@
 						},
 						{
 							"key": "scope",
-							"value": "system/Condition.crus system/Observation.crus system/Encounter.crus system/AllergyIntolerance.crus",
+							"value": "system/Condition.crus system/Observation.crus system/Encounter.crus system/AllergyIntolerance.crus https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRParticipateOperation",
 							"description": "SMART on FHIR system scopes for resources required for API access",
 							"type": "text"
 						}
@@ -632,6 +632,150 @@
 					],
 					"path": [
 						"AllergyIntolerance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Participation - Global Participation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"resourceType\": \"Parameters\",\n    \"parameter\": [\n        {\n            \"name\": \"patient\",\n            \"valueReference\": {\n                \"reference\": \"https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284\",\n                \"type\": \"Patient\",\n                \"display\": \"Susan Westbrook\"\n            }\n        },\n        {\n            \"name\": \"facilityId\",\n            \"valueReference\": {\n                \"reference\": \"https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A\"\n            }\n        },\n        {\n            \"name\": \"globalParticipationIndicator\",\n            \"valueBoolean\": true\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/$participate",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"$participate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Participation - Withhold a record",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\" : \"Parameters\",\n  \"parameter\" : [\n    {\n      \"name\" : \"patient\",\n      \"valueReference\" : {\n        \"reference\" : \"https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284\",\n        \"type\" : \"Patient\",\n        \"display\" : \"Susan Westbrook\"\n      }\n    },\n    {\n      \"name\" : \"facilityId\",\n      \"valueReference\" : {\n        \"reference\" : \"https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A\"\n      }\n    },\n    {\n      \"name\" : \"resourceType\",\n      \"valueString\" : \"Condition\"\n    },\n    {\n      \"name\" : \"localResourceId\",\n      \"valueString\" : \"12345AAABBBccc\"\n    },\n    {\n      \"name\" : \"reasonCode\",\n      \"valueCodeableConcept\" : {\n        \"coding\" : [\n          {\n            \"system\" : \"https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-participation-reason\",\n            \"code\" : \"sdhr-record-withheld\",\n            \"display\" : \"Records withheld\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/$participate",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"$participate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SDHR - Participation - Release a record",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"resourceType\": \"Parameters\",\n    \"parameter\": [\n        {\n            \"name\": \"patient\",\n            \"valueReference\": {\n                \"reference\": \"https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284\",\n                \"type\": \"Patient\",\n                \"display\": \"Susan Westbrook\"\n            }\n        },\n        {\n            \"name\": \"facilityId\",\n            \"valueReference\": {\n                \"reference\": \"https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A\"\n            }\n        },\n        {\n            \"name\": \"resourceType\",\n            \"valueString\": \"Condition\"\n        },\n        {\n            \"name\": \"localResourceId\",\n            \"valueString\": \"12345AAABBBccc\"\n        },\n        {\n            \"name\": \"reasonCode\",\n            \"valueCodeableConcept\": {\n                \"coding\": [\n                    {\n                        \"system\": \"https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-participation-reason\",\n                        \"code\": \"sdhr-record-withheld\",\n                        \"display\": \"Records withheld\"\n                    }\n                ]\n            }\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/$participate",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"$participate"
 					]
 				}
 			},

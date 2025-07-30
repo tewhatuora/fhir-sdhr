@@ -46,7 +46,7 @@ ORCHESTRATOR -> APIC : Retrieve Condition details
 ORCHESTRATOR ->FHIRAPI : Write Condition
 FHIRAPI -> SDHR : Check patient participation preferences
 note left of SDHR
-  The SDHR service checks if the patient has opted in to the Shared Digital Health Record service
+  The SDHR service checks if the patient has opted in to the Shared Digital Health Record service at this facility.
   If the patient has not opted in, the SDHR service returns an OperationOutcome with a participation status unknown.
   The API consumer should then use the $participate operation to indicate the patient's participation preferences.
 end note
@@ -54,17 +54,26 @@ alt Patient has **NOT** opted in
   SDHR -> FHIRAPI : Return OperationOutcome
   FHIRAPI -> ORCHESTRATOR : Return OperationOutcome
   note right of ORCHESTRATOR
-    "resourceType" : "OperationOutcome",
-    "issue" : [
-      {
-        "severity" : "error",
-        "code" : "forbidden",
-        "details" : {
-          "text" : "Patient participation preferences are not known. 
-          Please use the $participate operation to indicate the patient's participation preferences."
-        }
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [
+    {
+      "severity" : "information",
+      "code" : "informational",
+      "details" : {
+        "coding" : [
+          {
+            "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
+            "code" : "sdhr-participation-unknown",
+            "display" : "SDHR Participation Unknown"
+          }
+        ],
+        "text" : "The Shared Digital Health Record service has no record of participation preferences for this patient at this facility.
+        Please use the $participate operation to indicate the patients participation preferences."
       }
-    ]
+    }
+  ]
+}
   end note
   ORCHESTRATOR -> APIC : Return OperationOutcome
   APIC -> ORCHESTRATOR : Trigger patient event
@@ -75,7 +84,7 @@ alt Patient has **NOT** opted in
     Parameters:
     - patient: Patient ID (NHI)
     - facilityId: Facility ID (HPI FacilityID)
-    - globalParticipationIndicator: true
+    - participationIndicator: true
   end note
   PARTICIPATE -> FHIRAPI : Write Participation
   FHIRAPI -> SDHR : Persist
@@ -123,7 +132,7 @@ note left of PARTICIPATE
   Parameters:
   - patient: Patient ID (NHI)
   - facilityId: Facility ID (HPI FacilityID)
-  - globalParticipationIndicator: false
+  - participationIndicator: false
 end note
 PARTICIPATE -> FHIRAPI : Write Participation
 FHIRAPI -> SDHR : Persist

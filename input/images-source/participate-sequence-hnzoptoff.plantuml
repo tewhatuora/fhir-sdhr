@@ -1,0 +1,159 @@
+@startuml
+
+title SDHR Health NZ Channel Opt Off Sequence Diagram
+
+autonumber "<color:Black>[00]"
+
+skinparam ActorFontSize 16
+skinparam ArrowFontSize 12
+skinparam ArrowFontSize 16
+skinparam BoxPadding 5
+skinparam DatabaseFontSize 16
+skinparam dpi 400
+skinparam EntityFontSize 16
+skinparam MaxMessageSize 375
+skinparam NoteFontSize 14
+skinparam ParticipantFontSize 16
+skinparam ParticipantPadding 5
+skinparam responseMessageBelowArrow true
+skinparam roundcorner 15
+skinparam sequenceArrowThickness 2
+skinparam SequenceBoxFontSize 16
+skinparam sequencegroupfontsize 14
+skinparam SequenceMessageAlignment left
+skinparam sequenceStyle uml2
+skinparam TitleFontSize 20
+' semi-transparent sequence groups!
+' see https://sarafian.github.io/tips/2021/03/11/plantuml-tips-tricks-1.html#:~:text=responseMessageBelowArrow-,Semi,-transparent%20group%20backgrounds
+skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
+
+scale max 400 width
+scale 300*500
+
+actor "Patient" as Patient
+actor "Health Practitioner" as USER
+participant "Health NZ" as HNZ #LightBlue
+participant "PMS" as APIC #Orange
+participant "PMS Orchestrator" as ORCHESTRATOR #Orange
+control "Participate Operation\n$participate" as PARTICIPATE #LightBlue
+control "SDHR FHIR API" as FHIRAPI #LightBlue
+database "SDHR FHIR Server" as SDHR #LightGreen
+
+== Patient opts out of SDHR participation using HNZ channel ==
+Patient -> HNZ : Notify HNZ of opt out prefference
+HNZ -> HNZ : Prepare participation\nparameters
+HNZ -> PARTICIPATE : Invoke participate operation
+note left of PARTICIPATE
+  Parameters:
+  - patient: Patient ID (NHI)
+  - facilityId: Facility ID (HPI FacilityID)
+      Note that this is a reserved HNZ facility ID
+  - participationIndicator: false
+end note
+PARTICIPATE -> FHIRAPI : Write Participation
+FHIRAPI -> SDHR : Persist
+PARTICIPATE -> HNZ : Return OperationOutcome
+note over PARTICIPATE
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [
+    {
+      "severity" : "information",
+      "code" : "informational",
+      "details" : {
+        "coding" : [
+          {
+            "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
+            "code" : "sdhr-operation-success",
+            "display" : "SDHR Operation Success"
+          }
+        ],
+        "text" : "Patient participation status successfully recorded."
+      }
+    }
+  ]
+}
+end note
+
+== Patient Consultation ==
+Patient -> USER : Consultation
+USER -> APIC : Record patient data e.g. Condition
+APIC -> ORCHESTRATOR : Trigger new condition event
+ORCHESTRATOR -> FHIRAPI : Search Resource (e.g. Condition)
+FHIRAPI -> ORCHESTRATOR : Return 403 OperationOutcome UNAUTHORIZED
+note right of ORCHESTRATOR
+The patient has opted out of participating in the Shared Digital Health Record service.
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [
+    {
+      "severity" : "error",
+      "code" : "suppressed",
+      "details" : {
+        "coding" : [
+          {
+            "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
+            "code" : "sdhr-participate-deny",
+            "display" : "SDHR Participate Deny"
+          }
+        ],
+        "text" : "Patient has opted out of participating in the shared digital health record service."
+      }
+    }
+  ]
+}
+end note
+
+==GET a Single Resource by ID==
+ORCHESTRATOR -> FHIRAPI : GET **ANY** Resource by ID (e.g. /Condition/{ID})
+FHIRAPI -> ORCHESTRATOR : Return 403 OperationOutcome UNAUTHORIZED
+note right of ORCHESTRATOR
+The patient has opted out of participating in the Shared Digital Health Record service.
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [
+    {
+      "severity" : "error",
+      "code" : "suppressed",
+      "details" : {
+        "coding" : [
+          {
+            "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
+            "code" : "sdhr-participate-deny",
+            "display" : "SDHR Participate Deny"
+          }
+        ],
+        "text" : "Patient has opted out of participating in the shared digital health record service."
+      }
+    }
+  ]
+}
+end note
+
+==Create a Resource==
+ORCHESTRATOR -> FHIRAPI : Create Resource (e.g. Condition)
+FHIRAPI -> ORCHESTRATOR : Return 403 OperationOutcome UNAUTHORIZED
+note right of ORCHESTRATOR
+The patient has opted out of participating in the Shared Digital Health Record service.
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [
+    {
+      "severity" : "error",
+      "code" : "suppressed",
+      "details" : {
+        "coding" : [
+          {
+            "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
+            "code" : "sdhr-participate-deny",
+            "display" : "SDHR Participate Deny"
+          }
+        ],
+        "text" : "Patient has opted out of participating in the shared digital health record service."
+      }
+    }
+  ]
+}
+end note
+
+@enduml

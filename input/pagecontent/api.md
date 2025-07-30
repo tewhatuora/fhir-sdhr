@@ -391,6 +391,13 @@ e.g.
 </div>
 <br clear="all">
 
+<!-- markdownlint-disable MD033 -->
+<div width="100%">
+<!-- Generated from `input/images-source/participate-sequence-pmsrecordwithheld.plantuml` -->
+{% include participate-sequence-hnzoptoff.svg %}
+</div>
+<br clear="all">
+
 
 ## SDHR Confidential Record API behaviour
 

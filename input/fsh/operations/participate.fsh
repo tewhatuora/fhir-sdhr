@@ -37,7 +37,7 @@ Usage: #definition
 * parameter[=].type = #Reference
 * parameter[=].documentation = "Reference must be an NHI Patient URL with format https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZZZ1111 or ZZZ11AA"
 
-* parameter[+].name = #globalParticipationIndicator
+* parameter[+].name = #participationIndicator
 * parameter[=].use = #in
 * parameter[=].min = 1
 * parameter[=].max = "1"

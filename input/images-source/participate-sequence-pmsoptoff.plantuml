@@ -1,6 +1,6 @@
 @startuml
 
-title SDHR Participate Operation PMS Opt Off Sequence Diagram
+title SDHR Participate Operation Facility Opt Off Sequence Diagram
 
 autonumber "<color:Black>[00]"
 
@@ -38,7 +38,7 @@ control "Participate Operation\n$participate" as PARTICIPATE #LightBlue
 control "SDHR FHIR API" as FHIRAPI #LightBlue
 database "SDHR FHIR Server" as SDHR #LightGreen
 
-== Patient opts in to SDHR participation ==
+== Patient opts in to SDHR participation at facility ==
 Patient -> USER : Consultation
 USER -> APIC : Record patient data e.g. Condition
 APIC -> ORCHESTRATOR : Trigger new condition event
@@ -121,7 +121,7 @@ else Patient has opted in
 
 end
 
-== Patient opts out of SDHR participation ==
+== Patient opts out of SDHR participation at facility ==
 Patient -> USER : Request to opt out\nof SDHR participation
 USER -> APIC : Request to opt out\nof SDHR participation
 APIC -> ORCHESTRATOR : Trigger patient event
@@ -168,32 +168,52 @@ FHIRAPI -> SDHR : Query Resource by ID
 SDHR -> FHIRAPI : Return 403
 FHIRAPI -> ORCHESTRATOR : Return OperationOutcome UNAUTHORIZED
 note right of ORCHESTRATOR
+{
   "resourceType" : "OperationOutcome",
+  "id" : "OperationOutcomeFacilityDenyExample",
   "issue" : [
     {
       "severity" : "error",
-      "code" : "forbidden",
+      "code" : "suppressed",
       "details" : {
-        "text" : "Access to the resource is forbidden due to patient participation preferences."
+        "coding" : [
+          {
+            "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
+            "code" : "shdr-facility-participate-deny",
+            "display" : "SDHR Facility Participate Deny"
+          }
+        ],
+        "text" : "Patient has opted out of participating in the shared digital health record service at this facility."
       }
     }
   ]
+}
 end note
 
 ==Create a Resource==
 ORCHESTRATOR -> FHIRAPI : Create Resource (e.g. Condition)
 FHIRAPI -> ORCHESTRATOR : Return OperationOutcome
 note right of ORCHESTRATOR
+{
   "resourceType" : "OperationOutcome",
+  "id" : "OperationOutcomeFacilityDenyExample",
   "issue" : [
     {
       "severity" : "error",
-      "code" : "forbidden",
+      "code" : "suppressed",
       "details" : {
-        "text" : "Resource creation is forbidden due to patient participation preferences."
+        "coding" : [
+          {
+            "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
+            "code" : "shdr-facility-participate-deny",
+            "display" : "SDHR Facility Participate Deny"
+          }
+        ],
+        "text" : "Patient has opted out of participating in the shared digital health record service at this facility."
       }
     }
   ]
+}
 end note
 
 @enduml

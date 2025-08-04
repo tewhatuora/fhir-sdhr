@@ -64,8 +64,8 @@ alt Patient has **NOT** opted in
         "coding" : [
           {
             "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
-            "code" : "sdhr-participation-unknown",
-            "display" : "SDHR Participation Unknown"
+            "code" : "sdhr-participation-status-unknown",
+            "display" : "SDHR Participation Status Unknown"
           }
         ],
         "text" : "The Shared Digital Health Record service has no record of participation preferences for this patient at this facility.
@@ -179,8 +179,8 @@ note right of ORCHESTRATOR
         "coding" : [
           {
             "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
-            "code" : "shdr-facility-participate-deny",
-            "display" : "SDHR Facility Participate Deny"
+            "code" : "sdhr-participation-status-denied-facility",
+            "display" : "SDHR Participation Status Denied at Facility"
           }
         ],
         "text" : "Patient has opted out of participating in the shared digital health record service at this facility."
@@ -205,8 +205,8 @@ note right of ORCHESTRATOR
         "coding" : [
           {
             "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
-            "code" : "shdr-facility-participate-deny",
-            "display" : "SDHR Facility Participate Deny"
+            "code" : "sdhr-participation-status-denied-facility",
+            "display" : "SDHR Participation Status Denied at Facility"
           }
         ],
         "text" : "Patient has opted out of participating in the shared digital health record service at this facility."

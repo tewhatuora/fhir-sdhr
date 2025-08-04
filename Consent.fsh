@@ -11,14 +11,7 @@ Description: "Consent resource created to reflect a patient has agreed to share 
 * category ^fixedCodeableConcept.coding[0].system = "http://snomed.info/sct"
 * category ^fixedCodeableConcept.coding[0].code = #887031000000108
 
-// * patient.type = "Patient"
-// * patient.identifier.use = #official
-// * patient.identifier.system = "https://standards.digital.health.nz/ns/nhi-id"
-// * patient.identifier.value 1..1
-
 * insert ProfilePatient(patient)
-
-// * patient.identifier.value ^short = "The NHI number of the patient"
 
 * policy 1..*
 
@@ -32,6 +25,9 @@ Description: "Consent resource created to reflect a patient has agreed to share 
 * provision.period.end ^short = "The date and time the Consent is considered to be expired"
 * provision.action 1..*
 * provision.action ^short = "The action that is being permitted or denied"
+
+* provision.provision.extension contains OptOutAtFacilityExtension named optOutAtFacility 0..1
+* provision.provision.extension[optOutAtFacility] ^short = "Indicates the patient has opted out of participation entirely at the facility"
 
 * scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 //* category = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL

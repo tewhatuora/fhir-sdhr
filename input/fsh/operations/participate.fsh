@@ -2,11 +2,14 @@ Instance: SDHRParticipateOperation
 InstanceOf: OperationDefinition
 Description: """
 This operation allows a patient to choose to participate in the Shared Digital Health Record service.
-It can be used to indicate whether the patient wishes to participate, whether any resources are withheld, and the reason for participation.
+This operation should be used by data providers in the Shared Digital Health Record ecosystem such as Patient Management Systems (PMS) or Electronic Health Record (EHR) systems.
+It can be used to indicate whether the patient wishes to participate, whether any resources are withheld, and the reason for participation. The scope of this operation is the API consumer - e.g. an HPI Facility where patient data is held.
 
-Examples where this operation might be used include:
-- A patient who chooses not to participate in the Shared Digital Health Record service and informs their healthcare provider of this choice.
-- A patient who has one or more confidential records, held at their healthcare provider, that are withheld from the service.
+Scenarios where this operation might be used include:
+- A patient has opted in to the Shared Digital Health Record service and appropriate data will be shared from the data holder to the service.
+- A patient chooses not to participate in the Shared Digital Health Record service and informs their healthcare provider of this choice.
+- A patient has one or more confidential records, held at their healthcare provider, that are withheld from the service.
+- A patient has previously withheld records but has now released them to the Shared Digital Health Record service.
 
 For example payloads that might be used with this operation see:
 - [Parameters resource for total non-participation](./Parameters-ParametersDoNotParticipate.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
@@ -84,6 +87,8 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].binding.valueSet = Canonical(SDHRParticipationReasonValueSet)
 * parameter[=].documentation = """The reason code for participation. This **MUST** be provided when the intent is to indicate a withheld record or when releasing a record.
 Valid codes include:
+- `sdhr-facility-opt-out`: Patient has opted out of participation entirely at the facility. This means that no records will be shared from that facility.
+- `sdhr-facility-opt-in`: Patient has opted in to participation at the facility
 - `sdhr-record-withheld`: Records withheld from the patient for privacy or confidentiality reasons.
 - `sdhr-record-released`: Record that was previously withheld has been released (is no longer confidential or restricted) to the service by the patient."""
 

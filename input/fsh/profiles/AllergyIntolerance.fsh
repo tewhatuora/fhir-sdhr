@@ -21,7 +21,7 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 * contained 0..0
 //* clinicalStatus from sdhr-allergyintolerance-clinical-status-valueset (required)
 //* verificationStatus from http://hl7.org/fhir/ValueSet/allergyintolerance-verification (required)
-* code 1..1
+// * code 1..1
 * code from http://hl7.org/fhir/ValueSet/allergyintolerance-code (preferred)
 * insert UserSelected
 * recorder.identifier only Identifier

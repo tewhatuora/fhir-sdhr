@@ -93,8 +93,8 @@ The patient has opted out of participating in the Shared Digital Health Record s
         "coding" : [
           {
             "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
-            "code" : "sdhr-participate-deny",
-            "display" : "SDHR Participate Deny"
+            "code" : "sdhr-participation-status-denied",
+            "display" : "SDHR Participation Status Denied"
           }
         ],
         "text" : "Patient has opted out of participating in the shared digital health record service."
@@ -119,8 +119,8 @@ The patient has opted out of participating in the Shared Digital Health Record s
         "coding" : [
           {
             "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
-            "code" : "sdhr-participate-deny",
-            "display" : "SDHR Participate Deny"
+            "code" : "sdhr-participation-status-denied",
+            "display" : "SDHR Participation Status Denied"
           }
         ],
         "text" : "Patient has opted out of participating in the shared digital health record service."
@@ -145,8 +145,8 @@ The patient has opted out of participating in the Shared Digital Health Record s
         "coding" : [
           {
             "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
-            "code" : "sdhr-participate-deny",
-            "display" : "SDHR Participate Deny"
+            "code" : "sdhr-participation-status-denied",
+            "display" : "SDHR Participation Status Denied"
           }
         ],
         "text" : "Patient has opted out of participating in the shared digital health record service."

@@ -1,7 +1,9 @@
 Profile: SDHRConsent
 Parent: Consent
-Description: "Consent resource created to reflect a patient has agreed to share their information with authorised health workers, originating from a practice management system
-            For more detail on how this resource is used, see the [consent based access control page](./consent-based-access.html)."
+Description: "Consent resource created to reflect a patient's preferences with regard to sharing their information with authorised health workers via the shared digital health record service.
+            Note that this is a protected resource and scopes required to manage this resource are not provisioned to most API consumers.
+            A patient's participation preferences should be managed by the [Participate Operation](./OperationDefinition-SDHRParticipateOperation.html).
+            For more details on the participate operation see [SDHR Custom Operations](./api.html#sdhr-custom-operations)."
 
 * status ^short = "The state of the Consent. This must be active to release data from the server"
 

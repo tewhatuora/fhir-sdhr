@@ -32,3 +32,5 @@ Description: "This code system defines the reasons for a patient to participate 
 * #sdhr-record-released "Record released" "Record that was previously withheld has been released (is no longer confidential or restricted) to the service by the patient."
 * #sdhr-facility-opt-out "Facility opt out" "Patient has opted out of participation entirely at the facility. This means that no records will be shared from that facility."
 * #sdhr-facility-opt-in "Facility opt in" "Patient has opted in to participation at the facility. This means that records will be shared from that facility."
+* #sdhr-hnz-opt-out "HNZ opt out" "Patient has opted out of participation entirely with Health NZ. This means that no records will be shared from any facility."
+* #sdhr-hnz-opt-in "HNZ opt in" "Patient has opted in to participation with Health NZ. This means that records will be shared from all facilities."

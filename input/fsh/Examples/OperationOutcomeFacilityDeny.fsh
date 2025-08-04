@@ -5,5 +5,5 @@ Usage: #example
 
 * issue[0].severity = #error
 * issue[0].code = #suppressed
-* issue[0].details.coding[0] = $sdhr-outcome-codes#shdr-facility-participate-deny "SDHR Facility Participate Deny"
+* issue[0].details.coding[0] = $sdhr-outcome-codes#sdhr-participation-status-denied-facility "SDHR Participation Status Denied at Facility"
 * issue[0].details.text = "Patient has opted out of participating in the shared digital health record service at this facility."

@@ -2,8 +2,8 @@ Profile: SDHRCondition
 Parent: NzCondition
 Description: "Condition resource to record problems and conditions affecting a person"
 
+* meta 1..1
 * meta.profile 1..1
-
 * meta.source 1..1
 * meta insert MetaSource
 * meta insert MetaTag

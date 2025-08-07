@@ -78,8 +78,7 @@ RuleSet: HPIFacility(hpi-facility-id)
 RuleSet: MetaSource
 * source ^short = "Captures the source of the record - please see description for details"
 * source ^definition = "Captures the source of the record. If the record is sourced from a PMS the value should contain the HPIFacilityID
-                            e.g. HPI Facility https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B
-                            or HNZ System (AIR) https://api.air.digital.health.nz/fhir/"
+                            e.g. HPI Facility https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B"
 
 Invariant: hpi-location-url-format
 Description: "Reference must be an HPI Location URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A"

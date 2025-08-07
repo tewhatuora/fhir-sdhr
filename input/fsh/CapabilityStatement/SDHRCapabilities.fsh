@@ -21,15 +21,18 @@ Usage: #definition
 * format = #application/fhir+json
 * rest.mode = #server
 //participate operation
-* rest.operation[0].name = "participate"
+* rest.operation[+].name = "participate"
 * rest.operation[=].definition = Canonical(SDHRParticipateOperation)
 * rest.operation[=].documentation = """
 This operation allows a patient to choose to participate in the Shared Digital Health Record service.
-It can be used to indicate whether the patient wishes to participate, whether any resources are withheld, and the reason for participation.
+This operation should be used by data providers in the Shared Digital Health Record ecosystem such as Patient Management Systems (PMS) or Electronic Health Record (EHR) systems.
+It can be used to indicate whether the patient wishes to participate, whether any resources are withheld, and the reason for participation. The scope of this operation is the API consumer - e.g. an HPI Facility where patient data is held.
 
-Examples where this operation might be used include:
-- A patient who chooses not to participate in the Shared Digital Health Record service and informs their healthcare provider of this choice.
-- A patient who has some confidential records, held at their healthcare provider, that are withheld from the service.
+Scenarios where this operation might be used include:
+- A patient has opted in to the Shared Digital Health Record service and appropriate data will be shared from the data holder to the service.
+- A patient chooses not to participate in the Shared Digital Health Record service and informs their healthcare provider of this choice.
+- A patient has one or more confidential records, held at their healthcare provider, that are withheld from the service.
+- A patient has previously withheld records but has now released them to the Shared Digital Health Record service.
 
 For example payloads that might be used with this operation see:
 - [Parameters resource for total non-participation](./Parameters-ParametersDoNotParticipate.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
@@ -44,26 +47,24 @@ The operation is expected to be called by a healthcare provider on behalf of the
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 // HNZ participate operation
-* rest.operation[0].name = "hnz-participate"
+* rest.operation[+].name = "hnz-participate"
 * rest.operation[=].definition = Canonical(SDHRHNZParticipateOperation)
 * rest.operation[=].documentation = """
-This operation allows a patient to choose to participate in the Shared Digital Health Record service.
-It can be used to indicate whether the patient wishes to participate, whether any resources are withheld, and the reason for participation.
+This operation allows a patient to choose to participate in the Shared Digital Health Record service via HNZ assisted channels.
+This operation should only be used by HNZ channels.
 
-Examples where this operation might be used include:
-- A patient who chooses not to participate in the Shared Digital Health Record service and informs their healthcare provider of this choice.
-- A patient who has some confidential records, held at their healthcare provider, that are withheld from the service.
+Scenarios where this operation might be used include:
+- A patient has opted in to the Shared Digital Health Record service by contacting Health NZ via appropriate digital or assisted channels.
+- A patient chooses not to participate in the Shared Digital Health Record service and informs Health NZ of this choice via appropriate digital or assisted channels.
 
 For example payloads that might be used with this operation see:
-- [Parameters resource for total non-participation](./Parameters-ParametersDoNotParticipate.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
-- [Parameters resource for participation](./Parameters-ParametersParticipate.html) : This example shows how to indicate that a patient wishes to participate in the Shared Digital Health Record service, where previously opted out (opt-in).
-- [Parameters resource for partial participation with withheld records](./Parameters-ParametersParticipateRecordWithheld.html) : This example shows how to indicate that a patient has some confidential records that are withheld from the Shared Digital Health Record service.
-- [Parameters resource for releasing withheld records](./Parameters-ParametersParticipateRecordReleased.html) : This example shows how to indicate that a patient has previously withheld records but has now released them to the Shared Digital Health Record service.
+- [Parameters resource for total non-participation](./Parameters-ParametersHNZParticipateOptOut.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
+- [Parameters resource for participation](./Parameters-ParametersHNZParticipateOptIn.html) : This example shows how to indicate that a patient wishes to participate in the Shared Digital Health Record service.
 
-To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participate`).
+To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$hnz-participate`).
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
-The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
+The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 

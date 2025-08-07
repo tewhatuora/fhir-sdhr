@@ -74,21 +74,26 @@ FHIRAPI -> SDHR : Query Resource
 SDHR -> FHIRAPI : Return
 FHIRAPI -> ORCHESTRATOR : Return Search result with OperationOutcome\nindicating that the patient has witheld records at source
 note right of ORCHESTRATOR
-  "type" : "searchset",
-  "total" : 0,
-  "entry": [
-  "resourceType" : "Bundle",
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [
     {
-      "resourceType" : "OperationOutcome",
-      "issue" : [
-        {
-          "severity" : "info",
-          "code" : "security",
-          "diagnostics" : "Patients has witheld records at source"
-        }
-      ]
+      "severity" : "information",
+      "code" : "informational",
+      "details" : {
+        "coding" : [
+          {
+            "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
+            "code" : "sdhr-records-withheld-at-source",
+            "display" : "Records withheld at source"
+          }
+        ],
+        "text" : "Patient has withheld records at source. The operation was successful,
+        but some records were not included in the response due to confidentiality settings."
+      }
     }
   ]
+}
 end note
 
 ==Patient Elects to Unrestict the Record==
@@ -110,9 +115,19 @@ alt check SDHR for resource
         "resourceType" : "OperationOutcome",
         "issue" : [
           {
-            "severity" : "info",
-            "code" : "security",
-            "diagnostics" : "Patients has witheld records at source"
+            "severity" : "information",
+            "code" : "informational",
+            "details" : {
+              "coding" : [
+                {
+                  "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
+                  "code" : "sdhr-records-withheld-at-source",
+                  "display" : "Records withheld at source"
+                }
+              ],
+              "text" : "Patient has withheld records at source. The operation was successful,
+              but some records were not included in the response due to confidentiality settings."
+            }
           }
         ]
       }

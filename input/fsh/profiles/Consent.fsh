@@ -1,7 +1,9 @@
 Profile: SDHRConsent
 Parent: Consent
-Description: "Consent resource created to reflect a patient has agreed to share their information with authorised health workers, originating from a practice management system
-            For more detail on how this resource is used, see the [consent based access control page](./consent-based-access.html)."
+Description: "Consent resource created to reflect a patient's preferences with regard to sharing their information with authorised health workers via the shared digital health record service.
+            Note that this is a protected resource and scopes required to manage this resource are not provisioned to most API consumers.
+            A patient's participation preferences should be managed by the [Participate Operation](./OperationDefinition-SDHRParticipateOperation.html).
+            For more details on the participate operation see [SDHR Custom Operations](./api.html#sdhr-custom-operations)."
 
 * status ^short = "The state of the Consent. This must be active to release data from the server"
 
@@ -25,9 +27,9 @@ Description: "Consent resource created to reflect a patient has agreed to share 
 * provision.period.end ^short = "The date and time the Consent is considered to be expired"
 * provision.action 1..*
 * provision.action ^short = "The action that is being permitted or denied"
-
-* provision.provision.extension contains OptOutAtFacilityExtension named optOutAtFacility 0..1
-* provision.provision.extension[optOutAtFacility] ^short = "Indicates the patient has opted out of participation entirely at the facility"
+// Add the extension at provision.provision
+* provision.provision.extension contains FacilityParticipationExtension named FacilityParticipationExtension 0..1
+* provision.provision.extension[FacilityParticipationExtension] ^short = "Indicates the patient has opted out of participation entirely at the facility"
 
 * scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 //* category = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL

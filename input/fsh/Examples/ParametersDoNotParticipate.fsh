@@ -8,7 +8,7 @@ Description: "Example parameters content to POST to the Participate operation wh
 * parameter[=].valueReference.type = "Patient"
 * parameter[+].name = "facilityId"
 * parameter[=].valueReference = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A)
-* parameter[+].name = "globalParticipationIndicator"
+* parameter[+].name = "participationIndicator"
 * parameter[=].valueBoolean = false
 // * parameter[+].name = "reasonCode"
 // * parameter[=].valueCodeableConcept = $sdhr-participation-reason#sdhr-participation "SDHR participation"

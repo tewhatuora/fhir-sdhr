@@ -19,12 +19,13 @@ See [SDHR Participate Operation](https://fhir-ig.digital.health.nz/sdhr/Operatio
 * ^status = #active
 
 * #sdhr-records-withheld-at-source "Records withheld at source" "This code is used when the patient has records that are withheld from the Shared Digital Health Record service at source, for example, a GP practice or hospital."
-* #sdhr-participate-deny "SDHR Participate Deny" "This code is used when the patient has opted out of participating in the Shared Digital Health Record service."
+* #sdhr-participation-status-denied "SDHR Participation Status Denied" "This code is used when the patient has opted out of participating in the Shared Digital Health Record service."
+* #sdhr-participation-status-denied-facility "SDHR Participation Status Denied at Facility" "This code is used when the patient has opted out of participating in the Shared Digital Health Record service at a specific facility."
 * #sdhr-invalid-patient "SDHR Invalid Patient" "This code is used when the patient parameter is invalid for the Shared Digital Health Record service operation. Please ensure the patient is correctly specified and matches the required NHI Patient URL format."
-* #sdhr-required-parameter-missing "SDHR Required parameter missing" "This code is used when a required parameter is missing in the request, such as the reasonCode parameter."
+* #sdhr-parameter-missing "SDHR Required parameter missing" "This code is used when a required parameter is missing in the request, such as the reasonCode parameter."
 * #sdhr-parameter-invalid "SDHR parameter invalid" "This code is used when a parameter is invalid in the request."
 * #sdhr-participation-status-invalid "SDHR Participation Status Invalid"
 * #sdhr-operation-success "SDHR Operation Success" "This code is used when the operation was successful, such as when a patient's participation status was successfully recorded."
-* #sdhr-participation-unknown "SDHR Participation Unknown" "This code is used when the Shared Digital Health Record service has no record of participation preferences for this patient. Please use the $participate operation to indicate the patient's participation preferences."
+* #sdhr-participation-status-unknown "SDHR Participation Status Unknown" "This code is used when the Shared Digital Health Record service has no record of participation preferences for this patient. Please use the $participate operation to indicate the patient's participation preferences."
 
 

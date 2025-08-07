@@ -373,7 +373,7 @@ This operation is designed to enable API Consumers such as PMS systems to notify
 To call the operation a `POST` request is made to the base API with a `Parameters` payload.
 e.g.
 
-{% fragment Parameters/ParametersParticipate JSON %}
+{% fragment Parameters/ParametersParticipateRecordReleased JSON %}
 
 ### Example Participation Flows
 
@@ -388,6 +388,13 @@ e.g.
 <div width="100%">
 <!-- Generated from `input/images-source/participate-sequence-pmsrecordwithheld.plantuml` -->
 {% include participate-sequence-pmsrecordwithheld.svg %}
+</div>
+<br clear="all">
+
+<!-- markdownlint-disable MD033 -->
+<div width="100%">
+<!-- Generated from `input/images-source/participate-sequence-pmsrecordwithheld.plantuml` -->
+{% include participate-sequence-hnzoptoff.svg %}
 </div>
 <br clear="all">
 

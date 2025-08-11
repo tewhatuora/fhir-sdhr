@@ -18,12 +18,12 @@ Description: "Consent example illustrating a patient stating participation prefe
 * provision.period.start = "2023-10-04"
 * provision.action.coding.code = #access "Access. Retrieval without permitting collection, use or disclosure."
 
-* provision.provision.extension.url = "http://fhir-ig.digital.health.nz/sdhr/StructureDefinition/facility-participation-extension"
+* provision.provision.extension.url = "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/facility-participation-extension"
 * provision.provision.extension.valueCodeableConcept = #sdhr-facility-opt-out "Facility opt out"
 * provision.provision.actor.role = #PROV
 * provision.provision.actor.reference = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A)
 
-* provision.provision[+].extension.url = "http://fhir-ig.digital.health.nz/sdhr/StructureDefinition/facility-participation-extension"
+* provision.provision[+].extension.url = "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/facility-participation-extension"
 * provision.provision[=].extension.valueCodeableConcept = #sdhr-facility-opt-in "Facility opt in"
 * provision.provision[=].actor.role = #PROV
 * provision.provision[=].actor.reference = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Location/B2222-C)

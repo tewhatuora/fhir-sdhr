@@ -27,6 +27,6 @@ Description: "Consent example to allow a patient to opt in to sharing their info
 * provision.provision[=].data[=].meaning = #instance
 * provision.provision[=].data[+].reference = Reference(Condition/another-local-pms-id)
 * provision.provision[=].data[=].meaning = #instance
-* provision.provision.extension[+].url = "http://fhir-ig.digital.health.nz/sdhr/StructureDefinition/facility-participation-extension"
+* provision.provision.extension[+].url = "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/facility-participation-extension"
 * provision.provision.extension[=].valueCodeableConcept = #sdhr-facility-opt-in "Facility opt in"
 * scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy

@@ -87,8 +87,6 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].binding.valueSet = Canonical(SDHRParticipationReasonValueSet)
 * parameter[=].documentation = """The reason code for participation. This **MUST** be provided when the intent is to indicate a withheld record or when releasing a record.
 Valid codes include:
-- `sdhr-facility-opt-out`: Patient has opted out of participation entirely at the facility. This means that no records will be shared from that facility.
-- `sdhr-facility-opt-in`: Patient has opted in to participation at the facility
 - `sdhr-record-withheld`: Records withheld from the patient for privacy or confidentiality reasons.
 - `sdhr-record-released`: Record that was previously withheld has been released (is no longer confidential or restricted) to the service by the patient."""
 

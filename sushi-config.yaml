@@ -9,7 +9,7 @@ name: nz-shared-digital-health-record
 title: NZ Shared Digital Health Record API
 description: NZ Shared Digital Health Record API
 status: draft # draft | active | retired | unknown
-version: 0.6.0
+version: 0.7.0
 fhirVersion: 4.0.1 # https://www.hl7.org/fhir/valueset-FHIR-version.html
 copyrightYear: 2025+
 releaseLabel: ballot # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use

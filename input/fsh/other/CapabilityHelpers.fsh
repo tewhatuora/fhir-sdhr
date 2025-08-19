@@ -92,17 +92,19 @@ RuleSet: APIStandardsDocumentation
     #### Example Request-Context Header Payload for a system submitting data to the API, where there is no end user
   **Base64 Encoded**
   ```
-  ICB7CiAgICAidXNlcklkZW50aWZpZXIiOiAiMWI4MjAwZDctM2E4Yy00ZmI2LThlNWMtY2VjNDU0MDk5OWQ1IiwKICAgICJ1c2VyUm9sZSI6ICIxMTAxNTAiLAogICAgInB1cnBvc2VPZlVzZSI6IFsKICAgICAgIlNZU0RFViIKICAgIF0sCiAgICAidXNlckZ1bGxOYW1lIjogIlNhbXBsZSBQTVMgSW50ZWdyYXRpb24gQXBwbGljYXRpb24iCiAgfQ==
+  ewogICAgInVzZXJJZGVudGlmaWVyIjogIjFiODIwMGQ3LTNhOGMtNGZiNi04ZTVjLWNlYzQ1NDA5OTlkNSIsCiAgICAidXNlclJvbGUiOiAiMTEwMTUwIiwKICAgICJwdXJwb3NlT2ZVc2UiOiBbCiAgICAgICAgIlNZU0RFViIKICAgIF0sCiAgICAidXNlckZ1bGxOYW1lIjogIlNhbXBsZSBQTVMgSW50ZWdyYXRpb24gQXBwbGljYXRpb24iLAogICAgIm9yZ0lkZW50aWZpZXIiOiAiRzAwMDAxLUciLAogICAgImZhY2lsaXR5SWRlbnRpZmllciI6ICJGWlo5OTktQiIKfQ==
   ```
   **Decoded JSON**
   ```json
   {
-    "userIdentifier": "1b8200d7-3a8c-4fb6-8e5c-cec4540999d5",
-    "userRole": "110150",
-    "purposeOfUse": [
-      "SYSDEV"
-    ],
-    "userFullName": "Sample PMS Integration Application"
+      "userIdentifier": "1b8200d7-3a8c-4fb6-8e5c-cec4540999d5",
+      "userRole": "110150",
+      "purposeOfUse": [
+          "SYSDEV"
+      ],
+      "userFullName": "Sample PMS Integration Application",
+      "orgIdentifier": "G00001-G",
+      "facilityIdentifier": "FZZ999-B"
   }
   ```
 

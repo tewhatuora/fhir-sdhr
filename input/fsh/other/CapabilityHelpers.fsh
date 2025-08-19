@@ -51,8 +51,8 @@ RuleSet: APIStandardsDocumentation
   | `purposeOfUse`           | Yes         | One of [ "PATRQT", "POPHLTH", "TREAT", "ETREAT", "PUBHLTH", "SYSDEV" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                                 |
   | `userFullName`           | Yes         | Full name of the user of the PMS/health application.                                                                                                     |
   | `userRole`               | Yes         | Role of the user of the PMS/health application. Set to `"PROV"` (Provider) or `"PAT"` (Patient)                                                         |
-  | `orgIdentifier`          | No (preferred)         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
-  | `facilityIdentifier`     | No (preferred)         | HPI identifier for the facility where the user is located                                                                                                |
+  | `orgIdentifier`          | Yes         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
+  | `facilityIdentifier`     | Yes         | HPI identifier for the facility where the user is located                                                                                                |
 
   #### Requests with system context
   | **Context property**     | **Mandatory** | **Value**                                                                                                                          |
@@ -61,6 +61,8 @@ RuleSet: APIStandardsDocumentation
   | `purposeOfUse`           | Yes         | [ "SYSDEV" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                              |
   | `userFullName`           | Yes         | Name of the PMS/health application.                                                                                                    |
   | `userRole`               | Yes         | Role of the PMS/health application. Set to `"110150"` (Application)                                                 |
+  | `orgIdentifier`          | Yes         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
+  | `facilityIdentifier`     | Yes         | HPI identifier for the facility where the user is located                                                                                                |
 
   A schema definition and examples for `Request-Context` can be [found here](https://github.com/tewhatuora/schemas/blob/main/json-schema/Request-Context.json)
 

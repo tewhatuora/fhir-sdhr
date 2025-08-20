@@ -183,10 +183,6 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Condition-onset-date"
 * rest.resource[=].searchParam[=].type = #date
 * rest.resource[=].searchParam[=].documentation = "Date the condition started"
-* rest.resource[=].searchParam[+].name = "participant"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/AllergyIntolerance-participant"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Persons involved in the encounter other than the patient."
 * rest.resource[=].searchParam[+].name = "severity"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Condition-severity"
 * rest.resource[=].searchParam[=].type = #token
@@ -246,10 +242,10 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-participant"
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "Persons involved in the encounter other than the patient."
-* rest.resource[=].searchParam[+].name = "participant-actor"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Condition-participant-actor"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Persons involved in the encounter other than the patient."
+* rest.resource[=].searchParam[+].name = "participant-type"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-participant-type"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Role of participant in encounter."
 * rest.resource[=].searchParam[+].name = "status"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-status"
 * rest.resource[=].searchParam[=].type = #token

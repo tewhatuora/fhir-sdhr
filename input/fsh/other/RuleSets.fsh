@@ -86,6 +86,11 @@ Description: "Reference must be an HPI Location URL with format https://api.hip.
 Expression: "matches('^https://api.hip.digital.health.nz/fhir/hpi/v1/Location/[A-Z]{1}[0-9]{5}-[A-Z]{1}$')"
 Severity: #error
 
+Invariant: code-or-note-required
+Description: "The AllergyIntolerance resource must have at least one of 'code' or 'note'."
+Expression: "(code.exists() or note.exists())"
+Severity: #error
+
 RuleSet: MetaTag
 * tag 0..*
 * tag ^short = "Tag the resource with a code to indicate usability components of the resource"

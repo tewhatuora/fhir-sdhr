@@ -21,6 +21,13 @@ Description: "A ValueSet containing all codes from the AllergyIntolerance Severi
 * include $sct#1255665007 "Moderate (qualifier value)"
 * include $sct#24484000 "Severe (severity modifier) (qualifier value)"
 
+ValueSet: SDHRAllergyIntoleranceCodeValueSet
+Id: sdhr-allergyintolerance-code-valueset
+Title: "ValueSet for AllergyIntolerance Code"
+Description: "A ValueSet containing all codes from the AllergyIntolerance Code system."
+* include codes from valueset http://hl7.org/fhir/ValueSet/allergyintolerance-code
+* include codes from system https://standards.digital.health.nz/ns/nzmt-type-code
+
 
 // ValueSet: SDHRReferenceSetValueSet
 // Id: sdhr-reference-set-valueset

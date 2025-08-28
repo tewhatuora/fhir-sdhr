@@ -1188,7 +1188,7 @@
 				"packages": {},
 				"exec": [
 					"// Include Request-Context on all requests",
-					"// See https://fhir-ig.digital.health.nz/sdhr/CapabilityStatement-SDHRCapabliityStatement.html for details on how to form this header",
+					"// See https://fhir-ig.digital.health.nz/sdhr/CapabilityStatement-SDHRCapabilityStatement.html for details on how to form this header",
 					"pm.request.headers.add({key: 'Request-Context', value: btoa(JSON.stringify({\"userIdentifier\":\"AABBCC\",\"userRole\":\"PROV\",\"secondaryIdentifier\":{\"use\":\"admin\",\"system\":\"https://standards.digital.health.nz.ns/hpi-person-id\",\"value\":\"12345678\"},\"purposeOfUse\":[\"TREAT\",\"PUBHLTH\"],\"userFullName\":\"Dr. Jane Doe\",\"orgIdentifier\":\"O12345\",\"facilityIdentifier\":\"F12345\"})) });",
 					""
 				]

@@ -1,8 +1,8 @@
-Instance: SDHRCapabliityStatement
+Instance: SDHRCapabilityStatement
 InstanceOf: HnzToolingCapabilityStatement
 Usage: #definition
 * version = "0.6.0"
-* name = "SDHRCapabliityStatement"
+* name = "SDHRCapabilityStatement"
 * title = "NZ Shared Digital Health Record API"
 * contact[+].name = "Health New Zealand Te Whatu Ora"
 * contact[=].telecom.value = "https://www.tewhatuora.govt.nz"

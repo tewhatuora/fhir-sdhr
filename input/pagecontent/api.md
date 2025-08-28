@@ -4,7 +4,7 @@ The SDHR API is comprised of multiple FHIR resources. This page provides technic
 
 | **Resource** | **Description** |
 | --- | --- |
-| [API Capability Statement](./CapabilityStatement-SDHRCapabliityStatement.html) | FHIR API Capability Statement. Developers should review this to understand the available API interactions and request requirements such as the Request-Context header |
+| [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) | FHIR API Capability Statement. Developers should review this to understand the available API interactions and request requirements such as the Request-Context header |
 | [API Artifacts](./artifacts.html) | List of FHIR Artifacts for this API |
 | [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) | Machine readable OpenAPI specification for this API |
 | [Participate Operation](./OperationDefinition-SDHRParticipateOperation.html)| Custom operation designed to capture participation information from API Consumers e.g. Patient Management Systems |
@@ -22,7 +22,7 @@ The SDHR API is comprised of multiple FHIR resources. This page provides technic
 
 The Shared Digital Health Record FHIR API supports the [FHIR search pattern](https://hl7.org/fhir/R4B/search.html).
 
-You can see the supported search parameters for this API in the [API Capability Statement](./CapabilityStatement-SDHRCapabliityStatement.html#resourcesCap1)
+You can see the supported search parameters for this API in the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html#resourcesCap1)
 
 See below for some example search queries.
 
@@ -331,15 +331,15 @@ To maintain data integrity, API Consumers authorized to make updates to resource
 
 ### Searching for resources before update
 
-The SDHR API reflects the FHIR Search parameters which are documented in the [Server Capability Statement](./CapabilityStatement-SDHRCapabliityStatement.html) and well as a direct HTTP GET for a resource.
+The SDHR API reflects the FHIR Search parameters which are documented in the [Server Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) and well as a direct HTTP GET for a resource.
 
-#### Case 1: The SDHR Server assigned resource ID is known by the API Consumer:
+#### Case 1: The SDHR Server assigned resource ID is known by the API Consumer
 
 In this scenario, an HTTP GET for the resource can be made to retrieve the resource: `GET /Condition/{serverResourceId}`.
 
 Once the update has been made, the resource can be updated in the SDHR Server by using an HTTP PUT to the resource: `PUT /Condition/{serverResourceId}`
 
-#### Case 2: The SDHR Server assigned resource ID is unknown by the API Consumer:
+#### Case 2: The SDHR Server assigned resource ID is unknown by the API Consumer
 
 In this scenario, a FHIR Search must be used with search parameters available to the API Consumer, as the server resource ID cannot be used for a direct HTTP GET.
 
@@ -355,7 +355,7 @@ To improve accuracy in this process, API Consumers who submit or update records 
 
 <b>Option 2: FHIR Search using resource search parameters</b>
 
-When a local identifier is not submitted to a resource, the search parameters for each resource must be used, which are documented in the [Server Capability Statement](./CapabilityStatement-SDHRCapabliityStatement.html). This will return a FHIR Bundle which may contain multiple records which must be handled by the API Consumer.
+When a local identifier is not submitted to a resource, the search parameters for each resource must be used, which are documented in the [Server Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html). This will return a FHIR Bundle which may contain multiple records which must be handled by the API Consumer.
 
 <div width="100%">
 <!-- Generated from `input/images-source/search-by-parameters.plantuml` -->
@@ -423,6 +423,7 @@ The behaviours are valid for resources containing an security label using the `h
 </details>
 
 #### FHIR Search example
+
 `GET /AllergyIntolerance?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC7284`
 
 Response status: `200`
@@ -437,8 +438,8 @@ In this request example, a request is made to return AllergyIntolerance resource
 
 In the following search the parameters below are supplied
 
-- `patient` | https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC4633
-- `source` | https://api.hip.digital.health.nz/fhir/Location/F38006-B
+- `patient` | <https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC4633>
+- `source` | <https://api.hip.digital.health.nz/fhir/Location/F38006-B>
 - `identifier` | 6b8a6cc1-612f-456e-89df-9fbcd753acb2
 
 `GET /Condition?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC4633&_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FLocation%2FF38006-B&identifier=6b8a6cc1-612f-456e-89df-9fbcd753acb2`

@@ -28,3 +28,5 @@ Description: "Condition resource to record problems and conditions affecting a p
 * insert UserSelected
 * recorder ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
 * asserter ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
+
+* obeys clinical-status-requirements

@@ -163,3 +163,8 @@ Invariant: no-participation-ops
 Description: "Bundle entries MUST NOT invoke $participate or $hnz-participate."
 Severity: #error
 Expression: "entry.request.url.where($this.matches('[$](participate|hnz-participate)')).exists().not()"
+
+Invariant: clinical-status-requirements
+Description: "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error and category is problem-list-item"
+Severity: #error
+Expression: "clinicalStatus.exists() or verificationStatus.coding.where(system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' and code = 'entered-in-error').exists() or category.select($this = 'problem-list-item').empty()"

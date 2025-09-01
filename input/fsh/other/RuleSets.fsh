@@ -77,6 +77,7 @@ RuleSet: HPIFacility(hpi-facility-id)
 
 RuleSet: MetaSource
 * source 1..1
+* source obeys hpi-location-url-format
 * source ^short = "Captures the source of the record - please see description for details"
 * source ^definition = "Captures the source of the record. This must contain the HPIFacilityID
                             e.g. https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B"

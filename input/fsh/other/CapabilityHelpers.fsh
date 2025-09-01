@@ -52,7 +52,7 @@ RuleSet: APIStandardsDocumentation
   | `userFullName`           | Yes         | Full name of the user of the PMS/health application.                                                                                                     |
   | `userRole`               | Yes         | Role of the user of the PMS/health application. Set to `"PROV"` (Provider) or `"PAT"` (Patient)                                                         |
   | `orgIdentifier`          | Yes         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
-  | `facilityIdentifier`     | Yes         | HPI identifier for the facility where the user is located                                                                                                |
+  | `facilityIdentifier`     | Yes         | The HPI Facility identifier for the facility where the record is being sourced / accessed.                                                                                                |
 
   #### Requests with system context
   | **Context property**     | **Mandatory** | **Value**                                                                                                                          |

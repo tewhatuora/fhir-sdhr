@@ -77,6 +77,7 @@ RuleSet: HPIFacility(hpi-facility-id)
 
 RuleSet: MetaSource
 * source 1..1
+* source obeys hpi-location-url-format
 * source ^short = "Captures the source of the record - please see description for details"
 * source ^definition = "Captures the source of the record. This must contain the HPIFacilityID
                             e.g. https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B"
@@ -152,3 +153,14 @@ RuleSet: HNZSDHRClientLastUpdated(dateTime)
 RuleSet: HNZSDHRHighlighted(highlighted)
 * url = "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-sdhr-highlighted-extension"
 * valueBoolean = {highlighted}
+
+
+Invariant: one-patient-only
+Description: "All Patient references in the bundle are the same (compares full reference strings)."
+Severity: #error
+Expression: "entry.resource.descendants().where($this is Reference).reference.where(matches('(^|.*/)?Patient/[^/]+$')).exists() and entry.resource.descendants().where($this is Reference).reference.where(matches('(^|.*/)?Patient/[^/]+$')).distinct().count() = 1"
+
+Invariant: no-participation-ops
+Description: "Bundle entries MUST NOT invoke $participate or $hnz-participate."
+Severity: #error
+Expression: "entry.request.url.where($this.matches('[$](participate|hnz-participate)')).exists().not()"

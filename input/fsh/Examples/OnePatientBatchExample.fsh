@@ -2,7 +2,7 @@ Alias: $condition-clinical = http://terminology.hl7.org/CodeSystem/condition-cli
 Alias: $condition-ver-status = http://terminology.hl7.org/CodeSystem/condition-ver-status
 Alias: $sct = http://snomed.info/sct
 
-Instance: GOFSH-GENERATED-ID-0
+Instance: Batch-example
 InstanceOf: Bundle
 Usage: #example
 * type = #batch

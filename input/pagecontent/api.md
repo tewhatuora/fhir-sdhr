@@ -439,10 +439,10 @@ In this request example, a request is made to return AllergyIntolerance resource
 In the following search the parameters below are supplied
 
 - `patient` | <https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC4633>
-- `source` | <https://api.hip.digital.health.nz/fhir/Location/F38006-B>
+- `source` | <https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B>
 - `identifier` | 6b8a6cc1-612f-456e-89df-9fbcd753acb2
 
-`GET /Condition?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC4633&_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2FLocation%2FF38006-B&identifier=6b8a6cc1-612f-456e-89df-9fbcd753acb2`
+`GET /Condition?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC4633&_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fhpi%2Fv1%2FLocation%2FF38006-B&identifier=6b8a6cc1-612f-456e-89df-9fbcd753acb2`
 
 In this example the spplied parameters are an exact match for a singe record that has been indicated as wiithheld by the source system. in this scenario the server does not have the record however it is able to uniquely match to a record that has been withheld using the [$participate operation](./OperationDefinition-SDHRParticipateOperation.html)
 

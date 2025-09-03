@@ -18,10 +18,12 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 
 * insert ProfilePatient(patient)
 
+* obeys code-or-note-required
+
 * contained 0..0
 //* clinicalStatus from sdhr-allergyintolerance-clinical-status-valueset (required)
 //* verificationStatus from http://hl7.org/fhir/ValueSet/allergyintolerance-verification (required)
-* code obeys code-or-note-required
+
 //* code from http://hl7.org/fhir/ValueSet/allergyintolerance-code (preferred)
 * code from sdhr-allergyintolerance-code-valueset (preferred)
 * code ^short = "Preferred - a SNOMED CT code or a NZMT code. When the intolerance is referring to a medication please use the NZMT codeset. When referring to another supstance, food etc. please use SNOMED."
@@ -32,5 +34,3 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 //* category from sdhr-allergyintolerance-category-valueset (required)
 * reaction.manifestation from sdhr-allergyintolerance-manifestation-valueset (required)
 * reaction.severity from sdhr-allergyintolerance-severity-valueset (required)
-* note obeys code-or-note-required
-

@@ -23,7 +23,7 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 * contained 0..0
 //* clinicalStatus from sdhr-allergyintolerance-clinical-status-valueset (required)
 //* verificationStatus from http://hl7.org/fhir/ValueSet/allergyintolerance-verification (required)
-* obeys code-or-note-required
+
 //* code from http://hl7.org/fhir/ValueSet/allergyintolerance-code (preferred)
 * code from sdhr-allergyintolerance-code-valueset (preferred)
 * code ^short = "Preferred - a SNOMED CT code or a NZMT code. When the intolerance is referring to a medication please use the NZMT codeset. When referring to another supstance, food etc. please use SNOMED."

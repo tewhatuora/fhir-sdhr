@@ -84,7 +84,7 @@ RuleSet: MetaSource
 
 Invariant: hpi-location-url-format
 Description: "Reference must be an HPI Location URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A"
-Expression: "matches('^https://api.hip.digital.health.nz/fhir/hpi/v1/Location/[A-Z]{1}[0-9]{5}-[A-Z]{1}$')"
+Expression: "matches('^https://api.hip.digital.health.nz/fhir/hpi/v1/Location/[A-Z]{3}[0-9]{3}-[A-Z]{1}$')"
 Severity: #error
 
 Invariant: code-or-note-required

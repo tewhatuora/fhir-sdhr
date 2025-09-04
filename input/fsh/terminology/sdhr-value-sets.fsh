@@ -10,7 +10,9 @@ ValueSet: SDHRAllergyIntoleranceManifestationValueSet
 Id: sdhr-allergyintolerance-manifestation-valueset
 Title: "ValueSet for AllergyIntolerance Manifestation"
 Description: "A ValueSet containing all codes from the AllergyIntolerance Manifestation system."
-* include codes from system http://snomed.info/sct/21000210109 where refset = #351000210106
+* include codes from system http://snomed.info/sct where concept is-a #281647001
+// * include codes from valueset http://snomed.info/sct?fhir_vs=ecl/%5E%20351000210106%20
+// * include codes from system http://snomed.info/sct/21000210109 where refset = #351000210106
 
 
 ValueSet: SDHRAllergyIntoleranceSeverityValueSet

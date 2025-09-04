@@ -32,5 +32,5 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 * recorder ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
 * asserter ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
 //* category from sdhr-allergyintolerance-category-valueset (required)
-// * reaction.manifestation from sdhr-allergyintolerance-manifestation-valueset (required)
-// * reaction.severity from sdhr-allergyintolerance-severity-valueset (required)
+* reaction.manifestation from sdhr-allergyintolerance-manifestation-valueset (preferred)
+* reaction.severity from sdhr-allergyintolerance-severity-valueset (required)

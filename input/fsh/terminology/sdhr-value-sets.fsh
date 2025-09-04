@@ -12,6 +12,7 @@ Title: "ValueSet for AllergyIntolerance Manifestation"
 Description: "A ValueSet containing all codes from the AllergyIntolerance Manifestation system."
 * include codes from system http://snomed.info/sct/21000210109 where refset = #351000210106
 
+
 ValueSet: SDHRAllergyIntoleranceSeverityValueSet
 Id: sdhr-allergyintolerance-severity-valueset
 Title: "ValueSet for AllergyIntolerance Severity"

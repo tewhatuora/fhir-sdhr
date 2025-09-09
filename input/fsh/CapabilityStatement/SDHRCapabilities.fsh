@@ -191,6 +191,14 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Condition-subject"
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "Who has the condition?"
+* rest.resource[=].searchParam[+].name = "highlighted"
+* rest.resource[=].searchParam[=].definition = "https://fhir-ig.digital.health.nz/sdhr/SearchParameter/condition-highlighted"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Search for conditions flagged as highlighted in the SDHRCondition profile"
+* rest.resource[=].searchParam[+].name = "long-term-condition"
+* rest.resource[=].searchParam[=].definition = "https://fhir-ig.digital.health.nz/sdhr/SearchParameter/condition-long-term-condition"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Search for conditions flagged as long term in the SDHRCondition profile"
 * rest.resource[=].searchParam[+].name = "_lastUpdated"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
 * rest.resource[=].searchParam[=].type = #date

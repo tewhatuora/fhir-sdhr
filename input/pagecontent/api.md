@@ -30,13 +30,13 @@ See below for some example search queries.
 
 This query will return all Condition resources for a given `Patient` and `meta.source`.
 
-`GET /Condition?patient=https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284&_source=https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B`
+`GET /Condition?patient=https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284&_source=https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ111-A`
 
 <div width="100%">
 <details>
 <summary><b><u>Click to view example response</u></b></summary>
 <br>
-In this example the search returns 2 active conditions for the patient `ZKC7284` that were sourced from the HPI location `F38006-B`
+In this example the search returns 2 active conditions for the patient `ZKC7284` that were sourced from the HPI location `FZZ111-A`
 <br>
 <pre><code class="language-json">
 {
@@ -121,7 +121,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
                     "profile": [
                         "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
                     ],
-                    "source": "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B"
+                    "source": "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ111-A"
                 },
                 "id": "635b2a1c-bdd1-4a20-8c2f-6d8348352f6a",
                 "resourceType": "Condition"
@@ -188,7 +188,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
                     "profile": [
                         "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
                     ],
-                    "source": "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B"
+                    "source": "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ111-A"
                 },
                 "id": "c3605e85-6785-4fa9-94a5-6d8015416c53",
                 "resourceType": "Condition"
@@ -301,7 +301,7 @@ In this example the above query returns a single result. Note that in most cases
                     "profile": [
                         "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
                     ],
-                    "source": "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B"
+                    "source": "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ111-A"
                 },
                 "id": "72ca633a-23cc-4848-a512-5111750508fb",
                 "resourceType": "Condition"
@@ -439,7 +439,7 @@ In this request example, a request is made to return AllergyIntolerance resource
 In the following search the parameters below are supplied
 
 - `patient` | <https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC4633>
-- `source` | <https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B>
+- `source` | <https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ111-A>
 - `identifier` | 6b8a6cc1-612f-456e-89df-9fbcd753acb2
 
 `GET /Condition?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC4633&_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fhpi%2Fv1%2FLocation%2FF38006-B&identifier=6b8a6cc1-612f-456e-89df-9fbcd753acb2`

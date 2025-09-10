@@ -80,10 +80,10 @@ RuleSet: MetaSource
 * source obeys hpi-location-url-format
 * source ^short = "Captures the source of the record - please see description for details"
 * source ^definition = "Captures the source of the record. This must contain the HPIFacilityID
-                            e.g. https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B"
+                            e.g. https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ111-A"
 
 Invariant: hpi-location-url-format
-Description: "Reference must be an HPI Location URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FXX111-A"
+Description: "Reference must be an HPI Location URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ111-A"
 Expression: "matches('^https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F[A-Za-z0-9]{2}[0-9]{3}-[A-Za-z0-9]$')"
 Severity: #error
 

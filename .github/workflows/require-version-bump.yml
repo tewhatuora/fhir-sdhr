@@ -1,0 +1,27 @@
+name: Require version bump for UAT merges
+
+on:
+  pull_request:
+    branches:
+      - uat
+
+jobs:
+  check-version-bump:
+    name: Check sushi-config.yaml version bump
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify version increased vs base branch
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          node .github/scripts/check_version_bump.js --base-sha "$BASE_SHA" --file "sushi-config.yaml"

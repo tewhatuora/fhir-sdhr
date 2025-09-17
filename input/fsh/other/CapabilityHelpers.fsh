@@ -48,7 +48,7 @@ RuleSet: APIStandardsDocumentation
   |:-------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|
   | `userIdentifier`         | Yes         | The userid of the user as authenticated by the PMS/health application                                                                                   |
   | `secondaryIdentifier`    | Yes         | The secondary identifier for the user - this **MUST** be the end users Common Person Number (aka HPI Practitioner identifier) of the practitioner using the application where available. Otherwise, any secondary identifier that is held for the user |
-  | `purposeOfUse`           | Yes         | One of [ "PATRQT", "POPHLTH", "TREAT", "ETREAT", "PUBHLTH", "SYSDEV" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                                 |
+  | `purposeOfUse`           | Yes         | One of [ "PATRQT", "POPHLTH", "TREAT", "ETREAT", "PUBHLTH", "RECORDMGT" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                                 |
   | `userFullName`           | Yes         | Full name of the user of the PMS/health application.                                                                                                     |
   | `userRole`               | Yes         | Role of the user of the PMS/health application. Set to `"PROV"` (Provider) or `"PAT"` (Patient)                                                         |
   | `orgIdentifier`          | Yes         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
@@ -58,7 +58,7 @@ RuleSet: APIStandardsDocumentation
   | **Context property**     | **Mandatory** | **Value**                                                                                                                          |
   |:-------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|
   | `userIdentifier`         | Yes         | The oAuth clientId of the system submitting data to the API                                                                                   |
-  | `purposeOfUse`           | Yes         | [ "SYSDEV" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                              |
+  | `purposeOfUse`           | Yes         | [ "RECORDMGT" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                              |
   | `userFullName`           | Yes         | Name of the PMS/health application.                                                                                                    |
   | `userRole`               | Yes         | Role of the PMS/health application. Set to `"110150"` (Application)                                                 |
   | `orgIdentifier`          | Yes         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
@@ -92,7 +92,7 @@ RuleSet: APIStandardsDocumentation
     #### Example Request-Context Header Payload for a system submitting data to the API, where there is no end user
   **Base64 Encoded**
   ```
-  ewogICAgInVzZXJJZGVudGlmaWVyIjogIjFiODIwMGQ3LTNhOGMtNGZiNi04ZTVjLWNlYzQ1NDA5OTlkNSIsCiAgICAidXNlclJvbGUiOiAiMTEwMTUwIiwKICAgICJwdXJwb3NlT2ZVc2UiOiBbCiAgICAgICAgIlNZU0RFViIKICAgIF0sCiAgICAidXNlckZ1bGxOYW1lIjogIlNhbXBsZSBQTVMgSW50ZWdyYXRpb24gQXBwbGljYXRpb24iLAogICAgIm9yZ0lkZW50aWZpZXIiOiAiRzAwMDAxLUciLAogICAgImZhY2lsaXR5SWRlbnRpZmllciI6ICJGWlo5OTktQiIKfQ==
+  ewogICAgInVzZXJJZGVudGlmaWVyIjogIjFiODIwMGQ3LTNhOGMtNGZiNi04ZTVjLWNlYzQ1NDA5OTlkNSIsCiAgICAidXNlclJvbGUiOiAiMTEwMTUwIiwKICAgICJwdXJwb3NlT2ZVc2UiOiBbCiAgICAgICAgIlJFQ09SRE1HVCIKICAgIF0sCiAgICAidXNlckZ1bGxOYW1lIjogIlNhbXBsZSBQTVMgSW50ZWdyYXRpb24gQXBwbGljYXRpb24iLAogICAgIm9yZ0lkZW50aWZpZXIiOiAiRzAwMDAxLUciLAogICAgImZhY2lsaXR5SWRlbnRpZmllciI6ICJGWlo5OTktQiIKfQ==
   ```
   **Decoded JSON**
   ```json
@@ -100,7 +100,7 @@ RuleSet: APIStandardsDocumentation
       "userIdentifier": "1b8200d7-3a8c-4fb6-8e5c-cec4540999d5",
       "userRole": "110150",
       "purposeOfUse": [
-          "SYSDEV"
+          "RECORDMGT"
       ],
       "userFullName": "Sample PMS Integration Application",
       "orgIdentifier": "G00001-G",
@@ -140,7 +140,20 @@ RuleSet: APIStandardsDocumentation
   |429|TOO MANY REQUESTS  |No |Your application is sending too many simultaneous requests|
   |500|SERVER ERROR       |No |An internal server error prevented return of the representation response|
   |503|SERVICE UNAVAILABLE|No |The server is temporarily unable to return the representation. Please wait and try again later|
- 
+
+   #### Update or Create (POST or PUT) Operation Statuses
+
+  |**Code**|**Meaning**   |**OperationOutcome** in response?|**Description**|
+  |:--:|:-----------------|:----------------------------------|:----------------------------------|
+  |200|OK                 |Yes, When there are additional messages about an operation|The request was successful, and the response body contains the representation requested|
+  |201|CREATED            |No|The request was successful, and the response body contains the representation created|
+  |400|BAD REQUEST        |Yes|Missing or bad `Request-Context` custom header;<br>FHIR request payload does not validate against Implementation Guide|
+  |401|UNAUTHORIZED       |Yes|The supplied credentials, if any, are not sufficient to access the resource|
+  |403|FORBIDDEN          |Yes|Insufficient privilege to access the requested FHIR resource/operation. See [OperationOutcome-APIError-Unauthorised](./OperationOutcome-APIError-Unauthorised.html)|
+  |429|TOO MANY REQUESTS  |No |Your application is sending too many simultaneous requests|
+  |500|SERVER ERROR       |No |An internal server error prevented return of the representation response|
+  |503|SERVICE UNAVAILABLE|No |The server is temporarily unable to return the representation. Please wait and try again later|
+
   ### Non existent API endpoints
 
   When a consumer attempts to call a non-existent API end point, respond

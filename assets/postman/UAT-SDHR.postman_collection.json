@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "463268a6-35ee-4a33-b3cf-cfa7ec3f22ef",
+		"_postman_id": "26e2d6af-70ce-4443-acdb-27e490e1122a",
 		"name": "UAT SDHR",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26960160",
-		"_collection_link": "https://grey-station-358477.postman.co/workspace/MoH~247d87ae-b9f2-40cb-9ac1-4cd0f1f44e61/collection/26960160-463268a6-35ee-4a33-b3cf-cfa7ec3f22ef?action=share&source=collection_link&creator=26960160"
+		"_exporter_id": "26238032"
 	},
 	"item": [
 		{
@@ -1190,7 +1189,16 @@
 				"exec": [
 					"// Include Request-Context on all requests",
 					"// See https://fhir-ig.digital.health.nz/sdhr/CapabilityStatement-SDHRCapabilityStatement.html for details on how to form this header",
-					"pm.request.headers.add({key: 'Request-Context', value: btoa(JSON.stringify({\"userIdentifier\":\"AABBCC\",\"userRole\":\"PROV\",\"secondaryIdentifier\":{\"use\":\"admin\",\"system\":\"https://standards.digital.health.nz.ns/hpi-person-id\",\"value\":\"12345678\"},\"purposeOfUse\":[\"TREAT\",\"PUBHLTH\"],\"userFullName\":\"Dr. Jane Doe\",\"orgIdentifier\":\"O12345\",\"facilityIdentifier\":\"F12345\"})) });",
+					"pm.request.headers.add({key: 'Request-Context', value: btoa(JSON.stringify({",
+					"      \"userIdentifier\": \"1b8200d7-3a8c-4fb6-8e5c-cec4540999d5\",",
+					"      \"userRole\": \"110150\",",
+					"      \"purposeOfUse\": [",
+					"          \"RECORDMGT\"",
+					"      ],",
+					"      \"userFullName\": \"Sample PMS Integration Application\",",
+					"      \"orgIdentifier\": \"G00001-G\",",
+					"      \"facilityIdentifier\": \"FZZ999-B\"",
+					"  })) });",
 					""
 				]
 			}

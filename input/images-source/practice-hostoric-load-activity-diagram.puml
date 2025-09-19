@@ -1,0 +1,63 @@
+@startuml
+
+title: Practice Historic Load Sequence
+
+' skinparam dpi 100
+' scale max 700 width
+
+' Define colour scheme and styling for the diagram
+' Standard HNZ colours
+skinparam {
+    defaultFontColor #4080a9
+    defaultBackgroundColor #d7f8ff
+    '     defaultComponentColour #61d9de
+    '     defaultActorColour #61d9de
+    defaultFontSize 16
+    defaultArrowThickness 6
+    '     actorStyle awesome
+    '     linetype polyline
+}
+
+'allowmixing
+
+start
+
+:Practice communicates with patients;
+:Practice collects patient consents;
+:Practice onboards to SDHR service;
+:PMS enables SDHR data sharing;
+:PMS sends all new or updated patient records;
+fork
+    :HNZ starts extract/load job;
+    :HNZ loads records to SDHR;
+    if(ETL Success) then (Yes)
+        :HNZ adds practice to whitelist;
+        #LightGreen:SDHR ready to accept records for practice;
+        stop
+    else (No)
+        :HNZ notifies practice of failure;
+        #Orange:Resolve and retry;
+        stop
+    endif
+fork again
+    :PMS is Medtech;
+    repeat:Search for record in SDHR;
+    if(ETL Complete\nPractice in whitelist) then (Yes)
+        if(Record already in SDHR) then (Yes)
+            :Update record;
+            stop
+        else (No)
+            :Create new record;
+            stop
+        endif
+    else (No)
+        #Orange:SDHR responds with error\nonboarding not complete;
+    endif
+    repeat while (Holds record for (x) hours)
+    detach
+' fork again
+'     :PMS is Indici;
+'     :Indici holds extract/load job;\
+
+
+        @enduml

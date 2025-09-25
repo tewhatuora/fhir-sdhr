@@ -221,51 +221,51 @@ The operation will return an OperationOutcome resource indicating the result of 
 // * rest.resource[=].searchParam[=].documentation = "Who does the consent relate to"
 
 // encounter
-* rest.resource[+].type = #Encounter
-* rest.resource[=] insert LimitedInteractionsDocumentation
-* rest.resource[=].profile = Canonical(SDHREncounter)
-* rest.resource[=].interaction[0].code = #read
-* rest.resource[=].interaction[+].code = #create 
-* rest.resource[=].interaction[+].code = #update
-* rest.resource[=].interaction[+].code = #search-type
-* rest.resource[=].interaction[+].code = #delete
-* rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
-* rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
-* rest.resource[=].extension[=].extension[=].valueCode = #SHALL
-* rest.resource[=].extension[=].extension[+].url = "required"
-* rest.resource[=].extension[=].extension[=].valueString = "patient"
-* rest.resource[=].searchParam[+].name = "patient"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  The patient or group present at the encounter"
-* rest.resource[=].searchParam[+].name = "identifier"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
-* rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
-* rest.resource[=].searchParam[+].name = "location"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/location"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Location the encounter takes place."
-* rest.resource[=].searchParam[+].name = "participant"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-participant"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Persons involved in the encounter other than the patient."
-* rest.resource[=].searchParam[+].name = "participant-type"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-participant-type"
-* rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Role of participant in encounter."
-* rest.resource[=].searchParam[+].name = "status"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-status"
-* rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "planned | arrived | triaged | in-progress | onleave | finished | cancelled +"
-* rest.resource[=].searchParam[+].name = "subject"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-subject"
-* rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "The patient or group present at the encounter"
-* rest.resource[=].searchParam[+].name = "_lastUpdated"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
-* rest.resource[=].searchParam[=].type = #date
-* rest.resource[=].searchParam[=].documentation = "When the resource version last changed."
+// * rest.resource[+].type = #Encounter
+// * rest.resource[=] insert LimitedInteractionsDocumentation
+// * rest.resource[=].profile = Canonical(SDHREncounter)
+// * rest.resource[=].interaction[0].code = #read
+// * rest.resource[=].interaction[+].code = #create 
+// * rest.resource[=].interaction[+].code = #update
+// * rest.resource[=].interaction[+].code = #search-type
+// * rest.resource[=].interaction[+].code = #delete
+// * rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
+// * rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
+// * rest.resource[=].extension[=].extension[=].valueCode = #SHALL
+// * rest.resource[=].extension[=].extension[+].url = "required"
+// * rest.resource[=].extension[=].extension[=].valueString = "patient"
+// * rest.resource[=].searchParam[+].name = "patient"
+// * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
+// * rest.resource[=].searchParam[=].type = #reference
+// * rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  The patient or group present at the encounter"
+// * rest.resource[=].searchParam[+].name = "identifier"
+// * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
+// * rest.resource[=].searchParam[=].type = #token
+// * rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
+// * rest.resource[=].searchParam[+].name = "location"
+// * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/location"
+// * rest.resource[=].searchParam[=].type = #reference
+// * rest.resource[=].searchParam[=].documentation = "Location the encounter takes place."
+// * rest.resource[=].searchParam[+].name = "participant"
+// * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-participant"
+// * rest.resource[=].searchParam[=].type = #reference
+// * rest.resource[=].searchParam[=].documentation = "Persons involved in the encounter other than the patient."
+// * rest.resource[=].searchParam[+].name = "participant-type"
+// * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-participant-type"
+// * rest.resource[=].searchParam[=].type = #token
+// * rest.resource[=].searchParam[=].documentation = "Role of participant in encounter."
+// * rest.resource[=].searchParam[+].name = "status"
+// * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-status"
+// * rest.resource[=].searchParam[=].type = #token
+// * rest.resource[=].searchParam[=].documentation = "planned | arrived | triaged | in-progress | onleave | finished | cancelled +"
+// * rest.resource[=].searchParam[+].name = "subject"
+// * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Encounter-subject"
+// * rest.resource[=].searchParam[=].type = #reference
+// * rest.resource[=].searchParam[=].documentation = "The patient or group present at the encounter"
+// * rest.resource[=].searchParam[+].name = "_lastUpdated"
+// * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
+// * rest.resource[=].searchParam[=].type = #date
+// * rest.resource[=].searchParam[=].documentation = "When the resource version last changed."
 
 // observations
 * rest.resource[+].type = #Observation

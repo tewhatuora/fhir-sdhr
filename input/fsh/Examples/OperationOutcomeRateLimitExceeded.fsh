@@ -5,5 +5,5 @@ This outcome message will be returned where an API Consumer has exceeded the all
 """
 Usage: #example
 * issue[0].severity = #error
-* issue[0].code = #transient
-* issue[0].details.text = "Quota has been exceeded"
+* issue[0].code = #throttled
+* issue[0].details.text = "Throttled"

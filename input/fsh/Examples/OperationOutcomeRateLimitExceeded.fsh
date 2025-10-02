@@ -6,4 +6,4 @@ This outcome message will be returned where an API Consumer has exceeded the all
 Usage: #example
 * issue[0].severity = #error
 * issue[0].code = #throttled
-* issue[0].details.text = "Throttled"
+* issue[0].details.text = "Request has been throttled due to exceeding the allocated rate limit."

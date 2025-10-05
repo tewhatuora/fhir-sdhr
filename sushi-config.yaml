@@ -9,7 +9,7 @@ name: nz-shared-digital-health-record
 title: NZ Shared Digital Health Record API
 description: NZ Shared Digital Health Record API
 status: draft # draft | active | retired | unknown
-version: 0.7.0
+version: 0.7.1
 fhirVersion: 4.0.1 # https://www.hl7.org/fhir/valueset-FHIR-version.html
 copyrightYear: 2025+
 releaseLabel: ballot # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use
@@ -65,6 +65,8 @@ pages:
     title: Data Models
   api.md:
     title: API Docs
+  test-data.md:
+    title: Test Data
 #
 #
 # The parameters property represents IG.definition.parameter. Rather
@@ -102,6 +104,7 @@ menu:
     Artefacts (JSON): definitions.json.zip
     Artefacts (XML): definitions.xml.zip
     Download IG: full-ig.zip
+    Test Data: test-data.html
 
 # ╭───────────────────────────Less Common Implementation Guide Properties──────────────────────────╮
 # │  Uncomment the properties below to configure additional properties on the ImplementationGuide  │

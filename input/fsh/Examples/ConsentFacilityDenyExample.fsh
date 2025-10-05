@@ -21,6 +21,6 @@ Description: "Consent example submitted to allow a patient to opt out of sharing
 * provision.provision.extension[+].url = "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/facility-participation-extension"
 * provision.provision.extension[=].valueCodeableConcept = #sdhr-facility-opt-out "Facility opt out"
 * provision.provision.actor.role = #PROV
-* provision.provision.actor.reference = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Location/A1111-A)
+* provision.provision.actor.reference = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ111-A)
 
 * scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy

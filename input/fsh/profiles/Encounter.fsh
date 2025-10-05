@@ -1,6 +1,6 @@
 Profile: SDHREncounter
 Parent: Encounter
-Description: "Encounter resource to record an instance of an interaction between patient and healthcare provider"
+Description: "Support for the SDHR Encounter is coming soon. Encounter resource to record an instance of an interaction between patient and healthcare provider."
 
 * meta 1..1
 * meta.profile 1..1

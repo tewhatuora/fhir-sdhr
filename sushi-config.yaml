@@ -65,6 +65,8 @@ pages:
     title: Data Models
   api.md:
     title: API Docs
+  test-data.md:
+    title: Test Data
 #
 #
 # The parameters property represents IG.definition.parameter. Rather

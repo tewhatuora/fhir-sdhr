@@ -102,6 +102,7 @@ menu:
     Artefacts (JSON): definitions.json.zip
     Artefacts (XML): definitions.xml.zip
     Download IG: full-ig.zip
+    Test Data: test-data.html
 
 # ╭───────────────────────────Less Common Implementation Guide Properties──────────────────────────╮
 # │  Uncomment the properties below to configure additional properties on the ImplementationGuide  │

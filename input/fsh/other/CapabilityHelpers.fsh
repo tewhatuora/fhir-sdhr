@@ -150,8 +150,8 @@ RuleSet: APIStandardsDocumentation
   |400|BAD REQUEST        |Yes|Missing or bad `Request-Context` custom header;<br>FHIR request payload does not validate against Implementation Guide|
   |401|UNAUTHORIZED       |Yes|The supplied credentials, if any, are not sufficient to access the resource|
   |403|FORBIDDEN          |Yes|Insufficient privilege to access the requested FHIR resource/operation. See [OperationOutcome-APIError-Unauthorised](./OperationOutcome-APIError-Unauthorised.html)|
-  |429|TOO MANY REQUESTS  |No |Your application is sending too many simultaneous requests|
-  |500|SERVER ERROR       |No |An internal server error prevented return of the representation response|
+  |429|TOO MANY REQUESTS  |Yes |Your application is sending too many simultaneous requests|
+  |500|SERVER ERROR       |Yes |An internal server error prevented return of the representation response|
   |503|SERVICE UNAVAILABLE|No |The server is temporarily unable to return the representation. Please wait and try again later|
 
   ### Non existent API endpoints

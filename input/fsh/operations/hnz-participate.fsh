@@ -44,27 +44,6 @@ Usage: #definition
 If false, the patient does not wish to participate in the service and their resources will not be shared.
 """
 
-* parameter[+].name = #facilityId
-* parameter[=].use = #in
-* parameter[=].min = 1
-* parameter[=].max = "1"
-* parameter[=].type = #Reference
-* parameter[=].documentation = """The HPI Facility ID of the healthcare provider that is withholding the resource.
-    This parameter is mandatory and must be provided to indicate the healthcare provider that is withholding the resource from the Shared Digital Health Record service.
-    The HPI Facility ID must be a valid HPI Facility ID in the format `https://api.hip.digital.health.nz/fhir/hpi/v1/{Location}or{Organization}/{hpi-facility-id}or{hpi-org-id}`."""
-
-* parameter[+].name = #reasonCode
-* parameter[=].use = #in
-* parameter[=].min = 0
-* parameter[=].max = "1"
-* parameter[=].type = #Coding
-* parameter[=].binding.strength = #required
-* parameter[=].binding.valueSet = Canonical(SDHRParticipationReasonValueSet)
-* parameter[=].documentation = """The reason code for participation.
-Valid codes include:
-- `sdhr-hnz-opt-out`: Patient has opted out of participation entirely with Health NZ. This means that no records will be shared from any facility.
-- `sdhr-hnz-opt-in`: Patient has opted in to participation with Health NZ."""
-
 * parameter[+].name = #return
 * parameter[=].use = #out
 * parameter[=].min = 1
@@ -77,6 +56,5 @@ Valid codes include:
     The OperationOutcome resource will be returned in the response body of the operation request.
     See the following examples for possible OperationOutcome responses:
     - [OperationOutcome for invalid patient reference](./OperationOutcome-OperationOutcomeParticipateInvalidPatient.html)
-    - [OperationOutcome for missing reason code](./OperationOutcome-OperationOutcomeParticipateMissingReason.html)
     - [OperationOutcome for successful participation](./OperationOutcome-OperationOutcomeParticipateSuccess.html)
     """

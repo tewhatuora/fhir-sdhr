@@ -1,7 +1,7 @@
 Extension: ClientLastUpdatedExtension
 Id: hnz-sdhr-client-last-updated-extension
 Title: "Client Last Updated"
-Context: Condition, Observation, AllergyIntolerance, Encounter
+Context: Condition, Observation, AllergyIntolerance
 Description: "Extension to record the last time a resource was updated by the source system. When consuming applications are writing data to the SDHR API they can use this extension to record the `LastUpdated` timestamp in their system"
 * value[x] only dateTime
 

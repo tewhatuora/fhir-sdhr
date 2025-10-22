@@ -1,40 +1,40 @@
-Profile: SDHREncounter
-Parent: Encounter
-Description: "Support for the SDHR Encounter is coming soon. Encounter resource to record an instance of an interaction between patient and healthcare provider."
+// Profile: SDHREncounter
+// Parent: Encounter
+// Description: "Support for the SDHR Encounter is coming soon. Encounter resource to record an instance of an interaction between patient and healthcare provider."
 
-* meta 1..1
-* meta.profile 1..1
-* meta insert MetaSource
-* meta insert MetaTag
+// * meta 1..1
+// * meta.profile 1..1
+// * meta insert MetaSource
+// * meta insert MetaTag
 
-* insert LocalIdentifierDocs
+// * insert LocalIdentifierDocs
 
-* extension contains
-  hnz-sdhr-client-last-updated-extension named ClientLastUpdated 0..1
+// * extension contains
+//   hnz-sdhr-client-last-updated-extension named ClientLastUpdated 0..1
 
-// Excluded Elements
-* implicitRules 0..0
-* language 0..0
-* account 0..0
-* hospitalization 0..0
-* partOf
+// // Excluded Elements
+// * implicitRules 0..0
+// * language 0..0
+// * account 0..0
+// * hospitalization 0..0
+// * partOf
 
-* class from sdhr-encounter-class-valueset (required)
+// * class from sdhr-encounter-class-valueset (required)
 
-* modifierExtension 0..0
-* contained 0..0
+// * modifierExtension 0..0
+// * contained 0..0
 
-* insert ProfilePatient(subject)
+// * insert ProfilePatient(subject)
 
-* participant 1..*
-* participant.id 0..0
-* participant.extension 0..0
-* participant.modifierExtension 0..0
+// * participant 1..*
+// * participant.id 0..0
+// * participant.extension 0..0
+// * participant.modifierExtension 0..0
 
-* participant.individual ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
-//* insert ProfilePractitioner(participant.individual)
-* participant.individual.extension 0..0
-* participant.individual.identifier 0..0
+// * participant.individual ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
+// //* insert ProfilePractitioner(participant.individual)
+// * participant.individual.extension 0..0
+// * participant.individual.identifier 0..0
 
-* period 1..1
-* period.start 1..1
+// * period 1..1
+// * period.start 1..1

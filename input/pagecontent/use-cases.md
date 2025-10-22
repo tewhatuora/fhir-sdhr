@@ -9,7 +9,7 @@ The information included in the Shared Digital Health Record:
 	
 * [AllergyIntolerance](./StructureDefinition-SDHRAllergyIntolerance.html)
 * [Condition](./StructureDefinition-SDHRCondition.html)
-* [Encounter](./StructureDefinition-SDHREncounter.html)
+<!-- * [Encounter](./StructureDefinition-SDHREncounter.html) -->
 * [Observation](./StructureDefinition-SDHRObservation.html)
 
 * [Immunization](https://healthnz-prm.gitlab.io/air/air-api-fhir-ig/StructureDefinition-air-immunization.html)
@@ -18,6 +18,6 @@ The information included in the Shared Digital Health Record:
 
 ### Data provision
 
-When a patient's record is created or updated in a system of record for an encounter, allergy/intolerance, condition, or observation, FHIR resources representing this information should be POSTed or PUT to the API. 
+When a patient's record is created or updated in a system of record for an allergy/intolerance, condition, or observation, FHIR resources representing this information should be POSTed or PUT to the API. 
 
 This should be performed synchronously as soon as the change is made to the record.

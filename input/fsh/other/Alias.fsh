@@ -11,7 +11,7 @@ Alias: $HealthRecordKey = https://standards.digital.health.nz/ns/health-record-k
 
 //Profiles
 Alias: $SDHRConditionProfile = https://fhir-ig-uat.digital.health.nz/sdhr/StructureDefinition/SDHRCondition
-Alias: $SDHREncounterProfile = https://fhir-ig-uat.digital.health.nz/sdhr/StructureDefinition/SDHREncounter
+// Alias: $SDHREncounterProfile = https://fhir-ig-uat.digital.health.nz/sdhr/StructureDefinition/SDHREncounter
 //Alias: $SDHRConsentProfile = https://fhir-ig-uat.digital.health.nz/sdhr/StructureDefinition/SDHRConsent
 Alias: $SDHRAllergyIntoleranceProfile = https://fhir-ig-uat.digital.health.nz/sdhr/StructureDefinition/SDHRAllergyIntolerance
 Alias: $SDHRObservationProfile = https://fhir-ig-uat.digital.health.nz/sdhr/StructureDefinition/SDHRObservation

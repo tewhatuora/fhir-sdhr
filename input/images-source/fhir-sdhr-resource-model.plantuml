@@ -33,18 +33,18 @@ title "Shared Digital Health Record - FHIR data model"
 
 frame "Core Data Services" as SDHRFrame {
 
-class "SDHR:Encounter" as encounter <<Encounter>> #LightSalmon ##[bold] {
-    Represents a SDHR encounter
-    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHREncounter.html]]
-    Inherits FHIR ""Encounter""
-    ----
-    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facilityid}}"
-    * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHREncounter"
-    * **status**: ~~1..1~~ Binding: EncounterStatus [[[http://hl7.org/fhir/R4/valueset-encounter-status.html]]]
-    * **class**: ~~1..1~~ Binding: ActEncounterCode (extensible) [[[http://terminology.hl7.org/5.5.0/ValueSet-v3-ActEncounterCode.html]]]
-    * **subject**: ~~1..1~~ Reference NHI Patient
-    * **participant.individual**: ~~1..1~~ Reference Practitioner
-}
+' class "SDHR:Encounter" as encounter <<Encounter>> #LightSalmon ##[bold] {
+'     Represents a SDHR encounter
+'     [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHREncounter.html]]
+'     Inherits FHIR ""Encounter""
+'     ----
+'     * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facilityid}}"
+'     * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHREncounter"
+'     * **status**: ~~1..1~~ Binding: EncounterStatus [[[http://hl7.org/fhir/R4/valueset-encounter-status.html]]]
+'     * **class**: ~~1..1~~ Binding: ActEncounterCode (extensible) [[[http://terminology.hl7.org/5.5.0/ValueSet-v3-ActEncounterCode.html]]]
+'     * **subject**: ~~1..1~~ Reference NHI Patient
+'     * **participant.individual**: ~~1..1~~ Reference Practitioner
+' }
 
 class "SDHR:Condition" as condition <<Condition>> #LightSalmon ##[bold] {
     Represents a SDHR condition
@@ -117,7 +117,7 @@ rectangle "Notes" as Notes {
     The following resources are sourced from primary care systems:
     - AllergyIntolerance
     - Condition
-    - Encounter
+    ' - Encounter
     - Observation
     The following resources are existing national data services:
     - Immunization (AIR)
@@ -162,8 +162,8 @@ end note
 ' ********
 ' * resource linkages
 
-encounter "subject" -[#SkyBlue,dashed]up-- Patient
-encounter "participant" -[#SkyBlue,dashed]up-- HPI
+' encounter "subject" -[#SkyBlue,dashed]up-- Patient
+' encounter "participant" -[#SkyBlue,dashed]up-- HPI
 condition "subject" -[#SkyBlue,dashed]down-- Patient
 condition "recorder | asserter" --[#SkyBlue,dashed]down-- HPI
 allergyintolerance "subject" -[#SkyBlue,dashed]up-- Patient

@@ -67,10 +67,10 @@ System_Boundary(HNZ,"Health NZ | Te Whatu Ora") {
                   methods(GET, POST, PUT)
                 }
               
-                interface "SDHR Encounter FHIR API" as sdhrencounterapi {
-                  Encounter
-                  methods(GET, POST, PUT)
-                }
+                ' interface "SDHR Encounter FHIR API" as sdhrencounterapi {
+                '   Encounter
+                '   methods(GET, POST, PUT)
+                ' }
               interface "SDHR Observation FHIR API" as sdhrobservationapi {
                 Observation
                 methods(GET, POST, PUT)

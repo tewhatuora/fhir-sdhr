@@ -100,17 +100,6 @@ For each requirement, please provide appropriate evidence as per the guidance be
   margin-right: 0.5rem;
 }
 
-/* Make the third column narrower but still allow wrapping */
-/* .joplin-table-wrapper.ssd-ref-table th:nth-child(3),
-.joplin-table-wrapper.ssd-ref-table td:nth-child(3) {
-  width: 140px;
-  max-width: 200px;
-  min-width: 80px;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-  white-space: normal;
-} */
-
 /* keep layout predictable when rows use rowspan/split cells */
 .joplin-table-wrapper.ssd-ref-table table td,
 .joplin-table-wrapper.ssd-ref-table table th {

@@ -175,8 +175,6 @@ For each requirement, please provide appropriate evidence as per the guidance be
 
 The SDHR team will assess your responses and discuss with you if any further clarification is needed.
 
-Any questions regarding these compliance requirements please contact Julie Turner & Steve Shere.
-
 ### Compliance requirements
 
 <div class="joplin-table-wrapper ssd-ref-table">

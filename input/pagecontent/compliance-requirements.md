@@ -1,6 +1,6 @@
 ### Important information about Compliance requirements
 
-#### Use cases & the two step accreditation process.
+#### Use cases & the two step accreditation process
 
 These compliance requirements are for data source systems integrating with the Shared Digital Health Record to share data. In the first instance this is limited to Practice Management Systems (PMS). They do not cover the compliance tests for systems (including PMSs) that use SDHR APIs to fetch and display data for a clinical user to view. Requirements for those systems are covered separately.
 
@@ -1018,6 +1018,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             <tr>
                 <td>
                     <p>An existing local record is changed in the application</p>
+                </td>
                 <td>
                     <p>The updated record is available in SDHR promptly, 95<sup>th</sup> percentile are received within
                         5 minutes, or sooner, as close to real time as possible.</p>
@@ -1465,6 +1466,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                 <td>
                     <p>The application can update an existing <em>Observation </em>resource and the resulting SDHR
                         record reflects the changes made in the PMS</p>
+                </td>
                 <td>
                     <p>A local record that has previously been created in SDHR is modified in the application.</p>
                     <p></p>

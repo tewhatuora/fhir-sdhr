@@ -158,4 +158,17 @@ RuleSet: APIStandardsDocumentation
 
   When a consumer attempts to call a non-existent API end point, respond
   with a **501 Not Implemented** status code.
+
+  ### API Rate Limits
+  API rate limiting is enforced on a per client basis, and the status of the rate limit is communicated via the following HTTP response headers:
+
+  | **Header name**       | **Description**                                  |
+  |:----------------------|:-------------------------------------------------|
+  | x-ratelimit-remaining | The amount of available quota |
+  | x-ratelimit-limit     | The maximum available requests per window |
+  | x-ratelimit-reset     | The remaining time, in milliseconds, until a new window starts |
+
+  The API client **MUST** monitor these headers and ensure that they do not exceed the quota expressed in the `x-ratelimit-limit` header before the time window expressed in `x-ratelimit-reset`.
+  If the rate limit is exceeded, the API will respond with a **429 Too Many Requests** status code and the [Rate Limit OperationOutcome](./OperationOutcome-OperationOutcomeRateLimitExceeded.json.html).
+  Where the rate limit is exceeded as part of normal operations, the API client can request an increased quota by contacting the SDHR service desk portal.
 """

@@ -170,5 +170,12 @@ RuleSet: APIStandardsDocumentation
 
   The API client **MUST** monitor these headers and ensure that they do not exceed the quota expressed in the `x-ratelimit-limit` header before the time window expressed in `x-ratelimit-reset`.
   If the rate limit is exceeded, the API will respond with a **429 Too Many Requests** status code and the [Rate Limit OperationOutcome](./OperationOutcome-OperationOutcomeRateLimitExceeded.json.html).
+
+  | **Usage plan**       | **Rate limits**                                  |
+  |:----------------------|:-------------------------------------------------|
+  | SDHR Gold | 400 requests per second, per client |
+  | SDHR Silver     | 50 requests per second, per client |
+  | SDHR Bronze     | 10 requests per second, per client |
+
   Where the rate limit is exceeded as part of normal operations, the API client can request an increased quota by contacting the SDHR service desk portal.
 """

@@ -30,9 +30,9 @@ skinparam TitleFontSize 20
 title "Consent Sequence"
 
 participant "API Consumer" as Client
-note over Client
-  See [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHREncounter.html]] for component definitions.
-end note
+' note over Client
+'   See [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHREncounter.html]] for component definitions.
+' end note
 participant "SDHR FHIR API (API Provider)" as Server
 == START Create (POST) SDHR Resources ==
 Client -> Server : POST /{ResourceType}

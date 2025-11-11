@@ -6,7 +6,9 @@ Enables a person’s core health information to be securely accessed from their 
 
 The Shared Digital Health Record (SDHR) API will enable a person’s core health information to be securely accessed from their general practice PMS. With the patient’s permission, information will be copied to a central database which will be made available to health professionals across Aotearoa, through existing shared patient record systems, such as shared electronic health records. This will give a fuller view of a person’s important health information and enable better care.
 
-This health information will initially include a person’s health conditions and allergies, observations (eg, heart rate and blood pressure), and encounters (when they’ve seen a health professional).
+This health information will initially include a person’s health conditions and allergies, observations (eg, heart rate and blood pressure)
+
+<!-- , and encounters (when they’ve seen a health professional). -->
 
 # Overview
 
@@ -20,7 +22,7 @@ The SDHR API will initially access the following information from PMSs.
 
 * [Allergies and intolerances.](./StructureDefinition-SDHRAllergyIntolerance.html)
 * [Health conditions.](./StructureDefinition-SDHRCondition.html)
-* [Encounters (when someone has interacted with the health system).](./StructureDefinition-SDHREncounter.html)
+<!-- * [Encounters (when someone has interacted with the health system).](./StructureDefinition-SDHREncounter.html) -->
 * [Observations.](./StructureDefinition-SDHRObservation.html)
 <!-- * [Consent](./StructureDefinition-SDHRConsent.html) -->
 

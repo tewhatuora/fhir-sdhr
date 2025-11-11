@@ -1,9 +1,9 @@
-ValueSet: SDHREncounterClassValueSet
-Id: sdhr-encounter-class-valueset
-Title: "ValueSet for Encounter Class"
-Description: "A ValueSet containing all codes from the Encounter Class system."
-* include codes from valueset http://terminology.hl7.org/ValueSet/v3-ActEncounterCode
-* include codes from system SDHROther
+// ValueSet: SDHREncounterClassValueSet
+// Id: sdhr-encounter-class-valueset
+// Title: "ValueSet for Encounter Class"
+// Description: "A ValueSet containing all codes from the Encounter Class system."
+// * include codes from valueset http://terminology.hl7.org/ValueSet/v3-ActEncounterCode
+// * include codes from system SDHROther
 
 
 ValueSet: SDHRAllergyIntoleranceManifestationValueSet

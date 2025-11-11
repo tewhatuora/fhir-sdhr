@@ -7,7 +7,7 @@ The SDHR UAT environment contains some fixed data to support specific testing us
 | Identifiers | Description | OperationOutcome |
 | -------- | ------- | ------- |
 | ZMW9001 - ZMW9009  |  This set of Patients are opted out globally with HNZ. | [Global Deny OperationOutcome](./OperationOutcome-OperationOutcomeGlobalDenyExample.json.html) |
-| ZMW8001 - ZMW8010 | This set of Patients are locked due to a background load process. | [Patient Locked OperationOutcome](./OperationOutcome-OperationOutcomePatientLocked.json.html) |
+| ZMW8001 - ZMW8010 | This set of Patients are locked due to a background load process at each of these facilities: FZZ999-B, FZZ997-J, FZZ996-G, FZZ995-E, FZZ994-C. | [Patient Locked OperationOutcome](./OperationOutcome-OperationOutcomePatientLocked.json.html) |
 
 ## Facilities
 

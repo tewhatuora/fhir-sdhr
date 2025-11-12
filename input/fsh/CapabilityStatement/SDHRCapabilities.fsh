@@ -1,7 +1,7 @@
 Instance: SDHRCapabilityStatement
 InstanceOf: HnzToolingCapabilityStatement
 Usage: #definition
-* version = "0.6.0"
+* version = "0.7.0"
 * name = "SDHRCapabilityStatement"
 * title = "NZ Shared Digital Health Record API"
 * contact[+].name = "Health New Zealand Te Whatu Ora"
@@ -14,7 +14,7 @@ Usage: #definition
 * publisher = "Health NZ"
 * kind = #capability
 * implementation.description = "Health NZ | Te Whatu Ora NZ Shared Digital Health Record API"
-* implementation.url = "https://api.uat.sdhr.digital.health.nz/s2s"
+* implementation.url = "https://api.sdhr.digital.health.nz/s2s"
 * software.name = "NZ Shared Digital Health Record API"
 * software.version = "1.0.0"
 * fhirVersion = #4.0.1

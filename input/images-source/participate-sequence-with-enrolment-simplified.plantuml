@@ -1,0 +1,126 @@
+@startuml
+
+title SDHR Participate Operation Patient Opt In Simplified Sequence Diagram
+
+autonumber "<color:Blue>[00]"
+
+skinparam ActorFontSize 16
+skinparam ArrowFontSize 12
+skinparam ArrowFontSize 16
+skinparam BoxPadding 5
+skinparam DatabaseFontSize 16
+skinparam dpi 400
+skinparam EntityFontSize 16
+skinparam MaxMessageSize 375
+skinparam NoteFontSize 14
+skinparam ParticipantFontSize 16
+skinparam ParticipantPadding 5
+skinparam responseMessageBelowArrow true
+skinparam roundcorner 15
+skinparam sequenceArrowThickness 2
+skinparam SequenceBoxFontSize 16
+skinparam sequencegroupfontsize 14
+skinparam SequenceMessageAlignment left
+skinparam sequenceStyle uml2
+skinparam TitleFontSize 20
+' semi-transparent sequence groups!
+' see https://sarafian.github.io/tips/2021/03/11/plantuml-tips-tricks-1.html#:~:text=responseMessageBelowArrow-,Semi,-transparent%20group%20backgrounds
+skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
+
+scale max 400 width
+scale 300*500
+
+actor "Patient" as Patient
+actor "Health Practitioner" as USER
+participant "PMS" as APIC #Orange
+participant "ALEX" as ORCHESTRATOR #Orange
+control "Participate Operation\n$participate" as PARTICIPATE #LightBlue
+control "SDHR FHIR API" as FHIRAPI #LightBlue
+database "SDHR FHIR Server" as SDHR #LightGreen
+
+== Patient opts in to SDHR participation at facility ==
+Patient -> USER : Consultation
+USER -> APIC : Record patient participation preference
+APIC -> ORCHESTRATOR : Trigger patient event
+ORCHESTRATOR -> APIC : Retrieve patient details + enrolment
+  note right of APIC
+    Patient?identifier=https://standards.digital.health.nz/ns/nhi-id|ZZZ0032&_include=Patient:general-practitioner
+  end note
+ORCHESTRATOR -> ORCHESTRATOR : Prepare participation\nparameters
+ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
+  note left of PARTICIPATE
+    Parameters:
+    - patient: Patient ID (NHI)
+    - facilityId: Facility ID (HPI FacilityID)
+    - participationIndicator: true
+    - enrolmentStaus: [ENROLED|NOT-ENROLED|UNKNOWN]
+    '- nhiValidationStatus: [VALIDATED|INVALID|NOT-VALIDATED]
+  end note
+PARTICIPATE -> FHIRAPI : Write Participation
+FHIRAPI -> SDHR : Persist
+PARTICIPATE -> ORCHESTRATOR : Return OperationOutcome
+  note over PARTICIPATE
+    {
+      "resourceType" : "OperationOutcome",
+      "issue" : [
+        {
+          "severity" : "information",
+          "code" : "informational",
+          "details" : {
+            "coding" : [
+              {
+                "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
+                "code" : "sdhr-operation-success",
+                "display" : "SDHR Operation Success"
+              }
+            ],
+            "text" : "Patient participation status successfully recorded."
+          }
+        }
+      ]
+    }
+  end note
+alt Patient ENROLED
+  FHIRAPI -> FHIRAPI : Lock Patient record
+  FHIRAPI -> ORCHESTRATOR : Get Patient records (historic load)
+  ORCHESTRATOR -> FHIRAPI : Return patient records
+  loop For each Patient record
+    FHIRAPI -> SDHR : Persist
+  end loop
+  FHIRAPI -> FHIRAPI : Unlock Patient record
+else Patient NOT-ENROLED or UNKNOWN
+  note over FHIRAPI
+    No historic load of patient records performed
+    New records are loaded as they are created
+  end note
+end alt
+
+== Some Time Passes ==
+note over ORCHESTRATOR
+  A previously UNENROLED or UNKNOWN patient has now ENROLED
+end note
+ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
+  note left of PARTICIPATE
+    Parameters:
+    - patient: Patient ID (NHI)
+    - facilityId: Facility ID (HPI FacilityID)
+    - participationIndicator: true
+    - enrolmentStaus: ENROLED
+    '- nhiValidationStatus: [VALIDATED|INVALID|NOT-VALIDATED]
+  end note
+PARTICIPATE -> FHIRAPI : Write Participation
+FHIRAPI -> SDHR : Persist
+PARTICIPATE -> ORCHESTRATOR : Return OperationOutcome
+FHIRAPI -> FHIRAPI : Lock Patient record
+FHIRAPI -> ORCHESTRATOR : Get Patient records (historic load)
+ORCHESTRATOR -> FHIRAPI : Return patient records
+loop For each Patient record
+  FHIRAPI ->  SDHR : Check if record exists
+  alt Record exists
+    FHIRAPI -> SDHR : Update record (PUT)
+  else Record does not exist
+    FHIRAPI -> SDHR : Create record (POST)
+  end
+end loop
+FHIRAPI -> FHIRAPI : Unlock Patient record
+@enduml

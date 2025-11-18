@@ -12,3 +12,4 @@ Thumbs.db
 .index.db
 .index.json
 /.vscode
+/copilot-instructions.md

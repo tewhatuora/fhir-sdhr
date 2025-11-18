@@ -1,0 +1,86 @@
+@startuml "NHI Change Sequence"
+
+title SDHR NHI Change Sequence Diagram
+
+skinparam ActivityDiamondBackgroundColor #RoyalBlue
+skinparam ArrowColor #RoyalBlue
+skinparam ArrowFontColor #RoyalBlue
+skinparam ArrowFontSize 12
+skinparam ArrowMessageAlignment right
+skinparam BoxPadding 10
+skinparam ClassFontSize 16
+skinparam ClassFontStyle bold
+skinparam ClassStereotypeFontSize 16
+skinparam dpi 300
+skinparam FooterFontSize 14
+skinparam FooterFontStyle italic
+skinparam LegendBackgroundColor #Snow
+skinparam LegendFontName Helvetica
+skinparam LegendFontSize 16
+skinparam linetype ortho
+skinparam nodesep 70
+skinparam NoteBackgroundColor #LightYellow
+skinparam NoteFontSize 15
+skinparam NoteTextAlignment left
+skinparam ranksep 60
+skinparam roundcorner 5
+skinparam TitleFontSize 20
+skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
+
+scale max 200 width
+scale 300*500
+
+actor "Patient" as Patient
+actor "Health Practitioner" as USER
+participant "PMS" as APIC #Orange
+'participant "PMS Orchestrator" as ORCHESTRATOR #Orange
+'control "Participate Operation\n$participate" as PARTICIPATE #LightBlue
+'control "SDHR FHIR API" as FHIRAPI #LightBlue
+'database "NHI Registry" as NHI #LightGreen
+database "SDHR FHIR Server" as SDHR #LightGreen
+
+autonumber "<color:Red>[00]"
+
+group Standard patient consultation
+    Patient -> USER : Consultation
+    USER -> APIC : Search for patient by Name/DOB etc.
+    APIC -> USER : Return patient details
+    USER -> Patient : Consultation
+    USER -> APIC : Create / update clinical record(s)
+
+    ' APIC -> NHI : NHI Search
+    ' alt
+    '     "NHI Found"
+    '     NHI --> APIC : Return NHI
+    ' else
+    ' "NHI Not Found"
+    ' NHI --> APIC : Return No Match
+    ' APIC -> NHI : Get **pre-allocated** NHI
+    ' APIC -> APIC : Store NHI against patient record
+    ' APIC -> NHI : Confirm NHI allocation with details
+    ' end
+    APIC -> SDHR : Create / Update Patient records with NHI
+
+    ' == Some time passes ==
+
+    ' NHI -> NHI : Merge event
+    ' note over NHI
+    '     The NHI Registry identifies that two NHIs belong
+    '     to the same person and merges them.
+    '     An NHI Change event is generated to notify connected
+    '     systems of the change.
+    ' end note
+    ' NHI -> APIC : Notify NHI Change event
+    ' APIC -> APIC : Update patient record with new NHI
+end group
+
+
+    == Process to be defined ==
+group NHI Change Processing
+
+    USER -> APIC : NHI Change on patient record
+    APIC -> APIC : Identify all records with old NHI and extract SDHR IDs
+    APIC -> SDHR : Update Patient resource(s) with new NHI `PUT /{resourceType}/{SDHR-ID}`
+end group
+
+@enduml

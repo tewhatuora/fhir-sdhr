@@ -1317,7 +1317,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                         allows the receiving system to determine which records have been sent to SDHR previously.</p>
                 </td>
                 <td>
-                    <p>Mandatory</p>
+                    <p>Recommended</p>
                 </td>
                 <td>
                     <p>Design and Test output showing the SDHR ID is transferred as part of the GP2GP transfer</p>
@@ -1341,7 +1341,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>The application imports the SDHR_ID and stores it alongside the local records per SSD-25.</p>
                 </td>
                 <td>
-                    <p>Mandatory</p>
+                    <p>Recommended</p>
                 </td>
                 <td>
                     <p>Desing and Test output showing the SDHR ID is accepted</p>

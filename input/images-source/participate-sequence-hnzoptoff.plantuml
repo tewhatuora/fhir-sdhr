@@ -2,7 +2,7 @@
 
 title SDHR Health NZ Channel Opt Off Sequence Diagram
 
-autonumber "<color:Black>[00]"
+autonumber "<color:Red>[00]"
 
 skinparam ActorFontSize 16
 skinparam ArrowFontSize 12

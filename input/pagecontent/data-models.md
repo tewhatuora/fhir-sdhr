@@ -21,7 +21,7 @@ Details:
 
 Must conform to the following canonical example pattern:
 
-`xxxxxxxx-xxxx-4xxx-[8|9|A|B]xxx-xxxxxxxxxxxx`
+`xxxxxxxx-xxxx-4xxx-[8|9|a|b]xxx-xxxxxxxxxxxx`
 
 - Is unique across all resources of this type.
 - Will not change over the lifetime of the resource.

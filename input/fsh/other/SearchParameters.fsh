@@ -25,3 +25,45 @@ Usage: #definition
 * type = #token
 * expression = "Condition.extension('http://hl7.org.nz/fhir/StructureDefinition/long-term-condition')"
 * xpathUsage = #normal
+
+Instance: allergyintolerance-clientlastupdated
+InstanceOf: SearchParameter
+Usage: #definition
+* url = "https://fhir-ig.digital.health.nz/sdhr/SearchParameter/allergyintolerance-clientlastupdated"
+* version = "1.0.0"
+* name = "AllergyIntoleranceClientLastUpdated"
+* status = #active
+* description = "Search by the ClientLastUpdated extension on SDHR AllergyIntolerance resources"
+* code = #clientlastupdated
+* base = #AllergyIntolerance
+* type = #date
+* expression = "AllergyIntolerance.extension('https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-sdhr-client-last-updated-extension').value"
+* xpathUsage = #normal
+
+Instance: condition-clientlastupdated
+InstanceOf: SearchParameter
+Usage: #definition
+* url = "https://fhir-ig.digital.health.nz/sdhr/SearchParameter/condition-clientlastupdated"
+* version = "1.0.0"
+* name = "ConditionClientLastUpdated"
+* status = #active
+* description = "Search by the ClientLastUpdated extension on SDHR Condition resources"
+* code = #clientlastupdated
+* base = #Condition
+* type = #date
+* expression = "Condition.extension('https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-sdhr-client-last-updated-extension').value"
+* xpathUsage = #normal
+
+Instance: observation-clientlastupdated
+InstanceOf: SearchParameter
+Usage: #definition
+* url = "https://fhir-ig.digital.health.nz/sdhr/SearchParameter/observation-clientlastupdated"
+* version = "1.0.0"
+* name = "ObservationClientLastUpdated"
+* status = #active
+* description = "Search by the ClientLastUpdated extension on SDHR Observation resources"
+* code = #clientlastupdated
+* base = #Observation
+* type = #date
+* expression = "Observation.extension('https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-sdhr-client-last-updated-extension').value"
+* xpathUsage = #normal

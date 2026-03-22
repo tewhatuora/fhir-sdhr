@@ -27,6 +27,7 @@ Usage: #example
 Description: "An example payload for a Primary Care AllergyIntolerance resource indicating an allergy to Cashew nuts"
 * meta.lastUpdated = "2024-01-26T10:03:26+13:00"
 * meta insert HPIFacility(F38006-B)
+* extension[+] insert HNZSDHRClientLastUpdated(2024-02-14T11:15:00+13:00)
 
 * insert LocalIdentifierExample
 

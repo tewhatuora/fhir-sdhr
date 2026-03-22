@@ -139,6 +139,10 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/severity"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "mild | moderate | severe (of event as a whole)."
+* rest.resource[=].searchParam[+].name = "clientlastupdated"
+* rest.resource[=].searchParam[=].definition = "https://fhir-ig.digital.health.nz/sdhr/SearchParameter/allergyintolerance-clientlastupdated"
+* rest.resource[=].searchParam[=].type = #date
+* rest.resource[=].searchParam[=].documentation = "The ClientLastUpdated extension value. This date parameter can also be used with `_sort=clientlastupdated` or `_sort=-clientlastupdated`."
 * rest.resource[=].searchParam[+].name = "_lastUpdated"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
 * rest.resource[=].searchParam[=].type = #date
@@ -199,6 +203,10 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[=].searchParam[=].definition = "https://fhir-ig.digital.health.nz/sdhr/SearchParameter/condition-long-term-condition"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "Search for conditions flagged as long term in the SDHRCondition profile"
+* rest.resource[=].searchParam[+].name = "clientlastupdated"
+* rest.resource[=].searchParam[=].definition = "https://fhir-ig.digital.health.nz/sdhr/SearchParameter/condition-clientlastupdated"
+* rest.resource[=].searchParam[=].type = #date
+* rest.resource[=].searchParam[=].documentation = "The ClientLastUpdated extension value. This date parameter can also be used with `_sort=clientlastupdated` or `_sort=-clientlastupdated`."
 * rest.resource[=].searchParam[+].name = "_lastUpdated"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
 * rest.resource[=].searchParam[=].type = #date
@@ -333,7 +341,27 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Observation-value-string"
 * rest.resource[=].searchParam[=].type = #string
 * rest.resource[=].searchParam[=].documentation = "The value of the observation, if the value is a string, and also searches in CodeableConcept.text"
+* rest.resource[=].searchParam[+].name = "clientlastupdated"
+* rest.resource[=].searchParam[=].definition = "https://fhir-ig.digital.health.nz/sdhr/SearchParameter/observation-clientlastupdated"
+* rest.resource[=].searchParam[=].type = #date
+* rest.resource[=].searchParam[=].documentation = "The ClientLastUpdated extension value. This date parameter can also be used with `_sort=clientlastupdated` or `_sort=-clientlastupdated`."
 * rest.resource[=].searchParam[+].name = "_lastUpdated"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
 * rest.resource[=].searchParam[=].type = #date
 * rest.resource[=].searchParam[=].documentation = "When the resource version last changed."
+
+// Immunization
+* rest.resource[+].type = #Immunization
+* rest.resource[=] insert LimitedInteractionsDocumentation
+* rest.resource[=].profile = Canonical(SDHRImmunization)
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #search-type
+* rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
+* rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
+* rest.resource[=].extension[=].extension[=].valueCode = #SHALL
+* rest.resource[=].extension[=].extension[+].url = "required"
+* rest.resource[=].extension[=].extension[=].valueString = "patient"
+* rest.resource[=].searchParam[+].name = "patient"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  Who the immunization is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"

@@ -12,7 +12,7 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 * meta insert MetaTag
 
 * extension contains
-  hnz-sdhr-client-last-updated-extension named ClientLastUpdated 0..1
+  hnz-sdhr-client-last-updated-extension named ClientLastUpdated 1..1
 
 * insert LocalIdentifierDocs
 

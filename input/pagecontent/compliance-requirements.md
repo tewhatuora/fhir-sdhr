@@ -918,6 +918,37 @@ The SDHR team will assess your responses and discuss with you if any further cla
                 </td>
             </tr>
             <tr>
+                <td rowspan="2">
+                    <p>SSD-19.1</p>
+                </td>
+                <td rowspan="2">
+                    <p>The application applies any existing opt-off setting recorded in the PMS for a patient to
+                        their SDHR participation prior to the Facility historical data being loaded unless the patient
+                        decides to share their data with SDHR</p>
+                </td>
+                <td>
+                    <p>An existing SEHR opt-off preference exists in the PMS for a patient</p>
+                </td>
+                <td>
+                    <p>The application defaults the existing SEHR opt-off preference to the SDHR participation
+                        preference</p>
+                </td>
+                <td rowspan="2">
+                    <p>Mandatory</p>
+                </td>
+                <td rowspan="2">
+                    <p>Design and Test output from vendor</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Later, a patient responds to the practice and requests to share their records with SDHR</p>
+                </td>
+                <td>
+                    <p>The application allows the default SDHR setting to be overridden</p>
+                </td>
+            </tr>
+            <tr>
                 <td>
                     <ol>
                         <li></li>

@@ -68,6 +68,10 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
                 ],
                 "extension": [
                     {
+                        "url": "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-sdhr-client-last-updated-extension",
+                        "valueDateTime": "2025-03-20T09:14:00+13:00"
+                    },
+                    {
                         "valueBoolean": true,
                         "url": "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
                     }
@@ -134,6 +138,10 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
             "fullUrl": "https://server.url/Condition/c3605e85-6785-4fa9-94a5-6d8015416c53",
             "resource": {
                 "extension": [
+                    {
+                        "url": "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-sdhr-client-last-updated-extension",
+                        "valueDateTime": "2025-03-20T09:17:00+13:00"
+                    },
                     {
                         "valueBoolean": true,
                         "url": "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
@@ -247,6 +255,10 @@ In this example the above query returns a single result. Note that in most cases
                     }
                 ],
                 "extension": [
+                    {
+                        "url": "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-sdhr-client-last-updated-extension",
+                        "valueDateTime": "2025-05-01T09:02:00+13:00"
+                    },
                     {
                         "valueBoolean": true,
                         "url": "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"

@@ -23,6 +23,5 @@
 
 // * period.start = "2024-03-26T10:13:26+13:00" 
 
-// * participant.type = http://terminology.hl7.org/CodeSystem/v3-ParticipationType#PPRF "primary performer"
+// * participant.type = http://terminology.hl7.org/fhir/CodeSystem/v3-ParticipationType#PPRF "primary performer"
 // * participant.individual insert Practitioner(91ZABY, Dr Andrea Welby)
-

@@ -24,7 +24,6 @@ Description: "A Shared Digital Health Record Observation."
 * subject ^short = "National Health Identifier for the health consumer"
 * subject ^definition = "National Health Identifier for the health consumer"
 
-//* insert ProfilePractitioner(performer)
 * insert HPIPractitionerReference(performer)
 
 * performer ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"

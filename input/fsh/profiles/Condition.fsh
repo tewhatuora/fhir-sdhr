@@ -23,8 +23,6 @@ Description: "Condition resource to record problems and conditions affecting a p
 * subject ^short = "National Health Identifier for the health consumer"
 * subject ^definition = "National Health Identifier for the health consumer"
 
-//* insert ProfilePractitioner(asserter)
-
 * code 1..1 
 * code from http://hl7.org/fhir/ValueSet/condition-code (preferred)
 * insert UserSelected

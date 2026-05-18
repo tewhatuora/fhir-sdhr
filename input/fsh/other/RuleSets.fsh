@@ -35,10 +35,7 @@ Severity: #error
 */
 RuleSet: ProfilePractitioner(property)
 * {property} 1..1
-* {property} only Reference(Practitioner)
-* {property}.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system. See constraints for details."
-* {property}.type = "Practitioner"
-* {property}.reference obeys hpi-url-format
+* insert HPIPractitionerReference({property})
 
 /*
     Re-usable HPI Practitioner reference constraint.

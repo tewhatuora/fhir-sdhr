@@ -40,6 +40,18 @@ RuleSet: ProfilePractitioner(property)
 * {property}.type = "Practitioner"
 * {property}.reference obeys hpi-url-format
 
+/*
+    Re-usable HPI Practitioner reference constraint.
+    This ruleset does not change element cardinality.
+    It can be applied to optional or repeating practitioner reference elements.
+*/
+RuleSet: HPIPractitionerReference(property)
+* {property} only Reference(Practitioner)
+* {property}.reference ^short = "Must be an absolute URL reference to the practitioner on the HPI system. See constraints for details."
+* {property}.type = "Practitioner"
+* {property}.reference 1..1
+* {property}.reference obeys hpi-url-format
+
 Invariant: hpi-url-format
 Description: "Reference must be an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
 Expression: "matches('^https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/[0-9]{2}[A-Z]{4}$')"

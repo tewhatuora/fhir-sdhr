@@ -28,6 +28,8 @@ Description: "AllergyIntolerance FHIR resource for Shared Digital Health Record"
 * code from sdhr-allergyintolerance-code-valueset (preferred)
 * code ^short = "Preferred - a SNOMED CT code or a NZMT code. When the intolerance is referring to a medication please use the NZMT codeset. When referring to another supstance, food etc. please use SNOMED."
 * insert UserSelected
+* insert HPIPractitionerReference(recorder)
+* insert HPIPractitionerReference(asserter)
 * recorder.identifier only Identifier
 * recorder ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
 * asserter ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"

@@ -30,5 +30,7 @@ Description: "Condition resource to record problems and conditions affecting a p
 * insert UserSelected
 * category ^short = "A means of categorising the different types of problem, to distinguish for example, a diagnosis, from a clinical risk"
 * category ^definition = "A means of categorising the different types of problem, to distinguish for example, a diagnosis, from a clinical risk"
+* insert HPIPractitionerReference(recorder)
+* insert HPIPractitionerReference(asserter)
 * recorder ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"
 * asserter ^short = "Preferred - an HPI Practitioner URL with format https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/11AAAA"

@@ -1,18 +1,16 @@
-# Overview
+### Overview
 
 [The Shared Digital Health Record (SDHR) API](https://apistandards.digital.health.nz/api-concepts/ComponentDefinitions#api-provider) facilitates access to a patient's clinical information held in Health NZ, primary, and secondary care systems. This allows information to be surfaced back to [authorised health workers](https://apistandards.digital.health.nz/api-concepts/ComponentDefinitions#health-workers) who are using an approved clinical system. [API consumers](https://apistandards.digital.health.nz/api-concepts/ComponentDefinitions#api-consumer).
 
 This IG is a Draft only. Please be aware it is subject to change. Profiles are being updated regularly. Please do not rely on the current version for development decisions.
 
-# Use Cases
+### Use Case 1: Collection of structured health information from Primary care providers
 
-## Collection of structured health information from Primary care providers
-
-### Business Purpose
+#### Business Purpose
 
 To collect patient information from a participating Health Service Provider, via their PMS.
 
-### Scope
+#### Scope
 
 Applies to: 
 
@@ -20,26 +18,26 @@ Applies to:
 - Conditions  
 - Observations  
 
-### Key Behaviour
+#### Key Behaviour
 
 - Clinical data is recorded in PMS. 
 - Data is sent to the Shared Digital Health Record as close to real-time as possible, subject to patient privacy choices. 
 - The Shared Digital Health Record stores a copy only (and the PMS remains the system of record). 
 
-### Important Rules
+#### Important Rules
 
 - Historical data is only collected if the patient is enrolled at the contributing HSP. 
 - Data marked as confidential/sensitive within the source system must not be submitted to the Shared Digital Health Record. 
 - Data is rejected if the patient has chosen to opt out of data sharing for information held at a given facility, or if they have chosen not to participate in the Shared Digital Health Record data sharing at all. 
 - The PMS is responsible for ensuring the copy of data in the Shared Digital Health Record accurately reflects the state of the data in the PMS. 
 
-## Clinical Access Patient Clinical Data
+### Use Case 2: Clinical Access Patient Clinical Data
 
-### Business Purpose
+#### Business Purpose
 
 To provide clinicians with access to relevant patient information from multiple sources, enabling safer and more informed care. 
 
-### Scope
+#### Scope
 
 Applies to: 
 
@@ -49,7 +47,7 @@ Applies to:
 - Medications (prescriptions and dispensing) 
 - Observations  
 
-### Key Behaviour
+#### Key Behaviour
 
 - Data is retrieved for a specific resource using:  
     - patient identifier (NHI)  
@@ -59,16 +57,16 @@ Applies to:
 
 - The request must include the context of the request, for auditing purposes. 
 
-### Important Rules
+#### Important Rules
 
 - Historical data is only collected if the patient is enrolled at the contributing HSP. 
 - Data marked as confidential/sensitive within the source system must not be submitted to the Shared Digital Health Record. 
 - Data is rejected if the patient has chosen to opt out of data sharing for information held at a given facility, or if they have chosen not to participate in the Shared Digital Health Record data sharing at all. 
 - The PMS is responsible for ensuring the copy of data in the Shared Digital Health Record accurately reflects the state of the data in the PMS. 
 
-# Domain Descriptions
+### Domain Descriptions
  
-## Allergies and Intolerances
+#### Allergies and Intolerances
  
 **Alias:** Adverse Reactions, Adverse Drug Reactions (ADR), Adverse Events, Adverse Events Following Immunisation (AEFI), Medical Warnings, Warnings, Alerts, Side Effects.
  
@@ -76,15 +74,13 @@ Applies to:
  
 **Considerations for use:**
  
-Primary care information is collected from practices, with respect for the confidentiality and sharing preferences as expressed by the health consumer.
- 
-Note that allergy and intolerance records cannot be made confidential at the record / domain level.
- 
-Data sources will be added over time.
+- Primary care information is collected from practices, with respect for the confidentiality and sharing preferences as expressed by the health consumer.
+- Note that allergy and intolerance records cannot be made confidential at the record / domain level.
+- Data sources will be added over time.
  
 ---
  
-## Conditions
+#### Conditions
 
 **Alias:** Problems, Diagnoses, Classifications.
  
@@ -104,13 +100,12 @@ Social issues and family history concepts are included as non-clinical condition
  
 **Considerations for use:**
  
-Primary care information is collected from practices, with respect for the confidentiality and sharing preferences as expressed by the health consumer.
- 
-Data sources will be added over time.
+- Primary care information is collected from practices, with respect for the confidentiality and sharing preferences as expressed by the health consumer.
+- Data sources will be added over time.
  
 ---
  
-## Observations
+#### Observations
  
 **Alias:** Vital sign, Health Consumer Measurement
  
@@ -118,13 +113,13 @@ Data sources will be added over time.
  
 **Considerations for use:**
  
-Primary care information is collected from practices, with respect for the confidentiality and sharing preferences as expressed by the Health Consumer.
+- Primary care information is collected from practices, with respect for the confidentiality and sharing preferences as expressed by the Health Consumer.
  
-Data sources will be added over time.
+- Data sources will be added over time.
  
 ---
 
-## Medications
+#### Medications
 
 Including: 
 - Prescribed Medications
@@ -184,7 +179,7 @@ It supports clinicians to understand what medications a person has been prescrib
 - "Administered Medications" are not recorded in NZePS. These are generally given in inpatient settings, but also can be in outpatient and some clinic settings.
 
 
-## Immunisations *(coming soon)*
+#### Immunisations *(coming soon)*
  
 **Alias:** Vital sign, Health Consumer Measurement
  
@@ -192,6 +187,6 @@ It supports clinicians to understand what medications a person has been prescrib
  
 **Considerations for use:**
  
-Primary care information is collected from practices, with respect for the confidentiality and sharing preferences as expressed by the Health Consumer.
+- Primary care information is collected from practices, with respect for the confidentiality and sharing preferences as expressed by the Health Consumer.
  
-Data sources will be added over time.
+- Data sources will be added over time.

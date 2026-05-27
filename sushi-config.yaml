@@ -56,7 +56,7 @@ pages:
   index.md:
     title: NZ Shared Digital Health Record API
   use-cases.md:
-    title: Use cases
+    title: Use Cases
   consent-based-access.md:
     title: Consent based access control
   artifacts.html:

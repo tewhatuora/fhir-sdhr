@@ -6,6 +6,7 @@ The SDHR API is comprised of multiple FHIR resources. This page provides technic
 | --- | --- |
 | [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) | FHIR API Capability Statement. Developers should review this to understand the available API interactions and request requirements such as the Request-Context header |
 | [API Artifacts](./artifacts.html) | List of FHIR Artifacts for this API |
+| [SDHR ID NamingSystem](./NamingSystem-SDHRIdNamingSystem.html) | Identifier namespace for SDHR resource ids. API consumers can use this when they want to refer to the FHIR ids returned by SDHR |
 | [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) | Machine readable OpenAPI specification for this API |
 | [Participate Operation](./OperationDefinition-SDHRParticipateOperation.html)| Custom operation designed to capture participation information from API Consumers e.g. Patient Management Systems |
 

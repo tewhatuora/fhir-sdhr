@@ -7,6 +7,7 @@ It returns whether the patient is participating in the service, whether enrollme
 
 For an example response payload for this operation see:
 - [Parameters resource for participation status response](./Parameters-ParametersParticipationStatusResponse.html) : This example shows the `Parameters` resource returned by the operation when participation status information is found for a patient.
+- [Parameters resource for participation status response with enrollment details](./Parameters-ParametersParticipationStatusEnrollmentResponse.html) : This example shows the `Parameters` resource returned by the operation when enrollment details are known for a patient.
 
 To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participation-status`).
 
@@ -73,3 +74,24 @@ Usage: #definition
 * parameter[=].max = "1"
 * parameter[=].type = #boolean
 * parameter[=].documentation = "Indicates whether enrollment information was found for the patient."
+
+* parameter[+].name = #enrollmentOrgId
+* parameter[=].use = #out
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #string
+* parameter[=].documentation = "The enrollment organization identifier, when enrollment information is available for the patient."
+
+* parameter[+].name = #enrollmentFacilityId
+* parameter[=].use = #out
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #string
+* parameter[=].documentation = "The enrollment facility identifier, when enrollment information is available for the patient."
+
+* parameter[+].name = #enrollmentNHI
+* parameter[=].use = #out
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #string
+* parameter[=].documentation = "The enrollment NHI value, when enrollment information is available for the patient."

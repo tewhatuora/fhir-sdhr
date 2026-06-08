@@ -1,4 +1,4 @@
-Instance: SDHRHNZParticipationStatusOperation
+Instance: SDHRParticipationStatusOperation
 InstanceOf: OperationDefinition
 Description: """
 This operation retrieves a patient's Shared Digital Health Record participation status.

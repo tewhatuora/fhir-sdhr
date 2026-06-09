@@ -12,13 +12,17 @@ Description: "A Shared Digital Health Record Observation."
 
 * insert LocalIdentifierDocs
 
+* obeys value-or-dataabsentreason-required
+
 * extension contains
-  hnz-sdhr-client-last-updated-extension named ClientLastUpdated 0..1
+  hnz-sdhr-client-last-updated-extension named ClientLastUpdated 1..1
 
 * modifierExtension 0..0
 * contained 0..0
 
 * insert ProfilePatient(subject)
+* subject ^short = "National Health Identifier for the health consumer"
+* subject ^definition = "National Health Identifier for the health consumer"
 
 //* insert ProfilePractitioner(performer)
 
@@ -30,6 +34,10 @@ Description: "A Shared Digital Health Record Observation."
 * code ^short = "Observation code. Note that when the observation is an individual observation (singular) LOINC should be used. If, however, the Observation is a grouping (e.g. vital-signs) the code can be from SNOMED CT e.g. `122869004`. See https://fhir-ig.digital.health.nz/sdhr/Observation-ObservationVitalSignsExample.html for example"
 * insert UserSelected
 * effective[x] 1..1
+* effective[x] ^short = "Date and time/time-period the measurement was obtained"
+* effective[x] ^definition = "Date and time/time-period the measurement was obtained"
+* bodySite ^short = "Code for the body site affected by the problem (if applicable)"
+* bodySite ^definition = "Code for the body site affected by the problem (if applicable)"
 * component 0..*
 * component.code from http://hl7.org/fhir/ValueSet/observation-codes (preferred)
 * component.value[x] 0..1

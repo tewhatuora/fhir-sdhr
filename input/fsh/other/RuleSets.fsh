@@ -164,3 +164,8 @@ Invariant: no-participation-ops
 Description: "Bundle entries MUST NOT invoke $participate or $hnz-participate."
 Severity: #error
 Expression: "entry.request.url.where($this.matches('[$](participate|hnz-participate)')).exists().not()"
+
+Invariant: value-or-dataabsentreason-required
+Description: "Observations must have a root or component value[x], or a root or component dataAbsentReason."
+Severity: #error
+Expression: "value.exists() or component.value.exists() or dataAbsentReason.exists() or component.dataAbsentReason.exists()"

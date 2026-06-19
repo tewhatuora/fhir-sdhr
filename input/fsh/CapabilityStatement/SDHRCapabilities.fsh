@@ -354,14 +354,45 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[+].type = #Immunization
 * rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHRImmunization)
+// Immunisations are a read-only proxy of the Aotearoa Immunisation Register (AIR);
+// no create/update/delete is supported.
 * rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #vread
 * rest.resource[=].interaction[+].code = #search-type
 * rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
 * rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
 * rest.resource[=].extension[=].extension[=].valueCode = #SHALL
 * rest.resource[=].extension[=].extension[+].url = "required"
 * rest.resource[=].extension[=].extension[=].valueString = "patient"
+// Only the search parameters below are accepted. Any other parameter, modifier
+// or date comparator is rejected with a 400 OperationOutcome (it is not silently
+// ignored). target-disease, status and status-reason are applied by AIR; date,
+// location and vaccine-code are applied by SDHR over the AIR result set.
 * rest.resource[=].searchParam[+].name = "patient"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  Who the immunization is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"
+* rest.resource[=].searchParam[+].name = "date"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-date"
+* rest.resource[=].searchParam[=].type = #date
+* rest.resource[=].searchParam[=].documentation = "Vaccination (occurrence) date. Comparators eq, ge, gt, le, lt are supported; two `date` parameters may be combined for a range. Applied by SDHR."
+* rest.resource[=].searchParam[+].name = "location"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-location"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "Facility (HPI) where the vaccination was administered. Applied by SDHR."
+* rest.resource[=].searchParam[+].name = "vaccine-code"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-vaccine-code"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Vaccine product administered. Supports `system|code` or bare `code`, and the `:text` modifier for name search. Applied by SDHR."
+* rest.resource[=].searchParam[+].name = "target-disease"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-target-disease"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Disease targeted by the vaccination. Applied by AIR."
+* rest.resource[=].searchParam[+].name = "status"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-status"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Immunisation event status. Applied by AIR. Records with status `entered-in-error` are never returned."
+* rest.resource[=].searchParam[+].name = "status-reason"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-status-reason"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Reason a vaccination was not administered. Applied by AIR."

@@ -10,5 +10,9 @@ Description: "Example parameters content to POST to the HNZ Participate (`$hnz-p
 * parameter[=].valueReference = Reference(https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC9999)
 * parameter[=].valueReference.display = "Linked patient"
 * parameter[=].valueReference.type = "Patient"
+* parameter[+].name = "facilityId"
+* parameter[=].valueReference = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ999-B)
+* parameter[+].name = "pmsIdentifier"
+* parameter[=].valueString = "Medtech"
 * parameter[+].name = "hnzParticipationIndicator"
 * parameter[=].valueBoolean = true

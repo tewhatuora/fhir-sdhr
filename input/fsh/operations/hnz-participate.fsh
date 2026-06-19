@@ -18,6 +18,7 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI. For a global opt-in request, one or more `patient` parameters may be supplied. Multiple `patient` parameters are only supported when all supplied NHIs are already linked in the same NHI group and the request supplies the complete linked group. Multiple `patient` parameters are not supported for global opt-out requests.
+For a global opt-in request where the patient is enrolled with a provider, the request may include the enrolled provider `facilityId` and must include `pmsIdentifier`. If `facilityId` is not provided, `pmsIdentifier` must not be provided and the operation updates consent without triggering a historic load.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 Usage: #definition
@@ -45,6 +46,20 @@ Usage: #definition
 * parameter[=].documentation = """Indicates global participation in the Shared Digital Health Record service (true/false)
 If false, the patient does not wish to participate in the service and their resources will not be shared.
 """
+
+* parameter[+].name = #facilityId
+* parameter[=].use = #in
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #Reference
+* parameter[=].documentation = "Optional for global opt-in. Reference must be an HPI Location URL for the enrolled provider, with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ999-B. If provided, pmsIdentifier is required. Not supported for global opt-out."
+
+* parameter[+].name = #pmsIdentifier
+* parameter[=].use = #in
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #string
+* parameter[=].documentation = "Required when facilityId is provided, otherwise omitted. Must identify the PMS historic load method. Supported values are Medtech, Indici, and MyPractice. Not supported for global opt-out."
 
 * parameter[+].name = #return
 * parameter[=].use = #out

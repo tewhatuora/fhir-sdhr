@@ -366,8 +366,8 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[=].extension[=].extension[=].valueString = "patient"
 // Only the search parameters below are accepted. Any other parameter, modifier
 // or date comparator is rejected with a 400 OperationOutcome (it is not silently
-// ignored). target-disease, status and status-reason are applied by AIR; date,
-// location and vaccine-code are applied by SDHR over the AIR result set.
+// ignored). status and status-reason are applied by AIR; date, location,
+// vaccine-code and target-disease are applied by SDHR over the AIR result set.
 * rest.resource[=].searchParam[+].name = "patient"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
 * rest.resource[=].searchParam[=].type = #reference
@@ -387,7 +387,7 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[=].searchParam[+].name = "target-disease"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-target-disease"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Disease targeted by the vaccination. Applied by AIR."
+* rest.resource[=].searchParam[=].documentation = "Disease targeted by the vaccination, matched against protocolApplied.targetDisease. Applied by SDHR."
 * rest.resource[=].searchParam[+].name = "status"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-status"
 * rest.resource[=].searchParam[=].type = #token

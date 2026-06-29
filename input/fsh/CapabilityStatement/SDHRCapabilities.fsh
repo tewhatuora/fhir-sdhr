@@ -44,6 +44,7 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
+For an opt-in request, a Medtech PMS may set `enrolledPatient` to `true` to indicate that the patient is enrolled at the supplied facility and that a historic load should be triggered. If `enrolledPatient` is omitted, the API treats the caller as non-Medtech or unknown and updates consent without triggering a historic load.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 // HNZ participate operation
@@ -55,16 +56,19 @@ This operation should only be used by HNZ channels.
 
 Scenarios where this operation might be used include:
 - A patient has opted in to the Shared Digital Health Record service by contacting Health NZ via appropriate digital or assisted channels.
+- A linked group of patients has opted in to the Shared Digital Health Record service by contacting Health NZ via appropriate digital or assisted channels.
 - A patient chooses not to participate in the Shared Digital Health Record service and informs Health NZ of this choice via appropriate digital or assisted channels.
 
 For example payloads that might be used with this operation see:
 - [Parameters resource for total non-participation](./Parameters-ParametersHNZParticipateOptOut.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
 - [Parameters resource for participation](./Parameters-ParametersHNZParticipateOptIn.html) : This example shows how to indicate that a patient wishes to participate in the Shared Digital Health Record service.
+- [Parameters resource for linked group participation](./Parameters-ParametersHNZParticipateLinkedGroupOptIn.html) : This example shows how to indicate that all patients in a linked NHI group wish to participate in the Shared Digital Health Record service.
 
 To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$hnz-participate`).
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
-The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI.
+The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI. For a global opt-in request, one or more `patient` parameters may be supplied. Multiple `patient` parameters are only supported when all supplied NHIs are already linked in the same NHI group and the request supplies the complete linked group. Multiple `patient` parameters are not supported for global opt-out requests.
+For a global opt-in request where the patient is enrolled with a provider, the request may include the enrolled provider `facilityId` and must include `pmsIdentifier`. If `facilityId` is not provided, `pmsIdentifier` must not be provided and the operation updates consent without triggering a historic load.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 

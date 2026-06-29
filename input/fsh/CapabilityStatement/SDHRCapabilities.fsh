@@ -413,15 +413,15 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[=].extension[=].extension[+].url = "required"
 * rest.resource[=].extension[=].extension[=].valueString = "patient"
 * rest.resource[=].searchParam[+].name = "patient"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-patient"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  Who the prescription is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"
 * rest.resource[=].searchParam[+].name = "identifier"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-identifier"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
 * rest.resource[=].searchParam[+].name = "status"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/MedicationRequest-status"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-status"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "Status of the prescription."
 * rest.resource[=].searchParam[+].name = "_lastUpdated"
@@ -441,15 +441,15 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[=].extension[=].extension[+].url = "required"
 * rest.resource[=].extension[=].extension[=].valueString = "patient"
 * rest.resource[=].searchParam[+].name = "patient"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-patient"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
 * rest.resource[=].searchParam[=].type = #reference
 * rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  Who the dispense is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"
 * rest.resource[=].searchParam[+].name = "identifier"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-identifier"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
 * rest.resource[=].searchParam[+].name = "status"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/MedicationDispense-status"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-status"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "Status of the dispense."
 * rest.resource[=].searchParam[+].name = "_lastUpdated"

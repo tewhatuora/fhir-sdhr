@@ -44,6 +44,7 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
+For an opt-in request, a Medtech PMS may set `enrolledPatient` to `true` to indicate that the patient is enrolled at the supplied facility and that a historic load should be triggered. If `enrolledPatient` is omitted, the API treats the caller as non-Medtech or unknown and updates consent without triggering a historic load.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 // HNZ participate operation
@@ -55,16 +56,19 @@ This operation should only be used by HNZ channels.
 
 Scenarios where this operation might be used include:
 - A patient has opted in to the Shared Digital Health Record service by contacting Health NZ via appropriate digital or assisted channels.
+- A linked group of patients has opted in to the Shared Digital Health Record service by contacting Health NZ via appropriate digital or assisted channels.
 - A patient chooses not to participate in the Shared Digital Health Record service and informs Health NZ of this choice via appropriate digital or assisted channels.
 
 For example payloads that might be used with this operation see:
 - [Parameters resource for total non-participation](./Parameters-ParametersHNZParticipateOptOut.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
 - [Parameters resource for participation](./Parameters-ParametersHNZParticipateOptIn.html) : This example shows how to indicate that a patient wishes to participate in the Shared Digital Health Record service.
+- [Parameters resource for linked group participation](./Parameters-ParametersHNZParticipateLinkedGroupOptIn.html) : This example shows how to indicate that all patients in a linked NHI group wish to participate in the Shared Digital Health Record service.
 
 To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$hnz-participate`).
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
-The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI.
+The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI. For a global opt-in request, one or more `patient` parameters may be supplied. Multiple `patient` parameters are only supported when all supplied NHIs are already linked in the same NHI group and the request supplies the complete linked group. Multiple `patient` parameters are not supported for global opt-out requests.
+For a global opt-in request where the patient is enrolled with a provider, the request may include the enrolled provider `facilityId` and must include `pmsIdentifier`. If `facilityId` is not provided, `pmsIdentifier` must not be provided and the operation updates consent without triggering a historic load.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 
@@ -354,6 +358,53 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[+].type = #Immunization
 * rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHRImmunization)
+// Immunisations are a read-only proxy of the Aotearoa Immunisation Register (AIR);
+// no create/update/delete is supported.
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #vread
+* rest.resource[=].interaction[+].code = #search-type
+* rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
+* rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
+* rest.resource[=].extension[=].extension[=].valueCode = #SHALL
+* rest.resource[=].extension[=].extension[+].url = "required"
+* rest.resource[=].extension[=].extension[=].valueString = "patient"
+// Only the search parameters below are accepted. Any other parameter, modifier
+// or date comparator is rejected with a 400 OperationOutcome (it is not silently
+// ignored). target-disease, status and status-reason are applied by AIR; date,
+// location and vaccine-code are applied by SDHR over the AIR result set.
+* rest.resource[=].searchParam[+].name = "patient"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  Who the immunization is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"
+* rest.resource[=].searchParam[+].name = "date"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-date"
+* rest.resource[=].searchParam[=].type = #date
+* rest.resource[=].searchParam[=].documentation = "Vaccination (occurrence) date. Comparators eq, ge, gt, le, lt are supported; two `date` parameters may be combined for a range. Applied by SDHR."
+* rest.resource[=].searchParam[+].name = "location"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-location"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "Facility (HPI) where the vaccination was administered. Applied by SDHR."
+* rest.resource[=].searchParam[+].name = "vaccine-code"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-vaccine-code"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Vaccine product administered. Supports `system|code` or bare `code`, and the `:text` modifier for name search. Applied by SDHR."
+* rest.resource[=].searchParam[+].name = "target-disease"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-target-disease"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Disease targeted by the vaccination (protocolApplied.targetDisease, SNOMED). Applied by AIR."
+* rest.resource[=].searchParam[+].name = "status"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-status"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Immunisation event status. Applied by AIR. Records with status `entered-in-error` are never returned."
+* rest.resource[=].searchParam[+].name = "status-reason"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-status-reason"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Reason a vaccination was not administered. Applied by AIR."
+
+// MedicationRequest
+* rest.resource[+].type = #MedicationRequest
+* rest.resource[=] insert LimitedInteractionsDocumentation
+* rest.resource[=].profile = Canonical(SDHRMedicationRequest)
 * rest.resource[=].interaction[0].code = #read
 * rest.resource[=].interaction[+].code = #search-type
 * rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
@@ -364,4 +415,44 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.resource[=].searchParam[+].name = "patient"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
 * rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  Who the immunization is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"
+* rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  Who the prescription is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"
+* rest.resource[=].searchParam[+].name = "identifier"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
+* rest.resource[=].searchParam[+].name = "status"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-status"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Status of the prescription."
+* rest.resource[=].searchParam[+].name = "_lastUpdated"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
+* rest.resource[=].searchParam[=].type = #date
+* rest.resource[=].searchParam[=].documentation = "When the resource version last changed."
+
+// MedicationDispense
+* rest.resource[+].type = #MedicationDispense
+* rest.resource[=] insert LimitedInteractionsDocumentation
+* rest.resource[=].profile = Canonical(SDHRMedicationDispense)
+* rest.resource[=].interaction[0].code = #read
+* rest.resource[=].interaction[+].code = #search-type
+* rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
+* rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"
+* rest.resource[=].extension[=].extension[=].valueCode = #SHALL
+* rest.resource[=].extension[=].extension[+].url = "required"
+* rest.resource[=].extension[=].extension[=].valueString = "patient"
+* rest.resource[=].searchParam[+].name = "patient"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n  Who the dispense is for \n [Patient](http://hl7.org/fhir/R4/patient.html)"
+* rest.resource[=].searchParam[+].name = "identifier"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
+* rest.resource[=].searchParam[+].name = "status"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-status"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Status of the dispense."
+* rest.resource[=].searchParam[+].name = "_lastUpdated"
+* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
+* rest.resource[=].searchParam[=].type = #date
+* rest.resource[=].searchParam[=].documentation = "When the resource version last changed."

@@ -21,6 +21,7 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
+For an opt-in request, a Medtech PMS may set `enrolledPatient` to `true` to indicate that the patient is enrolled at the supplied facility and that a historic load should be triggered. If `enrolledPatient` is omitted, the API treats the caller as non-Medtech or unknown and updates consent without triggering a historic load.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 Usage: #definition
@@ -58,7 +59,7 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].type = #string
 * parameter[=].documentation = """The resource type that is being withheld. Must be a valid FHIR resource type supported by the SDHR service, such as `Condition`, `Observation` etc. Note that `AllergyIntolerance` resources MUST NOT be withheld.
     This parameter is optional and should only be used to specify the type of resource that is withheld from the Shared Digital Health Record service.
-    When this paramter is used the request MUST contain a `reasonCode` parameter and a `localResourceId` parameter."""
+    When this parameter is used the request MUST contain a `reasonCode` parameter and a `localResourceId` parameter."""
 
 * parameter[+].name = #facilityId
 * parameter[=].use = #in
@@ -69,6 +70,14 @@ If an API consumer attempts to POST a record for a patient that has not opted in
     This parameter is mandatory and must be provided to indicate the healthcare provider that is withholding the resource from the Shared Digital Health Record service.
     The HPI Facility ID must be a valid HPI Facility ID in the format `https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facility-id}`."""
 
+* parameter[+].name = #enrolledPatient
+* parameter[=].use = #in
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #boolean
+* parameter[=].documentation = """Optional for facility opt-in requests. Medtech callers may set this to `true` when the patient is enrolled at the supplied facility and historic load should be triggered.
+If omitted, the caller is treated as non-Medtech or unknown and the operation updates consent without triggering a historic load."""
+
 * parameter[+].name = #localResourceId
 * parameter[=].use = #in
 * parameter[=].min = 0
@@ -76,7 +85,7 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].type = #string
 * parameter[=].documentation = """The local resource ID that is withheld from the Shared Digital Health Record service.
     This parameter is optional and should only be used to specify the local ID of the resource that is withheld.
-    When this paramter is used the request MUST contain a `reasonCode` parameter and a `resourceType` parameter."""
+    When this parameter is used the request MUST contain a `reasonCode` parameter and a `resourceType` parameter."""
 
 * parameter[+].name = #reasonCode
 * parameter[=].use = #in

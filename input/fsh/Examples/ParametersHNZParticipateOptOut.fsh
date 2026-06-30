@@ -9,6 +9,6 @@ Description: "Example parameters content to POST to the HNZ Participate (`$hnz-p
 * parameter[+].name = "facilityId"
 * parameter[=].valueReference = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Organization/G00001-G)
 * parameter[+].name = "hnzParticipationIndicator"
-* parameter[=].valueBoolean = true
+* parameter[=].valueBoolean = false
 // * parameter[+].name = "reasonCode"
 // * parameter[=].valueCodeableConcept = $sdhr-participation-reason#sdhr-hnz-opt-out "HNZ opt out"

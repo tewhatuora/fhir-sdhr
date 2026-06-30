@@ -1,7 +1,7 @@
-Instance: ParametersParticipationStatusEnrollmentResponse
+Instance: ParametersParticipationStatusEnrolmentResponse
 InstanceOf: Parameters
 Usage: #example
-Description: "Example parameters content returned by the Participation Status operation when participation enrollment details are found for a patient."
+Description: "Example parameters content returned by the Participation Status operation when participation enrolment details are found for a patient."
 * parameter[0].name = "patient"
 * parameter[=].valueReference = Reference(https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZXK9000)
 * parameter[=].valueReference.type = "Patient"
@@ -13,11 +13,11 @@ Description: "Example parameters content returned by the Participation Status op
 * parameter[=].valueBoolean = false
 * parameter[+].name = "hasAnyRecords"
 * parameter[=].valueBoolean = false
-* parameter[+].name = "enrollmentInformationFound"
+* parameter[+].name = "enrolmentInformationFound"
 * parameter[=].valueBoolean = true
-* parameter[+].name = "enrollmentOrgId"
+* parameter[+].name = "enrolmentOrgId"
 * parameter[=].valueString = "ORG123"
-* parameter[+].name = "enrollmentFacilityId"
+* parameter[+].name = "enrolmentFacilityId"
 * parameter[=].valueString = "FAC456"
-* parameter[+].name = "enrollmentNHI"
+* parameter[+].name = "enrolmentNHI"
 * parameter[=].valueString = "ZXK9000"

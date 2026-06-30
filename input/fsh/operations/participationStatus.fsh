@@ -1,4 +1,4 @@
-Instance: SDHRParticipationStatusOperation
+Instance: SDHRHNZParticipationStatusOperation
 InstanceOf: OperationDefinition
 Description: """
 This operation retrieves a patient's Shared Digital Health Record participation status.
@@ -18,7 +18,7 @@ The operation is expected to be called by a healthcare provider on behalf of the
 The operation will return a `Parameters` resource containing the patient reference and participation status indicators.
 """
 Usage: #definition
-* url = "https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRParticipationStatusOperation"
+* url = "https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRHNZParticipationStatusOperation"
 * name = "ParticipationStatus"
 * status = #active
 * kind = #operation

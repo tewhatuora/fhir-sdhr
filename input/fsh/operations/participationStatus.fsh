@@ -6,8 +6,10 @@ This operation should be used by data providers in the Shared Digital Health Rec
 It returns whether the patient is participating in the service, whether enrolment information was found, and whether the patient has active, archived, or any records available in the service. The scope of the status returned is the API consumer, for example an HPI Facility where patient data is held.
 
 For an example response payload for this operation see:
-- [Parameters resource for participation status response](./Parameters-ParametersParticipationStatusResponse.html) : This example shows the `Parameters` resource returned by the operation when participation status information is found for a patient.
-- [Parameters resource for participation status response with enrolment details](./Parameters-ParametersParticipationStatusEnrolmentResponse.html) : This example shows the `Parameters` resource returned by the operation when enrolment details are known for a patient.
+- [Parameters resource for participation status response - not participating](./Parameters-ParametersParticipationStatusResponse.html) : No consent, enrolment, or records found for the patient.
+- [Parameters resource for participation status response - enrolment found, not participating](./Parameters-ParametersParticipationStatusEnrolmentResponse.html) : Enrolment information is found but the patient is not currently participating.
+- [Parameters resource for participation status response - actively participating](./Parameters-ParametersParticipationStatusActiveResponse.html) : Patient is actively participating with active records at a facility.
+- [Parameters resource for participation status response - actively participating with enrolment](./Parameters-ParametersParticipationStatusEnrolmentActiveResponse.html) : Patient is actively participating with enrolment information and facility-level participation details.
 
 To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participation-status`).
 

@@ -1,10 +1,12 @@
 Instance: ParametersParticipationStatusEnrolmentResponse
 InstanceOf: Parameters
 Usage: #example
-Description: "Example parameters content returned by the Participation Status operation when participation enrolment details are found for a patient."
+Description: "Example parameters content returned by the Participation Status operation when enrolment details are found for a patient who is not currently participating."
 * parameter[0].name = "patient"
 * parameter[=].valueReference = Reference(https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZXK9000)
 * parameter[=].valueReference.type = "Patient"
+* parameter[+].name = "consentFound"
+* parameter[=].valueBoolean = true
 * parameter[+].name = "hnzParticipationIndicator"
 * parameter[=].valueBoolean = false
 * parameter[+].name = "hasActiveRecords"
@@ -16,8 +18,14 @@ Description: "Example parameters content returned by the Participation Status op
 * parameter[+].name = "enrolmentInformationFound"
 * parameter[=].valueBoolean = true
 * parameter[+].name = "enrolmentOrgId"
-* parameter[=].valueString = "ORG123"
+* parameter[=].valueString = "GOM00001-A"
 * parameter[+].name = "enrolmentFacilityId"
-* parameter[=].valueString = "FAC456"
+* parameter[=].valueString = "FZZ999-B"
 * parameter[+].name = "enrolmentNHI"
 * parameter[=].valueString = "ZXK9000"
+* parameter[+].name = "enrolmentFacilityParticipation"
+* parameter[=].part[0].name = "facilityId"
+* parameter[=].part[=].valueReference = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ999-B)
+* parameter[=].part[=].valueReference.type = "Location"
+* parameter[=].part[+].name = "participationIndicator"
+* parameter[=].part[=].valueBoolean = false

@@ -22,7 +22,7 @@ Usage: #definition
 * name = "ParticipationStatus"
 * status = #active
 * kind = #operation
-* code = #participation-status
+* code = #hnz-participation-status
 * system = true
 * type = false
 * instance = false

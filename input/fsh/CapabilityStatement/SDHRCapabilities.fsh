@@ -73,7 +73,7 @@ The operation will return an OperationOutcome resource indicating the result of 
 """
 
 // participation status operation
-* rest.operation[+].name = "participation-status"
+* rest.operation[+].name = "hnz-participation-status"
 * rest.operation[=].definition = Canonical(SDHRHNZParticipationStatusOperation)
 * rest.operation[=].documentation = """
 This operation retrieves a patient's Shared Digital Health Record participation status.

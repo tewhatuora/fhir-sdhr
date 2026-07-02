@@ -11,7 +11,7 @@ For an example response payload for this operation see:
 - [Parameters resource for participation status response - actively participating](./Parameters-ParametersParticipationStatusActiveResponse.html) : Patient is actively participating with active records at a facility.
 - [Parameters resource for participation status response - actively participating with enrolment](./Parameters-ParametersParticipationStatusEnrolmentActiveResponse.html) : Patient is actively participating with enrolment information and facility-level participation details.
 
-To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participation-status`).
+To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$hnz-participation-status`).
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.

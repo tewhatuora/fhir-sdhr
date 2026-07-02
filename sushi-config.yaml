@@ -40,7 +40,16 @@ dependencies:
   #tewhatuora.fhir.nzps: current
   fhir.org.nz.ig.base: 3.0.0
   tewhatuora.digitaltooling: 0.0.11
-  
+
+# Stop the IG Publisher from version-pinning base-spec canonicals (e.g. turning a
+# Reference(Patient) targetProfile into 'http://hl7.org/fhir/StructureDefinition/Patient|4.0.1')
+# in generated snapshots. Newer publisher releases pin by default; the SDHR HAPI validator
+# only has the unversioned base R4 definitions, so a pinned 'Patient|4.0.1' cannot be resolved
+# and every Consent.patient validation fails. pin-none keeps these canonicals unversioned.
+parameters:
+  pin-canonicals: pin-none
+
+
 # The pages property corresponds to IG.definition.page. SUSHI can
 # auto-generate the page list, but if the author includes pages in
 # this file, it is assumed that the author will fully manage the

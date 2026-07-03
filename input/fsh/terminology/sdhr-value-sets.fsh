@@ -49,3 +49,9 @@ Id: sdhr-participation-reason-valueset
 Title: "ValueSet for SDHR Participation Reason"
 Description: "A ValueSet containing all codes from the SDHR Participation Reason system."
 * include codes from system sdhr-participation-reason
+
+ValueSet: SDHRVerificationResultValueSet
+Id: sdhr-verification-result-valueset
+Title: "ValueSet for SDHR Verification Result"
+Description: "A ValueSet containing all codes from the SDHR Verification Result system."
+* include codes from system sdhr-verification-result

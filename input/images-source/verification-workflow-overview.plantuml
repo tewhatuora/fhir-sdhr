@@ -1,0 +1,40 @@
+@startuml
+
+title SDHR Verification Workflow Overview
+
+autonumber "<color:Black>[00]"
+
+skinparam {
+    defaultFontColor #4080a9
+    defaultBackgroundColor #d7f8ff
+    defaultFontSize 16
+    defaultArrowThickness 6
+}
+
+participant "Data Viewer Application" as CONSUMER
+participant "SDHR FHIR Server" as SERVER
+
+note over CONSUMER, SERVER
+  This workflow is performed periodically by the Data Viewer Application
+  so sampled access events are retrieved and verified on an ongoing basis.
+end note
+
+group Retrieve verification samples
+  CONSUMER -> SERVER : GET /AuditEvent/$verification-samples
+  SERVER --> CONSUMER : Bundle of sampled AuditEvent resources
+end
+
+group Review sampled access events
+  note over CONSUMER
+    The Data Viewer Application reviews each sampled AuditEvent
+    using either an automated process or a manual
+    verification workflow.
+  end note
+end
+
+group Submit verification decisions
+  CONSUMER -> SERVER : POST /AuditEvent/$verification-submissions\nParameters with verification results
+  SERVER --> CONSUMER : Parameters response confirming processing results
+end
+
+@enduml

@@ -214,6 +214,18 @@ The operation will return an OperationOutcome resource indicating the result of 
 //* rest.resource[=].searchInclude[0] = "*"
 * rest.resource[=].searchInclude[0] = "Condition:encounter"
 
+// auditevent
+* rest.resource[+].type = #AuditEvent
+* rest.resource[=] insert LimitedInteractionsDocumentation
+* rest.resource[=].profile = Canonical(SDHRAuditEvent)
+* rest.resource[=].documentation = "AuditEvent supports custom operations for data viewer application verification workflows."
+* rest.resource[=].operation[+].name = "verification-samples"
+* rest.resource[=].operation[=].definition = Canonical(SDHRVerificationSamplesOperation)
+* rest.resource[=].operation[=].documentation = "Returns sampled AuditEvent resources that are still outstanding for verification by the authenticated data viewer application."
+* rest.resource[=].operation[+].name = "verification-submissions"
+* rest.resource[=].operation[=].definition = Canonical(SDHRVerificationSubmissionsOperation)
+* rest.resource[=].operation[=].documentation = "Accepts a Parameters payload containing one or more verification decisions for sampled AuditEvent resources."
+
 //consent
 // * rest.resource[+].type = #Consent
 // * rest.resource[=] insert LimitedInteractionsDocumentation

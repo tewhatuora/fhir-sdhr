@@ -63,6 +63,8 @@ pages:
     title: FHIR Artifacts
   compliance-requirements.md:
     title: Compliance Requirements - for Systems Sharing Data
+  compliance-requirements-reading.md:
+    title: Compliance Requirements - for Systems Reading Data
   data-models.md:
     title: Data Models
   api.md:
@@ -99,7 +101,9 @@ menu:
   Artifacts: artifacts.html
   Data Models: data-models.html
   API: api.html
-  Compliance: compliance-requirements.html
+  Compliance:
+    For systems sharing data: compliance-requirements.html
+    For systems reading data: compliance-requirements-reading.html
   Support:
     View FHIR OpenAPI: new-tab https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API
     View Bulk OpenAPI: new-tab https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+Bulk+Data+API

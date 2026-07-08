@@ -10,7 +10,9 @@ The response is a `Bundle` containing sampled `AuditEvent` resources that:
 - are eligible for the authenticated caller
 - have not already been marked as verified by the data viewer application
 
-The operation does not require any input parameters.
+The operation supports optional paging parameters:
+- `_count` to limit the maximum number of samples returned in a single response
+- `_offset` to skip a number of matching samples before returning results
 """
 Usage: #definition
 * url = "https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRVerificationSamplesOperation"
@@ -23,12 +25,26 @@ Usage: #definition
 * instance = false
 * resource[0] = #AuditEvent
 
-* parameter[0].name = #return
+* parameter[0].name = #_count
+* parameter[=].use = #in
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #integer
+* parameter[=].documentation = "Optional page size. Limits the maximum number of sampled AuditEvent resources returned in the Bundle."
+
+* parameter[+].name = #_offset
+* parameter[=].use = #in
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #integer
+* parameter[=].documentation = "Optional zero-based starting offset. Skips the specified number of matching sampled AuditEvent resources before returning results."
+
+* parameter[+].name = #return
 * parameter[=].use = #out
 * parameter[=].min = 1
 * parameter[=].max = "1"
 * parameter[=].type = #Bundle
-* parameter[=].documentation = "Bundle of sampled AuditEvent resources requiring verification by the authenticated data viewer application."
+* parameter[=].documentation = "Bundle of sampled AuditEvent resources requiring verification by the authenticated data viewer application. When paging is used, the Bundle may include paging links such as `self` and `next`."
 
 Instance: SDHRVerificationSubmissionsOperation
 InstanceOf: OperationDefinition

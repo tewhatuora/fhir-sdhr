@@ -42,9 +42,38 @@ Usage: #example
 Description: "Example Bundle returned from the verification samples operation."
 * type = #collection
 * timestamp = "2026-07-03T10:00:00+12:00"
+* total = 2
+* link[0].relation = "self"
+* link[=].url = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/$verification-samples"
 * entry[0].fullUrl = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615"
 * entry[=].resource = AuditEventVerificationSampleOne
 * entry[+].fullUrl = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/6ebffb1a-61a1-4646-857e-51d4153b698d"
+* entry[=].resource = AuditEventVerificationSampleTwo
+
+Instance: BundleVerificationSamplesPageOneResponseExample
+InstanceOf: Bundle
+Usage: #example
+Description: "Example first page Bundle returned from the verification samples operation using _count and _offset."
+* type = #searchset
+* timestamp = "2026-07-03T10:00:00+12:00"
+* total = 2
+* link[0].relation = "self"
+* link[=].url = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/$verification-samples?_count=1&_offset=0"
+* link[+].relation = "next"
+* link[=].url = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/$verification-samples?_count=1&_offset=1"
+* entry[0].fullUrl = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615"
+* entry[=].resource = AuditEventVerificationSampleOne
+
+Instance: BundleVerificationSamplesPageTwoResponseExample
+InstanceOf: Bundle
+Usage: #example
+Description: "Example second page Bundle returned from the verification samples operation using _count and _offset."
+* type = #searchset
+* timestamp = "2026-07-03T10:00:05+12:00"
+* total = 2
+* link[0].relation = "self"
+* link[=].url = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/$verification-samples?_count=1&_offset=1"
+* entry[0].fullUrl = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/6ebffb1a-61a1-4646-857e-51d4153b698d"
 * entry[=].resource = AuditEventVerificationSampleTwo
 
 Instance: ParametersVerificationSubmissionRequestExample

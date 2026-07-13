@@ -14,6 +14,8 @@ Once retrieved, those samples need to be verified by the API Consumer using eith
 
 The following sequence diagram provides a basic overview of the verification workflow between the API Consumer and the Shared Digital Health Record server.
 
+These verification operations and examples are currently draft and should be treated as draft interface content.
+
 This workflow is not a one off onboarding activity. API Consumers need to perform this retrieval and verification process periodically on an ongoing basis so that sampled access events continue to be reviewed and verified over time.
 
 <!-- markdownlint-disable MD033 -->
@@ -23,7 +25,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
 </div>
 <br clear="all">
 
-1. Retrieve verification samples: The Data Viewer Application calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation also supports `_count` and `_offset` query parameters for paging, for example `GET /AuditEvent/$verification-samples?_count=1&_offset=0`. See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSamplesOperation.html).
+1. Retrieve verification samples: The Data Viewer Application calls the draft `GET /AuditEvent/$verification-samples` operation to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation also supports `_count` and `_offset` query parameters for paging, for example `GET /AuditEvent/$verification-samples?_count=1&_offset=0`. See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSamplesOperation.html).
 
     <details>
     <summary><b><u>Click to view verification samples Bundle example</u></b></summary>
@@ -34,7 +36,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
 
 2. Review sampled access events: The API Consumer reviews the returned sampled `AuditEvent` resources using either an automated process or a manual workflow to determine whether the recorded access was valid.
 
-3. Submit verification decisions: The Data Viewer Application calls `POST /AuditEvent/$verification-submissions` with the defined `Parameters` payload to submit one or more verification decisions for the sampled `AuditEvent` resources. See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificationSubmissionsOperation.html), the [SDHRVerificationSubmissionParameters profile](./StructureDefinition-SDHRVerificationSubmissionParameters.html), and the [SDHRVerificationSubmissionResponseParameters profile](./StructureDefinition-SDHRVerificationSubmissionResponseParameters.html).
+3. Submit verification decisions: The Data Viewer Application calls the draft `POST /AuditEvent/$verification-submissions` operation with the defined `Parameters` payload to submit one or more verification decisions for the sampled `AuditEvent` resources. See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificationSubmissionsOperation.html), the [SDHRVerificationSubmissionParameters profile](./StructureDefinition-SDHRVerificationSubmissionParameters.html), and the [SDHRVerificationSubmissionResponseParameters profile](./StructureDefinition-SDHRVerificationSubmissionResponseParameters.html).
 
     <details>
     <summary><b><u>Click to view verification submission request example</u></b></summary>

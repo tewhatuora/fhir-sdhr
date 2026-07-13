@@ -43,5 +43,5 @@ Description: "This code system defines the result codes used when a data viewer 
 * ^status = #draft
 * ^experimental = false
 * ^publisher = "Health NZ | Te Whatu Ora"
-* #validated "Validated" "The data viewer application has confirmed the sampled AuditEvent is valid."
-* #validation-failed "Validation failed" "The data viewer application has determined the sampled AuditEvent failed verification."
+* #verification-succeeded "Verification succeeded" "The data viewer application has confirmed the sampled AuditEvent is valid."
+* #verification-failed "Verification failed" "The data viewer application has determined the sampled AuditEvent failed verification."

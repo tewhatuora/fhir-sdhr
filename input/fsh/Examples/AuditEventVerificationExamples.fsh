@@ -84,12 +84,12 @@ Description: "Example Parameters payload posted to the verification submissions 
 * parameter[=].part[0].name = "auditEvent"
 * parameter[=].part[=].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615"
 * parameter[=].part[+].name = "result"
-* parameter[=].part[=].valueCode = #validated
+* parameter[=].part[=].valueCode = #verification-succeeded
 * parameter[+].name = "verification"
 * parameter[=].part[0].name = "auditEvent"
 * parameter[=].part[=].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/6ebffb1a-61a1-4646-857e-51d4153b698d"
 * parameter[=].part[+].name = "result"
-* parameter[=].part[=].valueCode = #validation-failed	
+* parameter[=].part[=].valueCode = #verification-failed	
 
 Instance: ParametersVerificationSubmissionResponseExample
 InstanceOf: SDHRVerificationSubmissionResponseParameters

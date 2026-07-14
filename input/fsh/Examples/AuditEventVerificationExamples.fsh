@@ -6,6 +6,8 @@ Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
 * type = http://terminology.hl7.org/CodeSystem/audit-event-type#rest "Restful Operation"
 * subtype[0] = http://hl7.org/fhir/restful-interaction#read "read"
 * action = #R
+* outcome = #0
+* outcomeDesc = "Successful access sample returned for verification workflow."
 * recorded = "2026-07-03T09:15:00+12:00"
 * agent[0].requestor = true
 * agent[=].who.identifier.system = "https://standards.digital.health.nz/ns/hpi-person-id"
@@ -25,6 +27,8 @@ Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
 * type = http://terminology.hl7.org/CodeSystem/audit-event-type#rest "Restful Operation"
 * subtype[0] = http://hl7.org/fhir/restful-interaction#search-type "search-type"
 * action = #E
+* outcome = #0
+* outcomeDesc = "Successful search access sample returned for verification workflow."
 * recorded = "2026-07-03T09:20:00+12:00"
 * agent[0].requestor = true
 * agent[=].who.identifier.system = "https://standards.digital.health.nz/ns/hpi-person-id"

@@ -243,6 +243,7 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[+].type = #AuditEvent
 * rest.resource[=] insert LimitedInteractionsDocumentation
 * rest.resource[=].profile = Canonical(SDHRAuditEvent)
+* rest.resource[=].supportedProfile[+] = Canonical(SDHRAuditEvent)
 * rest.resource[=].documentation = "AuditEvent supports DRAFT custom operations for data viewer application verification workflows."
 * rest.resource[=].operation[+].name = "verification-samples"
 * rest.resource[=].operation[=].definition = Canonical(SDHRVerificationSamplesOperation)

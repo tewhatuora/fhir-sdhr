@@ -14,7 +14,9 @@
 */
 RuleSet: ProfilePatient(property)
 * {property} 1..1
-* {property} only Reference(Patient)
+// `|*` is an IG Publisher directive: emit an unversioned targetProfile and mark
+// it for "latest" resolution, even if canonical pinning defaults change.
+* {property} only Reference(http://hl7.org/fhir/StructureDefinition/Patient|*)
 * {property}.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. See constraints for details."
 * {property}.type = "Patient"
 * {property}.type 1..1

@@ -1,7 +1,7 @@
 Instance: SDHRVerificationSamplesOperation
 InstanceOf: OperationDefinition
 Description: """
-This operation returns `AuditEvent` resources that have been sampled for verification and are still outstanding for the data viewer application.
+DRAFT OPERATION: This operation returns `AuditEvent` resources that have been sampled for verification and are still outstanding for the data viewer application.
 
 The operation is invoked on the `AuditEvent` type using `GET /AuditEvent/$verification-samples`.
 
@@ -49,7 +49,7 @@ Usage: #definition
 Instance: SDHRVerificationSubmissionsOperation
 InstanceOf: OperationDefinition
 Description: """
-This operation allows the data viewer application to submit one or more verification decisions for previously issued `AuditEvent` samples.
+DRAFT OPERATION: This operation allows the data viewer application to submit one or more verification decisions for previously issued `AuditEvent` samples.
 
 The operation is invoked on the `AuditEvent` type using `POST /AuditEvent/$verification-submissions` with a `Parameters` resource in the request body.
 

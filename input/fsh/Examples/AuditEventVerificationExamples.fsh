@@ -1,11 +1,13 @@
 Instance: AuditEventVerificationSampleOne
 InstanceOf: SDHRAuditEvent
 Usage: #example
-Description: "Example sampled AuditEvent returned for verification."
+Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
 * id = "b3f9de58-2da4-427c-a39c-07147eac3615"
 * type = http://terminology.hl7.org/CodeSystem/audit-event-type#rest "Restful Operation"
 * subtype[0] = http://hl7.org/fhir/restful-interaction#read "read"
 * action = #R
+* outcome = #0
+* outcomeDesc = "Successful access sample returned for verification workflow."
 * recorded = "2026-07-03T09:15:00+12:00"
 * agent[0].requestor = true
 * agent[=].who.identifier.system = "https://standards.digital.health.nz/ns/hpi-person-id"
@@ -20,11 +22,13 @@ Description: "Example sampled AuditEvent returned for verification."
 Instance: AuditEventVerificationSampleTwo
 InstanceOf: SDHRAuditEvent
 Usage: #example
-Description: "Example sampled AuditEvent returned for verification."
+Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
 * id = "6ebffb1a-61a1-4646-857e-51d4153b698d"
 * type = http://terminology.hl7.org/CodeSystem/audit-event-type#rest "Restful Operation"
 * subtype[0] = http://hl7.org/fhir/restful-interaction#search-type "search-type"
 * action = #E
+* outcome = #0
+* outcomeDesc = "Successful search access sample returned for verification workflow."
 * recorded = "2026-07-03T09:20:00+12:00"
 * agent[0].requestor = true
 * agent[=].who.identifier.system = "https://standards.digital.health.nz/ns/hpi-person-id"
@@ -39,7 +43,7 @@ Description: "Example sampled AuditEvent returned for verification."
 Instance: BundleVerificationSamplesResponseExample
 InstanceOf: Bundle
 Usage: #example
-Description: "Example Bundle returned from the verification samples operation."
+Description: "DRAFT EXAMPLE ONLY: Bundle returned from the verification samples operation."
 * type = #collection
 * timestamp = "2026-07-03T10:00:00+12:00"
 * total = 2
@@ -79,7 +83,7 @@ Description: "Example second page Bundle returned from the verification samples 
 Instance: ParametersVerificationSubmissionRequestExample
 InstanceOf: SDHRVerificationSubmissionParameters
 Usage: #example
-Description: "Example Parameters payload posted to the verification submissions operation."
+Description: "DRAFT EXAMPLE ONLY: Parameters payload posted to the verification submissions operation."
 * parameter[0].name = "verification"
 * parameter[=].part[0].name = "auditEvent"
 * parameter[=].part[=].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615"
@@ -94,7 +98,7 @@ Description: "Example Parameters payload posted to the verification submissions 
 Instance: ParametersVerificationSubmissionResponseExample
 InstanceOf: SDHRVerificationSubmissionResponseParameters
 Usage: #example
-Description: "Example Parameters response returned from the verification submissions operation."
+Description: "DRAFT EXAMPLE ONLY: Parameters response returned from the verification submissions operation."
 * parameter[0].name = "verificationSubmissionResult"
 * parameter[=].part[0].name = "auditEvent"
 * parameter[=].part[=].valueReference = Reference(AuditEvent/AuditEventVerificationSampleOne)

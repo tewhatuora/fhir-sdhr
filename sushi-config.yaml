@@ -9,7 +9,7 @@ name: nz-shared-digital-health-record
 title: NZ Shared Digital Health Record API
 description: NZ Shared Digital Health Record API
 status: active # draft | active | retired | unknown
-version: 1.0.2
+version: 1.1.0
 fhirVersion: 4.0.1 # https://www.hl7.org/fhir/valueset-FHIR-version.html
 copyrightYear: 2025+
 releaseLabel: release # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use
@@ -40,7 +40,15 @@ dependencies:
   #tewhatuora.fhir.nzps: current
   fhir.org.nz.ig.base: 3.0.0
   tewhatuora.digitaltooling: 0.0.11
-  
+
+# Do not add versions to otherwise-unversioned canonicals. This does not remove
+# versions already present in dependencies or the base R4 specification. Patient
+# references that must remain unversioned also use the Publisher's explicit `|*`
+# directive in RuleSets.fsh.
+parameters:
+  pin-canonicals: pin-none
+
+
 # The pages property corresponds to IG.definition.page. SUSHI can
 # auto-generate the page list, but if the author includes pages in
 # this file, it is assumed that the author will fully manage the

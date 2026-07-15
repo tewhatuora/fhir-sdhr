@@ -1,18 +1,3 @@
-Invariant: sdhr-imm-ext-1
-Description: "Only the AIR administered product and AIR age given extensions are permitted on SDHRImmunization."
-Expression: "extension.where(url != 'https://standards.digital.health.nz/fhir/air/StructureDefinition/air-administered-product' and url != 'https://standards.digital.health.nz/fhir/air/StructureDefinition/air-age-given').empty()"
-Severity: #error
-
-Invariant: sdhr-imm-ext-2
-Description: "The AIR administered product extension may appear at most once on SDHRImmunization."
-Expression: "extension.where(url = 'https://standards.digital.health.nz/fhir/air/StructureDefinition/air-administered-product').count() <= 1"
-Severity: #error
-
-Invariant: sdhr-imm-ext-3
-Description: "The AIR age given extension may appear at most once on SDHRImmunization."
-Expression: "extension.where(url = 'https://standards.digital.health.nz/fhir/air/StructureDefinition/air-age-given').count() <= 1"
-Severity: #error
-
 Profile: SDHRImmunization
 Parent: http://healthnz-prm.gitlab.io/air/air-api-fhir-ig/StructureDefinition-air-immunization
 Description: "DRAFT PROFILE: Immunization resource for Shared Digital Health Record. This profile constrains Immunization to the SDHR subset of AIR immunization content. AIR reference: https://healthnz-prm.gitlab.io/air/air-api-fhir-ig/StructureDefinition-air-immunization.html"
@@ -33,7 +18,6 @@ Description: "DRAFT PROFILE: Immunization resource for Shared Digital Health Rec
 * meta.tag 0..0
 
 * extension 0..2
-* obeys sdhr-imm-ext-1 and sdhr-imm-ext-2 and sdhr-imm-ext-3
 
 * identifier 0..0
 * status 1..1

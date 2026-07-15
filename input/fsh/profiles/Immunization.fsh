@@ -1,5 +1,5 @@
 Profile: SDHRImmunization
-Parent: http://healthnz-prm.gitlab.io/air/air-api-fhir-ig/StructureDefinition-air-immunization
+Parent: http://hl7.org/fhir/StructureDefinition/Immunization
 Description: "DRAFT PROFILE: Immunization resource for Shared Digital Health Record. This profile constrains Immunization to the SDHR subset of AIR immunization content. AIR reference: https://healthnz-prm.gitlab.io/air/air-api-fhir-ig/StructureDefinition-air-immunization.html"
 
 * ^status = #draft

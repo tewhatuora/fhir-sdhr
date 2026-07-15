@@ -1,5 +1,5 @@
 Profile: SDHRMedicationDispense
-Parent: http://hl7.org.nz/fhir/StructureDefinition/nzeps-medicationdispense
+Parent: http://hl7.org/fhir/StructureDefinition/MedicationDispense
 Description: "DRAFT PROFILE: MedicationDispense resource for Shared Digital Health Record. This profile constrains MedicationDispense to the SDHR subset of MDR medication dispense content."
 
 * ^status = #draft

@@ -14,7 +14,7 @@ Expression: "extension.where(url = 'https://standards.digital.health.nz/fhir/air
 Severity: #error
 
 Profile: SDHRImmunization
-Parent: Immunization
+Parent: http://healthnz-prm.gitlab.io/air/air-api-fhir-ig/StructureDefinition-air-immunization
 Description: "DRAFT PROFILE: Immunization resource for Shared Digital Health Record. This profile constrains Immunization to the SDHR subset of AIR immunization content. AIR reference: https://healthnz-prm.gitlab.io/air/air-api-fhir-ig/StructureDefinition-air-immunization.html"
 
 * ^status = #draft

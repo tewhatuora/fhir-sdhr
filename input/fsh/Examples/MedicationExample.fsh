@@ -22,8 +22,15 @@ Description: "DRAFT EXAMPLE ONLY: an SDHR medication request adapted from the MD
 * supportingInformation[0].display = "Morrow Medical Centre"
 * authoredOn = "2021-10-19T15:21:07+00:00"
 * requester insert Practitioner(63576, Dr Sander Abel | Doctor | 63576)
+* dosageInstruction[0].sequence = 1
+* dosageInstruction[0].patientInstruction = "Take one dose as directed."
+* dosageInstruction[0].timing.event[0] = "2021-10-20T08:00:00+00:00"
 * dosageInstruction[0].route.coding[0].system = "http://terminology.hl7.org/CodeSystem/v3-RouteOfAdministration"
+* dosageInstruction[0].doseAndRate[0].doseQuantity.value = 1
+* dosageInstruction[0].doseAndRate[0].doseQuantity.unit = "tablet"
 * dispenseRequest.numberOfRepeatsAllowed = 0
+* dispenseRequest.validityPeriod.start = "2021-10-20T03:34:13+00:00"
+* dispenseRequest.validityPeriod.end = "2021-11-20T03:34:13+00:00"
 * dispenseRequest.quantity.value = 1
 * dispenseRequest.quantity.unit = "g"
 

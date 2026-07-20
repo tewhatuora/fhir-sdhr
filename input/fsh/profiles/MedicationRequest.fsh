@@ -25,7 +25,13 @@ Description: "DRAFT PROFILE: MedicationRequest resource for Shared Digital Healt
 	http://hl7.org.nz/fhir/StructureDefinition/nzeps-instructions-modified named InstructionsModified 0..1 and
 	http://hl7.org.nz/fhir/StructureDefinition/nzeps-medication-modified named MedicationModified 0..1 and
 	http://hl7.org.nz/fhir/StructureDefinition/nzeps-status-type named ItemStatus 0..1
+* extension[ItemStatus] ^short = "Legacy extension no longer supported"
+* extension[ItemStatus] ^definition = "Legacy MDR status extension. If present, this is mapped to status during ingestion, but it is not exposed in SEHR content."
 
+* identifier 1..1
+* identifier ^short = "NZePS Item ID"
+* identifier ^definition = "NZ ePrescribing System (NZePS) Item ID. This is the Medication Request MDR ID."
+* identifier ^comment = "This identifier is the MDR ID for the medication request record."
 * basedOn 0..0
 * groupIdentifier 0..0
 * status 1..1
@@ -36,6 +42,7 @@ Description: "DRAFT PROFILE: MedicationRequest resource for Shared Digital Healt
 * reported[x] 0..0
 * encounter 0..0
 * supportingInformation 0..*
+* supportingInformation ^definition = "Supporting information referencing a location via HPI facility identifier."
 * performer 0..0
 * performerType 0..0
 * recorder 0..0
@@ -47,17 +54,37 @@ Description: "DRAFT PROFILE: MedicationRequest resource for Shared Digital Healt
 * insurance 0..0
 * note 0..0
 * dosageInstruction 0..*
+* dosageInstruction.id 0..0
+* dosageInstruction.extension 0..0
+* dosageInstruction.modifierExtension 0..0
+* dosageInstruction.sequence 0..1
+* dosageInstruction.text 0..0
+* dosageInstruction.additionalInstruction 0..0
+* dosageInstruction.patientInstruction 0..1
+* dosageInstruction.timing 0..1
+* dosageInstruction.asNeeded[x] 0..0
+* dosageInstruction.site 0..0
+* dosageInstruction.route 0..1
+* dosageInstruction.route.text 0..0
+* dosageInstruction.route.coding 0..*
+* dosageInstruction.method 0..0
+* dosageInstruction.doseAndRate 0..*
+* dosageInstruction.maxDosePerPeriod 0..0
+* dosageInstruction.maxDosePerAdministration 0..0
+* dosageInstruction.maxDosePerLifetime 0..0
 * dispenseRequest 0..1
 * dispenseRequest.id 0..0
 * dispenseRequest.extension 0..0
 * dispenseRequest.modifierExtension 0..0
-* dispenseRequest.initialFill 0..0
-* dispenseRequest.dispenseInterval 0..0
-* dispenseRequest.expectedSupplyDuration 0..0
-* dispenseRequest.performer 0..0
+* dispenseRequest.initialFill 0..1
+* dispenseRequest.dispenseInterval 0..1
+* dispenseRequest.expectedSupplyDuration 0..1
+* dispenseRequest.performer 0..1
 * dispenseRequest.validityPeriod 0..1
 * dispenseRequest.numberOfRepeatsAllowed 0..1
 * dispenseRequest.quantity 0..1
+* dispenseRequest.quantity.value 0..1
+* dispenseRequest.quantity.unit 0..1
 * substitution 0..0
 * priorPrescription 0..0
 * detectedIssue 0..0
@@ -65,7 +92,9 @@ Description: "DRAFT PROFILE: MedicationRequest resource for Shared Digital Healt
 
 * category 0..*
 * subject 1..1
+* subject.display 0..0
 * medication[x] only CodeableConcept
 * medication[x] 1..1
+* medicationCodeableConcept ^binding = http://nzmt.org.nz/vs (preferred)
 * authoredOn 0..1
 * requester 0..1

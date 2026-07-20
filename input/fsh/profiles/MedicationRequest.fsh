@@ -17,17 +17,6 @@ Description: "DRAFT PROFILE: MedicationRequest resource for Shared Digital Healt
 * meta.profile 0..0
 * meta.tag 0..0
 
-* extension ^slicing.discriminator.type = #value
-* extension ^slicing.discriminator.path = "url"
-* extension ^slicing.rules = #closed
-* extension contains
-	http://hl7.org.nz/fhir/StructureDefinition/nzeps-long-term-medication named LongTermMedication 0..1 and
-	http://hl7.org.nz/fhir/StructureDefinition/nzeps-instructions-modified named InstructionsModified 0..1 and
-	http://hl7.org.nz/fhir/StructureDefinition/nzeps-medication-modified named MedicationModified 0..1 and
-	http://hl7.org.nz/fhir/StructureDefinition/nzeps-status-type named ItemStatus 0..1
-* extension[ItemStatus] ^short = "Legacy extension no longer supported"
-* extension[ItemStatus] ^definition = "Legacy MDR status extension. If present, this is mapped to status during ingestion, but it is not exposed in SEHR content."
-
 * identifier 1..1
 * identifier ^short = "NZePS Item ID"
 * identifier ^definition = "NZ ePrescribing System (NZePS) Item ID. This is the Medication Request MDR ID."

@@ -41,6 +41,7 @@ Description: "DRAFT EXAMPLE ONLY: an SDHR medication dispense aligned to the MDR
 * id = "draft-1TNQ015Y6K2HN1P8R1-1-dispense"
 * meta.lastUpdated = "2021-10-20T04:15:00+00:00"
 * meta.security = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#U "unrestricted"
+* extension[nzeps-medication-copayment-paid].valueBoolean = false
 * extension[SupplyNumber].valueString = "RX-100245"
 * identifier[+].system = "https://standards.digital.health.nz/ns/nzeps-scid-item-id"
 * identifier[=].value = "draft-1TNQ015Y6K2HN1P8R1-1"

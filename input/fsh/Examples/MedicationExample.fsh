@@ -44,11 +44,16 @@ Description: "DRAFT EXAMPLE ONLY: an SDHR medication dispense aligned to the MDR
 * medicationCodeableConcept.coding.display = "Ganciclovir 0.15% Tube Eye gel"
 * subject insert Patient(ZZZ0008, Mr Test Patient | Male | 2001-01-01)
 * performer[0].actor insert Practitioner(63576, Dr Sander Abel | Doctor | 63576)
+* location.reference = "Location/4df12de7-1c11-4830-ab18-7d86fb25ae8c"
 * location.display = "Morrow Medical Centre"
 * authorizingPrescription[0].reference = "MedicationRequest/draft-1TNQ015Y6K2HN1P8R1-1"
 * quantity.value = 1
 * quantity.unit = "g"
 * whenPrepared = "2021-10-20T03:45:00+00:00"
 * whenHandedOver = "2021-10-20T04:00:00+00:00"
+* dosageInstruction[0].sequence = 1
 * dosageInstruction[0].patientInstruction = "Apply to the affected eye as directed."
+* dosageInstruction[0].timing.event[0] = "2021-10-20T04:00:00+00:00"
 * dosageInstruction[0].route.coding[0].system = "http://terminology.hl7.org/CodeSystem/v3-RouteOfAdministration"
+* dosageInstruction[0].doseAndRate[0].doseQuantity.value = 0.15
+* dosageInstruction[0].doseAndRate[0].doseQuantity.unit = "g"

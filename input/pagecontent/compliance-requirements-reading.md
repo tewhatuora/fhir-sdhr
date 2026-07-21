@@ -1,3 +1,5 @@
+> **Draft**: These compliance requirements are currently in draft and should be treated as draft content.
+
 ### Important information about Compliance requirements
 
 #### Use cases

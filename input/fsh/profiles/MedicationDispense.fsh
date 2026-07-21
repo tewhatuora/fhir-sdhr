@@ -36,6 +36,37 @@ Description: "DRAFT PROFILE: MedicationDispense resource for Shared Digital Heal
 * authorizingPrescription ^short = "Reference to the authorising prescription"
 * authorizingPrescription ^definition = "Link to the MedicationRequest that authorises this dispense."
 
+* subject 1..1
+* insert ProfilePatient(subject)
+* subject ^short = "Patient for the dispense event"
+* subject ^definition = "The patient who is the subject of this medication dispense."
+* subject.display 0..0
+
+* quantity 0..1
+* quantity ^short = "Dispensed quantity"
+* quantity ^definition = "The quantity of medication dispensed in this dispense event."
+
+* daysSupply 0..1
+* daysSupply ^short = "Days of supply"
+* daysSupply ^definition = "The expected number of days of medication supplied."
+
+* whenHandedOver 0..1
+* whenHandedOver ^short = "Time the medication was handed to the patient"
+* whenHandedOver ^definition = "The date and time when the dispensed medication was handed over to the patient."
+
+* destination 0..1
+* destination only Reference(Location)
+* destination ^short = "Dispense destination location"
+* destination ^definition = "The destination location for the dispensed medication."
+
+* receiver 0..1
+* receiver ^short = "Person who received the dispense"
+* receiver ^definition = "The individual who received the medication from the dispenser."
+
+* dosageInstruction.patientInstruction 0..1
+* dosageInstruction.patientInstruction ^short = "Patient instructions"
+* dosageInstruction.patientInstruction ^definition = "Patient-facing instructions about how the dispensed medication should be taken."
+
 * extension contains
 	http://hl7.org.nz/fhir/StructureDefinition/nzeps-medication-modified named MedicationModified 1..1 and
 	http://hl7.org.nz/fhir/StructureDefinition/nzeps-instructions-modified named InstructionsModified 1..1

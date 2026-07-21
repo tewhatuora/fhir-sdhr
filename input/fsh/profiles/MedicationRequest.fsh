@@ -47,8 +47,8 @@ Description: "DRAFT PROFILE: MedicationRequest resource for Shared Digital Healt
 
 * medicationCodeableConcept 1..1
 * medicationCodeableConcept ^short = "Medication to be taken"
-* medicationCodeableConcept ^definition = "The medication requested for the patient, expressed as a codeable concept."
-* medicationCodeableConcept.coding.system 0..1 = http://nzmt.org.nz
+* medicationCodeableConcept ^definition = "The medication requested for the patient, expressed as a codeable concept." 
+* medicationCodeableConcept.coding.system 0..1
 * medicationCodeableConcept.coding.code 0..1
 * medicationCodeableConcept.coding.display 0..1
 

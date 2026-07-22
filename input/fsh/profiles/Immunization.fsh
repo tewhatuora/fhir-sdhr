@@ -26,8 +26,7 @@ Description: "DRAFT PROFILE: Immunization resource for Shared Digital Health Rec
 	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-created-source-system named CreatedSourceSystem 0..1 and
 	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-created-by named CreatedBy 0..1 and
 	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-modified-source-system named ModifiedSourceSystem 0..1 and
-	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-modified-by named ModifiedBy 0..1 and
-    http://hl7.org/fhir/StructureDefinition/firstCreated named FirstCreated 0..1
+	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-modified-by named ModifiedBy 0..1
 * protocolApplied.seriesDoses[x] 0..0
 * recorded 0..0
 * identifier 0..0

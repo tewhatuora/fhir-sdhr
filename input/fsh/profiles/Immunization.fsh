@@ -35,8 +35,8 @@ Description: "DRAFT PROFILE: Immunization resource for Shared Digital Health Rec
 
 // Extension Handling in SDHR, some we allow and some we remove
 * extension contains
-	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-administered-product named MedicationModified 0..1 and
-	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-diluent named InstructionsModified 0.. and
+	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-administered-product named AdministeredProduct 0..1 and
+	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-diluent named Diluent 0..1 and
 	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-mobile-site named MobileSite 0..0 and
 	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-age-given named AgeGiven 0..1 and
 	https://standards.digital.health.nz/fhir/air/StructureDefinition/air-related-person-extension named RelatedPersonExtension 0..0 and

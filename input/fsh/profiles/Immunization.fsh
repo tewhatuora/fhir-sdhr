@@ -46,5 +46,4 @@ Description: "DRAFT PROFILE: Immunization resource for Shared Digital Health Rec
 
 // Duplications of key AIR elements with additional context added
 * id 1..1
-* id ^short = "MDR dispense record identifier (SCID + item sequence number + dispense sequence number)"
-* id ^definition = "The MDR identifier for this MedicationDispense resource, composed of the NZePS prescription SCID, item sequence number, and dispense sequence number. A reversal record would include a suffix of '-X' before being removed from MDR prior to SDHR integration."
+* id ^short = "Unique ID for the immunisation event provided by ImmSOT."

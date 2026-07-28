@@ -29,6 +29,10 @@ To write patient health information from a participating Practice Management Sys
       <td>Healthcare professional</td>
       <td>Records or updates information in the PMS, where relevant to the source workflow.</td>
     </tr>
+    <tr>
+      <td>Health NZ participation channel</td>
+      <td>Records a patient's global participation choice through operations restricted to authorised Health NZ callers.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -115,6 +119,14 @@ The PMS must immediately prevent new or changed local records for the patient fr
 {% include participate-sequence-pmsrecordwithheld.svg %}
 
 A new confidential `Condition` or `Observation` record must not be written to SDHR. If a copy already exists when the source record becomes confidential, the PMS must follow the documented update and confidentiality process. `AllergyIntolerance` records cannot be withheld at record level. See the [confidential record API behaviour](./api.html#sdhr-confidential-record-api-behaviour) and [compliance requirements for systems sharing data](./compliance-requirements.html).
+
+#### Global participation through Health NZ
+
+A patient can record a global opt-out or restore global participation through an authorised Health NZ channel. The channel uses the restricted [`$hnz-participate` operation](./OperationDefinition-SDHRHNZParticipateOperation.html); PMS API Consumers cannot call this operation.
+
+{% include participate-sequence-hnzoptoff.svg %}
+
+When a patient restores global participation, the enrolled PMS must be notified so the applicable historical reload can be initiated. See [Reload after a patient opts back in](#reload-after-a-patient-opts-back-in).
 
 ### Load historical information
 {: .underlined}

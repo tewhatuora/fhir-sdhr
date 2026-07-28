@@ -1,10 +1,12 @@
 The Shared Digital Health Record (SDHR) enables authorised clinical systems to access and share core patient health information to support the provision of healthcare.
 
-Through SDHR, information from the SDHR primary care collection and selected national health information sources is made available through a common interoperability platform. Information is shared subject to participation choices and appropriate privacy, security, and access controls.
+Through SDHR, information from the SDHR Primary Care Collection and selected national health information sources is made available through a common interoperability platform. Information is shared subject to patient participation choices and appropriate privacy, confidentiality, security, and access controls.
+
+Source systems remain the systems of record responsible for creating and authoritatively maintaining their domain information. SDHR acts as a trusted source of truth for accessing governed health information across care settings. It provides a consistent representation supported by common information models, interoperability standards, provenance, privacy controls, stewardship, and governance.
 
 ### Patient Information
 
-SDHR makes selected patient health information available from both the SDHR primary care collection and national health information sources.
+SDHR makes selected patient health information available from both the SDHR Primary Care Collection and national health information sources.
 
 #### SDHR Primary Care Collection
 
@@ -22,7 +24,7 @@ Information planned to be made available from national health information source
 - [Medication dispenses](./StructureDefinition-SDHRMedicationDispense.html)
 - [Immunisations](./StructureDefinition-SDHRImmunization.html)
 
-See the [Use Cases](./use-cases.html), [Data Models](./data-models.html), and [FHIR Artifacts](./artifacts.html) sections for information about supported data, profiles, and implementation requirements.
+See [Contribute Information to SDHR](./contribute-information.html), [Access Information from SDHR](./access-information.html), [Data Domains](./data-domains.html), [Data Models](./data-models.html), and [FHIR Artifacts](./artifacts.html) for information about supported interactions, data, profiles, and implementation requirements.
 
 ### Integration Patterns
 
@@ -38,9 +40,9 @@ See the [requirements for systems providing access to SDHR information](./compli
 
 #### Contribute SDHR Information
 
-Participating PMS systems contribute patient health information to the SDHR primary care collection on behalf of participating primary care providers.
+Participating PMS systems contribute patient health information to the SDHR Primary Care Collection on behalf of participating primary care providers.
 
-The PMS remains the source system for information contributed to the SDHR primary care collection.
+The PMS remains the system of record for information contributed to the SDHR Primary Care Collection.
 
 See the [requirements for systems contributing data](./compliance-requirements.html).
 
@@ -49,6 +51,7 @@ See the [requirements for systems contributing data](./compliance-requirements.h
 To begin integrating with SDHR:
 
 - Begin the onboarding process through the [Digital Services Hub consumer onboarding process](https://www.tewhatuora.govt.nz/health-services-and-programmes/digital-health/digital-services-hub/consumer-onboarding/).
+- Review the use cases for [contributing information](./contribute-information.html) and [accessing information](./access-information.html), and the [Data Domains](./data-domains.html).
 - Review the [API documentation](./api.html).
 - Explore the [FHIR Artifacts](./artifacts.html) and [Data Models](./data-models.html).
 - Review the requirements for systems [accessing](./compliance-requirements-reading.html) or [contributing](./compliance-requirements.html) SDHR information.

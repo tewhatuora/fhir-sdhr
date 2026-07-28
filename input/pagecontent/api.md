@@ -282,7 +282,7 @@ The `identifier` search parameter can be used with unique source-system identifi
 <details>
 <summary><b><u>Click to view example response</u></b></summary>
 <br>
-In this example, the query returns a single result. Omitting `patient` may also return a single result, but API Consumers **SHOULD** include `patient` to avoid ambiguity if an identifier is not globally unique.
+In this example, the query returns a single result.
 <br>
 <pre><code class="language-json">
 

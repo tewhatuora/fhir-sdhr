@@ -46,6 +46,18 @@ This use case currently applies to information written to the SDHR Primary Care 
 
 The corresponding FHIR representations are described in [Data Models](./data-models.html) and [FHIR Artifacts](./artifacts.html).
 
+### Business rules
+{: .underlined}
+
+- Information must not be written where patient participation choices prevent sharing.
+- A patient who has not opted out must not be required to make a separate opt-in decision, although the API caller must initialise the facility participation preference before successfully creating the first resource for that patient at that facility.
+- Information marked confidential, sensitive, or otherwise excluded from sharing in the source system must not be written, except where the documented confidentiality process requires an existing SDHR copy to be restricted.
+- Historical information must only be loaded where permitted by SDHR participation, onboarding, and implementation requirements.
+- The PMS is responsible for ensuring that information written to SDHR accurately reflects the information held in the PMS.
+- The PMS remains responsible for source-system correction and update processes.
+- SDHR stores a copy of accepted information for authorised access, but does not replace the PMS as the source system.
+- SDHR does not alter the clinical meaning or any coding of information supplied by source systems.
+
 #### Preconditions
 
 - The provider participates in SDHR.
@@ -165,17 +177,6 @@ When a patient opts back in through a Health NZ channel after a global opt-out, 
 For pull-based acquisition, SDHR temporarily locks the patient against routine writes while it performs the reload; a write attempted during this period receives the [Patient Locked `OperationOutcome`](./OperationOutcome-OperationOutcomePatientLocked.html). For push-based acquisition, the PMS Orchestrator is responsible for coordinating historical and real-time writes so that older history does not overwrite newer data.
 
 The application must resume writing eligible new and changed information at the earliest practical time once the applicable load coordination permits. See [Concurrent historical and real-time data](./compliance-requirements.html#SSD-8), the [facility opt-back-in requirements](./compliance-requirements.html#SSD-14), and the [global opt-back-in requirements](./compliance-requirements.html#SSD-16).
-
-### Business rules
-{: .underlined}
-
-- Information must not be written where patient participation choices prevent sharing.
-- A patient who has not opted out must not be required to make a separate opt-in decision, although the API caller must initialise the facility participation preference before successfully creating the first resource for that patient at that facility.
-- Information marked confidential, sensitive, or otherwise excluded from sharing in the source system must not be written, except where the documented confidentiality process requires an existing SDHR copy to be restricted.
-- Historical information must only be loaded where permitted by SDHR participation, onboarding, and implementation requirements.
-- The PMS is responsible for ensuring that information written to SDHR accurately reflects the information held in the PMS.
-- The PMS remains responsible for source-system correction and update processes.
-- SDHR stores a copy of accepted information for authorised access, but does not replace the PMS as the source system.
 
 ### Related API interactions
 {: .underlined}

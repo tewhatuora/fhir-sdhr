@@ -63,20 +63,24 @@ parameters:
 pages:
   index.md:
     title: NZ Shared Digital Health Record API
-  use-cases.md:
-    title: Use cases
-  consent-based-access.md:
-    title: Consent based access control
-  artifacts.html:
-    title: FHIR Artifacts
+  contribute-information.md:
+    title: Contribute Information to SDHR
+  access-information.md:
+    title: Access Information from SDHR
+  data-domains.md:
+    title: Data Domains
+  data-models.md:
+    title: Data Models
+  api.md:
+    title: API Documentation
   compliance-requirements.md:
     title: Compliance Requirements - for Systems Sharing Data
   compliance-requirements-reading.md:
     title: Compliance Requirements - for Systems Reading Data
-  data-models.md:
-    title: Data Models
-  api.md:
-    title: API Docs
+  artifacts.html:
+    title: FHIR Artifacts
+  consent-based-access.md:
+    title: Consent based access control
   test-data.md:
     title: Test Data
 #
@@ -104,9 +108,11 @@ pages:
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
 menu:
   Home: index.html
-  Use cases: use-cases.html
+  Use Cases:
+    Contribute Information to SDHR: contribute-information.html
+    Access Information from SDHR: access-information.html
+  Data Domains: data-domains.html
   # Consent-based access control: consent-based-access.html
-  Artifacts: artifacts.html
   Data Models: data-models.html
   API: api.html
   Compliance:

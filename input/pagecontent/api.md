@@ -1,5 +1,11 @@
 The SDHR API comprises multiple FHIR resources. This page provides technical guidance for application developers integrating with the Shared Digital Health Record APIs.
 
+<style>
+details {
+  margin-bottom: 1rem;
+}
+</style>
+
 The [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) defines supported FHIR interactions and request requirements. The [FHIR Artifacts](./artifacts.html) provide the profiles, operation definitions, examples, and terminology used by the API, and the [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) provides a machine-readable interface description.
 
 ### Authentication and request context
@@ -12,7 +18,7 @@ The `Request-Context` header is required for API requests and supplies the user,
 ### Resource interaction catalogue
 {: .underlined}
 
-The following tables summarise the interactions advertised by the SDHR CapabilityStatement that are relevant to [contributing information](./contribute-information.html) and [accessing information](./access-information.html). The linked profiles, operation definitions, and detailed sections remain authoritative for parameters, payloads, response behaviour, validation, and errors.
+The following tables summarise the interactions intended for external API Consumers contributing information to or accessing information from SDHR. The linked profiles, operation definitions, and detailed sections remain authoritative for parameters, payloads, response behaviour, validation, and errors.
 
 #### Contributed resource interactions
 
@@ -20,9 +26,9 @@ Allergy, condition, and observation information is contributed to the SDHR Prima
 
 | Resource | Interactions | HTTP verbs and relative URLs | Profile or definition | Detailed behaviour |
 | --- | --- | --- | --- | --- |
-| AllergyIntolerance | search, create, read, update, delete | `GET /AllergyIntolerance`<br>`POST /AllergyIntolerance`<br>`GET /AllergyIntolerance/{id}`<br>`PUT /AllergyIntolerance/{id}`<br>`DELETE /AllergyIntolerance/{id}` | [SDHR AllergyIntolerance](./StructureDefinition-SDHRAllergyIntolerance.html) | [Search behaviour](#api-search-behaviour)<br>[Update behaviour](#sdhr-resource-updates) |
-| Condition | search, create, read, update, delete | `GET /Condition`<br>`POST /Condition`<br>`GET /Condition/{id}`<br>`PUT /Condition/{id}`<br>`DELETE /Condition/{id}` | [SDHR Condition](./StructureDefinition-SDHRCondition.html) | [Search behaviour](#api-search-behaviour)<br>[Update behaviour](#sdhr-resource-updates) |
-| Observation | search, create, read, update, delete | `GET /Observation`<br>`POST /Observation`<br>`GET /Observation/{id}`<br>`PUT /Observation/{id}`<br>`DELETE /Observation/{id}` | [SDHR Observation](./StructureDefinition-SDHRObservation.html) | [Search behaviour](#api-search-behaviour)<br>[Update behaviour](#sdhr-resource-updates) |
+| AllergyIntolerance | search, create, read, update | `GET /AllergyIntolerance`<br>`POST /AllergyIntolerance`<br>`GET /AllergyIntolerance/{id}`<br>`PUT /AllergyIntolerance/{id}` | [SDHR AllergyIntolerance](./StructureDefinition-SDHRAllergyIntolerance.html) | [Search behaviour](#api-search-behaviour)<br>[Update behaviour](#sdhr-resource-updates) |
+| Condition | search, create, read, update | `GET /Condition`<br>`POST /Condition`<br>`GET /Condition/{id}`<br>`PUT /Condition/{id}` | [SDHR Condition](./StructureDefinition-SDHRCondition.html) | [Search behaviour](#api-search-behaviour)<br>[Update behaviour](#sdhr-resource-updates) |
+| Observation | search, create, read, update | `GET /Observation`<br>`POST /Observation`<br>`GET /Observation/{id}`<br>`PUT /Observation/{id}` | [SDHR Observation](./StructureDefinition-SDHRObservation.html) | [Search behaviour](#api-search-behaviour)<br>[Update behaviour](#sdhr-resource-updates) |
 {: .grid}
 
 #### Batch interaction
@@ -438,24 +444,15 @@ The SDHR service includes the following FHIR custom operations.
 
 > **Draft**: These verification operations and examples are currently draft and should be treated as draft interface content.
 
-Data Viewer Applications need to periodically retrieve sampled access events from SDHR, review whether those accesses were valid, and submit the verification decisions. Samples are represented as FHIR `AuditEvent` resources that conform to the [SDHR AuditEvent profile](./StructureDefinition-SDHRAuditEvent.html).
+SEHR systems need to periodically retrieve sampled access events from SDHR, review whether those accesses were valid, and submit the verification decisions. Samples are represented as FHIR `AuditEvent` resources that conform to the [SDHR AuditEvent profile](./StructureDefinition-SDHRAuditEvent.html).
 
 This workflow is performed on an ongoing basis so that newly sampled access events continue to be reviewed and verified over time.
 
-##### Verification workflow
-
-The following sequence diagram provides an overview of the verification workflow between a Data Viewer Application and the SDHR FHIR server.
-
-<!-- markdownlint-disable MD033 -->
-<div width="100%">
-<!-- Generated from `input/images-source/verification-workflow-overview.plantuml` -->
-{% include verification-workflow-overview.svg %}
-</div>
-<br clear="all">
+The end-to-end sequence and corresponding processing steps are documented in the [audit access records workflow](./access-information.html#audit-access-records-workflow).
 
 ##### Retrieve verification samples
 
-The Data Viewer Application calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation supports `_count` and `_offset` query parameters for paging, for example:
+The SEHR calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation supports `_count` and `_offset` query parameters for paging, for example:
 
 `GET /AuditEvent/$verification-samples?_count=1&_offset=0`
 
@@ -470,11 +467,11 @@ See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSam
 
 ##### Review sampled access events
 
-The Data Viewer Application reviews the returned `AuditEvent` resources using either an automated process or a manual workflow to determine whether each recorded access was valid.
+The SEHR reviews the returned `AuditEvent` resources using either an automated process or a manual workflow to determine whether each recorded access was valid.
 
 ##### Submit verification decisions
 
-The Data Viewer Application calls `POST /AuditEvent/$verification-submissions` with the defined `Parameters` payload to submit one or more verification decisions.
+The SEHR calls `POST /AuditEvent/$verification-submissions` with the defined `Parameters` payload to submit one or more verification decisions.
 
 See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificationSubmissionsOperation.html), the [SDHRVerificationSubmissionParameters profile](./StructureDefinition-SDHRVerificationSubmissionParameters.html), and the [SDHRVerificationSubmissionResponseParameters profile](./StructureDefinition-SDHRVerificationSubmissionResponseParameters.html).
 
@@ -557,7 +554,12 @@ Response status: `200`
 
 Response body:
 
+<details>
+<summary><b><u>Click to view example response</u></b></summary>
+
 {% fragment Bundle/SearchConfidentialRecordsResponseExample JSON %}
+
+</details>
 
 This search requests `AllergyIntolerance` resources for a patient. Because the search matches a confidential resource, that resource is omitted and the server adds a `REDACTED` tag to `Bundle.meta.security`. The tag tells the API Consumer that the result set has been filtered. `Bundle.total` reports the number of matches before confidentiality filtering.
 
@@ -587,6 +589,11 @@ In this example, the supplied parameters exactly match a single record that the 
 
 The search response contains an `OperationOutcome` entry with `"mode":"outcome"`:
 
+<details>
+<summary><b><u>Click to view example response</u></b></summary>
+
 {% fragment Bundle/SearchExactMatchRecordWithheldExample JSON %}
+
+</details>
 
 [See example details](./Bundle-SearchExactMatchRecordWithheldExample.html)

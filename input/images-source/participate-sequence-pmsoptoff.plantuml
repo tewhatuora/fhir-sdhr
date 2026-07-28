@@ -1,6 +1,6 @@
 @startuml
 
-title SDHR Participate Operation Facility Opt Off Sequence Diagram
+title SDHR Participate Operation Facility Participation Sequence Diagram
 
 autonumber "<color:Black>[00]"
 
@@ -27,8 +27,7 @@ skinparam TitleFontSize 20
 ' see https://sarafian.github.io/tips/2021/03/11/plantuml-tips-tricks-1.html#:~:text=responseMessageBelowArrow-,Semi,-transparent%20group%20backgrounds
 skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
 
-scale max 400 width
-scale 300*500
+scale max 260 width
 
 actor "Patient" as Patient
 actor "Health Practitioner" as USER
@@ -38,7 +37,7 @@ control "Participate Operation\n$participate" as PARTICIPATE #LightBlue
 control "SDHR FHIR API" as FHIRAPI #LightBlue
 database "SDHR FHIR Server" as SDHR #LightGreen
 
-== Patient opts in to SDHR participation at facility ==
+== First resource write establishes facility participation ==
 Patient -> USER : Consultation
 USER -> APIC : Record patient data e.g. Condition
 APIC -> ORCHESTRATOR : Trigger new condition event
@@ -46,11 +45,11 @@ ORCHESTRATOR -> APIC : Retrieve Condition details
 ORCHESTRATOR ->FHIRAPI : Write Condition
 FHIRAPI -> SDHR : Check patient participation preferences
 note left of SDHR
-  The SDHR service checks if the patient has opted in to the Shared Digital Health Record service at this facility.
-  If the patient has not opted in, the SDHR service returns an OperationOutcome with a participation status unknown.
+  The SDHR service checks whether a participation preference has been recorded for the patient at this facility.
+  If no preference has been recorded, the SDHR service returns an OperationOutcome with a participation status unknown.
   The API consumer should then use the $participate operation to indicate the patient's participation preferences.
 end note
-alt Patient has **NOT** opted in
+alt Facility participation preference is unknown
   SDHR -> FHIRAPI : Return OperationOutcome
   FHIRAPI -> ORCHESTRATOR : Return OperationOutcome
   note right of ORCHESTRATOR
@@ -113,7 +112,7 @@ alt Patient has **NOT** opted in
   ORCHESTRATOR ->FHIRAPI : Retry write Condition
   FHIRAPI -> SDHR : Persist Condition
   FHIRAPI -x ORCHESTRATOR : Return created Condition resource
-else Patient has opted in
+else Facility participation preference permits sharing
   FHIRAPI -> SDHR : Persist Condition
   SDHR -> FHIRAPI : Return Condition resource
   FHIRAPI -x ORCHESTRATOR : Return created Condition resource
@@ -215,5 +214,34 @@ note right of ORCHESTRATOR
   ]
 }
 end note
+
+== Patient opts back in to SDHR participation at facility ==
+Patient -> USER : Request to opt back in\nto SDHR participation
+USER -> APIC : Record restored participation preference
+APIC -> ORCHESTRATOR : Trigger patient event
+ORCHESTRATOR -> APIC : Retrieve patient details and enrolment
+ORCHESTRATOR -> ORCHESTRATOR : Prepare participation\nparameters
+ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
+note left of PARTICIPATE
+  Parameters:
+  - patient: Patient ID (NHI)
+  - facilityId: Facility ID (HPI FacilityID)
+  - participationIndicator: true
+  - enrolledPatient: true (when enrolled and a historic load is required)
+end note
+PARTICIPATE -> FHIRAPI : Write Participation
+FHIRAPI -> SDHR : Persist
+PARTICIPATE -> ORCHESTRATOR : Return OperationOutcome
+opt Enrolled patient requires historical information
+  FHIRAPI -> FHIRAPI : Trigger assigned historical-load process
+  note over FHIRAPI, ORCHESTRATOR
+    Pull-based acquisition uses an SDHR patient lock.
+    For push-based acquisition, the PMS Orchestrator coordinates
+    historic and real-time writes.
+  end note
+end
+ORCHESTRATOR -> FHIRAPI : Resume eligible resource writes\nwhen load coordination permits
+FHIRAPI -> SDHR : Persist resource
+FHIRAPI --> ORCHESTRATOR : Return created or updated resource
 
 @enduml

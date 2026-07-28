@@ -1,89 +1,69 @@
-# NZ Shared Digital Health Record (SDHR) API
+The Shared Digital Health Record (SDHR) enables authorised clinical systems to access and share core patient health information to support the provision of healthcare.
 
-Enables a person’s core health information to be securely accessed from their general practice PMS. This information can then be made available to health professionals across Aotearoa.
+Through SDHR, information from the SDHR primary care collection and selected national health information sources is made available through a common interoperability platform. Information is shared subject to participation choices and appropriate privacy, security, and access controls.
 
-# Brief Description
+### Patient Information
 
-The Shared Digital Health Record (SDHR) API will enable a person’s core health information to be securely accessed from their general practice PMS. With the patient’s permission, information will be copied to a central database which will be made available to health professionals across Aotearoa, through existing shared patient record systems, such as shared electronic health records. This will give a fuller view of a person’s important health information and enable better care.
+SDHR makes selected patient health information available from both the SDHR primary care collection and national health information sources.
 
-This health information will initially include a person’s health conditions and allergies, observations (eg, heart rate and blood pressure)
+#### SDHR Primary Care Collection
 
-<!-- , and encounters (when they’ve seen a health professional). -->
+Information contributed by participating primary care providers:
 
-# Overview
+- [Allergies and intolerances](./StructureDefinition-SDHRAllergyIntolerance.html)
+- [Health conditions](./StructureDefinition-SDHRCondition.html)
+- [Observations](./StructureDefinition-SDHRObservation.html)
 
-- The SDHR data service will enable a person's core health information to be accessed across care settings nationally, and, in time, to be updated.
-- It will give health professionals access to the important patient information they need to care for people.
-- New Zealanders will be reassured that their important healthcare data can be securely accessed where and when needed – which could be life saving.
+#### Additional Information Sources (in development)
 
-# Accessible Data
+Information planned to be made available from national health information sources:
 
-The SDHR API will initially access the following information from PMSs.
+- [Medication requests](./StructureDefinition-SDHRMedicationRequest.html)
+- [Medication dispenses](./StructureDefinition-SDHRMedicationDispense.html)
+- [Immunisations](./StructureDefinition-SDHRImmunization.html)
 
-* [Allergies and intolerances.](./StructureDefinition-SDHRAllergyIntolerance.html)
-* [Health conditions.](./StructureDefinition-SDHRCondition.html)
-* [Immunizations.](./StructureDefinition-SDHRImmunization.html)
-* [Observations.](./StructureDefinition-SDHRObservation.html)
-* [Medication requests.](./StructureDefinition-SDHRMedicationRequest.html)
-* [Medication dispenses.](./StructureDefinition-SDHRMedicationDispense.html)
-<!-- * [Encounters (when someone has interacted with the health system).](./StructureDefinition-SDHREncounter.html) -->
-<!-- * [Consent](./StructureDefinition-SDHRConsent.html) -->
+See the [Use Cases](./use-cases.html), [Data Models](./data-models.html), and [FHIR Artifacts](./artifacts.html) sections for information about supported data, profiles, and implementation requirements.
 
-Further information may become available to be accessed over time.
+### Integration Patterns
 
-# Who can use this API
+Organisations integrate with SDHR in one or both of the following ways.
 
-Access to the SDHR APIs is currently limited to pre-approved integration partners involved in the development of the Shared Digital Health Record data service. The APIs will be generally available following this initial development phase, subject to future funding decisions.
+#### Access SDHR Information
 
-The SDHR API is for:
+Shared Electronic Health Record (SEHR) systems and other authorised clinical applications retrieve patient health information from SDHR and make it available to healthcare professionals involved in providing care.
 
-- accredited healthcare providers
-- health software developers
-- developers of practice management systems, consumer-facing patient portals or third-party integrators
-- shared electronic health record vendors, enabling them to access data from SDHR and make it available to existing shared patient record systems.
+SEHR systems use SDHR information alongside other clinical information sources to provide a consolidated view of a person's health information.
 
-Healthcare professionals using clinical workstations (CWS) or PMSs that have the SDHR API will be able to access the central minimum dataset of patient information through their CWS or PMS.
+See the [requirements for systems providing access to SDHR information](./compliance-requirements-reading.html).
 
-# Use Cases
+#### Contribute SDHR Information
 
-SDHR will enable:
+Participating PMS systems contribute patient health information to the SDHR primary care collection on behalf of participating primary care providers.
 
-- health professionals to access patient information to support the care of that patient, wherever in the country the person or health professional is
-- health professionals to have a summary view of a patient’s health record, copied from the patient’s general practice’s PMS
-- someone’s information to be accessed in emergency situations. For example, if a person is unconscious in the emergency department, the SDHR data service will give rapid access to potentially life-saving information about their allergies, medications, and medical history
-- (in time), health professionals to update a patient’s health record.
+The PMS remains the source system for information contributed to the SDHR primary care collection.
 
-# Onboarding and Implementation
+See the [requirements for systems contributing data](./compliance-requirements.html).
 
-To begin the onboarding process for this API, please visit the [Consumer onboarding page](https://www.tewhatuora.govt.nz/health-services-and-programmes/digital-health/digital-services-hub/consumer-onboarding/).
+### Getting Started
 
-For more information on integrating, please review the [Implementation guide](https://fhir-ig.digital.health.nz/sdhr/index.html).
+To begin integrating with SDHR:
 
-# API Types
+- Begin the onboarding process through the [Digital Services Hub consumer onboarding process](https://www.tewhatuora.govt.nz/health-services-and-programmes/digital-health/digital-services-hub/consumer-onboarding/).
+- Review the [API documentation](./api.html).
+- Explore the [FHIR Artifacts](./artifacts.html) and [Data Models](./data-models.html).
+- Review the requirements for systems [accessing](./compliance-requirements-reading.html) or [contributing](./compliance-requirements.html) SDHR information.
+- Download the [UAT Postman collection](postman/UAT-SDHR.postman_collection.json) and [example environment](postman/UAT-SDHR-example.postman_environment.json).
 
-## FHIR API
+### Additional Information
 
-All FHIR API endpoints adhere to Fast Healthcare Interoperable Resources (FHIR) interoperability standards and follow REST protocols
+Additional information about SDHR, participation, privacy, and onboarding:
 
-# Service Levels
+- **For patients:** [SDHR privacy and information-sharing choices](https://www.healthnz.govt.nz/privacy/wider-sharing-of-your-health-information/privacy-shared-digital-health-record).
+- **For practices:** [About the Shared Digital Health Record](https://www.healthnz.govt.nz/health-professionals/guidance-standards/topic/digital-technologies/digital-health-initiatives/shared-digital-health-record).
+- **For participating providers:** [Onboarding to the Shared Digital Health Record](https://www.healthnz.govt.nz/health-professionals/guidance-standards/topic/digital-technologies/digital-health-initiatives/shared-digital-health-record/onboarding-to-the-shared-digital-health-record).
 
-- Target 99.99 percent service availability 24 hours a day, seven days a week.
-- For support when using the SDHR APIs, please use the link here to access the SDHR service desk portal or call the team on 0800 855 066 (press 2 and then 1). These channels are currently monitored:  
+### FHIR Version
 
-  - 8am - 5pm, Monday to Friday (from 9.30am on Wednesdays)
-  - 9am - 2pm, Saturday
+This implementation guide is based on [FHIR R4](https://hl7.org/fhir/R4/).
 
-# Additional Requirements
-
-Any additional requirements for consuming the SDHR APIs will be released once the service is made available for onboarding, following this initial development phase, and subject to future funding decisions.
-
-# FHIR version
-
-{% include cross-version-analysis.xhtml %}
-
-# Postman Collection
-
-We provide a Postman collection for the Mock+ and UAT environments. These environments contain placeholder values for the client ID, client secret, and developer email address which you will need to replace with your own values. The Postman collections are available in the following locations:
-
-* [UAT Collection](postman/UAT-SDHR.postman_collection.json)
-* [UAT Environment](postman/UAT-SDHR-example.postman_environment.json)
+None of the features used by this implementation guide differ in [R4B](https://hl7.org/fhir/R4B/), and packages are available for both R4 and R4B implementations.

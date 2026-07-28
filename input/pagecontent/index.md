@@ -24,7 +24,7 @@ Information planned to be made available from national health information source
 - [Medication dispenses](./StructureDefinition-SDHRMedicationDispense.html)
 - [Immunisations](./StructureDefinition-SDHRImmunization.html)
 
-See [Contribute Information to SDHR](./contribute-information.html), [Access Information from SDHR](./access-information.html), [Data Domains](./data-domains.html), [Data Models](./data-models.html), and [FHIR Artifacts](./artifacts.html) for information about supported interactions, data, profiles, and implementation requirements.
+See [Contribute Information to SDHR](./contribute-information.html), [Access Information from SDHR](./access-information.html), [Data Overview](./data-overview.html), [Data Models](./data-models.html), and [FHIR Artifacts](./artifacts.html) for information about supported interactions, data, profiles, and implementation requirements.
 
 ### Integration Patterns
 
@@ -51,7 +51,7 @@ See the [requirements for systems contributing data](./compliance-requirements.h
 To begin integrating with SDHR:
 
 - Begin the onboarding process through the [Digital Services Hub consumer onboarding process](https://www.tewhatuora.govt.nz/health-services-and-programmes/digital-health/digital-services-hub/consumer-onboarding/).
-- Review the use cases for [contributing information](./contribute-information.html) and [accessing information](./access-information.html), and the [Data Domains](./data-domains.html).
+- Review the use cases for [contributing information](./contribute-information.html) and [accessing information](./access-information.html), and the [Data Overview](./data-overview.html).
 - Review the [API documentation](./api.html).
 - Explore the [FHIR Artifacts](./artifacts.html) and [Data Models](./data-models.html).
 - Review the requirements for systems [accessing](./compliance-requirements-reading.html) or [contributing](./compliance-requirements.html) SDHR information.

@@ -1,7 +1,6 @@
 @startuml
 
-skinparam dpi 100 
-scale max 350 width
+scale max 340 width
 
 skinparam ActivityDiamondBackgroundColor #RoyalBlue
 skinparam ArrowColor #RoyalBlue   
@@ -19,11 +18,11 @@ skinparam LegendBackgroundColor #Snow
 skinparam LegendFontName Helvetica
 skinparam LegendFontSize 16
 skinparam linetype ortho
-skinparam nodesep 70
+skinparam nodesep 35
 skinparam NoteBackgroundColor #LightYellow
 skinparam NoteFontSize 15
 skinparam NoteTextAlignment left
-skinparam ranksep 60
+skinparam ranksep 40
 skinparam roundcorner 5
 skinparam TitleFontSize 20
 
@@ -48,52 +47,90 @@ frame "Core Data Services" as SDHRFrame {
 
 class "SDHR:Condition" as condition <<Condition>> #LightSalmon ##[bold] {
     Represents a SDHR condition
-    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRCondition.html]]
+    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRCondition.html SDHR profile]]
     Inherits FHIR ""Condition""
     ----
-    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facilityid}}"
-    * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRCondition"
-    * **extension**: ~~1..*~~
-    * **extentension[*].url** : "http://hl7.org.nz/fhir/StructureDefinition/long-term-condition"
-    * **extension[*].valueBoolean**: boolean true|false
-    * **extension[+].url** : "https://standards.digital.health.nz/ns/sdhr-client-last-updated"
-    * **extension[+].valueDateTime**: "2023-11-26T10:02:45+13:00"
-    * **code**: ~~1..1~~ Binding: Condition/Problem/DiagnosisCodes (preferred) [[[http://hl7.org/fhir/ValueSet/condition-code]]]
+    * **meta.source**: ~~1..1~~ HPI Location
+    * **code**: ~~1..1~~ Condition or diagnosis code
     * **subject**: ~~1..1~~ Reference NHI Patient
-    * **onsetDateTime**: ~~0..1~~ Preferred
-    * **recordedDateTime**: ~~0..1~~ Preferred
-    * **recorder**: ~~0..1~~ Reference Practitioner (preferred)
-    * **asserter**: ~~1..1~~ Reference Practitioner
+    * **clinicalStatus**: ~~0..1~~ Clinical status
+    * **verificationStatus**: ~~0..1~~ Verification status
+    * **onsetDateTime**: ~~0..1~~ Onset date
+    * **recorder | asserter**: Reference Practitioner
 }
 
 class "SDHR:AllergyIntolerance" as allergyintolerance <<AllergyIntolerance>> #LightSalmon ##[bold] {
     Represents a SDHR allergy intolerance
-    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRAllergyIntolerance.html]]
+    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRAllergyIntolerance.html SDHR profile]]
     Inherits FHIR ""AllergyIntolerance""
     ----
-    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facilityid}}"
-    * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRAllergyIntolerance"
-    * **clinicalStatus**: ~~1..1~~ Binding: AllergyIntoleranceClinicalStatus (required) [[[http://hl7.org/fhir/R4/valueset-allergyintolerance-clinical.html]]]
-    * **code**: ~~1..1~~ Binding: Multiple bindings e.g. SNOMED CT, ReadCodes, MIMS
+    * **meta.source**: ~~1..1~~ HPI Location
+    * **clinicalStatus**: ~~1..1~~ Clinical status
+    * **verificationStatus**: ~~1..1~~ Verification status
+    * **code**: ~~1..1~~ Allergy or intolerance code
     * **patient**: ~~1..1~~ Reference NHI Patient
-    * **category**: ~~0..*~~ Binding: AllergyIntoleranceCategory (preferred) [[[http://hl7.org/fhir/R4/valueset-allergy-intolerance-category.html]]]
-    * **recordedDateTime**: 0..1 (preferred)
-    * **recorder**: 0..1 Reference Practitioner (preferred)
+    * **category**: ~~0..*~~ Allergy category
+    * **recorder**: ~~0..1~~ Reference Practitioner
 }
 
 class "SDHR:Observation" as observation <<Observation>> #LightSalmon ##[bold] {
     Represents a SDHR observation
-    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRObservation.html]]
+    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRObservation.html SDHR profile]]
     Inherits FHIR ""Observation""
     ----
-    * **meta.source**: ~~1..1~~ "https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facilityid}}"
-    * **meta.profile**: ~~1..1~~ "https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/SDHRObservation"
-    * **code**: Binding: LOINCCodes (preferred) [[[http://hl7.org/fhir/ValueSet/observation-codes]]]
+    * **meta.source**: ~~1..1~~ HPI Location
+    * **code**: Observation code
     * **subject**: ~~1..1~~ Reference NHI Patient
-    * **effectiveDateTime**: Preferred
-    * **value[x]**: Binding: Multiple bindings e.g. SNOMED CT, ReadCodes, MIMS
-    * **interpretation**: Binding: ObservationInterpretation (extensible) [[[http://hl7.org/fhir/R4/valueset-observation-interpretation.html]]]
-    * **status**: Binding: ObservationStatus (required) [[[http://hl7.org/fhir/R4/valueset-observation-status.html]]]
+    * **effectiveDateTime**: Observation date
+    * **value[x]**: Observation value
+    * **interpretation**: Result interpretation
+    * **status**: Observation status
+    * **performer**: Reference Practitioner
+}
+
+class "SDHR:MedicationRequest" as medicationrequest <<MedicationRequest>> #LightSalmon ##[bold] {
+    Represents prescribing intent from MDR
+    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRMedicationRequest.html SDHR profile]]
+    Inherits FHIR ""MedicationRequest""
+    ----
+    * **id**: MDR prescription item identifier
+    * **identifier**: NZePS prescription item ID
+    * **status**: ~~1..1~~ Medication request status
+    * **medicationCodeableConcept**: ~~1..1~~ Medication requested
+    * **subject**: ~~1..1~~ Reference NHI Patient
+    * **authoredOn**: ~~0..1~~ Date and time authored
+    * **requester**: ~~0..1~~ Reference Practitioner or Organization
+    * **reasonReference**: ~~0..*~~ Reference Condition or Observation
+}
+
+class "SDHR:MedicationDispense" as medicationdispense <<MedicationDispense>> #LightSalmon ##[bold] {
+    Represents medicines supplied from MDR
+    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRMedicationDispense.html SDHR profile]]
+    Inherits FHIR ""MedicationDispense""
+    ----
+    * **id**: ~~1..1~~ MDR dispense record identifier
+    * **identifier**: ~~1..1~~ NZePS prescription item ID
+    * **status**: ~~1..1~~ completed
+    * **authorizingPrescription**: ~~0..*~~ Reference MedicationRequest
+    * **subject**: ~~1..1~~ Reference NHI Patient
+    * **quantity**: ~~0..1~~ Quantity dispensed
+    * **daysSupply**: ~~0..1~~ Expected days supplied
+    * **whenHandedOver**: ~~0..1~~ Date and time supplied
+    * **destination**: ~~0..1~~ Reference Location
+}
+
+class "SDHR:Immunization" as immunization <<Immunization>> #LightSalmon ##[bold] {
+    Represents an immunisation event from AIR
+    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRImmunization.html SDHR profile]]
+    Inherits AIR ""Immunization""
+    ----
+    * **id**: ~~1..1~~ Immunisation event identifier
+    * **status**: ~~1..1~~ Immunisation event status
+    * **vaccineCode**: ~~1..1~~ Vaccine administered
+    * **patient**: ~~1..1~~ Reference NHI Patient
+    * **occurrence[x]**: ~~1..1~~ Date or timing of the event
+    * **location**: ~~0..1~~ Reference Location
+    * **performer**: ~~1..*~~ Reference Practitioner or Organization
 }
 
 
@@ -122,31 +159,8 @@ rectangle "Notes" as Notes {
     The following resources are existing national data services:
     - Immunization (AIR)
     - Patient (NHI)
-    - Practitioner/Organizaion/Location (HPI)
+    - Practitioner/Organization/Location (HPI)
     - MedicationRequest/MedicationDispense (MDR)
-    **Coding/Terminology:**
-    In some cases an attempt may be made to map a source
-    code to a standard code such as read code --> SNOMEDCT.
-    In these scenarios the "source" code will always be preserved
-    and marked as "user selected".
-    e.g.
-    {
-        "code" : {
-            "coding" : [
-            {
-                "system" : "http://snomed.info/sct",
-                "code" : "373784005",
-                "display" : "Penicillin allergy",
-                "userSelected" : false
-            },
-            {
-                "system" : "http://mims.co.nz",
-                "code" : "m00286",
-                "display" : "Penicillins",
-                "userSelected" : true
-            }
-        ]
-    }
   }
 end note
 }
@@ -160,6 +174,17 @@ end note
 ' plantuml positioning
 
 ' ********
+' * layout
+
+condition -[hidden]right- allergyintolerance
+allergyintolerance -[hidden]right- observation
+medicationrequest -[hidden]right- medicationdispense
+medicationdispense -[hidden]right- immunization
+condition -[hidden]down- medicationrequest
+allergyintolerance -[hidden]down- medicationdispense
+observation -[hidden]down- immunization
+
+' ********
 ' * resource linkages
 
 ' encounter "subject" -[#SkyBlue,dashed]up-- Patient
@@ -170,6 +195,13 @@ allergyintolerance "subject" -[#SkyBlue,dashed]up-- Patient
 allergyintolerance "recorder" -[#SkyBlue,dashed]up-- HPI
 observation "subject" -[#SkyBlue,dashed]down-- Patient
 observation "performer" --[#SkyBlue,dashed]down-- HPI
+medicationrequest "subject" -[#SkyBlue,dashed]down-- Patient
+medicationrequest "requester | supporting information" --[#SkyBlue,dashed]down-- HPI
+medicationdispense "subject" -[#SkyBlue,dashed]up-- Patient
+medicationdispense "destination" --[#SkyBlue,dashed]up-- HPI
+medicationdispense "authorizing prescription" -[#RoyalBlue,dashed]up-- medicationrequest
+immunization "patient" -[#SkyBlue,dashed]down-- Patient
+immunization "location | performer" --[#SkyBlue,dashed]down-- HPI
 Notes -[hidden]left- Patient
 
 'NationalIdentifier -[hidden]- SDHRFrame

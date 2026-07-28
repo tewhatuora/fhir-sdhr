@@ -40,9 +40,9 @@ To write patient health information from a participating Practice Management Sys
 
 This use case currently applies to information written to the SDHR Primary Care Collection:
 
-- [Allergies and intolerances](./data-domains.html#allergies-and-intolerances)
-- [Health conditions](./data-domains.html#conditions)
-- [Observations](./data-domains.html#observations)
+- [Allergies and intolerances](./allergies-intolerances.html)
+- [Health conditions](./conditions.html)
+- [Observations](./observations.html)
 
 The corresponding FHIR representations are described in [Data Models](./data-models.html) and [FHIR Artifacts](./artifacts.html).
 

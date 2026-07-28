@@ -38,12 +38,12 @@ To allow Shared Electronic Health Record (SEHR) systems and other clinical porta
 
 This use case currently or progressively applies to:
 
-- [Allergies and intolerances](./data-domains.html#allergies-and-intolerances)
-- [Health conditions](./data-domains.html#conditions)
-- [Observations](./data-domains.html#observations)
-- [Medication requests](./data-domains.html#medications) — in development
-- [Medication dispenses](./data-domains.html#medications) — in development
-- [Immunisations](./data-domains.html#immunisations) — in development
+- [Allergies and intolerances](./allergies-intolerances.html)
+- [Health conditions](./conditions.html)
+- [Observations](./observations.html)
+- [Medication requests](./medications.html) — in development
+- [Medication dispenses](./medications.html) — in development
+- [Immunisations](./immunisations.html) — in development
 
 The corresponding FHIR representations are described in [Data Models](./data-models.html) and [FHIR Artifacts](./artifacts.html).
 

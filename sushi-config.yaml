@@ -67,10 +67,20 @@ pages:
     title: Contribute Information to SDHR
   access-information.md:
     title: Access Information from SDHR
-  data-domains.md:
-    title: Data Domains
-  data-models.md:
-    title: Data Models
+  data-overview.md:
+    title: Data Overview
+    conditions.md:
+      title: Conditions
+    allergies-intolerances.md:
+      title: Allergies & Intolerances
+    observations.md:
+      title: Observations
+    medications.md:
+      title: Medications
+    immunisations.md:
+      title: Immunisations
+    data-models.md:
+      title: Data Models
   api.md:
     title: API Documentation
   compliance-requirements.md:
@@ -111,9 +121,15 @@ menu:
   Use Cases:
     Contribute Information to SDHR: contribute-information.html
     Access Information from SDHR: access-information.html
-  Data Domains: data-domains.html
+  Data:
+    Overview: data-overview.html
+    Conditions: conditions.html
+    Allergies & Intolerances: allergies-intolerances.html
+    Observations: observations.html
+    Medications: medications.html
+    Immunisations: immunisations.html
+    Data Models: data-models.html
   # Consent-based access control: consent-based-access.html
-  Data Models: data-models.html
   API: api.html
   Compliance:
     For systems sharing data: compliance-requirements.html

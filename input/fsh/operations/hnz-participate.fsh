@@ -18,7 +18,8 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI. For a global opt-in request, one or more `patient` parameters may be supplied. Multiple `patient` parameters are only supported when all supplied NHIs are already linked in the same NHI group and the request supplies the complete linked group. Multiple `patient` parameters are not supported for global opt-out requests.
-For a global opt-in request where the patient is enrolled with a provider, the request may include the enrolled provider `facilityId` and must include `pmsIdentifier`. If `facilityId` is not provided, `pmsIdentifier` must not be provided and the operation updates consent without triggering a historic load.
+For a global opt-in request where the patient is enrolled with a provider, the request may include the enrolled provider `facilityId` and must then include `pmsIdentifier`. When `facilityId` is provided, the service checks the patient's existing Consent for that facility before scheduling a historic load. A historic load is scheduled only when the patient is already opted in at that facility. This operation never creates or changes facility-level participation, so it is never treated as tacit permission to opt the patient in at a facility they have not chosen. If the patient is opted out at, or has no recorded preference for, that facility, the operation still succeeds and global participation is updated, but no historic load is scheduled — the request completes as if there were no records to load. The patient can then be sourced later, when they interact with that facility and are opted in through the facility participation flow. If `facilityId` is not provided, `pmsIdentifier` must not be provided and the operation updates consent without scheduling a historic load.
+When historic-load work is scheduled, the returned OperationOutcome includes an additional `sdhr-historic-load-scheduled` informational issue. This confirms scheduling only; it does not indicate that the load has completed successfully. When no historic load is scheduled the issue is absent, and whether a load was scheduled can also be inferred from the participation status.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 Usage: #definition
@@ -52,7 +53,7 @@ If false, the patient does not wish to participate in the service and their reso
 * parameter[=].min = 0
 * parameter[=].max = "1"
 * parameter[=].type = #Reference
-* parameter[=].documentation = "Optional for global opt-in. Reference must be an HPI Location URL for the enrolled provider, with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ999-B. If provided, pmsIdentifier is required. Not supported for global opt-out."
+* parameter[=].documentation = "Optional for global opt-in. Reference must be an HPI Location URL for the enrolled provider, with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ999-B. If provided, pmsIdentifier is required. A historic load from this facility is scheduled only when the patient's existing Consent already opts them in at this facility; otherwise consent is updated and the operation succeeds without scheduling a load. This operation does not create or alter facility-level participation. Not supported for global opt-out."
 
 * parameter[+].name = #pmsIdentifier
 * parameter[=].use = #in
@@ -74,4 +75,5 @@ If false, the patient does not wish to participate in the service and their reso
     See the following examples for possible OperationOutcome responses:
     - [OperationOutcome for invalid patient reference](./OperationOutcome-OperationOutcomeParticipateInvalidPatient.html)
     - [OperationOutcome for successful participation](./OperationOutcome-OperationOutcomeParticipateSuccess.html)
+    - [OperationOutcome for successful participation with a historic load scheduled](./OperationOutcome-OperationOutcomeParticipateLoadScheduled.html)
     """

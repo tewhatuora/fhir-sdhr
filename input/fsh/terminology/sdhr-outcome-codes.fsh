@@ -26,6 +26,7 @@ See [SDHR Participate Operation](https://fhir-ig.digital.health.nz/sdhr/Operatio
 * #sdhr-parameter-invalid "SDHR parameter invalid" "This code is used when a parameter is invalid in the request."
 * #sdhr-participation-status-invalid "SDHR Participation Status Invalid"
 * #sdhr-operation-success "SDHR Operation Success" "This code is used when the operation was successful, such as when a patient's participation status was successfully recorded."
+* #sdhr-historic-load-scheduled "SDHR Historic Load Scheduled" "This code is used when historic-load work has been successfully scheduled. It does not indicate that the historic load has completed."
 * #sdhr-participation-status-unknown "SDHR Participation Status Unknown" "This code is used when the Shared Digital Health Record service has no record of participation preferences for this patient. Please use the $participate operation to indicate the patient's participation preferences."
 * #sdhr-facility-locked "SDHR Facility Locked" "This code is used when a facility has been temporarily locked due to a background load process"
 * #sdhr-patient-locked "SDHR Patient Locked" "This code is used when a patient has been temporarily locked due to a background load process"

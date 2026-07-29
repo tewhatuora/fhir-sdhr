@@ -47,7 +47,7 @@ frame "Core Data Services" as SDHRFrame {
 
 class "SDHR:Condition" as condition <<Condition>> #LightSalmon ##[bold] {
     Represents a SDHR condition
-    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRCondition.html SDHR profile]]
+    [[./StructureDefinition-SDHRCondition.html SDHR profile]]
     Inherits FHIR ""Condition""
     ----
     * **meta.source**: ~~1..1~~ HPI Location
@@ -61,7 +61,7 @@ class "SDHR:Condition" as condition <<Condition>> #LightSalmon ##[bold] {
 
 class "SDHR:AllergyIntolerance" as allergyintolerance <<AllergyIntolerance>> #LightSalmon ##[bold] {
     Represents a SDHR allergy intolerance
-    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRAllergyIntolerance.html SDHR profile]]
+    [[./StructureDefinition-SDHRAllergyIntolerance.html SDHR profile]]
     Inherits FHIR ""AllergyIntolerance""
     ----
     * **meta.source**: ~~1..1~~ HPI Location
@@ -75,7 +75,7 @@ class "SDHR:AllergyIntolerance" as allergyintolerance <<AllergyIntolerance>> #Li
 
 class "SDHR:Observation" as observation <<Observation>> #LightSalmon ##[bold] {
     Represents a SDHR observation
-    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRObservation.html SDHR profile]]
+    [[./StructureDefinition-SDHRObservation.html SDHR profile]]
     Inherits FHIR ""Observation""
     ----
     * **meta.source**: ~~1..1~~ HPI Location
@@ -90,7 +90,7 @@ class "SDHR:Observation" as observation <<Observation>> #LightSalmon ##[bold] {
 
 class "SDHR:MedicationRequest" as medicationrequest <<MedicationRequest>> #LightSalmon ##[bold] {
     Represents prescribing intent from MDR
-    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRMedicationRequest.html SDHR profile]]
+    [[./StructureDefinition-SDHRMedicationRequest.html SDHR profile]]
     Inherits FHIR ""MedicationRequest""
     ----
     * **id**: MDR prescription item identifier
@@ -105,7 +105,7 @@ class "SDHR:MedicationRequest" as medicationrequest <<MedicationRequest>> #Light
 
 class "SDHR:MedicationDispense" as medicationdispense <<MedicationDispense>> #LightSalmon ##[bold] {
     Represents medicines supplied from MDR
-    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRMedicationDispense.html SDHR profile]]
+    [[./StructureDefinition-SDHRMedicationDispense.html SDHR profile]]
     Inherits FHIR ""MedicationDispense""
     ----
     * **id**: ~~1..1~~ MDR dispense record identifier
@@ -121,7 +121,7 @@ class "SDHR:MedicationDispense" as medicationdispense <<MedicationDispense>> #Li
 
 class "SDHR:Immunization" as immunization <<Immunization>> #LightSalmon ##[bold] {
     Represents an immunisation event from AIR
-    [[https://fhir-ig.digital.health.nz/sdhr/StructureDefinition-SDHRImmunization.html SDHR profile]]
+    [[./StructureDefinition-SDHRImmunization.html SDHR profile]]
     Inherits AIR ""Immunization""
     ----
     * **id**: ~~1..1~~ Immunisation event identifier

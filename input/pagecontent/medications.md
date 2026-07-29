@@ -39,6 +39,8 @@ Medication Dispenses represent medicines supplied. They are a stronger indicator
 
 - Medication information is sourced from the national Medicines Data Repository (MDR) through its FHIR API.
 - MDR contains prescribing and dispensing information from NZePS-integrated systems.
+- MDR remains the source system for creation and maintenance of medication information made available through this domain.
+- SDHR does not clinically reconcile, amend, or reinterpret medication information sourced from MDR.
 - Current NZePS-integrated sources include almost all New Zealand general practices, all New Zealand community pharmacies, several specialist prescribing systems, and an expanding set of secondary-care systems used primarily for outpatient prescribing.
 - Source-system implementation and workflow differences affect completeness and behaviour.
 - MDR dispense dates reflect pharmacy preparation and may differ from the date the patient received the medicine.
@@ -57,7 +59,7 @@ Medication Dispenses represent medicines supplied. They are a stronger indicator
 ### Clinical safety considerations
 {: .underlined}
 
-- Medication information must be interpreted with sufficient clinical context and medicines reconciliation.
+- Medication information should be interpreted in conjunction with medicines reconciliation, clinical context, and direct confirmation with the patient where appropriate.
 - Applications should make status, dates, provenance, and related information easy to identify.
 - Prescriptions cancelled or invalidated before supply should be excluded where this reduces misinterpretation risk.
 - Dispenses prepared and subsequently reversed because they were not collected are omitted.

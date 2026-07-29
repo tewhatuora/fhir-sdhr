@@ -28,9 +28,16 @@ The SDHR Primary Care Collection contains information contributed by participati
 - conditions; and
 - observations.
 
+In future we expect to include encounters/appointments and (subject to further design and engagement) consultation notes from certain care settings.
+
 #### National health information sources
 
-SDHR supports information made available from national repositories and services. Current or planned domains include medicines and immunisations. See the relevant domain page for source and availability details.
+SDHR supports information made available from national repositories and services. 
+
+- medications (requests and dispenses); and
+- immunisations
+
+In the future we expect to include laboratory results and radiology reports, clinical documents from secondary care (e.g. discharge summaries, clinic letters, and referrals).
 
 ### Information governance
 {: .underlined}
@@ -50,7 +57,7 @@ SDHR is not the system of record for the information it shares. Source systems r
 ### Shared Digital Health Record ID
 {: .underlined}
 
-Every resource in the Shared Digital Health Record is assigned an `id`. This identifier is guaranteed to be unique and is issued by the system when the resource is loaded. SDHR providers and consumers are expected to honour the `id` and use it as a unique reference when interacting with resources in SDHR.
+Every resource in the SDHR Primary Care Collection is assigned an `id`. This identifier is guaranteed to be unique and is issued by the system when the resource is loaded. SDHR providers and consumers are expected to honour the `id` and use it as a unique reference when interacting with resources in SDHR.
 
 #### Property specification: `id` (UUID v4)
 

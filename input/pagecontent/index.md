@@ -2,7 +2,7 @@ The Shared Digital Health Record (SDHR) enables authorised clinical systems to a
 
 Through SDHR, information from the SDHR Primary Care Collection and selected national health information sources is made available through a common interoperability platform. Information is shared subject to patient participation choices and appropriate privacy, confidentiality, security, and access controls.
 
-Source systems remain the systems of record responsible for creating and authoritatively maintaining their domain information. SDHR acts as a trusted source of truth for accessing governed health information across care settings. It provides a consistent representation supported by common information models, interoperability standards, provenance, privacy controls, stewardship, and governance.
+SDHR acts as a trusted source for accessing core health information for a patient across care settings. Information from participating systems is made available through common interoperability standards and information models, with consistent privacy, choice, and control options applied. Source systems remain responsible for creating and authoritatively maintaining their information. The initial release of SDHR accommodates variation in clinical coding and recording practices across participating systems while providing a common framework for information sharing and access.
 
 ### Patient Information
 
@@ -28,13 +28,13 @@ See [Contribute Information to SDHR](./contribute-information.html), [Access Inf
 
 ### Integration Patterns
 
-Organisations integrate with SDHR in one or both of the following ways.
+Clinical systems integrate with SDHR in one or both of the following ways.
 
 #### Access SDHR Information
 
 Shared Electronic Health Record (SEHR) systems and other authorised clinical applications retrieve patient health information from SDHR and make it available to healthcare professionals involved in providing care.
 
-SEHR systems use SDHR information alongside other clinical information sources to provide a consolidated view of a person's health information.
+SEHR systems use SDHR information (alongside other clinical information sources as required) to provide a consolidated view of a person's health information.
 
 See the [requirements for systems providing access to SDHR information](./compliance-requirements-reading.html).
 
@@ -67,6 +67,4 @@ Additional information about SDHR, participation, privacy, and onboarding:
 
 ### FHIR Version
 
-This implementation guide is based on [FHIR R4](https://hl7.org/fhir/R4/).
-
-None of the features used by this implementation guide differ in [R4B](https://hl7.org/fhir/R4B/), and packages are available for both R4 and R4B implementations.
+{% include cross-version-analysis.xhtml %}

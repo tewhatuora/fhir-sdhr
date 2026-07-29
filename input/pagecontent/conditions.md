@@ -17,28 +17,33 @@ This domain contains Condition records contributed by participating primary care
 ### Clinical description
 {: .underlined}
 
-Depending on PMS data models and workflows, Condition resources may contain:
+Condition resources in SDHR reflect condition and classification information recorded in participating PMS systems. Depending on the PMS product and local workflow, this may include:
 
-- diagnoses;
-- problems;
-- risk factors;
-- disabilities;
-- family history; and
-- social history.
+- diagnoses
+- problems
+- risk factors
+- disabilities
+- pregnancy information
+- family history
+- social history
+- symptoms
+- diseases
 
-They may also include classifications, symptoms, diseases, or pregnancy information. Some PMS systems record social and family history as classifications that map to FHIR `Condition`. Not every Condition represents a confirmed diagnosis of the patient.
+Some PMS systems record social history, family history and other contextual information as classifications that are mapped to FHIR Condition resources. As a result, not every Condition resource represents a confirmed diagnosis of the patient.
 
 ### Intended use
 {: .underlined}
 
-This domain provides a structured view of recorded current and historical conditions to support clinical assessment and continuity of care.
+This domain provides a structured view of condition and classification information recorded by participating healthcare providers to support clinical assessment and continuity of care.
+
+Information should be interpreted in the context of the patient's overall clinical history and other available health information.
 
 ### Source information
 {: .underlined}
 
-- Participating PMS systems contribute this information to the SDHR Primary Care Collection.
-- The PMS remains the source system for contributed information.
-- Meaning and classification vary between PMS products and local workflows, particularly for problem lists, diagnoses, social history, and family history.
+Participating PMS systems contribute this information to the SDHR Primary Care Collection. The PMS remains the system of record for contributed information.
+
+Meaning and classification can vary between PMS products and local workflows, particularly for problem lists, diagnoses, social history and family history.
 
 ### Privacy and confidentiality considerations
 {: .underlined}
@@ -50,12 +55,15 @@ This domain provides a structured view of recorded current and historical condit
 ### Clinical safety considerations
 {: .underlined}
 
-- Accessing systems should display coded meaning, clinical status, verification status, date, and provenance where available.
-- Systems must not present every Condition as a confirmed diagnosis of the patient.
+Accessing systems should display the recorded code or description, clinical status, verification status, relevant dates and provenance where available.
+
+Inactive records may represent different clinical meanings, including resolved, in remission, refuted or entered-in-error. Systems should avoid presenting inactive or unverified records in a way that implies a current confirmed diagnosis.
+
+Where coded values have been mapped or translated, source text and original user-selected text should be retained where available.
 
 ### Known limitations
 {: .underlined}
 
-- Condition lists may be incomplete or may not have been clinically reconciled.
-- A record may be inactive, resolved, provisional, entered in error, or recorded at a different level of specificity.
-- PMS products and local workflows may classify the same information differently.
+Condition lists may be incomplete and may not reflect a fully reconciled clinical record. Data quality, coding practices and clinical workflows vary between contributing systems.
+
+A missing Condition record may reflect source sharing controls, patient participation choices, confidentiality settings, local data entry practices, or information not being supplied by the source PMS.

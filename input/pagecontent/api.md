@@ -54,8 +54,6 @@ Medication and immunisation information is read-only through SDHR. It is sourced
 | Operation | HTTP verb and relative URL | Definition | Status | Detailed behaviour |
 | --- | --- | --- | --- | --- |
 | `$participate` | `POST /$participate` | [SDHR Participate Operation](./OperationDefinition-SDHRParticipateOperation.html) | Active | [Technical contract](#participate-operation)<br>[Contribution workflow](./contribute-information.html#facility-participation) |
-| `$hnz-participate` | `POST /$hnz-participate` | [SDHR HNZ Participate Operation](./OperationDefinition-SDHRHNZParticipateOperation.html) | Active | [Operation definition](./OperationDefinition-SDHRHNZParticipateOperation.html)<br>[Health NZ workflow](./contribute-information.html#global-participation-through-health-nz) |
-| `$hnz-participation-status` | `POST /$hnz-participation-status` | [SDHR HNZ Participation Status Operation](./OperationDefinition-SDHRHNZParticipationStatusOperation.html) | Active | [Operation definition](./OperationDefinition-SDHRHNZParticipationStatusOperation.html) |
 {: .grid}
 
 #### Access verification operation catalogue
@@ -597,3 +595,8 @@ The search response contains an `OperationOutcome` entry with `"mode":"outcome"`
 </details>
 
 [See example details](./Bundle-SearchExactMatchRecordWithheldExample.html)
+
+### Internal-only operations
+{: .underlined}
+
+The `$hnz-participate` and `$hnz-participation-status` operations are restricted to authorised Health NZ internal channels and are not available to external API Consumers.

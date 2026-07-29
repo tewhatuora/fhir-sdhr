@@ -134,7 +134,7 @@ A new confidential `Condition` or `Observation` record must not be written to SD
 
 #### Global participation through Health NZ
 
-A patient can record a global opt-out or restore global participation through an authorised Health NZ channel. The channel uses the restricted [`$hnz-participate` operation](./OperationDefinition-SDHRHNZParticipateOperation.html); PMS API Consumers cannot call this operation.
+A patient can record a global opt-out or restore global participation through an authorised Health NZ channel.
 
 {% include participate-sequence-hnzoptoff.svg %}
 

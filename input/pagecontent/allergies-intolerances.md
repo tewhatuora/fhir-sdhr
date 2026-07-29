@@ -8,11 +8,11 @@ This domain contains allergy and intolerance information contributed by particip
 
 > **FHIR Artifacts**
 >
-> - [SDHR AllergyIntolerance RAllergyIntolerance.html
-> - [/AllergyIntolerance-AllergyIntoleranceExample.html
-> - [Search parameters and ehaviour
-> - [Resource interactionsteraction-catalogue
-> - [Terminologyhtml
+> - [SDHR AllergyIntolerance profile](./StructureDefinition-SDHRAllergyIntolerance.html)
+> - [AllergyIntolerance example](./AllergyIntolerance-AllergyIntoleranceExample.html)
+> - [Search parameters and behaviour](./api.html#api-search-behaviour)
+> - [Resource interactions](./api.html#resource-interaction-catalogue)
+> - [FHIR artifact catalogue](./artifacts.html)
 
 ### Clinical description
 {: .underlined}
@@ -61,4 +61,3 @@ Allergy and intolerance information from SDHR should be treated as shared clinic
 - Both active and inactive records may be returned. Accessing systems should present status clearly and avoid assuming inactive records are clinically irrelevant.
 - Absence of a record does not establish that the patient has no known allergy or intolerance.
 - Some records may represent negated allergy statements (for example, "no known allergies") rather than a positive allergy or intolerance.
-``

@@ -4,73 +4,78 @@ Description: "DRAFT PROFILE: MedicationDispense resource for Shared Digital Heal
 
 * ^status = #draft
 
+// SDHR wide policies for all resources
 * implicitRules 0..0
 * language 0..0
 * text 0..0
-* contained 0..0
-* modifierExtension 0..0
+* contained 0..0    
 
 * meta.versionId 0..1
 * meta.lastUpdated 0..1
-* meta.security 0..*
+* meta.security 0..1
 * meta.source 0..0
 * meta.profile 0..0
 * meta.tag 0..0
 
-* extension ^slicing.discriminator.type = #value
-* extension ^slicing.discriminator.path = "url"
-* extension ^slicing.rules = #closed
-* extension contains
-	http://hl7.org.nz/fhir/StructureDefinition/nzeps-scriptno-local named SupplyNumber 0..1
+// Duplications of key MDR elements to support SDHR use cases
+* id 1..1
+* id ^short = "MDR dispense record identifier (SCID + item sequence number + dispense sequence number)"
+* id ^definition = "The MDR identifier for this MedicationDispense resource, composed of the NZePS prescription SCID, item sequence number, and dispense sequence number. A reversal record would include a suffix of '-X' before being removed from MDR prior to SDHR integration."
 
-* identifier 0..*
-* partOf 0..0
+* identifier 1..1
+* identifier ^short = "NZePS prescription item ID (SCID + item sequence number)"
+* identifier ^definition = "NZePS SCID + item sequence number. This identifier links dispense records to the originating prescription item and excludes GTIM barcode values."
+
 * status 1..1
-* statusReason[x] 0..0
-* category 0..1
-* medication[x] only CodeableConcept
-* medication[x] 1..1
-* subject 0..1
-* context 0..0
-* supportingInformation 0..0
-* performer 0..*
-* performer.id 0..0
-* performer.extension 0..0
-* performer.modifierExtension 0..0
-* performer.function 0..0
-* location 0..1
-* location.reference 0..0
-* location.type 0..0
-* location.identifier 0..0
-* location.display 0..1
+* status = #completed
+* status ^short = "Dispense status"
+* status ^definition = "Dispense status for the MDR record. Dispense events are assumed completed when present in MDR."
+
 * authorizingPrescription 0..*
-* type 0..0
+* authorizingPrescription only Reference(MedicationRequest)
+* authorizingPrescription ^short = "Reference to the authorising prescription"
+* authorizingPrescription ^definition = "Link to the MedicationRequest that authorises this dispense."
+
+* subject 1..1
+* insert ProfilePatient(subject)
+* subject ^short = "Patient for the dispense event"
+* subject ^definition = "The patient who is the subject of this medication dispense."
+* subject.display 0..0
+
 * quantity 0..1
-* daysSupply 0..0
-* whenPrepared 0..1
+* quantity ^short = "Dispensed quantity"
+* quantity ^definition = "The quantity of medication dispensed in this dispense event."
+
+* daysSupply 0..1
+* daysSupply ^short = "Days of supply"
+* daysSupply ^definition = "The expected number of days of medication supplied."
+
 * whenHandedOver 0..1
-* destination 0..0
-* receiver 0..0
-* note 0..0
-* dosageInstruction 0..*
-* dosageInstruction.id 0..0
-* dosageInstruction.extension 0..0
-* dosageInstruction.modifierExtension 0..0
-* dosageInstruction.sequence 0..0
-* dosageInstruction.text 0..0
-* dosageInstruction.additionalInstruction 0..0
+* whenHandedOver ^short = "Time the medication was handed to the patient"
+* whenHandedOver ^definition = "The date and time when the dispensed medication was handed over to the patient."
+
+* destination 0..1
+* destination only Reference(Location)
+* destination ^short = "Dispense destination location"
+* destination ^definition = "The destination location for the dispensed medication."
+
+* receiver 0..1
+* receiver ^short = "Person who received the dispense"
+* receiver ^definition = "The individual who received the medication from the dispenser."
+
 * dosageInstruction.patientInstruction 0..1
-* dosageInstruction.timing 0..0
-* dosageInstruction.asNeeded[x] 0..0
-* dosageInstruction.site 0..0
-* dosageInstruction.route 0..1
-* dosageInstruction.route.text 0..0
-* dosageInstruction.route.coding 0..*
-* dosageInstruction.method 0..0
-* dosageInstruction.doseAndRate 0..0
-* dosageInstruction.maxDosePerPeriod 0..0
-* dosageInstruction.maxDosePerAdministration 0..0
-* dosageInstruction.maxDosePerLifetime 0..0
-* substitution 0..0
-* detectedIssue 0..0
-* eventHistory 0..0
+* dosageInstruction.patientInstruction ^short = "Patient instructions"
+* dosageInstruction.patientInstruction ^definition = "Patient-facing instructions about how the dispensed medication should be taken."
+
+* extension contains
+	http://hl7.org.nz/fhir/StructureDefinition/nzeps-medication-modified named MedicationModified 1..1 and
+	http://hl7.org.nz/fhir/StructureDefinition/nzeps-instructions-modified named InstructionsModified 1..1
+* extension[MedicationModified] ^short = "NZePS modified medication flag"
+* extension[MedicationModified] ^definition = "Indicates whether the dispensed medication or dosage quantity differ materially from the prescribed medication."
+* extension[InstructionsModified] ^short = "NZePS modified instructions flag"
+* extension[InstructionsModified] ^definition = "Indicates whether the patient instructions in the dispense event differ significantly from those in the prescription."
+
+// Deviations from MDR profile
+* performer 0..0
+* subject.display 0..0
+

@@ -22,8 +22,11 @@ The SDHR API will initially access the following information from PMSs.
 
 * [Allergies and intolerances.](./StructureDefinition-SDHRAllergyIntolerance.html)
 * [Health conditions.](./StructureDefinition-SDHRCondition.html)
-<!-- * [Encounters (when someone has interacted with the health system).](./StructureDefinition-SDHREncounter.html) -->
+* [Immunizations.](./StructureDefinition-SDHRImmunization.html)
 * [Observations.](./StructureDefinition-SDHRObservation.html)
+* [Medication requests.](./StructureDefinition-SDHRMedicationRequest.html)
+* [Medication dispenses.](./StructureDefinition-SDHRMedicationDispense.html)
+<!-- * [Encounters (when someone has interacted with the health system).](./StructureDefinition-SDHREncounter.html) -->
 <!-- * [Consent](./StructureDefinition-SDHRConsent.html) -->
 
 Further information may become available to be accessed over time.

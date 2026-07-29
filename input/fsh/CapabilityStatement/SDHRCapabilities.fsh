@@ -247,7 +247,7 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].documentation = "AuditEvent supports DRAFT custom operations for data viewer application verification workflows."
 * rest.resource[=].operation[+].name = "verification-samples"
 * rest.resource[=].operation[=].definition = Canonical(SDHRVerificationSamplesOperation)
-* rest.resource[=].operation[=].documentation = "Returns sampled AuditEvent resources that are still outstanding for verification by the authenticated data viewer application. Supports optional `_count` and `_offset` query parameters for paging."
+* rest.resource[=].operation[=].documentation = "DRAFT OPERATION: Returns sampled AuditEvent resources that are still outstanding for verification by the authenticated data viewer application. Supports optional `_count` and `_offset` query parameters for paging."
 * rest.resource[=].operation[+].name = "verification-submissions"
 * rest.resource[=].operation[=].definition = Canonical(SDHRVerificationSubmissionsOperation)
 * rest.resource[=].operation[=].documentation = "DRAFT OPERATION: Accepts a Parameters payload containing one or more verification decisions for sampled AuditEvent resources."

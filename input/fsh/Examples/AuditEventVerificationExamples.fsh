@@ -57,7 +57,7 @@ Description: "DRAFT EXAMPLE ONLY: Bundle returned from the verification samples 
 Instance: BundleVerificationSamplesPageOneResponseExample
 InstanceOf: Bundle
 Usage: #example
-Description: "Example first page Bundle returned from the verification samples operation using _count and _offset."
+Description: "DRAFT EXAMPLE ONLY: first page Bundle returned from the verification samples operation using _count and _offset."
 * type = #searchset
 * timestamp = "2026-07-03T10:00:00+12:00"
 * total = 2
@@ -71,7 +71,7 @@ Description: "Example first page Bundle returned from the verification samples o
 Instance: BundleVerificationSamplesPageTwoResponseExample
 InstanceOf: Bundle
 Usage: #example
-Description: "Example second page Bundle returned from the verification samples operation using _count and _offset."
+Description: "DRAFT EXAMPLE ONLY: second page Bundle returned from the verification samples operation using _count and _offset."
 * type = #searchset
 * timestamp = "2026-07-03T10:00:05+12:00"
 * total = 2

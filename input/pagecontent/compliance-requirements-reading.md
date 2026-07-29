@@ -27,7 +27,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
 </div>
 <br clear="all">
 
-1. Retrieve verification samples: The Data Viewer Application calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation also supports `_count` and `_offset` query parameters for paging, for example `GET /AuditEvent/$verification-samples?_count=1&_offset=0`. See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSamplesOperation.html).
+1. Retrieve verification samples: The Data Viewer Application calls the draft `GET /AuditEvent/$verification-samples` operation to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation also supports `_count` and `_offset` query parameters for paging, for example `GET /AuditEvent/$verification-samples?_count=1&_offset=0`. See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSamplesOperation.html).
 
     <details>
     <summary><b><u>Click to view verification samples Bundle example</u></b></summary>

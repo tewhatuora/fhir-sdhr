@@ -357,7 +357,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Clinical users have safe methods for ensuring the correct patient record is being viewed. This could include integration directly into the existing wider patient record within the same UI or via a launch with the patient context included, display of patient demographics from a local or nationwide source to allow patient identification. An unattached SEHR record without demographics displayed that was found based on a typed NHI is insufficient.</p>
                 </td>
                 <td>
-                    <p></p>
+                    <p>Yes</p>
                 </td>
                 <td>
                     <p>UI screenshots demonstrating record selection or launching process</p>
@@ -614,7 +614,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p></p>
+                    <p>The user experience for clinicians accessing SDHR data must be designed with appropriate clinical oversight in place to avoid risk of misinterpretation or harm.</p>
                 </td>
                 <td>
                     <p></p>

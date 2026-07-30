@@ -2,109 +2,148 @@
 
 ### Important information about Compliance requirements
 
-#### Use cases
+#### Scope and accreditation
 
-These compliance requirements are for any user interface that can access and display Shared Digital Health Record information to a clinical user.
+These compliance requirements apply to **Shared Electronic Health Record (SEHR) systems** that retrieve information from the Shared Digital Health Record (SDHR) and display it to clinical users. An SEHR is an API Consumer acting on behalf of an authenticated clinical user.
 
-#### Data Access Verification
+The requirements cover secure access, accurate request context, safe presentation of clinical information, auditability, and ongoing monitoring of access. They do not cover creating or updating source data in SDHR. Systems that share data with SDHR must separately meet the [compliance requirements for systems sharing data](./compliance-requirements.html). Systems that perform both roles are assessed against both sets of requirements.
 
-API Consumers accessing and displaying records to clinical users need to periodically retrieve their verification samples from the verification sample endpoint. The samples are represented as FHIR `AuditEvent` resources in accordance with the [SDHR AuditEvent profile](./StructureDefinition-SDHRAuditEvent.html).
+Technical integration behaviour is documented in the [API documentation](./api.html) and the linked FHIR conformance resources. Meeting the requirements on this page does not replace conformance with those technical specifications.
 
-Once retrieved, those samples need to be verified by the API Consumer using either an automated or manual process. Once access has been reviewed, the results must be submitted back to the Shared Digital Health Record to advise of the result.
+#### Ongoing access verification
 
-##### Workflow
+SEHR systems must periodically retrieve sampled access events, review whether those accesses were valid using an automated or manual process, and submit the verification decisions to SDHR. This is an ongoing monitoring responsibility rather than a one-off onboarding activity.
 
-The following sequence diagram provides a basic overview of the verification workflow between the API Consumer and the Shared Digital Health Record server.
+The [audit access records workflow](./access-information.html#audit-access-records-workflow) contains the end-to-end sequence and processing steps. The [access verification operations](./api.html#access-verification-operations) section of the API documentation contains endpoint behaviour, paging guidance, payload examples, and links to the relevant FHIR definitions.
 
-These verification operations and examples are currently draft and should be treated as draft interface content.
+#### Types of Evidence
 
-This workflow is not a one off onboarding activity. API Consumers need to perform this retrieval and verification process periodically on an ongoing basis so that sampled access events continue to be reviewed and verified over time.
-
-<!-- markdownlint-disable MD033 -->
-<div width="100%">
-<!-- Generated from `input/images-source/verification-workflow-overview.plantuml` -->
-{% include verification-workflow-overview.svg %}
-</div>
-<br clear="all">
-
-1. Retrieve verification samples: The Data Viewer Application calls the draft `GET /AuditEvent/$verification-samples` operation to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation also supports `_count` and `_offset` query parameters for paging, for example `GET /AuditEvent/$verification-samples?_count=1&_offset=0`. See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSamplesOperation.html).
-
-    <details>
-    <summary><b><u>Click to view verification samples Bundle example</u></b></summary>
-
-    {% fragment Bundle/BundleVerificationSamplesResponseExample JSON %}
-
-    </details>
-
-2. Review sampled access events: The API Consumer reviews the returned sampled `AuditEvent` resources using either an automated process or a manual workflow to determine whether the recorded access was valid.
-
-3. Submit verification decisions: The Data Viewer Application calls the draft `POST /AuditEvent/$verification-submissions` operation with the defined `Parameters` payload to submit one or more verification decisions for the sampled `AuditEvent` resources. See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificationSubmissionsOperation.html), the [SDHRVerificationSubmissionParameters profile](./StructureDefinition-SDHRVerificationSubmissionParameters.html), and the [SDHRVerificationSubmissionResponseParameters profile](./StructureDefinition-SDHRVerificationSubmissionResponseParameters.html).
-
-    <details>
-    <summary><b><u>Click to view verification submission request example</u></b></summary>
-
-    {% fragment Parameters/ParametersVerificationSubmissionRequestExample JSON %}
-
-    </details>
-
-    <details>
-    <summary><b><u>Click to view verification submission response example</u></b></summary>
-
-    {% fragment Parameters/ParametersVerificationSubmissionResponseExample JSON %}
-
-    </details>
-
-4. Repeat periodically: This process needs to be repeated periodically so that newly sampled access events continue to be reviewed and verified over time.
-
-### Compliance requirements
+For each requirement, please provide appropriate evidence as per the guidance below.
 
 <style>
-.joplin-table-wrapper.ssd-ref-table {
+.joplin-table-wrapper {
   overflow-x: auto;
 }
-.joplin-table-wrapper.ssd-ref-table table {
+.joplin-table-wrapper.evidence-table table {
   border-collapse: collapse;
   width: 100%;
   table-layout: auto;
-  counter-reset: ssd-counter;
 }
-.joplin-table-wrapper.ssd-ref-table th,
-.joplin-table-wrapper.ssd-ref-table td {
+.joplin-table-wrapper.evidence-table th,
+.joplin-table-wrapper.evidence-table td {
+  border: 1px solid #4a5568;
+  padding: 8px;
+  vertical-align: top;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+.joplin-table-wrapper.evidence-table thead th {
+  background-color: #008080;
+  color: #ffffff;
+}
+.joplin-table-wrapper.compliance-ref-table table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: auto;
+}
+.joplin-table-wrapper.compliance-ref-table th,
+.joplin-table-wrapper.compliance-ref-table td {
   border: 1px solid #0e6655;
   padding: 8px;
   vertical-align: top;
   overflow-wrap: break-word;
   white-space: normal;
 }
-.joplin-table-wrapper.ssd-ref-table thead th {
+.joplin-table-wrapper.compliance-ref-table thead th {
   background-color: #008080;
   color: #ffffff;
 }
-.joplin-table-wrapper.ssd-ref-table td:first-child ol {
-  list-style: none;
+.joplin-table-wrapper.compliance-ref-table th:first-child,
+.joplin-table-wrapper.compliance-ref-table td:first-child {
+  width: 5.5rem;
+  min-width: 5.5rem;
+  white-space: nowrap;
+}
+.joplin-table-wrapper.compliance-ref-table .requirement-ref {
   margin: 0;
-  padding: 0;
-}
-.joplin-table-wrapper.ssd-ref-table tbody tr:has(td:first-child ol) {
-  counter-increment: ssd-counter;
-}
-.joplin-table-wrapper.ssd-ref-table td:first-child::before {
-  content: none;
-}
-.joplin-table-wrapper.ssd-ref-table td:first-child:has(ol)::before {
-  content: "SSD-" counter(ssd-counter);
   font-weight: 600;
   color: #0e6655;
-  display: inline-block;
-  margin-right: 0.5rem;
 }
-.joplin-table-wrapper.ssd-ref-table table td,
-.joplin-table-wrapper.ssd-ref-table table th {
+.joplin-table-wrapper.compliance-ref-table .category-row td {
+  background-color: #e6f4f1;
+  color: #0e6655;
+  font-weight: 600;
+}
+.joplin-table-wrapper.compliance-ref-table table td,
+.joplin-table-wrapper.compliance-ref-table table th {
   box-sizing: border-box;
 }
 </style>
 
-<div class="joplin-table-wrapper ssd-ref-table">
+<div class="joplin-table-wrapper evidence-table">
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <p><strong>Types of Evidence</strong></p>
+                </th>
+                <th>
+                    <p><strong>Guidance</strong></p>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <p><strong>HNZ test scenario</strong></p>
+                </td>
+                <td>
+                    <p>A test scenario and sample data will be provided by an HNZ tester. The vendor runs the scenario
+                        in the SDHR UAT environment and provides the resulting output.</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Design and test evidence from the vendor</strong></p>
+                </td>
+                <td>
+                    <p>Please provide suitable evidence of vendor design and testing, showing that the application meets
+                        the expected outcome, including:</p>
+                    <ul>
+                        <li>Test output</li>
+                        <li>Screenshots or other evidence of input values within the application</li>
+                        <li>Screenshots, log extracts, or other evidence of the expected outcomes within the application</li>
+                        <li>If appropriate, a video recording of the scenario instead of screenshots</li>
+                        <li>Test data created in the SDHR UAT environment to complete the scenario</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Attestation</strong></p>
+                </td>
+                <td>
+                    <p>A statement explaining how the application meets the requirement. Please also supply available
+                        evidence to support the statement, such as:</p>
+                    <ul>
+                        <li>A business process or standard operating procedure (SOP)</li>
+                        <li>Screenshots or other evidence of the inputs and expected outcomes within the application</li>
+                        <li>If appropriate, a video recording of the scenario instead of screenshots</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+### Support for these compliance requirements
+
+The SDHR team will assess your responses and discuss with you if any further clarification is needed.
+
+### Compliance requirements
+
+<div class="joplin-table-wrapper compliance-ref-table">
     <table>
         <thead>
             <tr>
@@ -129,16 +168,14 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr class="category-row">
                 <td colspan="6">
                     <p><strong>Security</strong></p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-1">SRD-1</p>
                 </td>
                 <td>
                     <p>Securely storage of authentication credentials used for SDHR</p>
@@ -158,9 +195,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-2">SRD-2</p>
                 </td>
                 <td>
                     <p>User logins to the SEHR system are performed securely</p>
@@ -178,16 +213,14 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
                     <p>Documentation of user account controls, SSO, MFA etc.</p>
                 </td>
             </tr>
-            <tr>
+            <tr class="category-row">
                 <td colspan="6">
-                    <p><strong>Accurate Requests</strong></p>
+                    <p><strong>Accurate requests</strong></p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-3">SRD-3</p>
                 </td>
                 <td>
                     <p>HPI-Facility and Org are accurately reported to SDHR</p>
@@ -207,9 +240,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-4">SRD-4</p>
                 </td>
                 <td>
                     <p>HPI-CPN is accurately reported to SDHR</p>
@@ -229,9 +260,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-5">SRD-5</p>
                 </td>
                 <td>
                     <p>Capture purpose of use for every access</p>
@@ -251,9 +280,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-6">SRD-6</p>
                 </td>
                 <td>
                     <p>Enforce appropriate access restrictions to SDHR data</p>
@@ -273,9 +300,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-7">SRD-7</p>
                 </td>
                 <td>
                     <p>No local retention of SDHR clinical data</p>
@@ -295,9 +320,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-8">SRD-8</p>
                 </td>
                 <td>
                     <p>Only make requests based on user action</p>
@@ -315,16 +338,14 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
                     <p>Documentation of requests that are made, correlation of our audit events being linked to a user action in the SEHR?</p>
                 </td>
             </tr>
-            <tr>
+            <tr class="category-row">
                 <td colspan="6">
-                    <p><strong>Data Display</strong></p>
+                    <p><strong>Data display</strong></p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-9">SRD-9</p>
                 </td>
                 <td>
                     <p>Ensure correct record is being viewed</p>
@@ -336,7 +357,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
                     <p>Clinical users have safe methods for ensuring the correct patient record is being viewed. This could include integration directly into the existing wider patient record within the same UI or via a launch with the patient context included, display of patient demographics from a local or nationwide source to allow patient identification. An unattached SEHR record without demographics displayed that was found based on a typed NHI is insufficient.</p>
                 </td>
                 <td>
-                    <p></p>
+                    <p>Yes</p>
                 </td>
                 <td>
                     <p>UI screenshots demonstrating record selection or launching process</p>
@@ -344,9 +365,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-10">SRD-10</p>
                 </td>
                 <td>
                     <p>Users are made aware of SDHR data completeness limits</p>
@@ -366,9 +385,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-11">SRD-11</p>
                 </td>
                 <td>
                     <p>Provide clear feedback when no data is found</p>
@@ -388,9 +405,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-12">SRD-12</p>
                 </td>
                 <td>
                     <p>Users informed of withheld records</p>
@@ -410,9 +425,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-13">SRD-13</p>
                 </td>
                 <td>
                     <p>Users informed of domain opt out</p>
@@ -432,9 +445,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-14">SRD-14</p>
                 </td>
                 <td>
                     <p>Users informed of global opt out</p>
@@ -454,9 +465,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-15">SRD-15</p>
                 </td>
                 <td>
                     <p>Handle SDHR API rate limiting gracefully</p>
@@ -476,9 +485,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-16">SRD-16</p>
                 </td>
                 <td>
                     <p>Users informed of deceased patients</p>
@@ -498,9 +505,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-17">SRD-17</p>
                 </td>
                 <td>
                     <p>Support linked NHI viewing</p>
@@ -520,9 +525,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-18">SRD-18</p>
                 </td>
                 <td>
                     <p>Users informed when there are more records</p>
@@ -542,9 +545,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-19">SRD-19</p>
                 </td>
                 <td>
                     <p>Prevent data truncation</p>
@@ -564,9 +565,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-20">SRD-20</p>
                 </td>
                 <td>
                     <p>Users informed of appropriate statuses of records</p>
@@ -586,9 +585,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-21">SRD-21</p>
                 </td>
                 <td>
                     <p>Avoid relying on unverified patient names</p>
@@ -608,9 +605,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-22">SRD-22</p>
                 </td>
                 <td>
                     <p>Appropriate clinical oversight of user interface</p>
@@ -619,7 +614,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p></p>
+                    <p>The user experience for clinicians accessing SDHR data must be designed with appropriate clinical oversight in place to avoid risk of misinterpretation or harm.</p>
                 </td>
                 <td>
                     <p></p>
@@ -628,16 +623,14 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
                     <p>Governance structure, clinical sign off</p>
                 </td>
             </tr>
-            <tr>
+            <tr class="category-row">
                 <td colspan="6">
                     <p><strong>Audit</strong></p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-23">SRD-23</p>
                 </td>
                 <td>
                     <p>Maintain complete audit logs</p>
@@ -655,16 +648,14 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
                     <p>Audit log extracts</p>
                 </td>
             </tr>
-            <tr>
+            <tr class="category-row">
                 <td colspan="6">
                     <p><strong>Monitoring</strong></p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-24">SRD-24</p>
                 </td>
                 <td>
                     <p>Enable HNZ audit and investigation</p>
@@ -684,9 +675,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-25">SRD-25</p>
                 </td>
                 <td>
                     <p>Retrieve access samples from SDHR</p>
@@ -706,9 +695,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-26">SRD-26</p>
                 </td>
                 <td>
                     <p>Submit proactive monitoring outcomes to SDHR</p>
@@ -728,9 +715,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-27">SRD-27</p>
                 </td>
                 <td>
                     <p>Perform proactive monitoring of access</p>
@@ -750,9 +735,7 @@ This workflow is not a one off onboarding activity. API Consumers need to perfor
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SRD-28">SRD-28</p>
                 </td>
                 <td>
                     <p>Support privacy investigations and corrective action</p>

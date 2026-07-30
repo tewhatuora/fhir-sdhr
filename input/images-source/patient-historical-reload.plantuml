@@ -1,0 +1,76 @@
+@startuml
+
+title SDHR Patient Historic Reload Sequence Diagram
+
+autonumber "<color:Black>[00]"
+
+skinparam ActorFontSize 16
+skinparam ArrowFontSize 12
+skinparam ArrowFontSize 16
+skinparam BoxPadding 5
+skinparam DatabaseFontSize 16
+skinparam dpi 400
+skinparam EntityFontSize 16
+skinparam MaxMessageSize 375
+skinparam NoteFontSize 14
+skinparam ParticipantFontSize 16
+skinparam ParticipantPadding 5
+skinparam responseMessageBelowArrow true
+skinparam roundcorner 15
+skinparam sequenceArrowThickness 2
+skinparam SequenceBoxFontSize 16
+skinparam sequencegroupfontsize 14
+skinparam SequenceMessageAlignment left
+skinparam sequenceStyle uml2
+skinparam TitleFontSize 20
+skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
+
+scale max 260 width
+
+actor "Patient" as Patient
+actor "Health Practitioner" as USER
+participant "Health NZ" as HNZ #LightBlue
+participant "PMS" as APIC #Orange
+participant "PMS Orchestrator" as ORCHESTRATOR #Orange
+control "Participate Operation\n$participate" as PARTICIPATE #LightBlue
+control "SDHR FHIR API" as FHIRAPI #LightBlue
+database "SDHR FHIR Server" as SDHR #LightGreen
+
+alt Patient opts back in at facility
+    Patient -> USER : Request to opt back in\nto SDHR participation
+    USER -> APIC : Record restored participation preference
+    APIC -> ORCHESTRATOR : Trigger patient event
+    ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
+    PARTICIPATE -> FHIRAPI : Write Participation
+    FHIRAPI -> SDHR : Persist
+    PARTICIPATE --> ORCHESTRATOR : Return OperationOutcome
+else Patient opts back in through Health NZ channel
+    Patient -> HNZ : Restore SDHR participation
+    HNZ -> ORCHESTRATOR : Notify participation change
+end
+
+alt Pull-based acquisition
+    FHIRAPI -> FHIRAPI : Lock patient for routine writes
+    FHIRAPI -> ORCHESTRATOR : Initiate individual historic reload
+    ORCHESTRATOR -> APIC : Retrieve eligible patient history
+    APIC --> ORCHESTRATOR : Return eligible patient history
+    ORCHESTRATOR --> FHIRAPI : Supply eligible patient history
+    loop For each eligible historic resource
+        FHIRAPI -> SDHR : Create or update resource
+    end
+    FHIRAPI -> FHIRAPI : Unlock patient
+    FHIRAPI --> ORCHESTRATOR : Return load results
+else Push-based acquisition
+    ORCHESTRATOR -> APIC : Retrieve eligible patient history
+    APIC --> ORCHESTRATOR : Return eligible patient history
+    ORCHESTRATOR -> ORCHESTRATOR : Coordinate historic and real-time writes\nso history cannot overwrite newer data
+    loop For each eligible historic resource
+        ORCHESTRATOR -> FHIRAPI : Create or update resource
+        FHIRAPI -> SDHR : Persist submitted resource
+    end
+    FHIRAPI --> ORCHESTRATOR : Return load results
+end
+
+ORCHESTRATOR -> ORCHESTRATOR : Resume eligible routine writes
+
+@enduml

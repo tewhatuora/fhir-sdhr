@@ -1,6 +1,6 @@
 @startuml
 
-title SDHR Audit Access Records Sequence Diagram
+title SDHR Information Access Sequence Diagram
 
 autonumber "<color:Black>[00]"
 
@@ -30,26 +30,30 @@ scale max 260 width
 actor "Health Practitioner" as USER
 participant "SEHR" as APP #Orange
 control "SDHR FHIR API" as FHIRAPI #LightBlue
-
-== Record access ==
+database "SDHR Primary Care\nCollection" as PCC #LightGreen
+participant "National Health\nInformation Source" as NHS #LightGreen
 
 USER -> APP : Select patient and request information
-APP -> APP : Record user action and request context\nin local audit record
+APP -> APP : Establish patient, user,\norganisation, and facility context
 APP -> FHIRAPI : Search or read patient information\nwith required access context
 FHIRAPI -> FHIRAPI : Authorise and audit request
-FHIRAPI -> FHIRAPI : Record access event
-FHIRAPI --> APP : Return FHIR response or error outcome
-APP -> APP : Correlate response with local audit record
+FHIRAPI -> FHIRAPI : Apply participation, privacy,\nconfidentiality, and access controls
 
-== Verify sampled access records ==
+alt Primary care information requested
+    FHIRAPI -> PCC : Retrieve permitted records
+    PCC --> FHIRAPI : Return available records
+else National information requested
+    FHIRAPI -> NHS : Retrieve permitted information
+    NHS --> FHIRAPI : Return available information
+end
 
-loop Ongoing access verification
-    APP -> FHIRAPI : GET /AuditEvent/$verification-samples
-    FHIRAPI -> FHIRAPI : Identify eligible outstanding samples
-    FHIRAPI --> APP : Bundle of sampled AuditEvent resources
-    APP -> APP : Review each sample using an\nautomated or manual process
-    APP -> FHIRAPI : POST /AuditEvent/$verification-submissions\nParameters with verification decisions
-    FHIRAPI --> APP : Parameters with processing results
+alt Request completed
+    FHIRAPI --> APP : Return FHIR Bundle or resource
+    APP -> APP : Retain required audit and source context
+    APP --> USER : Present information safely
+else Request cannot be completed
+    FHIRAPI --> APP : Return error outcome
+    APP -> APP : Handle error explicitly
 end
 
 @enduml

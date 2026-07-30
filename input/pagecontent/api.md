@@ -412,7 +412,7 @@ e.g.
 
 ### Testing the $participate Operation
 
-Most API consumers will have a credential that can be issued a scope that enables them to call the `$participate` operation. API consumers will not have access to the `$hnz-participate` operation so we have set up some NHIs in the UAT environmentto allow you to test outcome handling when a patient has opted out globally via an HNZ channel. ALL requests using these NHIs should fail with a 403 http response and an `OperationOutcome` containing the code `sdhr-participation-status-denied`
+Most API consumers will have a credential that can be issued a scope that enables them to call the `$participate` operation. NHIs are available in the UAT environment to allow you to test outcome handling when a patient has opted out globally via an HNZ channel. ALL requests using these NHIs should fail with a 403 http response and an `OperationOutcome` containing the code `sdhr-participation-status-denied`
 
 | NHI | Participate Status |
 |:---|:---|

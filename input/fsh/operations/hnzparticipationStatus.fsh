@@ -1,9 +1,7 @@
 Instance: SDHRHNZParticipationStatusOperation
 InstanceOf: OperationDefinition
 Description: """
-This operation retrieves a patient's Shared Digital Health Record participation status.
-This operation should be used by data providers in the Shared Digital Health Record ecosystem such as Patient Management Systems (PMS) or Electronic Health Record (EHR) systems.
-It returns whether the patient is participating in the service, whether enrolment information was found, and whether the patient has active, archived, or any records available in the service. The scope of the status returned is the API consumer, for example an HPI Facility where patient data is held.
+This internal use operation retrieves a patient's Shared Digital Health Record participation status and returns whether the patient is participating in the service, whether enrolment information was found, and whether the patient has active, archived, or any records available in the service.
 
 For an example response payload for this operation see:
 - [Parameters resource for participation status response - not participating](./Parameters-ParametersParticipationStatusResponse.html) : No consent, enrolment, or records found for the patient.
@@ -13,13 +11,11 @@ For an example response payload for this operation see:
 
 To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$hnz-participation-status`).
 
-The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
-The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
 The operation will return a `Parameters` resource containing the patient reference and participation status indicators.
 """
 Usage: #definition
 * url = "https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRHNZParticipationStatusOperation"
-* name = "ParticipationStatus"
+* name = "HNZParticipationStatus"
 * status = #active
 * kind = #operation
 * code = #hnz-participation-status

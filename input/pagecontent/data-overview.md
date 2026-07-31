@@ -3,7 +3,7 @@
 
 SDHR provides access to governed health information from participating primary care providers through the SDHR Primary Care Collection and from supported national health information sources. Each domain has distinct clinical meaning, source characteristics, privacy considerations, and known limitations.
 
-The domain pages explain what information is available and how it should be interpreted. FHIR representation and profile-level requirements remain in [Data Models](./data-models.html) and the [FHIR artifact catalogue](./artifacts.html).
+The domain pages explain what information is available and how it should be interpreted. FHIR representation and profile-level requirements remain in [data models](./data-models.html) and the [FHIR artifact catalogue](./artifacts.html).
 
 ### Available domains
 {: .underlined}
@@ -22,7 +22,7 @@ The domain pages explain what information is available and how it should be inte
 
 #### SDHR Primary Care Collection
 
-The SDHR Primary Care Collection contains information contributed by participating practice management system (PMS) systems. Its current scope includes:
+The SDHR Primary Care Collection contains information contributed by participating PMS products. Its current scope includes:
 
 - allergies and intolerances;
 - conditions; and
@@ -54,7 +54,7 @@ SDHR is not the system of record for the information it shares. Source systems r
 - Absence of information in SDHR does not establish that information does not exist elsewhere.
 - Information should be verified where clinically required.
 
-### Shared Digital Health Record ID
+### SDHR ID
 {: .underlined}
 
 Every resource in the SDHR Primary Care Collection is assigned an `id`. This identifier is guaranteed to be unique and is issued by the system when the resource is loaded. SDHR providers and consumers are expected to honour the `id` and use it as a unique reference when interacting with resources in SDHR.

@@ -3,7 +3,7 @@
 ### Purpose and scope
 {: .underlined}
 
-To allow Shared Electronic Health Record (SEHR) systems and other clinical portal applications to retrieve patient health information from SDHR and make it available to healthcare professionals involved in providing care.
+To allow SEHR systems and other clinical portal applications to retrieve patient health information from SDHR and make it available to healthcare professionals involved in providing care.
 
 #### Actors
 
@@ -20,7 +20,7 @@ To allow Shared Electronic Health Record (SEHR) systems and other clinical porta
       <td>Uses information in the context of providing care to a specific patient.</td>
     </tr>
     <tr>
-      <td>Shared Electronic Health Record (SEHR) system</td>
+      <td>SEHR system</td>
       <td>Identifies the patient, supplies the required access context, requests information, and presents the response.</td>
     </tr>
     <tr>
@@ -45,7 +45,7 @@ This use case currently or progressively applies to:
 - [Medication dispenses](./medications.html) — in development
 - [Immunisations](./immunisations.html) — in development
 
-The corresponding FHIR representations are described in [Data Models](./data-models.html) and [FHIR Artifacts](./artifacts.html).
+The corresponding FHIR representations are described in [data models](./data-models.html) and [FHIR artifacts](./artifacts.html).
 
 ### Business rules
 {: .underlined}

@@ -6,7 +6,7 @@ This domain provides a clinically focused, longitudinal view of prescribed and d
 ### FHIR artifacts
 {: .underlined}
 
-> **FHIR Artifacts**
+> **FHIR artifacts**
 >
 > - [SDHR MedicationRequest profile](./StructureDefinition-SDHRMedicationRequest.html)
 > - [SDHR MedicationDispense profile](./StructureDefinition-SDHRMedicationDispense.html)

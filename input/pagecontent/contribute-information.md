@@ -1,7 +1,7 @@
 ### Purpose and scope
 {: .underlined}
 
-To write patient health information from a participating Practice Management System (PMS) to the SDHR Primary Care Collection.
+To write patient health information from a participating PMS to the SDHR Primary Care Collection.
 
 #### Actors
 
@@ -44,7 +44,7 @@ This use case currently applies to information written to the SDHR Primary Care 
 - [Health conditions](./conditions.html)
 - [Observations](./observations.html)
 
-The corresponding FHIR representations are described in [Data Models](./data-models.html) and [FHIR Artifacts](./artifacts.html).
+The corresponding FHIR representations are described in [data models](./data-models.html) and [FHIR artifacts](./artifacts.html).
 
 ### Business rules
 {: .underlined}

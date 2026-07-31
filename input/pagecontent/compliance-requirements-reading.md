@@ -1,10 +1,10 @@
 > **Draft**: These compliance requirements are currently in draft and should be treated as draft content.
 
-### Important information about Compliance requirements
+### Important information about compliance requirements
 
 #### Scope and accreditation
 
-These compliance requirements apply to **Shared Electronic Health Record (SEHR) systems** that retrieve information from the Shared Digital Health Record (SDHR) and display it to clinical users. An SEHR is an API Consumer acting on behalf of an authenticated clinical user.
+These compliance requirements apply to **SEHR systems** that retrieve information from SDHR and display it to clinical users. An SEHR is an API consumer acting on behalf of an authenticated clinical user.
 
 The requirements cover secure access, accurate request context, safe presentation of clinical information, auditability, and ongoing monitoring of access. They do not cover creating or updating source data in SDHR. Systems that share data with SDHR must separately meet the [compliance requirements for systems sharing data](./compliance-requirements.html). Systems that perform both roles are assessed against both sets of requirements.
 
@@ -16,7 +16,7 @@ SEHR systems must periodically retrieve sampled access events, review whether th
 
 The [audit access records workflow](./access-information.html#audit-access-records-workflow) contains the end-to-end sequence and processing steps. The [access verification operations](./api.html#access-verification-operations) section of the API documentation contains endpoint behaviour, paging guidance, payload examples, and links to the relevant FHIR definitions.
 
-#### Types of Evidence
+#### Types of evidence
 
 For each requirement, please provide appropriate evidence as per the guidance below.
 
@@ -86,7 +86,7 @@ For each requirement, please provide appropriate evidence as per the guidance be
         <thead>
             <tr>
                 <th>
-                    <p><strong>Types of Evidence</strong></p>
+                    <p><strong>Types of evidence</strong></p>
                 </th>
                 <th>
                     <p><strong>Guidance</strong></p>
@@ -96,10 +96,10 @@ For each requirement, please provide appropriate evidence as per the guidance be
         <tbody>
             <tr>
                 <td>
-                    <p><strong>HNZ test scenario</strong></p>
+                    <p><strong>Health NZ test scenario</strong></p>
                 </td>
                 <td>
-                    <p>A test scenario and sample data will be provided by an HNZ tester. The vendor runs the scenario
+                    <p>A test scenario and sample data will be provided by a Health NZ tester. The vendor runs the scenario
                         in the SDHR UAT environment and provides the resulting output.</p>
                 </td>
             </tr>
@@ -163,7 +163,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p><strong>Mandatory</strong></p>
                 </th>
                 <th>
-                    <p><strong>Types of Evidence</strong></p>
+                    <p><strong>Types of evidence</strong></p>
                 </th>
             </tr>
         </thead>
@@ -658,7 +658,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-24">SRD-24</p>
                 </td>
                 <td>
-                    <p>Enable HNZ audit and investigation</p>
+                    <p>Enable Health NZ audit and investigation</p>
                 </td>
                 <td>
                     <p>Filtered audit datasets</p>

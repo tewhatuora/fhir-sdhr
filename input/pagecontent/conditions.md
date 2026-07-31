@@ -6,7 +6,7 @@ This domain contains Condition records contributed by participating primary care
 ### FHIR artifacts
 {: .underlined}
 
-> **FHIR Artifacts**
+> **FHIR artifacts**
 >
 > - [SDHR Condition profile](./StructureDefinition-SDHRCondition.html)
 > - [Condition example](./Condition-ConditionHypertensionExample.html)

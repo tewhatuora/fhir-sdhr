@@ -1,8 +1,8 @@
-### Important information about Compliance requirements
+### Important information about compliance requirements
 
 #### Scope and accreditation
 
-These compliance requirements apply to data source systems that create or update information in the Shared Digital Health Record (SDHR). Initially, this scope is limited to Practice Management Systems (PMS).
+These compliance requirements apply to data source systems that create or update information in SDHR. Initially, this scope is limited to PMS products.
 
 These requirements cover the system's role in sharing data with SDHR. A system that also retrieves and displays SDHR information to clinical users must separately meet the [compliance requirements for systems reading data](./compliance-requirements-reading.html). Systems that perform both roles are assessed against both sets of requirements.
 
@@ -25,7 +25,7 @@ Some requirements may not apply to every application. In that situation, provide
 
 Fig 2: Data acquisition solution components.
 
-#### Types of Evidence
+#### Types of evidence
 
 For each requirement, please provide appropriate evidence as per the guidance below.
 
@@ -95,7 +95,7 @@ For each requirement, please provide appropriate evidence as per the guidance be
         <thead>
             <tr>
                 <th>
-                    <p><strong>Types of Evidence</strong></p>
+                    <p><strong>Types of evidence</strong></p>
                 </th>
                 <th>
                     <p><strong>Guidance</strong></p>
@@ -105,17 +105,17 @@ For each requirement, please provide appropriate evidence as per the guidance be
         <tbody>
             <tr>
                 <td>
-                    <p><strong>HNZ test scenario</strong></p>
+                    <p><strong>Health NZ test scenario</strong></p>
                 </td>
                 <td>
-                    <p>A test scenario, and sample data, will be provided by an HNZ tester, run by vendor, and the
+                    <p>A test scenario, and sample data, will be provided by a Health NZ tester, run by vendor, and the
                         output will be provided. Please use the SDHR UAT environment to create the relevant test data to
                         complete each test.</p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p><strong>Design &amp; Test evidence from the Vendor</strong></p>
+                    <p><strong>Design and test evidence from the vendor</strong></p>
                 </td>
                 <td>
                     <p>Please provide suitable evidence of vendor design and testing, showing that the application meets
@@ -180,7 +180,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p><strong>Mandatory</strong></p>
                 </th>
                 <th>
-                    <p><strong>Types of Evidence</strong></p>
+                    <p><strong>Types of evidence</strong></p>
                 </th>
             </tr>
         </thead>
@@ -199,7 +199,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                         SDHR that it does not already hold locally (this capability requires separate compliance
                         testing)</p>
                     <p></p>
-                    <p><strong>Please Note</strong>: HNZ expects to use monitoring-based controls to ensure that the
+                    <p><strong>Please note</strong>: Health NZ expects to use monitoring-based controls to ensure that the
                         applications that are only accredited for sharing data to SDHR are not accessing data for
                         reasons other than record management.</p>
                 </td>
@@ -310,7 +310,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <p>Information can be provided to HNZ on request to support diagnostics, including the
+                    <p>Information can be provided to Health NZ on request to support diagnostics, including the
                         x-correlation-id header</p>
                 </td>
                 <td>
@@ -351,7 +351,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <p>Information can be provided to HNZ on request to support diagnostics, including the
+                    <p>Information can be provided to Health NZ on request to support diagnostics, including the
                         x-correlation-id header</p>
                 </td>
                 <td>
@@ -468,7 +468,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>The application supports the user to correctly identify and associate the appropriate NHI for the
                         patient before information is sent to SDHR.</p>
                     <p></p>
-                    <p>Please note: HNZ have process controls to ensure practices are correctly using NHIs to identify
+                    <p>Please note: Health NZ has process controls to ensure practices are correctly using NHIs to identify
                         patients.</p>
                 </td>
                 <td>
@@ -500,7 +500,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                         any applicable NHI held in the local patient record.</p>
                 </td>
                 <td>
-                    <p>The existing NHI on a patient record is linked to another NHI by HNZ (e.g. HNZ identify the
+                    <p>The existing NHI on a patient record is linked to another NHI by Health NZ (e.g. Health NZ identifies the
                         person has two NHI numbers).</p>
                 </td>
                 <td>
@@ -535,7 +535,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -546,7 +546,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Mandatory</p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr class="category-row">
@@ -575,7 +575,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -588,7 +588,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -604,7 +604,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -617,7 +617,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -654,7 +654,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td rowspan="2">
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -680,7 +680,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                     <p></p>
                 </td>
             </tr>
@@ -696,7 +696,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                     <p></p>
                 </td>
             </tr>
@@ -710,7 +710,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Mandatory</p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -724,7 +724,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                     <p></p>
                 </td>
             </tr>
@@ -735,7 +735,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                 <td rowspan="3">
                     <p>When accommodating<strong> Global participation (opt out),</strong> the application correctly
                         handles patient non-participation choices, for patients who choose to opt out of SDHR entirely
-                        (via HNZ opt out channel)</p>
+                        (via Health NZ opt out channel)</p>
                 </td>
                 <td rowspan="3">
                     <p>A patient has chosen to not participate in SDHR data sharing at a national level</p>
@@ -751,7 +751,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -764,7 +764,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -777,7 +777,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -786,12 +786,12 @@ The SDHR team will assess your responses and discuss with you if any further cla
                 </td>
                 <td>
                     <p>When accommodating<strong> Global participation (opt back in),</strong> the application has a
-                        mechanism to receive a notification from HNZ when a patient chooses to opt back into SDHR, to
+                        mechanism to receive a notification from Health NZ when a patient chooses to opt back into SDHR, to
                         initiate a bulk load of that patient’s information from their enrolled practice</p>
                 </td>
                 <td>
-                    <p>A patient who has previously chosen to opt-out via the HNZ opt out channel, chooses to opt back
-                        in again via HNZ.</p>
+                    <p>A patient who has previously chosen to opt-out via the Health NZ opt out channel, chooses to opt back
+                        in again via Health NZ.</p>
                 </td>
                 <td>
                     <p>The application implements an API endpoint to trigger a bulk historic load for an enrolled
@@ -806,7 +806,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Mandatory</p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr class="category-row">

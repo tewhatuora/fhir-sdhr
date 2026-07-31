@@ -6,7 +6,7 @@ This domain contains Observation records contributed by participating primary ca
 ### FHIR artifacts
 {: .underlined}
 
-> **FHIR Artifacts**
+> **FHIR artifacts**
 >
 > - [SDHR Observation profile](./StructureDefinition-SDHRObservation.html)
 > - [Vital signs example](./Observation-ObservationVitalSignsExample.html)

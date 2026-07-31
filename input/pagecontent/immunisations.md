@@ -6,7 +6,7 @@ This domain contains immunisation records sourced from a national immunisation i
 ### FHIR artifacts
 {: .underlined}
 
-> **FHIR Artifacts**
+> **FHIR artifacts**
 >
 > - [SDHR Immunization profile](./StructureDefinition-SDHRImmunization.html)
 > - [Search parameters and behaviour](./api.html#api-search-behaviour)

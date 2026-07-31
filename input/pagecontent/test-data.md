@@ -10,7 +10,7 @@ The globally opted-out patients below support testing of API behaviour after a H
 
 | Identifiers | Description | OperationOutcome |
 | -------- | ------- | ------- |
-| ZMW9001 - ZMW9009  |  This set of Patients are opted out globally with HNZ. | [Global Deny OperationOutcome](./OperationOutcome-OperationOutcomeGlobalDenyExample.json.html) |
+| ZMW9001 - ZMW9009  | These patients have opted out globally through Health NZ. | [Global Deny OperationOutcome](./OperationOutcome-OperationOutcomeGlobalDenyExample.json.html) |
 | ZMW8001 - ZMW8010 | This set of Patients are locked due to a background load process at each of these facilities: FZZ999-B, FZZ997-J, FZZ996-G, FZZ995-E, FZZ994-C. | [Patient Locked OperationOutcome](./OperationOutcome-OperationOutcomePatientLocked.json.html) |
 {: .grid}
 

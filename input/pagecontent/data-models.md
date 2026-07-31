@@ -1,4 +1,4 @@
-### FHIR Data Models
+### FHIR data models
 
 This section provides an overview of the design of the FHIR data representations that authorised applications can use to record and interchange shared digital health record information.
 
@@ -10,4 +10,3 @@ This section provides an overview of the design of the FHIR data representations
 {% include fhir-sdhr-resource-model.svg %}
 </div>
 <br clear="all">
-

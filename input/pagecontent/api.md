@@ -6,19 +6,19 @@ details {
 }
 </style>
 
-The [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) defines supported FHIR interactions and request requirements. The [FHIR Artifacts](./artifacts.html) provide the profiles, operation definitions, examples, and terminology used by the API, and the [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) provides a machine-readable interface description.
+The [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) defines supported FHIR interactions and request requirements. The [FHIR artifacts](./artifacts.html) provide the profiles, operation definitions, examples, and terminology used by the API, and the [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) provides a machine-readable interface description.
 
 ### Authentication and request context
 {: .underlined}
 
-The SDHR API uses OAuth 2.0 client credentials. API Consumers are authorised for approved interactions through the SDHR onboarding process.
+The SDHR API uses OAuth 2.0 client credentials. API consumers are authorised for approved interactions through the SDHR onboarding process.
 
 The `Request-Context` header is required for API requests and supplies the user, organisation, facility, and other request context needed for authorisation and audit. `X-Correlation-Id` is optional and supports request tracing. The [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) and [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) define the technical header requirements.
 
 ### Resource interaction catalogue
 {: .underlined}
 
-The following tables summarise the interactions intended for external API Consumers contributing information to or accessing information from SDHR. The linked profiles, operation definitions, and detailed sections remain authoritative for parameters, payloads, response behaviour, validation, and errors.
+The following tables summarise the interactions intended for external API consumers contributing information to or accessing information from SDHR. The linked profiles, operation definitions, and detailed sections remain authoritative for parameters, payloads, response behaviour, validation, and errors.
 
 #### Contributed resource interactions
 
@@ -268,7 +268,7 @@ In this example, the search returns two active conditions for patient `ZKC7284`,
 
 #### Search for resources by patient and identifier
 
-The `identifier` search parameter can be used with unique source-system identifiers. This enables systems such as Practice Management Systems to locate resources using identifiers they assigned and retained. A resource can contain multiple identifiers.
+The `identifier` search parameter can be used with unique source-system identifiers. This enables systems such as PMS products to locate resources using identifiers they assigned and retained. A resource can contain multiple identifiers.
 
 > Request `Condition` resources for a specific identifier
 > `GET Condition?patient=https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284&identifier=38cb6f26-9534-46e5-b659-536992faf0cc`
@@ -387,11 +387,11 @@ In this example, the query returns a single result.
 ### SDHR resource updates
 {: .underlined}
 
-This section describes how an API Consumer interacts with the SDHR FHIR server to update existing resources.
+This section describes how an API consumer interacts with the SDHR FHIR server to update existing resources.
 
 #### GET before PUT
 
-To maintain data integrity, API Consumers authorised to update resources must use a "GET before PUT" approach. Fetching the current resource before updating it ensures that changes are based on the latest state and do not overwrite updates made by another API Consumer.
+To maintain data integrity, API consumers authorised to update resources must use a "GET before PUT" approach. Fetching the current resource before updating it ensures that changes are based on the latest state and do not overwrite updates made by another API consumer.
 
 <div width="100%">
 <!-- Generated from `input/images-source/get-before-put.plantuml` -->
@@ -411,11 +411,11 @@ After applying the required changes, update the resource using `PUT /Condition/{
 
 ##### Case 2: The server-assigned resource ID is unknown
 
-Use a FHIR search with parameters available to the API Consumer to locate the resource before updating it.
+Use a FHIR search with parameters available to the API consumer to locate the resource before updating it.
 
 <b>Option 1: FHIR Search by local PMS identifier, stored as a FHIR Identifier</b>
 
-API Consumers that create or update records may include a source-system identifier in the shared resource. When this identifier is retained locally, the API Consumer can use the `identifier` search parameter to locate the resource.
+API consumers that create or update records may include a source-system identifier in the shared resource. When this identifier is retained locally, the API consumer can use the `identifier` search parameter to locate the resource.
 
 <div width="100%">
 <!-- Generated from `input/images-source/search-by-identifier.plantuml` -->
@@ -425,7 +425,7 @@ API Consumers that create or update records may include a source-system identifi
 
 <b>Option 2: FHIR Search using resource search parameters</b>
 
-When a source-system identifier is unavailable, use the resource-specific parameters documented in the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html). The search returns a FHIR `Bundle` that may contain multiple matches, which the API Consumer must handle safely.
+When a source-system identifier is unavailable, use the resource-specific parameters documented in the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html). The search returns a FHIR `Bundle` that may contain multiple matches, which the API consumer must handle safely.
 
 <div width="100%">
 <!-- Generated from `input/images-source/search-by-parameters.plantuml` -->
@@ -489,7 +489,7 @@ See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificatio
 
 #### Participate operation
 
-The `$participate` operation enables API Consumers, such as Practice Management Systems, to record a patient's facility participation preference and record-level withholding or release.
+The `$participate` operation enables API consumers, such as PMS products, to record a patient's facility participation preference and record-level withholding or release.
 
 | Contract element | Requirement |
 | --- | --- |
@@ -526,7 +526,7 @@ Response examples:
 
 See [Manage participation](./contribute-information.html#manage-participation) for the end-to-end facility, Health NZ, confidentiality, and historical-reload workflows. UAT identities and expected deny or lock outcomes are documented under [Test Data](./test-data.html).
 
-### SDHR Confidential Record API behaviour
+### SDHR confidential record API behaviour
 {: .underlined}
 
 SDHR represents two distinct confidentiality cases: an SDHR resource carrying a restrictive FHIR security label, and a source record registered as withheld through `$participate` where the clinical resource is not stored in SDHR. Their API responses differ.
@@ -559,7 +559,7 @@ Response body:
 
 </details>
 
-This search requests `AllergyIntolerance` resources for a patient. Because the search matches a confidential resource, that resource is omitted and the server adds a `REDACTED` tag to `Bundle.meta.security`. The tag tells the API Consumer that the result set has been filtered. `Bundle.total` reports the number of matches before confidentiality filtering.
+This search requests `AllergyIntolerance` resources for a patient. Because the search matches a confidential resource, that resource is omitted and the server adds a `REDACTED` tag to `Bundle.meta.security`. The tag tells the API consumer that the result set has been filtered. `Bundle.total` reports the number of matches before confidentiality filtering.
 
 ##### Read and vread response
 
@@ -599,4 +599,4 @@ The search response contains an `OperationOutcome` entry with `"mode":"outcome"`
 ### Internal-only operations
 {: .underlined}
 
-The `$hnz-participate` and `$hnz-participation-status` operations are restricted to authorised Health NZ internal channels and are not available to external API Consumers.
+The `$hnz-participate` and `$hnz-participation-status` operations are restricted to authorised Health NZ internal channels and are not available to external API consumers.

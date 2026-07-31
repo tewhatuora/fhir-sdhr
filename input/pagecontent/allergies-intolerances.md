@@ -6,7 +6,7 @@ This domain contains allergy and intolerance information contributed by particip
 ### FHIR artifacts
 {: .underlined}
 
-> **FHIR Artifacts**
+> **FHIR artifacts**
 >
 > - [SDHR AllergyIntolerance profile](./StructureDefinition-SDHRAllergyIntolerance.html)
 > - [AllergyIntolerance example](./AllergyIntolerance-AllergyIntoleranceExample.html)

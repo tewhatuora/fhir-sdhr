@@ -14,13 +14,13 @@ Information contributed by participating primary care providers:
 
 #### Additional information sources (in development)
 
-Information planned to be made available from national health information sources:
+Information from from national health information sources:
 
 - [Medication requests](./StructureDefinition-SDHRMedicationRequest.html)
 - [Medication dispenses](./StructureDefinition-SDHRMedicationDispense.html)
 - [Immunisations](./StructureDefinition-SDHRImmunization.html)
 
-See [Contribute information to SDHR](./contribute-information.html), [Access information from SDHR](./access-information.html), [Data overview](./data-overview.html), [data models](./data-models.html), and [FHIR artifacts](./artifacts.html) for information about supported interactions, data, profiles, and implementation requirements.
+See [Contribute information to SDHR](./contribute-information.html), [access information from SDHR](./access-information.html), [data overview](./data-overview.html), [data models](./data-models.html), and [FHIR artifacts](./artifacts.html) for information about supported interactions, data, profiles, and implementation requirements.
 
 ### Integration patterns
 

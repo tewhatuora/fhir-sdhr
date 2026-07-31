@@ -27,8 +27,7 @@ skinparam TitleFontSize 20
 ' see https://sarafian.github.io/tips/2021/03/11/plantuml-tips-tricks-1.html#:~:text=responseMessageBelowArrow-,Semi,-transparent%20group%20backgrounds
 skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
 
-scale max 400 width
-scale 300*500
+scale max 260 width
 
 actor "Health Practitioner" as USER
 participant "PMS" as APIC #Orange

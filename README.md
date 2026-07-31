@@ -48,5 +48,3 @@ Health New Zealand | Te Whatu Ora Shared Digital Health Record FHIR API.
     - If there are layout or rendering issues, update the markdown in `input/pagecontent` and repeat the build preview process.
     - If you are unsure about any behavior or need extra validation, ask the tech team to review the UAT preview as well.
 
-
-

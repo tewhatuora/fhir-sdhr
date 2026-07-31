@@ -1,15 +1,71 @@
-# API Documentation
+The SDHR API comprises multiple FHIR resources. This page provides technical guidance for application developers integrating with the Shared Digital Health Record APIs.
 
-The SDHR API is comprised of multiple FHIR resources. This page provides technical guidance for applicaiton developers who wish to integrate their applications with the Shared Digital Health Record APIs
+<style>
+details {
+  margin-bottom: 1rem;
+}
+</style>
 
-| **Resource** | **Description** |
-| --- | --- |
-| [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) | FHIR API Capability Statement. Developers should review this to understand the available API interactions and request requirements such as the Request-Context header |
-| [API Artifacts](./artifacts.html) | List of FHIR Artifacts for this API |
-| [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) | Machine readable OpenAPI specification for this API |
-| [Participate Operation](./OperationDefinition-SDHRParticipateOperation.html)| Custom operation designed to capture participation information from API Consumers e.g. Patient Management Systems |
+The [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) defines supported FHIR interactions and request requirements. The [FHIR artifacts](./artifacts.html) provide the profiles, operation definitions, examples, and terminology used by the API, and the [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) provides a machine-readable interface description.
 
-## Logical View
+### Authentication and request context
+{: .underlined}
+
+The SDHR API uses OAuth 2.0 client credentials. API consumers are authorised for approved interactions through the SDHR onboarding process.
+
+The `Request-Context` header is required for API requests and supplies the user, organisation, facility, and other request context needed for authorisation and audit. `X-Correlation-Id` is optional and supports request tracing. The [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) and [OpenAPI Specification](https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API) define the technical header requirements.
+
+### Resource interaction catalogue
+{: .underlined}
+
+The following tables summarise the interactions intended for external API consumers contributing information to or accessing information from SDHR. The linked profiles, operation definitions, and detailed sections remain authoritative for parameters, payloads, response behaviour, validation, and errors.
+
+#### Contributed resource interactions
+
+Allergy, condition, and observation information is contributed to the SDHR Primary Care Collection. These resources support the same interaction pattern.
+
+| Resource | Interactions | HTTP verbs and relative URLs | Profile or definition | Detailed behaviour |
+| --- | --- | --- | --- | --- |
+| AllergyIntolerance | search, create, read, update | `GET /AllergyIntolerance`<br>`POST /AllergyIntolerance`<br>`GET /AllergyIntolerance/{id}`<br>`PUT /AllergyIntolerance/{id}` | [SDHR AllergyIntolerance](./StructureDefinition-SDHRAllergyIntolerance.html) | [Search behaviour](#api-search-behaviour)<br>[Update behaviour](#sdhr-resource-updates) |
+| Condition | search, create, read, update | `GET /Condition`<br>`POST /Condition`<br>`GET /Condition/{id}`<br>`PUT /Condition/{id}` | [SDHR Condition](./StructureDefinition-SDHRCondition.html) | [Search behaviour](#api-search-behaviour)<br>[Update behaviour](#sdhr-resource-updates) |
+| Observation | search, create, read, update | `GET /Observation`<br>`POST /Observation`<br>`GET /Observation/{id}`<br>`PUT /Observation/{id}` | [SDHR Observation](./StructureDefinition-SDHRObservation.html) | [Search behaviour](#api-search-behaviour)<br>[Update behaviour](#sdhr-resource-updates) |
+{: .grid}
+
+#### Batch interaction
+
+| Resource | Interaction | HTTP verb and relative URL | Profile or definition | Detailed behaviour |
+| --- | --- | --- | --- | --- |
+| Bundle | batch | `POST /` | [SDHR Batch Bundle](./StructureDefinition-SDHRBatchBundle.html) | The Bundle must use `type = batch`; transaction processing and participation operations within the Bundle are not supported. |
+{: .grid}
+
+#### National source resource interactions
+
+Medication and immunisation information is read-only through SDHR. It is sourced from national health information sources and cannot be created, updated, or deleted through the SDHR API.
+
+| Resource | Interactions | HTTP verbs and relative URLs | Profile or definition | Detailed behaviour |
+| --- | --- | --- | --- | --- |
+| MedicationRequest | search, read | `GET /MedicationRequest`<br>`GET /MedicationRequest/{id}` | [SDHR MedicationRequest](./StructureDefinition-SDHRMedicationRequest.html) | [Search behaviour](#api-search-behaviour) |
+| MedicationDispense | search, read | `GET /MedicationDispense`<br>`GET /MedicationDispense/{id}` | [SDHR MedicationDispense](./StructureDefinition-SDHRMedicationDispense.html) | [Search behaviour](#api-search-behaviour) |
+| Immunization | search, read, vread | `GET /Immunization`<br>`GET /Immunization/{id}`<br>`GET /Immunization/{id}/_history/{vid}` | [SDHR Immunization](./StructureDefinition-SDHRImmunization.html) | [Search behaviour](#api-search-behaviour)<br>[Confidential record behaviour](#sdhr-confidential-record-api-behaviour) |
+{: .grid}
+
+#### Participation operations
+
+| Operation | HTTP verb and relative URL | Definition | Status | Detailed behaviour |
+| --- | --- | --- | --- | --- |
+| `$participate` | `POST /$participate` | [SDHR Participate Operation](./OperationDefinition-SDHRParticipateOperation.html) | Active | [Technical contract](#participate-operation)<br>[Contribution workflow](./contribute-information.html#facility-participation) |
+{: .grid}
+
+#### Access verification operation catalogue
+
+| Operation | HTTP verb and relative URL | Definition | Status | Detailed behaviour |
+| --- | --- | --- | --- | --- |
+| `$verification-samples` | `GET /AuditEvent/$verification-samples` | [SDHR Verification Samples Operation](./OperationDefinition-SDHRVerificationSamplesOperation.html) | Draft | [Access verification operations](#access-verification-operations) |
+| `$verification-submissions` | `POST /AuditEvent/$verification-submissions` | [SDHR Verification Submissions Operation](./OperationDefinition-SDHRVerificationSubmissionsOperation.html) | Draft | [Access verification operations](#access-verification-operations) |
+{: .grid}
+
+### Logical view
+{: .underlined}
 
 <!-- markdownlint-disable MD033 -->
 <div width="100%">
@@ -18,17 +74,18 @@ The SDHR API is comprised of multiple FHIR resources. This page provides technic
 </div>
 <br clear="all">
 
-## API Search Behaviour
+### API search behaviour
+{: .underlined}
 
 The Shared Digital Health Record FHIR API supports the [FHIR search pattern](https://hl7.org/fhir/R4B/search.html).
 
-You can see the supported search parameters for this API in the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html#resourcesCap1)
+Supported search parameters are listed in the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html#resourcesCap1).
 
 See below for some example search queries.
 
-### Search for Conditions by Patient and Source
+#### Search for Conditions by patient and source
 
-This query will return all Condition resources for a given `Patient` and `meta.source`.
+This query returns all Condition resources for a given `Patient` and `meta.source`.
 
 `GET /Condition?patient=https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284&_source=https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ111-A`
 
@@ -36,7 +93,7 @@ This query will return all Condition resources for a given `Patient` and `meta.s
 <details>
 <summary><b><u>Click to view example response</u></b></summary>
 <br>
-In this example the search returns 2 active conditions for the patient `ZKC7284` that were sourced from the HPI location `FZZ111-A`
+In this example, the search returns two active conditions for patient `ZKC7284`, sourced from HPI location `FZZ111-A`.
 <br>
 <pre><code class="language-json">
 {
@@ -50,7 +107,7 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
     "link": [
         {
             "relation": "self",
-            "url": "https://server.url/Condition?_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fhpi%2Fv1%2FLocation%2FF38006-B&patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC7284"
+            "url": "https://server.url/Condition?_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fhpi%2Fv1%2FLocation%2FFZZ111-A&patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC7284"
         }
     ],
     "entry": [
@@ -209,9 +266,9 @@ In this example the search returns 2 active conditions for the patient `ZKC7284`
 </div>
 <br clear="all">
 
-### Search for Resources by Patient and Identifier
+#### Search for resources by patient and identifier
 
-In this API `identifier` can be used to track source system unique identifiers. This should enable systems such as Patient Management Systems to track the provenance of resources. There is no limit on the number of identifiers that a resource can contain.
+The `identifier` search parameter can be used with unique source-system identifiers. This enables systems such as PMS products to locate resources using identifiers they assigned and retained. A resource can contain multiple identifiers.
 
 > Request `Condition` resources for a specific identifier
 > `GET Condition?patient=https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284&identifier=38cb6f26-9534-46e5-b659-536992faf0cc`
@@ -223,7 +280,7 @@ In this API `identifier` can be used to track source system unique identifiers. 
 <details>
 <summary><b><u>Click to view example response</u></b></summary>
 <br>
-In this example the above query returns a single result. Note that in most cases omission of the `patient` would return a single result but to avoid any possibility of identifier non-uniqueness the `patient` modifier **SHOULD** be used.
+In this example, the query returns a single result.
 <br>
 <pre><code class="language-json">
 
@@ -327,13 +384,14 @@ In this example the above query returns a single result. Note that in most cases
 </div>
 <br clear="all">
 
-## SDHR Resource updates
+### SDHR resource updates
+{: .underlined}
 
-This section describes the process of SDHR API Consumer system interacting with the SDHR FHIR server to update existing resources.
+This section describes how an API consumer interacts with the SDHR FHIR server to update existing resources.
 
-### GET before PUT
+#### GET before PUT
 
-To maintain data integrity, API Consumers authorized to make updates to resources must use a "GET before PUT" approach. By always fetching the current state of a resource before attempting an update, you ensure that the modifications reflect the most accurate and recent information, without overwriting updates which may have been made by other API Consumers.
+To maintain data integrity, API consumers authorised to update resources must use a "GET before PUT" approach. Fetching the current resource before updating it ensures that changes are based on the latest state and do not overwrite updates made by another API consumer.
 
 <div width="100%">
 <!-- Generated from `input/images-source/get-before-put.plantuml` -->
@@ -341,23 +399,23 @@ To maintain data integrity, API Consumers authorized to make updates to resource
 </div>
 <br clear="all">
 
-### Searching for resources before update
+#### Searching for resources before update
 
-The SDHR API reflects the FHIR Search parameters which are documented in the [Server Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) and well as a direct HTTP GET for a resource.
+The [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) documents the supported FHIR search parameters and direct read interactions.
 
-#### Case 1: The SDHR Server assigned resource ID is known by the API Consumer
+##### Case 1: The server-assigned resource ID is known
 
-In this scenario, an HTTP GET for the resource can be made to retrieve the resource: `GET /Condition/{serverResourceId}`.
+Retrieve the resource directly using `GET /Condition/{serverResourceId}`.
 
-Once the update has been made, the resource can be updated in the SDHR Server by using an HTTP PUT to the resource: `PUT /Condition/{serverResourceId}`
+After applying the required changes, update the resource using `PUT /Condition/{serverResourceId}`.
 
-#### Case 2: The SDHR Server assigned resource ID is unknown by the API Consumer
+##### Case 2: The server-assigned resource ID is unknown
 
-In this scenario, a FHIR Search must be used with search parameters available to the API Consumer, as the server resource ID cannot be used for a direct HTTP GET.
+Use a FHIR search with parameters available to the API consumer to locate the resource before updating it.
 
 <b>Option 1: FHIR Search by local PMS identifier, stored as a FHIR Identifier</b>
 
-To improve accuracy in this process, API Consumers who submit or update records may append an identifier known to them to the shared record. This may be a representation or a copy of a local identifier used within the local PMS system. When a local identifier is stored, a FHIR Search using an identifier search parameter can be used to retrieve a record.
+API consumers that create or update records may include a source-system identifier in the shared resource. When this identifier is retained locally, the API consumer can use the `identifier` search parameter to locate the resource.
 
 <div width="100%">
 <!-- Generated from `input/images-source/search-by-identifier.plantuml` -->
@@ -367,7 +425,7 @@ To improve accuracy in this process, API Consumers who submit or update records 
 
 <b>Option 2: FHIR Search using resource search parameters</b>
 
-When a local identifier is not submitted to a resource, the search parameters for each resource must be used, which are documented in the [Server Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html). This will return a FHIR Bundle which may contain multiple records which must be handled by the API Consumer.
+When a source-system identifier is unavailable, use the resource-specific parameters documented in the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html). The search returns a FHIR `Bundle` that may contain multiple matches, which the API consumer must handle safely.
 
 <div width="100%">
 <!-- Generated from `input/images-source/search-by-parameters.plantuml` -->
@@ -375,66 +433,118 @@ When a local identifier is not submitted to a resource, the search parameters fo
 </div>
 <br clear="all">
 
-## SDHR Custom Operations
+### SDHR custom operations
+{: .underlined}
 
-The SDHR service includes the following FHIR custom operations
+The SDHR service includes the following FHIR custom operations.
 
-### Participate Operation
+#### Access verification operations
 
-This operation is designed to enable API Consumers such as PMS systems to notify the SDHR service that a patient has withheld records from the service.
-To call the operation a `POST` request is made to the base API with a `Parameters` payload.
-e.g.
+> **Draft**: These verification operations and examples are currently draft and should be treated as draft interface content.
+
+SEHR systems need to periodically retrieve sampled access events from SDHR, review whether those accesses were valid, and submit the verification decisions. Samples are represented as FHIR `AuditEvent` resources that conform to the [SDHR AuditEvent profile](./StructureDefinition-SDHRAuditEvent.html).
+
+This workflow is performed on an ongoing basis so that newly sampled access events continue to be reviewed and verified over time.
+
+The end-to-end sequence and corresponding processing steps are documented in the [audit access records workflow](./access-information.html#audit-access-records-workflow).
+
+##### Retrieve verification samples
+
+The SEHR calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation supports `_count` and `_offset` query parameters for paging, for example:
+
+`GET /AuditEvent/$verification-samples?_count=1&_offset=0`
+
+See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSamplesOperation.html).
+
+<details>
+<summary><b><u>Click to view verification samples Bundle example</u></b></summary>
+
+{% fragment Bundle/BundleVerificationSamplesResponseExample JSON %}
+
+</details>
+
+##### Review sampled access events
+
+The SEHR reviews the returned `AuditEvent` resources using either an automated process or a manual workflow to determine whether each recorded access was valid.
+
+##### Submit verification decisions
+
+The SEHR calls `POST /AuditEvent/$verification-submissions` with the defined `Parameters` payload to submit one or more verification decisions.
+
+See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificationSubmissionsOperation.html), the [SDHRVerificationSubmissionParameters profile](./StructureDefinition-SDHRVerificationSubmissionParameters.html), and the [SDHRVerificationSubmissionResponseParameters profile](./StructureDefinition-SDHRVerificationSubmissionResponseParameters.html).
+
+<details>
+<summary><b><u>Click to view verification submission request example</u></b></summary>
+
+{% fragment Parameters/ParametersVerificationSubmissionRequestExample JSON %}
+
+</details>
+
+<details>
+<summary><b><u>Click to view verification submission response example</u></b></summary>
+
+{% fragment Parameters/ParametersVerificationSubmissionResponseExample JSON %}
+
+</details>
+
+#### Participate operation
+
+The `$participate` operation enables API consumers, such as PMS products, to record a patient's facility participation preference and record-level withholding or release.
+
+| Contract element | Requirement |
+| --- | --- |
+| Interaction | System-level custom operation |
+| HTTP request | `POST /$participate` |
+| Definition | [SDHR Participate Operation](./OperationDefinition-SDHRParticipateOperation.html) |
+| Request body | FHIR `Parameters` conforming to the operation definition |
+| Response body | `OperationOutcome` indicating success or failure |
+| Behaviour | Idempotent for repeated requests with the same parameters |
+{: .grid}
+
+The operation supports facility opt-out and opt-back-in, technical initialisation of the default facility preference, withholding a local `Condition` or `Observation`, and releasing a previously withheld record. Parameter cardinalities, conditional requirements, bindings, and response definitions are authoritative in the [OperationDefinition](./OperationDefinition-SDHRParticipateOperation.html).
+
+Request examples:
+
+- [Facility opt-out](./Parameters-ParametersDoNotParticipate.html)
+- [Set or restore facility participation](./Parameters-ParametersParticipate.html)
+- [Record withheld at source](./Parameters-ParametersParticipateRecordWithheld.html)
+- [Release a withheld record](./Parameters-ParametersParticipateRecordReleased.html)
+
+Response examples:
+
+- [Successful participation update](./OperationOutcome-OperationOutcomeParticipateSuccess.html)
+- [Invalid patient reference](./OperationOutcome-OperationOutcomeParticipateInvalidPatient.html)
+- [Missing withholding reason](./OperationOutcome-OperationOutcomeParticipateMissingReason.html)
+- [Facility preference not yet known](./OperationOutcome-OperationOutcomeParticipatePreferencesNotKnown.html)
+
+<details>
+<summary><b><u>Example request to release a withheld record</u></b></summary>
 
 {% fragment Parameters/ParametersParticipateRecordReleased JSON %}
 
-### Example Participation Flows
+</details>
 
-<!-- markdownlint-disable MD033 -->
-<div width="100%">
-<!-- Generated from `input/images-source/participate-sequence-pmsoptoff.plantuml` -->
-{% include participate-sequence-pmsoptoff.svg %}
-</div>
-<br clear="all">\
+See [Manage participation](./contribute-information.html#manage-participation) for the end-to-end facility, Health NZ, confidentiality, and historical-reload workflows. UAT identities and expected deny or lock outcomes are documented under [Test Data](./test-data.html).
 
-<!-- markdownlint-disable MD033 -->
-<div width="100%">
-<!-- Generated from `input/images-source/participate-sequence-pmsrecordwithheld.plantuml` -->
-{% include participate-sequence-pmsrecordwithheld.svg %}
-</div>
-<br clear="all">
+### SDHR confidential record API behaviour
+{: .underlined}
 
-<!-- markdownlint-disable MD033 -->
-<div width="100%">
-<!-- Generated from `input/images-source/participate-sequence-pmsrecordwithheld.plantuml` -->
-{% include participate-sequence-hnzoptoff.svg %}
-</div>
-<br clear="all">
+SDHR represents two distinct confidentiality cases: an SDHR resource carrying a restrictive FHIR security label, and a source record registered as withheld through `$participate` where the clinical resource is not stored in SDHR. Their API responses differ.
 
-### Testing the $participate Operation
+#### Stored resource security-label behaviour
 
-Most API consumers will have a credential that can be issued a scope that enables them to call the `$participate` operation. API consumers will not have access to the `$hnz-participate` operation so we have set up some NHIs in the UAT environmentto allow you to test outcome handling when a patient has opted out globally via an HNZ channel. ALL requests using these NHIs should fail with a 403 http response and an `OperationOutcome` containing the code `sdhr-participation-status-denied`
+Confidentiality labels are applied to an SDHR resource through its `meta.security` array using the `http://terminology.hl7.org/CodeSystem/v3-Confidentiality` code system.
 
-| NHI | Participate Status |
-|:---|:---|
-| ZMW9001 | Opted out `hnzParticipationIndicator:false`|
-| ZMW9009 | Opted out `hnzParticipationIndicator:false`|
+The behaviours below apply to resources labelled `R` (Restricted) or `V` (Very Restricted). SDHR resources without either confidentiality label are not subject to these behaviours.
 
-## SDHR Confidential Record API behaviour
-
-When a record is created or updated to be marked as confidential using [FHIR Security labels](https://build.fhir.org/security-labels.html), read or search operations that would return the  record will result in no access to the record.
-
-When the data sensitivity tags using the confidentiality system `http://terminology.hl7.org/CodeSystem/v3-Confidentiality` are be applied to any SDHR resource, by adding the tag in the resource `meta.security` array, the API will use the follow behaviours when the resources are subject to FHIR API Requests.
-
-The behaviours are valid for resources containing an security label using the `http://terminology.hl7.org/CodeSystem/v3-Confidentiality` `system` and `R` (Restricted) or `V` (Very Restricted). SDHR resources which do not contain this confidentiality tag will not be subject to these behaviours.
-
-## Sample confidential resource
+##### Sample confidential resource
 
 <details>
 <summary><b><u>Click to view example confidential resource</u></b></summary>
 {% fragment AllergyIntolerance/AllergyIntoleranceExample JSON %}
 </details>
 
-#### FHIR Search example
+##### Search response
 
 `GET /AllergyIntolerance?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC7284`
 
@@ -442,29 +552,16 @@ Response status: `200`
 
 Response body:
 
+<details>
+<summary><b><u>Click to view example response</u></b></summary>
+
 {% fragment Bundle/SearchConfidentialRecordsResponseExample JSON %}
 
-In this request example, a request is made to return AllergyIntolerance resources for a patient using FHIR Search. As a confidential resource was matched with this search, the search result set has been redacted due to confidentiality tags on the resource, resulting in the `meta.security` `REDACTED` tag being added to the search result `Bundle`. This indicates to the API Consumer that some portion of the searchset has been filtered due to confidentiality and not included in the content returned. The `total` within the response reflects the total of resources before filtering occurs.
+</details>
 
-#### FHIR Search Example Where Matched Records Are Withheld
+This search requests `AllergyIntolerance` resources for a patient. Because the search matches a confidential resource, that resource is omitted and the server adds a `REDACTED` tag to `Bundle.meta.security`. The tag tells the API consumer that the result set has been filtered. `Bundle.total` reports the number of matches before confidentiality filtering.
 
-In the following search the parameters below are supplied
-
-- `patient` | <https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC4633>
-- `source` | <https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ111-A>
-- `identifier` | 6b8a6cc1-612f-456e-89df-9fbcd753acb2
-
-`GET /Condition?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC4633&_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fhpi%2Fv1%2FLocation%2FF38006-B&identifier=6b8a6cc1-612f-456e-89df-9fbcd753acb2`
-
-In this example the spplied parameters are an exact match for a singe record that has been indicated as wiithheld by the source system. in this scenario the server does not have the record however it is able to uniquely match to a record that has been withheld using the [$participate operation](./OperationDefinition-SDHRParticipateOperation.html)
-
-The search response will contain an `OperationOutcome` with `"mode":"outcome"` as below
-
-{% fragment Bundle/SearchExactMatchRecordWithheldExample JSON %}
-
-[See example details](./Bundle-SearchExactMatchRecordWithheldExample.html)
-
-#### FHIR read, vread example
+##### Read and vread response
 
 `GET /AllergyIntolerance/{id}`
 
@@ -474,4 +571,32 @@ Response body:
 
 {% fragment OperationOutcome/APIError-Confidential JSON %}
 
-In this example, a request is made to a single resource which contains a confidentiality flag. This returns a 403 error.
+In this example, a request for a single confidential resource receives an HTTP 403 response.
+
+#### Record withheld at source behaviour
+
+The following search supplies these parameters:
+
+- `patient` | <https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC4633>
+- `source` | <https://api.hip.digital.health.nz/fhir/hpi/v1/Location/F38006-B>
+- `identifier` | 6b8a6cc1-612f-456e-89df-9fbcd753acb2
+
+`GET /Condition?patient=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fnhi%2Fv1%2FPatient%2FZKC4633&_source=https%3A%2F%2Fapi.hip.digital.health.nz%2Ffhir%2Fhpi%2Fv1%2FLocation%2FF38006-B&identifier=6b8a6cc1-612f-456e-89df-9fbcd753acb2`
+
+In this example, the supplied parameters exactly match a single record that the source system has marked as withheld. The server does not hold the clinical record, but it can uniquely match the search to the withheld record registered through the [$participate operation](./OperationDefinition-SDHRParticipateOperation.html).
+
+The search response contains an `OperationOutcome` entry with `"mode":"outcome"`:
+
+<details>
+<summary><b><u>Click to view example response</u></b></summary>
+
+{% fragment Bundle/SearchExactMatchRecordWithheldExample JSON %}
+
+</details>
+
+[See example details](./Bundle-SearchExactMatchRecordWithheldExample.html)
+
+### Internal-only operations
+{: .underlined}
+
+The `$hnz-participate` and `$hnz-participation-status` operations are restricted to authorised Health NZ internal channels and are not available to external API consumers.

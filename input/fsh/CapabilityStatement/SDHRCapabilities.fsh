@@ -72,7 +72,7 @@ For a global opt-in request where the patient is enrolled with a provider, the r
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 
-// participation status operation
+// hnz participation status operation
 * rest.operation[+].name = "hnz-participation-status"
 * rest.operation[=].definition = Canonical(SDHRHNZParticipationStatusOperation)
 * rest.operation[=].documentation = """
@@ -93,6 +93,21 @@ The operation is expected to be called by a healthcare provider on behalf of the
 The operation will return a `Parameters` resource containing the patient reference and participation status indicators.
 """
 
+// participation status operation
+* rest.operation[+].name = "participation-status"
+* rest.operation[=].definition = Canonical(SDHRParticipationStatusOperation)
+* rest.operation[=].documentation = """
+This operation allows Shared Electronic Health Record (SEHR) systems to retrieve a patient's Shared Digital Health Record participation status.
+
+For an example response payload for this operation see:
+- [Parameters resource for participation status response - not participating](./Parameters-ParametersParticipationStatusNotParticipatingResponse.html) : This example shows the `Parameters` resource returned when the patient is not participating in the Shared Digital Health Record service.
+- [Parameters resource for participation status response - participating](./Parameters-ParametersParticipationStatusParticipatingResponse.html) : This example shows the `Parameters` resource returned when the patient is participating in the Shared Digital Health Record service.
+
+To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participation-status`).
+
+The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
+The operation will return a `Parameters` resource containing the patient reference and participation status indicators.
+"""
 
 * rest.security.cors = true
 * rest.security.service = #SMART-on-FHIR

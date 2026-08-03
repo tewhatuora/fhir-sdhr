@@ -1,7 +1,7 @@
 ### Overview
 {: .underlined}
 
-SDHR provides access to governed health information from participating primary care providers through the SDHR Primary Care Collection and from supported national health information sources. Each domain has distinct clinical meaning, source characteristics, privacy considerations, and known limitations.
+SDHR provides access to core health information from participating primary care providers through the SDHR Primary Care Collection and from supported national health information sources. Each domain has distinct clinical meaning, source characteristics, privacy considerations, and known limitations.
 
 The domain pages explain what information is available and how it should be interpreted. FHIR representation and profile-level requirements remain in [data models](./data-models.html) and the [FHIR artifact catalogue](./artifacts.html).
 
@@ -42,7 +42,7 @@ In the future we expect to include laboratory results and radiology reports, cli
 ### Information governance
 {: .underlined}
 
-SDHR is not the system of record for the information it shares. Source systems remain responsible for creating, maintaining and correcting information. SDHR provides trusted access to governed health information across care settings.
+SDHR is not the system of record for the information it shares. Source systems remain responsible for creating, maintaining and correcting information.
 
 ### Clinical safety and interpretation
 {: .underlined}
@@ -53,6 +53,12 @@ SDHR is not the system of record for the information it shares. Source systems r
 - Provenance, status and dates are important to interpretation.
 - Absence of information in SDHR does not establish that information does not exist elsewhere.
 - Information should be verified where clinically required.
+
+Information may be unavailable because:
+- the source organisation does not participate in SDHR;
+- the patient has exercised a participation or confidentiality choice;
+- the information is outside the scope of currently connected data sources; or
+- the information has not been contributed to SDHR.
 
 ### SDHR ID
 {: .underlined}

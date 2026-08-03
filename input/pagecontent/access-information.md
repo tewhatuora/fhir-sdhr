@@ -114,14 +114,11 @@ The detailed structure, validation rules, and technical implementation of reques
 - SDHR returns information the requester is authorised to access.
 - The SEHR presents the information to the healthcare professional in a clinically safe and usable way.
 
-SDHR provides access to health information but does not determine which individual-level access controls for the roles that may view that information. Accessing systems remain responsible for authenticating users and determining the level of information available to those users based on local policies, roles, responsibilities, and permitted use.
-
-SDHR is not the system of record for the information it shares. Source systems remain responsible for creating, maintaining and correcting information.
-
 #### Response and error handling
 
 - A successful search returns a FHIR `Bundle`; a successful read or vread returns the requested resource.
 - An empty result may mean that SDHR has no matching information available to the requester. It must not be presented as proof that the clinical information does not exist.
+- Patient identity should be established using local or authoritative identity services. Patient names returned with SDHR information should not be treated as the authoritative source of patient identity.
 - A filtered result may contain metadata indicating that confidentiality controls, participation settings, source-system restrictions, or other information-sharing controls have removed information from the response.
 - Accessing systems must not assume that all relevant information has been returned when filtering controls have been applied.
 - Invalid, unauthorised, or prohibited requests return an error outcome that the SEHR must handle explicitly.

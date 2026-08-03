@@ -1,7 +1,7 @@
 ### Overview
 {: .underlined}
 
-This domain provides a clinically focused, longitudinal view of prescribed and dispensed medicines. Medication information is planned to be made available from a national health information source.
+This domain provides a clinically focused, longitudinal view of prescribed and dispensed medicines. Medication information is sourced from the Medicines Data Repository (MDR).
 
 ### FHIR artifacts
 {: .underlined}
@@ -50,8 +50,7 @@ Medication Dispenses represent medicines supplied. They are a stronger indicator
 {: .underlined}
 
 - MDR may contain confidential records.
-- Prescribing and dispensing confidentiality controls can be carried through to MDR, but their interpretation may vary according to how NZePS-integrated systems map confidentiality options.
-- Historical records reflect the patient's confidentiality choices, or the source system's knowledge of those choices, when the record was created and may not reflect current choices.
+- Prescribing and dispensing confidentiality controls are carried through to MDR
 - Medication information can reveal sensitive details relating to mental health, oncology, infectious disease, reproductive health, pain management, or substance dependence.
 - Inappropriate access, disclosure, or interpretation may contribute to stigma or bias and affect patient trust.
 - Access must be auditable and meet the [compliance requirements for systems reading data](./compliance-requirements-reading.html).
@@ -72,4 +71,4 @@ Medication Dispenses represent medicines supplied. They are a stronger indicator
 - Data completeness varies with NZePS integration, source-system workflows, and data quality.
 - Feedback mechanisms for correcting or annotating inaccurate medication information are limited.
 - Administered medicines are outside NZePS coverage.
-- Practical historical limits reflect current MDR availability and the risk-managed SDHR scope.
+- Practical historical limits reflect current MDR availability.

@@ -1,6 +1,7 @@
 The Shared Digital Health Record (SDHR), provided by Health New Zealand | Te Whatu Ora (Health NZ), enables authorised clinical systems to securely access and share core patient health information across care settings. It brings together information from the SDHR Primary Care Collection and selected national sources through common standards, subject to participation, privacy, confidentiality, security, and access controls. Source systems remain responsible for maintaining the information they provide.
 
 ### Patient information
+{: .underlined}
 
 Information is available from:
 
@@ -23,6 +24,7 @@ Information from from national health information sources:
 See [Contribute information to SDHR](./contribute-information.html), [access information from SDHR](./access-information.html), [data overview](./data-overview.html), [data models](./data-models.html), and [FHIR artifacts](./artifacts.html) for information about supported interactions, data, profiles, and implementation requirements.
 
 ### Integration patterns
+{: .underlined}
 
 Clinical systems integrate with SDHR in one or both of the following ways.
 
@@ -43,6 +45,7 @@ The PMS remains the system of record for information contributed to the SDHR Pri
 See the [requirements for systems contributing data](./compliance-requirements.html).
 
 ### Getting started
+{: .underlined}
 
 To begin integrating with SDHR:
 
@@ -54,6 +57,7 @@ To begin integrating with SDHR:
 - Download the [UAT Postman collection](postman/UAT-SDHR.postman_collection.json) and [example environment](postman/UAT-SDHR-example.postman_environment.json).
 
 ### Additional information
+{: .underlined}
 
 Additional information about SDHR, participation, privacy, and onboarding:
 
@@ -62,5 +66,6 @@ Additional information about SDHR, participation, privacy, and onboarding:
 - **For participating providers:** [Onboarding to the Shared Digital Health Record](https://www.healthnz.govt.nz/health-professionals/guidance-standards/topic/digital-technologies/digital-health-initiatives/shared-digital-health-record/onboarding-to-the-shared-digital-health-record).
 
 ### FHIR version
+{: .underlined}
 
 {% include cross-version-analysis.xhtml %}

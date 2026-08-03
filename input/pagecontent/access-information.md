@@ -57,6 +57,25 @@ The corresponding FHIR representations are described in [data models](./data-mod
 - Accessing systems should make source, date, status, and relevant limitations visible where these affect interpretation.
 - Accessing systems must comply with the [requirements for systems reading SDHR information](./compliance-requirements-reading.html).
 - Accessing systems must not imply that absence of information in SDHR means absence of a clinical condition, medication, allergy, observation, immunisation, or other relevant health information.
+- SDHR does not manage end-user accounts for accessing systems. Accessing systems are responsible for authenticating users and applying role-based access controls that are appropriate for their local environment and permitted use of SDHR information.
+
+#### Required request context
+
+All requests for SDHR information must include sufficient context to support audit, monitoring, privacy investigation, appropriate-use review, and assurance activities.
+
+At a minimum, requests are expected to provide:
+
+- user identifier
+- user name
+- user role
+- organisation identifier
+- facility identifier
+- purpose of use
+- patient context
+
+Requests that do not include valid request context may be rejected and no information may be returned.
+
+The detailed structure, validation rules, and technical implementation of request context are described in the [Authentication and Request Context documentation](./api.html#authentication-and-request-context) and [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html).
 
 #### Preconditions
 
@@ -95,15 +114,39 @@ The corresponding FHIR representations are described in [data models](./data-mod
 - SDHR returns information the requester is authorised to access.
 - The SEHR presents the information to the healthcare professional in a clinically safe and usable way.
 
-SDHR is not the system of record for the information it shares. Source systems remain responsible for creating, maintaining and correcting information. SDHR provides trusted access to governed health information across care settings.
+SDHR provides access to health information but does not determine which individual-level access controls for the roles that may view that information. Accessing systems remain responsible for authenticating users and determining the level of information available to those users based on local policies, roles, responsibilities, and permitted use.
+
+SDHR is not the system of record for the information it shares. Source systems remain responsible for creating, maintaining and correcting information.
 
 #### Response and error handling
 
 - A successful search returns a FHIR `Bundle`; a successful read or vread returns the requested resource.
 - An empty result may mean that SDHR has no matching information available to the requester. It must not be presented as proof that the clinical information does not exist.
-- A filtered result may contain metadata indicating that confidentiality controls removed information from the response.
+- A filtered result may contain metadata indicating that confidentiality controls, participation settings, source-system restrictions, or other information-sharing controls have removed information from the response.
+- Accessing systems must not assume that all relevant information has been returned when filtering controls have been applied.
 - Invalid, unauthorised, or prohibited requests return an error outcome that the SEHR must handle explicitly.
 - Detailed response behaviour, status codes, payloads, and errors are documented in the [API documentation](./api.html).
+
+#### Important SDHR access outcomes
+
+In some circumstances SDHR may return responses indicating that information cannot be returned or that information has been intentionally omitted due to participation, privacy, confidentiality, or operational controls.
+
+Accessing systems should identify these responses and communicate them clearly to users in a clinically safe manner.
+
+Examples include:
+
+| Scenario | Meaning |
+|-----------|----------|
+| Patient does not participate in SDHR | The patient has chosen not to participate in the Shared Digital Health Record service. |
+| Information withheld at source | Information may have been withheld by the source system according to patient preferences or source-system rules. |
+| Information type not shared | The patient has chosen not to share a particular type of information. |
+| Deceased patient | The patient record is unavailable because the patient is deceased. |
+| Temporary record lock | Information is temporarily unavailable while background processing is occurring. |
+| Technical access limits | The request could not be completed because a technical usage limit was reached. |
+
+Implementers should use the coded response supplied by SDHR when determining how to handle these situations rather than relying solely on displayed message text.
+
+The detailed response structures and operation outcomes are described in the [API documentation](./api.html).
 
 ### Audit and user context
 {: .underlined}
@@ -128,7 +171,13 @@ The access-verification workflow is draft and subject to change.
 7. The SEHR submits the verification decisions to SDHR and receives the processing results.
 8. The SEHR repeats the verification workflow so newly sampled access events continue to be reviewed.
 
-The SEHR is responsible for maintaining appropriate local audit and traceability where required. See the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) for request-context mechanics, the API documentation for [access verification operations](./api.html#access-verification-operations), and the [compliance requirements for systems reading data](./compliance-requirements-reading.html).
+Access verification is a required assurance activity for systems accessing SDHR information. Accessing systems are expected to periodically retrieve sampled access events, assess whether the access was appropriate, and submit verification outcomes back to SDHR.
+
+This process supports ongoing monitoring, auditing, and assurance activities.
+
+The SEHR is also responsible for maintaining appropriate local audit and traceability where required. 
+
+See the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html) for request-context mechanics, the API documentation for [access verification operations](./api.html#access-verification-operations), and the [compliance requirements for systems reading data](./compliance-requirements-reading.html).
 
 ### Related API interactions
 {: .underlined}

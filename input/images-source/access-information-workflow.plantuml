@@ -35,6 +35,13 @@ participant "National Health\nInformation Source" as NHS #LightGreen
 
 USER -> APP : Select patient and request information
 APP -> APP : Establish patient, user,\norganisation, and facility context
+
+opt Check global participation status
+    APP -> FHIRAPI : Check global participation\nPOST /$participation-status
+    FHIRAPI -> FHIRAPI : Authorise and audit request
+    FHIRAPI --> APP : Return Parameters with\nhnzParticipationIndicator
+end
+
 APP -> FHIRAPI : Search or read patient information\nwith required access context
 FHIRAPI -> FHIRAPI : Authorise and audit request
 FHIRAPI -> FHIRAPI : Apply participation, privacy,\nconfidentiality, and access controls

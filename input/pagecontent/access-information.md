@@ -51,6 +51,7 @@ The corresponding FHIR representations are described in [data models](./data-mod
 {: .underlined}
 
 - Requests must include sufficient context to support audit and access review.
+- The accessing system may check the patient's global SDHR participation status before requesting or presenting SDHR health information.
 - Patient participation and privacy controls must be applied before information is returned.
 - Confidential or restricted information must only be returned where permitted.
 - Accessing systems must present SDHR information in a way that supports safe clinical interpretation.
@@ -84,6 +85,7 @@ The detailed structure, validation rules, and technical implementation of reques
 - The healthcare professional is authenticated.
 - The request is made in the context of a specific patient.
 - The patient can be identified, normally using NHI.
+- The accessing system may optionally have checked the patient's global participation status using the [`$participation-status` operation](./api.html#participation-status-operation).
 - Patient participation, privacy, confidentiality, security, and access controls permit information to be returned.
 - The request includes required user, organisation, facility, and request context for audit purposes, where applicable.
 
@@ -99,17 +101,19 @@ The detailed structure, validation rules, and technical implementation of reques
 
 1. A healthcare professional selects a specific patient in the SEHR.
 2. The SEHR establishes the patient, authenticated user, organisation, facility, and request context required for access and audit.
-3. The SEHR uses a supported search, read, or vread interaction to request relevant information from SDHR.
-4. SDHR authorises and audits the request and applies applicable participation, privacy, confidentiality, security, and access controls.
-5. SDHR retrieves permitted information from the SDHR Primary Care Collection or an applicable national health information source.
-6. SDHR returns authorised FHIR resources, an empty or filtered result, or an error outcome as applicable.
-7. The SEHR retains required local audit and traceability information.
-8. The SEHR presents source, date, status, and relevant limitations in a clinically safe and usable way.
+3. The SEHR may call the [`$participation-status` operation](./api.html#participation-status-operation) with the patient's NHI to check global participation.
+4. If `hnzParticipationIndicator` is `true`, the SEHR uses a supported search or read interaction to request relevant information from SDHR. If it is `false`, the SEHR stops the information workflow and does not present SDHR clinical information.
+5. SDHR authorises and audits the request and applies applicable participation, privacy, confidentiality, security, and access controls.
+6. SDHR retrieves permitted information from the SDHR Primary Care Collection or an applicable national health information source.
+7. SDHR returns authorised FHIR resources, an empty or filtered result, or an error outcome as applicable.
+8. The SEHR retains required local audit and traceability information.
+9. The SEHR presents source, date, status, and relevant limitations in a clinically safe and usable way.
 
 #### Key behaviour
 
 - The healthcare professional uses an SEHR.
 - The SEHR identifies the patient and requests relevant information from SDHR.
+- The SEHR can check global participation before requesting information and uses `hnzParticipationIndicator` to determine whether to continue.
 - SDHR applies applicable privacy, participation, confidentiality, security, and access controls.
 - SDHR returns information the requester is authorised to access.
 - The SEHR presents the information to the healthcare professional in a clinically safe and usable way.
@@ -117,6 +121,8 @@ The detailed structure, validation rules, and technical implementation of reques
 #### Response and error handling
 
 - A successful search returns a FHIR `Bundle`; a successful read or vread returns the requested resource.
+- A successful `$participation-status` request returns a FHIR `Parameters` resource containing the patient reference and `hnzParticipationIndicator`.
+- If `hnzParticipationIndicator` is `false`, the SEHR must treat the patient as globally opted out and indicate this to the end user.
 - An empty result may mean that SDHR has no matching information available to the requester. It must not be presented as proof that the clinical information does not exist.
 - Patient identity should be established using local or authoritative identity services. Patient names returned with SDHR information should not be treated as the authoritative source of patient identity.
 - A filtered result may contain metadata indicating that confidentiality controls, participation settings, source-system restrictions, or other information-sharing controls have removed information from the response.
@@ -188,6 +194,11 @@ See the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td>Global participation status</td>
+      <td>Check whether the patient is globally participating before requesting health information.</td>
+      <td><a href="./api.html#participation-status-operation">Participation status operation</a></td>
+    </tr>
     <tr>
       <td>Search and read — contributed information</td>
       <td>Retrieve information stored in the SDHR Primary Care Collection.</td>

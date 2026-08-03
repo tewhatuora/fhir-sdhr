@@ -54,6 +54,7 @@ Medication and immunisation information is read-only through SDHR. It is sourced
 | Operation | HTTP verb and relative URL | Definition | Status | Detailed behaviour |
 | --- | --- | --- | --- | --- |
 | `$participate` | `POST /$participate` | [SDHR Participate Operation](./OperationDefinition-SDHRParticipateOperation.html) | Active | [Technical contract](#participate-operation)<br>[Contribution workflow](./contribute-information.html#facility-participation) |
+| `$participation-status` | `POST /$participation-status` | [SDHR Participation Status Operation](./OperationDefinition-SDHRParticipationStatusOperation.html) | Active | [Technical contract](#participation-status-operation)<br>[Access information workflow](./access-information.html#access-workflow) |
 {: .grid}
 
 #### Access verification operation catalogue
@@ -525,6 +526,46 @@ Response examples:
 </details>
 
 See [Manage participation](./contribute-information.html#manage-participation) for the end-to-end facility, Health NZ, confidentiality, and historical-reload workflows. UAT identities and expected deny or lock outcomes are documented under [Test Data](./test-data.html).
+
+#### Participation status operation
+
+The `$participation-status` operation allows an SEHR system to check whether a patient is globally participating in SDHR before requesting health information. It returns the patient's NHI reference and the `hnzParticipationIndicator` boolean. The operation does not change the patient's participation preference and does not return clinical information.
+
+| Contract element | Requirement |
+| --- | --- |
+| Interaction | System-level custom operation |
+| HTTP request | `POST /$participation-status` |
+| Definition | [SDHR Participation Status Operation](./OperationDefinition-SDHRParticipationStatusOperation.html) |
+| Request body | FHIR `Parameters` containing one NHI `patient` reference |
+| Response body | FHIR `Parameters` containing the patient reference and `hnzParticipationIndicator` |
+| `hnzParticipationIndicator` | `true` indicates global participation; `false` indicates that the patient has opted out globally |
+{: .grid}
+
+The operation is intended to be called by a healthcare provider on behalf of the patient. The patient must be identified by an NHI. The status returned is global; it does not represent a facility-level participation preference.
+
+Request example:
+
+```json
+{
+  "resourceType": "Parameters",
+  "parameter": [
+    {
+      "name": "patient",
+      "valueReference": {
+        "reference": "https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZXK9000",
+        "type": "Patient"
+      }
+    }
+  ]
+}
+```
+
+Response examples:
+
+- [Patient not globally participating](./Parameters-ParametersParticipationStatusNotParticipatingResponse.html)
+- [Patient globally participating](./Parameters-ParametersParticipationStatusParticipatingResponse.html)
+
+SEHR systems should use the result to determine whether to continue with an information request. If `hnzParticipationIndicator` is `false`, the patient is globally opted out of SDHR and no information will be available for that patient.
 
 ### SDHR confidential record API behaviour
 {: .underlined}

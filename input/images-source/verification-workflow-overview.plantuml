@@ -1,40 +1,55 @@
 @startuml
 
-title SDHR Verification Workflow Overview
+title SDHR Audit Access Records Sequence Diagram
 
 autonumber "<color:Black>[00]"
 
-skinparam {
-    defaultFontColor #4080a9
-    defaultBackgroundColor #d7f8ff
-    defaultFontSize 16
-    defaultArrowThickness 6
-}
+skinparam ActorFontSize 16
+skinparam ArrowFontSize 12
+skinparam ArrowFontSize 16
+skinparam BoxPadding 5
+skinparam DatabaseFontSize 16
+skinparam dpi 400
+skinparam EntityFontSize 16
+skinparam MaxMessageSize 375
+skinparam NoteFontSize 14
+skinparam ParticipantFontSize 16
+skinparam ParticipantPadding 5
+skinparam responseMessageBelowArrow true
+skinparam roundcorner 15
+skinparam sequenceArrowThickness 2
+skinparam SequenceBoxFontSize 16
+skinparam sequencegroupfontsize 14
+skinparam SequenceMessageAlignment left
+skinparam sequenceStyle uml2
+skinparam TitleFontSize 20
+skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
 
-participant "Data Viewer Application" as CONSUMER
-participant "SDHR FHIR Server" as SERVER
+scale max 260 width
 
-note over CONSUMER, SERVER
-  This workflow is performed periodically by the Data Viewer Application
-  so sampled access events are retrieved and verified on an ongoing basis.
-end note
+actor "Health Practitioner" as USER
+participant "SEHR" as APP #Orange
+control "SDHR FHIR API" as FHIRAPI #LightBlue
 
-group Retrieve verification samples
-  CONSUMER -> SERVER : GET /AuditEvent/$verification-samples
-  SERVER --> CONSUMER : Bundle of sampled AuditEvent resources
-end
+== Record access ==
 
-group Review sampled access events
-  note over CONSUMER
-    The Data Viewer Application reviews each sampled AuditEvent
-    using either an automated process or a manual
-    verification workflow.
-  end note
-end
+USER -> APP : Select patient and request information
+APP -> APP : Record user action and request context\nin local audit record
+APP -> FHIRAPI : Search or read patient information\nwith required access context
+FHIRAPI -> FHIRAPI : Authorise and audit request
+FHIRAPI -> FHIRAPI : Record access event
+FHIRAPI --> APP : Return FHIR response or error outcome
+APP -> APP : Correlate response with local audit record
 
-group Submit verification decisions
-  CONSUMER -> SERVER : POST /AuditEvent/$verification-submissions\nParameters with verification results
-  SERVER --> CONSUMER : Parameters response confirming processing results
+== Verify sampled access records ==
+
+loop Ongoing access verification
+    APP -> FHIRAPI : GET /AuditEvent/$verification-samples
+    FHIRAPI -> FHIRAPI : Identify eligible outstanding samples
+    FHIRAPI --> APP : Bundle of sampled AuditEvent resources
+    APP -> APP : Review each sample using an\nautomated or manual process
+    APP -> FHIRAPI : POST /AuditEvent/$verification-submissions\nParameters with verification decisions
+    FHIRAPI --> APP : Parameters with processing results
 end
 
 @enduml

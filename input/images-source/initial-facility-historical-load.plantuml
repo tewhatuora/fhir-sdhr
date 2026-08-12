@@ -1,0 +1,62 @@
+@startuml
+
+title SDHR Initial Facility Historic Load Sequence Diagram
+
+autonumber "<color:Black>[00]"
+
+skinparam ActorFontSize 16
+skinparam ArrowFontSize 12
+skinparam ArrowFontSize 16
+skinparam BoxPadding 5
+skinparam DatabaseFontSize 16
+skinparam dpi 400
+skinparam EntityFontSize 16
+skinparam MaxMessageSize 375
+skinparam NoteFontSize 14
+skinparam ParticipantFontSize 16
+skinparam ParticipantPadding 5
+skinparam responseMessageBelowArrow true
+skinparam roundcorner 15
+skinparam sequenceArrowThickness 2
+skinparam SequenceBoxFontSize 16
+skinparam sequencegroupfontsize 14
+skinparam SequenceMessageAlignment left
+skinparam sequenceStyle uml2
+skinparam TitleFontSize 20
+skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
+
+scale max 260 width
+
+actor "Primary Care Provider" as PROVIDER
+participant "PMS" as APIC #Orange
+participant "PMS Orchestrator" as ORCHESTRATOR #Orange
+control "SDHR FHIR API" as FHIRAPI #LightBlue
+database "SDHR FHIR Server" as SDHR #LightGreen
+
+PROVIDER -> FHIRAPI : Complete onboarding and sharing authorisation
+PROVIDER -> APIC : Enable SDHR information sharing
+APIC -> APIC : Apply patient opt-outs and\nconfidentiality exclusions
+
+alt Pull-based acquisition
+    FHIRAPI -> FHIRAPI : Lock facility for routine writes
+    FHIRAPI -> ORCHESTRATOR : Initiate authorised facility historic load
+    ORCHESTRATOR -> APIC : Retrieve eligible historic information
+    APIC --> ORCHESTRATOR : Return eligible historic information
+    ORCHESTRATOR --> FHIRAPI : Supply eligible historic information
+    loop For each eligible historic resource
+        FHIRAPI -> SDHR : Persist historic resource
+    end
+    FHIRAPI -> FHIRAPI : Unlock facility
+else Push-based acquisition
+    APIC -> ORCHESTRATOR : Trigger facility historic load
+    ORCHESTRATOR -> APIC : Retrieve eligible historic information
+    APIC --> ORCHESTRATOR : Return eligible historic information
+    ORCHESTRATOR -> ORCHESTRATOR : Coordinate historic and real-time writes\nso history cannot overwrite newer data
+    ORCHESTRATOR -> FHIRAPI : Write authorised bulk historic load
+    FHIRAPI -> SDHR : Persist submitted historic resources
+end
+
+FHIRAPI --> ORCHESTRATOR : Return load results
+ORCHESTRATOR -> ORCHESTRATOR : Begin or continue routine writes
+
+@enduml

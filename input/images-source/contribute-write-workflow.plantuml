@@ -1,0 +1,55 @@
+@startuml
+
+title SDHR Resource Write Sequence Diagram
+
+autonumber "<color:Black>[00]"
+
+skinparam ActorFontSize 16
+skinparam ArrowFontSize 12
+skinparam ArrowFontSize 16
+skinparam BoxPadding 5
+skinparam DatabaseFontSize 16
+skinparam dpi 400
+skinparam EntityFontSize 16
+skinparam MaxMessageSize 375
+skinparam NoteFontSize 14
+skinparam ParticipantFontSize 16
+skinparam ParticipantPadding 5
+skinparam responseMessageBelowArrow true
+skinparam roundcorner 15
+skinparam sequenceArrowThickness 2
+skinparam SequenceBoxFontSize 16
+skinparam sequencegroupfontsize 14
+skinparam SequenceMessageAlignment left
+skinparam sequenceStyle uml2
+skinparam TitleFontSize 20
+skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
+
+scale max 260 width
+
+actor "Health Practitioner" as USER
+participant "PMS" as APIC #Orange
+participant "PMS Orchestrator" as ORCHESTRATOR #Orange
+control "SDHR FHIR API" as FHIRAPI #LightBlue
+database "SDHR FHIR Server" as SDHR #LightGreen
+
+USER -> APIC : Record or update clinical information
+APIC -> ORCHESTRATOR : Trigger resource event
+ORCHESTRATOR -> APIC : Retrieve resource details
+ORCHESTRATOR -> ORCHESTRATOR : Check eligibility, confidentiality,\nand sharing controls
+ORCHESTRATOR -> ORCHESTRATOR : Select create or update interaction
+ORCHESTRATOR -> FHIRAPI : Write eligible FHIR resource
+FHIRAPI -> SDHR : Validate resource and apply\nparticipation and privacy controls
+
+alt Create accepted
+    SDHR -> SDHR : Persist resource
+    FHIRAPI --> ORCHESTRATOR : 201 Created with created resource
+else Update accepted
+    SDHR -> SDHR : Persist updated resource
+    FHIRAPI --> ORCHESTRATOR : 200 OK with updated resource
+else Write rejected
+    FHIRAPI --> ORCHESTRATOR : Return OperationOutcome
+    ORCHESTRATOR -> ORCHESTRATOR : Record and manage failure
+end
+
+@enduml

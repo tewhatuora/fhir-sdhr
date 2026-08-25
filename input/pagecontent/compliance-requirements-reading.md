@@ -178,13 +178,13 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-1">SRD-1</p>
                 </td>
                 <td>
-                    <p>Securely storage of authentication credentials used for SDHR</p>
+                    <p>Secure storage of authentication credentials used for SDHR</p>
                 </td>
                 <td>
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>Authentication Credentials for the SDHR API are stored securely, not available to users without appropriate controls in place.</p>
+                    <p>The SEHR system must store SDHR API authentication credentials securely, not available to users, including SEHR staff, without appropriate controls in place.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -204,13 +204,13 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>Users of the SEHR system have secure user accounts that only they can access allowing for confidence that the user making a request to SDHR is who they say they are</p>
+                    <p>Users of the SEHR system have secure user accounts that only they can access, providing confidence that the clinical user making the request is who they claim to be.</p>
                 </td>
                 <td>
                     <p>Yes</p>
                 </td>
                 <td>
-                    <p>Documentation of user account controls, SSO, MFA etc.</p>
+                    <p>Documentation of SEHR user account controls, SSO, MFA etc.</p>
                 </td>
             </tr>
             <tr class="category-row">
@@ -223,19 +223,19 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-3">SRD-3</p>
                 </td>
                 <td>
-                    <p>HPI-Facility and Org are accurately reported to SDHR</p>
+                    <p>HPI-Facility and Organisation are accurately reported to SDHR</p>
                 </td>
                 <td>
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>Clinical users must only be able to select an HPI‑Facility or HPI‑Organisation with which they have a legitimate relationship. Where a user’s HPI‑Facility/Org is assigned directly to their account, appropriate controls must ensure its accuracy. The HPI‑Facility/Org submitted to SDHR in API requests must accurately represent the user on whose behalf the request is made.</p>
+                    <p>Clinical users must only be able to select an HPI‑Facility or HPI‑Organisation with which they have a legitimate relationship. Where a user’s HPI‑Facility/Organisation is assigned directly to their account, appropriate controls must ensure its accuracy. The HPI‑Facility/Organisation submitted to SDHR in API requests must accurately represent the clinical user on whose behalf the request is made.</p>
                 </td>
                 <td>
                     <p>Yes</p>
                 </td>
                 <td>
-                    <p>Documentation of user onboarding and facility/org assignment processes, evidence of mapping from user account to request, test cases</p>
+                    <p>Documentation of clinical user onboarding and facility and organisation assignment processes, evidence of mapping from clinical user account to request, test cases</p>
                 </td>
             </tr>
             <tr>
@@ -249,13 +249,13 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>Clinical users must have the correct HPI-CPN assigned to their user account so this can be submitted to SDHR. Users cannot "self-select" their HPI-CPN.</p>
+                    <p>Clinical users must have the correct HPI-CPN assigned to their clinical user account so this can be submitted to SDHR. Clinical users cannot "self-select" their HPI-CPN.</p>
                 </td>
                 <td>
                     <p>Yes</p>
                 </td>
                 <td>
-                    <p>Documentation of user onboarding and CPN assignment process</p>
+                    <p>Documentation of clinical user onboarding and CPN assignment process</p>
                 </td>
             </tr>
             <tr>
@@ -269,7 +269,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>SDHR is informed of the correct clinical purpose for every request. This could be based on user selection or programatically set.</p>
+                    <p>The SEHR system must provide SDHR with the correct clinical purpose for every request. This could be based on clinical user selection or programmatically set.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -289,7 +289,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>Non-clinical users cannot see any SDHR data, clinical users can only see data appropriate for their role.</p>
+                    <p>Non-clinical users cannot see any SDHR data. Where limitations apply to certain types of clinical users, those limitations are consistently enforced.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -309,7 +309,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>SDHR clinical content is not stored, cached, or logged within the SEHR system. Please Note: Clinicians can make reference to SDHR data while writing notes or documents.</p>
+                    <p>SDHR clinical content is not stored, cached, or logged within the SEHR system. Please note: Clinical users can make reference to SDHR data while writing notes or documents.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -323,19 +323,19 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-8">SRD-8</p>
                 </td>
                 <td>
-                    <p>Only make requests based on user action</p>
+                    <p>Only make requests based on clinical user action</p>
                 </td>
                 <td>
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>Requests for SDHR data should only be made for the purpose of displaying data to the clinical user. Non-user initiated requests should NOT be made.</p>
+                    <p>Requests for SDHR data must only be made for the purpose of displaying data to the clinical user. Non-user-initiated requests MUST NOT be made.</p>
                 </td>
                 <td>
                     <p>Yes</p>
                 </td>
                 <td>
-                    <p>Documentation of requests that are made, correlation of our audit events being linked to a user action in the SEHR?</p>
+                    <p>Documentation of requests that are made, correlation of API requests being linked to a clinical user action in the SEHR</p>
                 </td>
             </tr>
             <tr class="category-row">
@@ -368,19 +368,19 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-10">SRD-10</p>
                 </td>
                 <td>
-                    <p>Users are made aware of SDHR data completeness limits</p>
+                    <p>Clinical users are made aware of SDHR data completeness limits</p>
                 </td>
                 <td>
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>Clinical users are made aware that SDHR data may not present the full patient record.</p>
+                    <p>Clinical users are made aware that SDHR data may not present the full patient record. This could be achieved by messages in the user interface, user acknowledgement of this as part of an initial access or user training completed prior to the clinical user gaining access to the SEHR.</p>
                 </td>
                 <td>
                     <p>Yes</p>
                 </td>
                 <td>
-                    <p>UI screenshots, terms of use, training material extracts</p>
+                    <p>UI screenshots, terms of use content and process or training material extracts</p>
                 </td>
             </tr>
             <tr>
@@ -394,7 +394,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Empty search results from SDHR</p>
                 </td>
                 <td>
-                    <p>Informative message displayed when no records are returned.</p>
+                    <p>The SEHR system must display an informative message when no records are returned.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -408,19 +408,19 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-12">SRD-12</p>
                 </td>
                 <td>
-                    <p>Users informed of withheld records</p>
+                    <p>Inform clinical users of withheld records</p>
                 </td>
                 <td>
                     <p>Information withheld outcome from SDHR</p>
                 </td>
                 <td>
-                    <p>Users are informed when records are withheld (“information withheld” indicator shown).</p>
+                    <p>The SEHR system must inform clinical users when records are withheld (i.e. an “information withheld” indicator or message is shown).</p>
                 </td>
                 <td>
                     <p>Yes</p>
                 </td>
                 <td>
-                    <p>UI screenshots demonstrating withheld indicators</p>
+                    <p>UI screenshots demonstrating withheld indicators/messages</p>
                 </td>
             </tr>
             <tr>
@@ -428,13 +428,13 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-13">SRD-13</p>
                 </td>
                 <td>
-                    <p>Users informed of domain opt out</p>
+                    <p>Inform clinical users of domain opt out</p>
                 </td>
                 <td>
                     <p>Domain level opt out outcome from SDHR</p>
                 </td>
                 <td>
-                    <p>Users are informed when the patient has opted out of a health domain.</p>
+                    <p>The SEHR system must inform clinical users when the patient has opted out of a health domain.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -448,13 +448,13 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-14">SRD-14</p>
                 </td>
                 <td>
-                    <p>Users informed of global opt out</p>
+                    <p>Inform clinical users of global opt out</p>
                 </td>
                 <td>
                     <p>Global level opt out outcome from SDHR</p>
                 </td>
                 <td>
-                    <p>Users are informed when the patient has globally opted out of SDHR.</p>
+                    <p>The SEHR system must inform clinical users when the patient has globally opted out of SDHR.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -474,7 +474,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>HTTP 429 response from SDHR</p>
                 </td>
                 <td>
-                    <p>User receives meaningful message; system does not repeatedly retry during rate limit window.</p>
+                    <p>The SEHR system must provide a meaningful message to clinical users and must not repeatedly retry during the rate-limit window.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -488,13 +488,13 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-16">SRD-16</p>
                 </td>
                 <td>
-                    <p>Users informed of deceased patients</p>
+                    <p>Inform clinical users of deceased patients</p>
                 </td>
                 <td>
-                    <p>Deceased patient indicator from SDHR</p>
+                    <p>Deceased patient message returned from SDHR</p>
                 </td>
                 <td>
-                    <p>Users are alerted that a patient is deceased.</p>
+                    <p>The SEHR system must inform clinical users when the patient is deceased. Note that SDHR will not return clinical data for deceased patients.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -514,7 +514,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>SDHR response including multiple NHIs</p>
                 </td>
                 <td>
-                    <p>Viewer can display records across all NHIs linked to a consumer.</p>
+                    <p>The SEHR system must display records across all NHIs linked to a consumer.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -528,13 +528,13 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-18">SRD-18</p>
                 </td>
                 <td>
-                    <p>Users informed when there are more records</p>
+                    <p>Inform clinical users when additional records are available</p>
                 </td>
                 <td>
                     <p>Large number of records returned from SDHR</p>
                 </td>
                 <td>
-                    <p>Users are informed when there are more records than currently displayed. This could take the form of page counts, infinite scroll or other UI indicators.</p>
+                    <p>The SEHR system must indicate when there are more records than currently displayed. This could take the form of page counts, infinite scroll or other UI indicators.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -554,7 +554,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>SDHR response including long text strings</p>
                 </td>
                 <td>
-                    <p>SDHR data fields are displayed without truncation or loss of meaning.</p>
+                    <p>The SEHR system must display data retrieved from SDHR without truncation or loss of meaning.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -568,13 +568,13 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-20">SRD-20</p>
                 </td>
                 <td>
-                    <p>Users informed of appropriate statuses of records</p>
+                    <p>Inform clinical users of record status information</p>
                 </td>
                 <td>
                     <p>SDHR response includes records with different statuses</p>
                 </td>
                 <td>
-                    <p>Users are made aware of the status of records where appropriate to ensure they can differentiate between current and past conditions, allergies etc. This could take the form of status badges or some other indicator.</p>
+                    <p>The SEHR system must indicate the status of records where appropriate to ensure they can differentiate between current and past conditions, allergies, etc. This could take the form of status badges or some other indicator.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -594,7 +594,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>Patient names from SDHR are either not displayed or clearly marked as non-authortative.</p>
+                    <p>Patient names from SDHR are either not displayed or clearly marked as non-authoritative.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -608,19 +608,19 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-22">SRD-22</p>
                 </td>
                 <td>
-                    <p>Appropriate clinical oversight of user interface</p>
+                    <p>Appropriate clinical oversight of the SEHR user interface</p>
                 </td>
                 <td>
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>The user experience for clinicians accessing SDHR data must be designed with appropriate clinical oversight in place to avoid risk of misinterpretation or harm.</p>
+                    <p>The clinical user experience when accessing SDHR data must be designed with appropriate clinical oversight in place to avoid risk of misinterpretation or harm.</p>
                 </td>
                 <td>
-                    <p></p>
+                    <p>Yes</p>
                 </td>
                 <td>
-                    <p>Governance structure, clinical sign off</p>
+                    <p>Governance structure, clinical sign-off</p>
                 </td>
             </tr>
             <tr class="category-row">
@@ -639,7 +639,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>N/A</p>
                 </td>
                 <td>
-                    <p>Audit logs capture full traceability for every SDHR interaction in compliance with HIGG. This would include at a minimum: -SEHR User ID -HPI CPN or other identifier -Full name -IP address -Facility and Organisation user belongs to -PoU for access -The API call that was made -Timestamp of access</p>
+                    <p>The SEHR system must capture audit logs that provide full traceability for every SDHR interaction in compliance with HIGG. This would include at a minimum: <br>- SEHR User ID <br>- HPI CPN or other identifier <br>- Full name <br>- IP address <br>- HPI-Facility and HPI-Organisation the clinical user belongs to <br>- PoU for access <br>- The API call that was made <br>- Timestamp of access</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -664,7 +664,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Filtered audit datasets</p>
                 </td>
                 <td>
-                    <p>SEHR can supply filtered audit logs on request (by NHI, user, org, time).</p>
+                    <p>The SEHR system must be capable of supplying filtered audit logs on request (by NHI, user ID, organisation, facility, time).</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -684,7 +684,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>SDHR accesses have been performed</p>
                 </td>
                 <td>
-                    <p>SEHR is capable of retrieving sampled SDHR data accesses via the sampling API.</p>
+                    <p>The SEHR system must be capable of retrieving sampled SDHR data accesses via the sampling API.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -704,13 +704,18 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Access samples have been retrieved</p>
                 </td>
                 <td>
-                    <p>The SEHR can determine the appropriateness of accesses to SDHR data by a clinician. SEHR can submit monitoring outcomes to SDHR via the Sampling API.</p>
+                    <p>The SEHR system must be capable of submitting monitoring outcomes to SDHR via the Sampling API following verification of appropriateness of access by Health Service Provider.</p>
                 </td>
                 <td>
                     <p>Yes</p>
                 </td>
                 <td>
-                    <p>Time of API calls so SDHR can verify call was received. Business process/rules for determining appropriateness of SDHR data access</p>
+                    <p>Time of API calls so SDHR can verify call was received.</p>
+                </td>
+            </tr>
+            <tr class="category-row">
+                <td colspan="6">
+                    <p><strong>Medications</strong></p>
                 </td>
             </tr>
             <tr>
@@ -718,19 +723,19 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-27">SRD-27</p>
                 </td>
                 <td>
-                    <p>Perform proactive monitoring of access</p>
+                    <p>Differentiate Prescribed from Dispensed data</p>
                 </td>
                 <td>
-                    <p>Monthly monitoring outputs</p>
+                    <p>Medications data returned containing both prescribed and dispensed records</p>
                 </td>
                 <td>
-                    <p>Regular monitoring detects inappropriate or anomalous access in compliance with HIGG.</p>
+                    <p>The SEHR system must distinguish between prescribed and dispensed medications to ensure clinical users have sufficient information to determine which medications the patient may be taking.</p>
                 </td>
                 <td>
                     <p>Yes</p>
                 </td>
                 <td>
-                    <p>Monitoring reports; attestation</p>
+                    <p>UI screenshots</p>
                 </td>
             </tr>
             <tr>
@@ -738,19 +743,39 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-28">SRD-28</p>
                 </td>
                 <td>
-                    <p>Support privacy investigations and corrective action</p>
+                    <p>Prescription data must be surfaced with dispensing data</p>
                 </td>
                 <td>
-                    <p>Incident records</p>
+                    <p>Medications data returned containing both prescribed and dispensed records</p>
                 </td>
                 <td>
-                    <p>Privacy breaches are investigated, recorded, and corrective action taken.</p>
+                    <p>Dispensing record data must take precedence over prescribed record data where both exist for a given medication record. Dispensed data is a more accurate depiction of what the patient received, therefore viewing prescription data without access to corresponding dispensing data can lead to misinterpretations about what the patient received. </p>
                 </td>
                 <td>
                     <p>Yes</p>
                 </td>
                 <td>
-                    <p>SOPs, incident register extracts - this is the content though</p>
+                    <p>UI screenshots</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="requirement-ref" id="SRD-29">SRD-29</p>
+                </td>
+                <td>
+                    <p>Extemporaneously Compounded (EC) Items</p>
+                </td>
+                <td>
+                    <p>Medications data returned containing Extemporaneously Compounded records</p>
+                </td>
+                <td>
+                    <p>Extemporaneously compounded medication records can contain a list of ingredients within the record. All ingredients must be displayed in the SEHR UI rather than displaying only the label which may not fully reflect the ingredients in the compounded medication.</p>
+                </td>
+                <td>
+                    <p>Yes</p>
+                </td>
+                <td>
+                    <p>UI screenshots</p>
                 </td>
             </tr>
         </tbody>

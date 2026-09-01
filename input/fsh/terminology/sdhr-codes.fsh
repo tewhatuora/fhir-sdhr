@@ -34,3 +34,14 @@ Description: "This code system defines the reasons for a patient to participate 
 * #sdhr-facility-opt-in "Facility opt in" "Patient has opted in to participation at the facility. This means that records will be shared from that facility."
 * #sdhr-hnz-opt-out "HNZ opt out" "Patient has opted out of participation entirely with Health NZ. This means that no records will be shared from any facility."
 * #sdhr-hnz-opt-in "HNZ opt in" "Patient has opted in to participation with Health NZ. This means that records will be shared from all facilities."
+
+CodeSystem: SDHRVerificationResult
+Id: sdhr-verification-result
+Title: "SDHR Verification Result Codes"
+Description: "This code system defines the result codes used when a data viewer application submits verification decisions for sampled AuditEvent resources."
+* ^meta.versionId = "1"
+* ^status = #draft
+* ^experimental = false
+* ^publisher = "Health NZ | Te Whatu Ora"
+* #validated "Validated" "The data viewer application has confirmed the sampled AuditEvent is valid."
+* #validation-failed "Validation failed" "The data viewer application has determined the sampled AuditEvent failed verification."

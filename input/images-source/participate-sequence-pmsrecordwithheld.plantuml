@@ -71,7 +71,7 @@ end
 ORCHESTRATOR -> FHIRAPI : Search Resource (e.g. Condition)
 FHIRAPI -> SDHR : Query Resource
 SDHR -> FHIRAPI : Return
-FHIRAPI -> ORCHESTRATOR : Return Search result with OperationOutcome\nindicating that the patient has witheld records at source
+FHIRAPI -> ORCHESTRATOR : Return Search result with OperationOutcome\nindicating that the patient has withheld records at source
 note right of ORCHESTRATOR
 {
   "resourceType" : "OperationOutcome",
@@ -104,7 +104,7 @@ alt check SDHR for resource
   ORCHESTRATOR -> FHIRAPI : Search for Resource by Patient, Facility and LocalID
   FHIRAPI -> SDHR : Query Resource
   SDHR -> FHIRAPI : Return
-  FHIRAPI -> ORCHESTRATOR : Return Search result with OperationOutcome\nindicating that the patient has witheld records at source
+  FHIRAPI -> ORCHESTRATOR : Return Search result with OperationOutcome\nindicating that the patient has withheld records at source
   note right of ORCHESTRATOR
     "type" : "searchset",
     "total" : 0,

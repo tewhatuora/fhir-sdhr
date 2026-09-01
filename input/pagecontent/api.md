@@ -502,7 +502,7 @@ The `$participate` operation enables API consumers, such as PMS products, to rec
 | Behaviour | Idempotent for repeated requests with the same parameters |
 {: .grid}
 
-The operation supports facility opt-out and opt-back-in, technical initialisation of the default facility preference, withholding a local `Condition` or `Observation`, and releasing a previously withheld record. Parameter cardinalities, conditional requirements, bindings, and response definitions are authoritative in the [OperationDefinition](./OperationDefinition-SDHRParticipateOperation.html).
+The operation supports facility opt-out and opt-back-in, technical initialisation of the default facility preference, withholding a local `Condition` or `Observation`, and releasing a previously withheld record. A facility opt-out archives the patient's active contributed resources from that facility; archived resources are retained but are excluded from normal search and read interactions. Parameter cardinalities, conditional requirements, bindings, and response definitions are authoritative in the [OperationDefinition](./OperationDefinition-SDHRParticipateOperation.html).
 
 Request examples:
 

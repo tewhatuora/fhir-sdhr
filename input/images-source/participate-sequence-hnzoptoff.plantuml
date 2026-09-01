@@ -34,23 +34,22 @@ actor "Health Practitioner" as USER
 participant "Health NZ" as HNZ #LightBlue
 participant "PMS" as APIC #Orange
 participant "PMS Orchestrator" as ORCHESTRATOR #Orange
-control "Participate Operation\n$participate" as PARTICIPATE #LightBlue
+control "Health NZ Participate Operation\n$hnz-participate" as PARTICIPATE #LightBlue
 control "SDHR FHIR API" as FHIRAPI #LightBlue
 database "SDHR FHIR Server" as SDHR #LightGreen
 
 == Patient opts out of SDHR participation using HNZ channel ==
-Patient -> HNZ : Notify HNZ of opt out prefference
+Patient -> HNZ : Notify Health NZ of opt-out preference
 HNZ -> HNZ : Prepare participation\nparameters
-HNZ -> PARTICIPATE : Invoke participate operation
+HNZ -> PARTICIPATE : Invoke Health NZ participate operation
 note left of PARTICIPATE
   Parameters:
   - patient: Patient ID (NHI)
-  - facilityId: Facility ID (HPI FacilityID)
-      Note that this is a reserved HNZ facility ID
-  - participationIndicator: false
+  - hnzParticipationIndicator: false
 end note
 PARTICIPATE -> FHIRAPI : Write Participation
-FHIRAPI -> SDHR : Persist
+FHIRAPI -> SDHR : Persist global preference and archive all active\ncontributed resources for the patient
+SDHR --> FHIRAPI : Participation recorded and resources archived
 PARTICIPATE -> HNZ : Return OperationOutcome
 note over PARTICIPATE
 {

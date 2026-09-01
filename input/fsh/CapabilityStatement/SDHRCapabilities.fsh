@@ -44,6 +44,7 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
+When `participationIndicator` is `false`, SDHR records the facility opt-out and archives the patient's active contributed resources from the supplied facility. Archived resources are not returned by normal search or read interactions.
 For an opt-in request, a Medtech PMS may set `enrolledPatient` to `true` to indicate that the patient is enrolled at the supplied facility and that a historic load should be triggered. If `enrolledPatient` is omitted, the API treats the caller as non-Medtech or unknown and updates consent without triggering a historic load.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
@@ -68,6 +69,7 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI. For a global opt-in request, one or more `patient` parameters may be supplied. Multiple `patient` parameters are only supported when all supplied NHIs are already linked in the same NHI group and the request supplies the complete linked group. Multiple `patient` parameters are not supported for global opt-out requests.
+When `hnzParticipationIndicator` is `false`, SDHR records the global opt-out and archives the patient's active contributed resources across all facilities. Archived resources are not returned by normal search or read interactions.
 For a global opt-in request where the patient is enrolled with a provider, the request may include the enrolled provider `facilityId` and must include `pmsIdentifier`. If `facilityId` is not provided, `pmsIdentifier` must not be provided and the operation updates consent without triggering a historic load.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
@@ -84,7 +86,7 @@ This operation requires the SMART on FHIR scope `https://fhir-ig.digital.health.
 
 For an example response payload for this operation see:
 - [Parameters resource for participation status response](./Parameters-ParametersParticipationStatusResponse.html) : This example shows the `Parameters` resource returned by the operation when participation status information is found for a patient.
-- [Parameters resource for participation status response with enrolment details](./Parameters-ParametersParticipationStatusEnrolmentResponse.html) : This example shows the `Parameters` resource returned by the operation when enrolment details are known for a patient.
+- [Parameters resource for participation status response after opt-out](./Parameters-ParametersParticipationStatusEnrolmentResponse.html) : This example shows an enrolled patient with archived records after opting out.
 
 To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$hnz-participation-status`).
 

@@ -5,7 +5,7 @@ This internal use operation retrieves a patient's Shared Digital Health Record p
 
 For an example response payload for this operation see:
 - [Parameters resource for participation status response - not participating](./Parameters-ParametersParticipationStatusResponse.html) : No consent, enrolment, or records found for the patient.
-- [Parameters resource for participation status response - enrolment found, not participating](./Parameters-ParametersParticipationStatusEnrolmentResponse.html) : Enrolment information is found but the patient is not currently participating.
+- [Parameters resource for participation status response - opted out with archived records](./Parameters-ParametersParticipationStatusEnrolmentResponse.html) : The enrolled patient is not currently participating and has archived records from before the opt-out.
 - [Parameters resource for participation status response - actively participating](./Parameters-ParametersParticipationStatusActiveResponse.html) : Patient is actively participating with active records at a facility.
 - [Parameters resource for participation status response - actively participating with enrolment](./Parameters-ParametersParticipationStatusEnrolmentActiveResponse.html) : Patient is actively participating with enrolment information and facility-level participation details.
 

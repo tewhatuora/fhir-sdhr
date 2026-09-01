@@ -12,5 +12,3 @@ Description: "Example parameters content to POST to the HNZ Participate (`$hnz-p
 * parameter[=].valueString = "Medtech"
 * parameter[+].name = "hnzParticipationIndicator"
 * parameter[=].valueBoolean = true
-// * parameter[+].name = "reasonCode"
-// * parameter[=].valueCodeableConcept = $sdhr-participation-reason#sdhr-hnz-opt-in "HNZ opt in"

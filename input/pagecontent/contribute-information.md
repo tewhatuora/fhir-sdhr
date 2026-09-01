@@ -119,12 +119,12 @@ The PMS must also respect global and facility-level opt-outs and record-level co
 The following diagram covers the facility participation scenarios:
 
 1. The first write for a patient at a facility establishes the default participation preference if SDHR reports that the preference is unknown.
-2. A facility opt-out records `participationIndicator` as `false` and prevents subsequent resources from being shared from that facility.
+2. A facility opt-out records `participationIndicator` as `false`, archives the patient's active contributed resources from that facility, and prevents subsequent resources from being shared from that facility.
 3. A facility opt-back-in records `participationIndicator` as `true`, allows routine writes to resume, and can trigger the assigned historical-load process for an enrolled patient.
 
 {% include participate-sequence-pmsoptoff.svg %}
 
-The PMS must immediately prevent new or changed local records for the patient from being written after a facility opt-out is recorded. See [Reload after a patient opts back in](#reload-after-a-patient-opts-back-in) for the historical information process that follows an opt-back-in.
+When the facility opt-out is recorded, SDHR archives the patient's active contributed resources from that facility. Archived resources are retained by SDHR but are not returned by normal search or read interactions. The PMS must immediately prevent new or changed local records for the patient from being written. See [Reload after a patient opts back in](#reload-after-a-patient-opts-back-in) for the historical information process that follows an opt-back-in.
 
 #### Set record-level confidentiality
 
@@ -137,6 +137,8 @@ A new confidential `Condition` or `Observation` record must not be written to SD
 A patient can record a global opt-out or restore global participation through an authorised Health NZ channel.
 
 {% include participate-sequence-hnzoptoff.svg %}
+
+When a global opt-out is recorded, SDHR archives the patient's active contributed resources across all facilities. Those archived resources are retained but are not available through normal search or read interactions.
 
 When a patient restores global participation, the enrolled PMS must be notified so the applicable historical reload can be initiated. See [Reload after a patient opts back in](#reload-after-a-patient-opts-back-in).
 
@@ -168,7 +170,7 @@ Detailed assurance requirements are documented under [Concurrent historical and 
 
 #### Reload after a patient opts back in
 
-When a patient opts back in at a facility, their eligible history must be reloaded for that facility. For pull-based acquisition, SDHR initiates the individual load. For push-based acquisition, the application initiates the load.
+When a patient opts back in at a facility, their eligible history must be reloaded for that facility and reconciled with the archived resources. For pull-based acquisition, SDHR initiates the individual load. For push-based acquisition, the application initiates the load.
 
 When a patient opts back in through a Health NZ channel after a global opt-out, the application must be able to receive a notification and trigger a load of the enrolled patient's history. An API-triggered process is preferred; a controlled manual process may be used where agreed during onboarding.
 

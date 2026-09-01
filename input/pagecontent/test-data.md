@@ -6,7 +6,7 @@ The SDHR UAT environment contains some fixed data to support specific testing us
 ### Patients
 {: .underlined}
 
-The globally opted-out patients below support testing of API behaviour after a Health NZ channel has recorded a global opt-out. Requests for their protected resources receive an HTTP 403 response containing the Global Deny `OperationOutcome`.
+The globally opted-out patients below support testing of API behaviour after a Health NZ channel has recorded a global opt-out and SDHR has archived their active contributed resources. Requests for protected resources receive an HTTP 403 response containing the Global Deny `OperationOutcome`.
 
 | Identifiers | Description | OperationOutcome |
 | -------- | ------- | ------- |

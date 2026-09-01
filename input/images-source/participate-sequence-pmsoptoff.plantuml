@@ -134,30 +134,24 @@ note left of PARTICIPATE
   - participationIndicator: false
 end note
 PARTICIPATE -> FHIRAPI : Write Participation
-FHIRAPI -> SDHR : Persist
+FHIRAPI -> SDHR : Persist preference and archive active contributed\nresources for the patient at this facility
+SDHR --> FHIRAPI : Participation recorded and resources archived
 PARTICIPATE -> ORCHESTRATOR : Return OperationOutcome
 
 ==Search for a Resource==
 ORCHESTRATOR -> FHIRAPI : Search Resource (e.g. Condition)
-FHIRAPI -> SDHR : Query Resource
-SDHR -> FHIRAPI : Return
-FHIRAPI -> ORCHESTRATOR : Return Search result with REDACTED data
+FHIRAPI -> SDHR : Query active resources
+SDHR -> FHIRAPI : Return no active matches
+FHIRAPI -> ORCHESTRATOR : Return empty search result
 note right of ORCHESTRATOR
 In this example the patient was previously opted in and uploaded 1 Condition resource.
-The SDHR service indicates that the search resulted in 1 `match` but the data is redacted
-due to the patient's participation preferences.
+The resource was archived when the facility opt-out was recorded, so it is not included
+in searches of active SDHR data. This is different from confidentiality filtering and the
+Bundle does not carry a REDACTED security label.
 
-  "meta" : {
-    "security" : [
-      {
-        "system" : "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
-        "code" : "redacted",
-        "display" : "REDACTED"
-      }
-    ]
-  },
+  "resourceType" : "Bundle",
   "type" : "searchset",
-  "total" : 1,
+  "total" : 0,
   "entry": []
 end note
 
@@ -238,6 +232,8 @@ opt Enrolled patient requires historical information
     Pull-based acquisition uses an SDHR patient lock.
     For push-based acquisition, the PMS Orchestrator coordinates
     historic and real-time writes.
+    The reload reconciles the current eligible source history with
+    the resources archived when the patient opted out.
   end note
 end
 ORCHESTRATOR -> FHIRAPI : Resume eligible resource writes\nwhen load coordination permits

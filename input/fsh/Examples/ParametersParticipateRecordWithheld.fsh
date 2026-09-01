@@ -8,11 +8,9 @@ Description: "Example parameters content to POST to the Participate operation wh
 * parameter[=].valueReference.type = "Patient"
 * parameter[+].name = "facilityId"
 * parameter[=].valueReference = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ111-A)
-// * parameter[+].name = "participationIndicator"
-// * parameter[=].valueBoolean = false
 * parameter[+].name = "resourceType"
 * parameter[=].valueString = "Condition"
 * parameter[+].name = "localResourceId"
 * parameter[=].valueString = "12345AAABBBccc"
 * parameter[+].name = "reasonCode"
-* parameter[=].valueCodeableConcept = $sdhr-participation-reason#sdhr-record-withheld "Records withheld"
+* parameter[=].valueCoding = $sdhr-participation-reason#sdhr-record-withheld "Records withheld"

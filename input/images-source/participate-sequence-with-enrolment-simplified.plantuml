@@ -33,7 +33,7 @@ scale 300*500
 actor "Patient" as Patient
 actor "Health Practitioner" as USER
 participant "PMS" as APIC #Orange
-participant "ALEX" as ORCHESTRATOR #Orange
+participant "PMS Orchestrator" as ORCHESTRATOR #Orange
 control "Participate Operation\n$participate" as PARTICIPATE #LightBlue
 control "SDHR FHIR API" as FHIRAPI #LightBlue
 database "SDHR FHIR Server" as SDHR #LightGreen
@@ -53,8 +53,7 @@ ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
     - patient: Patient ID (NHI)
     - facilityId: Facility ID (HPI FacilityID)
     - participationIndicator: true
-    - enrolmentStaus: [ENROLED|NOT-ENROLED|UNKNOWN]
-    '- nhiValidationStatus: [VALIDATED|INVALID|NOT-VALIDATED]
+    - enrolledPatient: true (Medtech only, when enrolled and a historic load is required)
   end note
 PARTICIPATE -> FHIRAPI : Write Participation
 FHIRAPI -> SDHR : Persist
@@ -80,7 +79,7 @@ PARTICIPATE -> ORCHESTRATOR : Return OperationOutcome
       ]
     }
   end note
-alt Patient ENROLED
+alt enrolledPatient is true
   FHIRAPI -> FHIRAPI : Lock Patient record
   FHIRAPI -> ORCHESTRATOR : Get Patient records (historic load)
   ORCHESTRATOR -> FHIRAPI : Return patient records
@@ -88,7 +87,7 @@ alt Patient ENROLED
     FHIRAPI -> SDHR : Persist
   end loop
   FHIRAPI -> FHIRAPI : Unlock Patient record
-else Patient NOT-ENROLED or UNKNOWN
+else enrolledPatient is false or omitted
   note over FHIRAPI
     No historic load of patient records performed
     New records are loaded as they are created
@@ -97,7 +96,7 @@ end alt
 
 == Some Time Passes ==
 note over ORCHESTRATOR
-  A previously UNENROLED or UNKNOWN patient has now ENROLED
+  A patient who was not previously enrolled is now enrolled
 end note
 ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
   note left of PARTICIPATE
@@ -105,8 +104,7 @@ ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
     - patient: Patient ID (NHI)
     - facilityId: Facility ID (HPI FacilityID)
     - participationIndicator: true
-    - enrolmentStaus: ENROLED
-    '- nhiValidationStatus: [VALIDATED|INVALID|NOT-VALIDATED]
+    - enrolledPatient: true
   end note
 PARTICIPATE -> FHIRAPI : Write Participation
 FHIRAPI -> SDHR : Persist

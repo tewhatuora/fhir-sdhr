@@ -38,7 +38,7 @@ Description: "Immunization resource for the Shared Digital Health Record. This p
 * meta.lastUpdated 0..1
 * meta.security 0..*
 * meta.source 0..0
-* meta.profile 0..0
+* meta.profile 1..1
 * meta.tag 0..0
 
 // Only the administered product and age-at-administration AIR extensions are

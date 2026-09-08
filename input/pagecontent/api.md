@@ -564,6 +564,7 @@ Response examples:
 
 - [Patient not globally participating](./Parameters-ParametersParticipationStatusNotParticipatingResponse.html)
 - [Patient globally participating](./Parameters-ParametersParticipationStatusParticipatingResponse.html)
+- [Invalid patient reference (HTTP 400)](./OperationOutcome-OperationOutcomeParticipationStatusInvalidPatient.html)
 
 SEHR systems should use the result to determine whether to continue with an information request. If `hnzParticipationIndicator` is `false`, the patient is globally opted out of SDHR and no information will be available for that patient.
 

@@ -21,7 +21,7 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
-When `participationIndicator` is `false`, SDHR records the facility opt-out and archives the patient's active contributed resources from the supplied facility. Archived resources are not returned by normal search or read interactions.
+When `participationIndicator` is `false`, SDHR records the facility opt-out and archives the patient's active contributed resources from the supplied facility. Archived resources are removed from SDHR and never returned.
 For an opt-in request, a Medtech PMS may set `enrolledPatient` to `true` to indicate that the patient is enrolled at the supplied facility and that a historic load should be triggered. If `enrolledPatient` is omitted, the API treats the caller as non-Medtech or unknown and updates consent without triggering a historic load.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """

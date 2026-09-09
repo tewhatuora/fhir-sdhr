@@ -502,7 +502,7 @@ The `$participate` operation enables API consumers, such as PMS products, to rec
 | Behaviour | Idempotent for repeated requests with the same parameters |
 {: .grid}
 
-The operation supports facility opt-out and opt-back-in, technical initialisation of the default facility preference, withholding a local `Condition` or `Observation`, and releasing a previously withheld record. A facility opt-out archives the patient's active contributed resources from that facility; archived resources are retained but are excluded from normal search and read interactions. Parameter cardinalities, conditional requirements, bindings, and response definitions are authoritative in the [OperationDefinition](./OperationDefinition-SDHRParticipateOperation.html).
+The operation supports facility opt-out and opt-back-in, technical initialisation of the default facility preference, withholding a local `Condition` or `Observation`, and releasing a previously withheld record. A facility opt-out archives the patient's active contributed resources from that facility; archived resources are removed from SDHR and never returned. Parameter cardinalities, conditional requirements, bindings, and response definitions are authoritative in the [OperationDefinition](./OperationDefinition-SDHRParticipateOperation.html).
 
 Request examples:
 
@@ -529,16 +529,17 @@ See [Manage participation](./contribute-information.html#manage-participation) f
 
 #### Participation status operation
 
-The `$participation-status` operation allows an SEHR system to check whether a patient is globally participating in SDHR before requesting health information. It returns the patient's NHI reference and the `hnzParticipationIndicator` boolean. The operation does not change the patient's participation preference and does not return clinical information.
+The `$participation-status` operation allows an SEHR system to check whether a patient is globally participating in SDHR before requesting health information. It returns the `hnzParticipationIndicator` boolean. The operation does not change the patient's participation preference and does not return clinical information.
 
 | Contract element | Requirement |
 | --- | --- |
 | Interaction | System-level custom operation |
 | HTTP request | `POST /$participation-status` |
 | Definition | [SDHR Participation Status Operation](./OperationDefinition-SDHRParticipationStatusOperation.html) |
+| Required SMART scope | `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRParticipationStatusOperation` |
 | Request body | FHIR `Parameters` containing one NHI `patient` reference |
-| Response body | FHIR `Parameters` containing the patient reference and `hnzParticipationIndicator` |
-| `hnzParticipationIndicator` | `true` indicates global participation; `false` indicates that the patient has opted out globally |
+| Response body | FHIR `Parameters` containing `hnzParticipationIndicator` |
+| `hnzParticipationIndicator` | `true` indicates global participation, including when no global preference has been recorded; `false` indicates that the patient has opted out globally |
 {: .grid}
 
 The operation is intended to be called by a healthcare provider on behalf of the patient. The patient must be identified by an NHI. The status returned is global; it does not represent a facility-level participation preference.

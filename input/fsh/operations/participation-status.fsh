@@ -3,6 +3,8 @@ InstanceOf: OperationDefinition
 Description: """
 This operation allows Shared Electronic Health Record (SEHR) systems to retrieve a patient's Shared Digital Health Record participation status.
 
+This operation requires the SMART on FHIR scope `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRParticipationStatusOperation`.
+
 For example response payloads for this operation see:
 - [Parameters resource for participation status response - not participating](./Parameters-ParametersParticipationStatusNotParticipatingResponse.html) : This example shows the `Parameters` resource returned when the patient is not participating in the Shared Digital Health Record service.
 - [Parameters resource for participation status response - participating](./Parameters-ParametersParticipationStatusParticipatingResponse.html) : This example shows the `Parameters` resource returned when the patient is participating in the Shared Digital Health Record service.
@@ -10,7 +12,7 @@ For example response payloads for this operation see:
 To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participation-status`).
 
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
-The operation will return a `Parameters` resource containing the patient reference and participation status indicators.
+The operation returns a `Parameters` resource containing the `hnzParticipationIndicator`. A patient with no recorded global participation preference is considered to be participating and returns `true`.
 """
 Usage: #definition
 * url = "https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRParticipationStatusOperation"
@@ -34,4 +36,4 @@ Usage: #definition
 * parameter[=].min = 1
 * parameter[=].max = "1"
 * parameter[=].type = #boolean
-* parameter[=].documentation = "Indicates whether the patient is currently participating in the Shared Digital Health Record service."
+* parameter[=].documentation = "Indicates whether the patient is globally participating in the Shared Digital Health Record service. Returns true when no global participation preference has been recorded."

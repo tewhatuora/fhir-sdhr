@@ -124,7 +124,7 @@ The following diagram covers the facility participation scenarios:
 
 {% include participate-sequence-pmsoptoff.svg %}
 
-When the facility opt-out is recorded, SDHR archives the patient's active contributed resources from that facility. Archived resources are retained by SDHR but are not returned by normal search or read interactions. The PMS must immediately prevent new or changed local records for the patient from being written. See [Reload after a patient opts back in](#reload-after-a-patient-opts-back-in) for the historical information process that follows an opt-back-in.
+When the facility opt-out is recorded, SDHR archives the patient's active contributed resources from that facility. Archived resources are removed from SDHR and never returned. The PMS must immediately prevent new or changed local records for the patient from being written. See [Reload after a patient opts back in](#reload-after-a-patient-opts-back-in) for the historical information process that follows an opt-back-in.
 
 #### Set record-level confidentiality
 
@@ -138,7 +138,7 @@ A patient can record a global opt-out or restore global participation through an
 
 {% include participate-sequence-hnzoptoff.svg %}
 
-When a global opt-out is recorded, SDHR archives the patient's active contributed resources across all facilities. Those archived resources are retained but are not available through normal search or read interactions.
+When a global opt-out is recorded, SDHR archives the patient's active contributed resources across all facilities. Archived resources are removed from SDHR and never returned.
 
 When a patient restores global participation, the enrolled PMS must be notified so the applicable historical reload can be initiated. See [Reload after a patient opts back in](#reload-after-a-patient-opts-back-in).
 

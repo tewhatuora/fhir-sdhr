@@ -121,7 +121,7 @@ The detailed structure, validation rules, and technical implementation of reques
 #### Response and error handling
 
 - A successful search returns a FHIR `Bundle`; a successful read or vread returns the requested resource.
-- A successful `$participation-status` request returns a FHIR `Parameters` resource containing the patient reference and `hnzParticipationIndicator`.
+- A successful `$participation-status` request returns a FHIR `Parameters` resource containing `hnzParticipationIndicator`.
 - If `hnzParticipationIndicator` is `false`, the SEHR must treat the patient as globally opted out and indicate this to the end user.
 - An empty result may mean that SDHR has no matching information available to the requester. It must not be presented as proof that the clinical information does not exist.
 - Patient identity should be established using local or authoritative identity services. Patient names returned with SDHR information should not be treated as the authoritative source of patient identity.

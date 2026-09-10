@@ -19,6 +19,7 @@ Usage: #definition
 * name = "VerificationSamples"
 * status = #draft
 * kind = #operation
+* affectsState = false
 * code = #verification-samples
 * system = false
 * type = true
@@ -60,6 +61,7 @@ Usage: #definition
 * name = "VerificationSubmissions"
 * status = #draft
 * kind = #operation
+* affectsState = true
 * code = #verification-submissions
 * system = false
 * type = true

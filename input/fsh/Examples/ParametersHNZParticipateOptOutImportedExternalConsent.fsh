@@ -1,7 +1,7 @@
-Instance: ParametersHNZParticipateOptOut
+Instance: ParametersHNZParticipateOptOutImportedExternalConsent
 InstanceOf: Parameters
 Usage: #example
-Description: "Example parameters content to POST to the HNZ Participate (`$hnz-participate`) operation where a patient elects not to participate in the Shared Digital Health Record service by using an appropriate HNZ digital or assisted channel."
+Description: "Example parameters content to POST to the HNZ Participate (`$hnz-participate`) operation where global opt-out is imported from an external consent source."
 * parameter[0].name = "patient"
 * parameter[=].valueReference = Reference(https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284)
 * parameter[=].valueReference.display = "Susan Westbrook"
@@ -10,5 +10,5 @@ Description: "Example parameters content to POST to the HNZ Participate (`$hnz-p
 * parameter[=].valueBoolean = false
 * parameter[+].name = "hnzOptOutReasonCode"
 * parameter[=].valueCodeableConcept.coding[0].system = "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/hnz-global-opt-out-reason"
-* parameter[=].valueCodeableConcept.coding[0].code = #patient-choice
-* parameter[=].valueCodeableConcept.coding[0].display = "Patient choice"
+* parameter[=].valueCodeableConcept.coding[0].code = #imported-external-consent
+* parameter[=].valueCodeableConcept.coding[0].display = "Imported external consent"

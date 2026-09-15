@@ -35,6 +35,17 @@ Description: "This code system defines the reasons for a patient to participate 
 * #sdhr-hnz-opt-out "HNZ opt out" "Patient has opted out of participation entirely with Health NZ. This means that no records will be shared from any facility."
 * #sdhr-hnz-opt-in "HNZ opt in" "Patient has opted in to participation with Health NZ. This means that records will be shared from all facilities."
 
+CodeSystem: HNZGlobalOptOutReason
+Id: hnz-global-opt-out-reason
+Title: "HNZ Global Opt Out Reason Codes"
+Description: "This code system defines the reasons for an HNZ global opt-off decision."
+* ^meta.versionId = "1"
+* ^experimental = false
+* ^publisher = "Health NZ | Te Whatu Ora"
+* #patient-choice "Patient choice" "Global opt-off was recorded based on patient choice."
+* #patient-deceased "Patient deceased" "Global opt-off was recorded because the patient is deceased."
+* #imported-external-consent "Imported external consent" "Global opt-off was imported from an external consent source."
+
 CodeSystem: SDHRVerificationResult
 Id: sdhr-verification-result
 Title: "SDHR Verification Result Codes"

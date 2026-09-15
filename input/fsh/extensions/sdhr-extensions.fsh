@@ -19,3 +19,10 @@ Description: "Indicates whether the patient has opted out or opted in to partici
 * valueCodeableConcept 1..1
 * valueCodeableConcept from SDHRParticipationReasonValueSet (required)
 * valueCodeableConcept ^short = "Use sdhr-facility-opt-out if the patient has opted out, sdhr-facility-opt-in if the patient has opted in"
+
+Extension: HNZGlobalOptOutReasonExtension
+Id: hnz-global-opt-out-reason-extension
+Title: "HNZ Global Opt Out Reason"
+Description: "Records the reason for an HNZ global opt-off decision."
+* valueCodeableConcept 1..1
+* valueCodeableConcept from SDHRHNZOptOutReasonValueSet (required)

@@ -9,6 +9,4 @@ Description: "Example parameters content to POST to the HNZ Participate (`$hnz-p
 * parameter[+].name = "hnzParticipationIndicator"
 * parameter[=].valueBoolean = false
 * parameter[+].name = "hnzOptOutReasonCode"
-* parameter[=].valueCodeableConcept.coding[0].system = "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/hnz-global-opt-out-reason"
-* parameter[=].valueCodeableConcept.coding[0].code = #patient-deceased
-* parameter[=].valueCodeableConcept.coding[0].display = "Patient deceased"
+* parameter[=].valueCode = #patient-deceased

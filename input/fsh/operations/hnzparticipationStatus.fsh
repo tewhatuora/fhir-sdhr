@@ -55,8 +55,10 @@ Usage: #definition
 * parameter[=].use = #out
 * parameter[=].min = 0
 * parameter[=].max = "1"
-* parameter[=].type = #CodeableConcept
-* parameter[=].documentation = "The global opt-out reason when hnzParticipationIndicator is false. Coding system: https://fhir-ig.digital.health.nz/sdhr/CodeSystem/hnz-global-opt-out-reason"
+* parameter[=].type = #code
+* parameter[=].binding.strength = #required
+* parameter[=].binding.valueSet = Canonical(SDHRHNZOptOutReasonValueSet)
+* parameter[=].documentation = "The global opt-out reason when hnzParticipationIndicator is false. Allowed values: patient-choice, patient-deceased, imported-external-consent."
 
 * parameter[+].name = #hasActiveRecords
 * parameter[=].use = #out

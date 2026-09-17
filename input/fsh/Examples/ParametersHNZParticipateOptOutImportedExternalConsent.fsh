@@ -9,6 +9,4 @@ Description: "Example parameters content to POST to the HNZ Participate (`$hnz-p
 * parameter[+].name = "hnzParticipationIndicator"
 * parameter[=].valueBoolean = false
 * parameter[+].name = "hnzOptOutReasonCode"
-* parameter[=].valueCodeableConcept.coding[0].system = "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/hnz-global-opt-out-reason"
-* parameter[=].valueCodeableConcept.coding[0].code = #imported-external-consent
-* parameter[=].valueCodeableConcept.coding[0].display = "Imported external consent"
+* parameter[=].valueCode = #imported-external-consent

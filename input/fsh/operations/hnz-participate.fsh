@@ -54,9 +54,14 @@ If false, the patient does not wish to participate in the service and their reso
 * parameter[=].use = #in
 * parameter[=].min = 0
 * parameter[=].max = "1"
-* parameter[=].type = #CodeableConcept
+* parameter[=].type = #code
+* parameter[=].binding.strength = #required
+* parameter[=].binding.valueSet = Canonical(SDHRHNZOptOutReasonValueSet)
 * parameter[=].documentation = """Required when hnzParticipationIndicator is false. Not supported when hnzParticipationIndicator is true.
-Coding system: https://fhir-ig.digital.health.nz/sdhr/CodeSystem/hnz-global-opt-out-reason
+Allowed values:
+- `patient-choice`
+- `patient-deceased`
+- `imported-external-consent`
 """
 
 * parameter[+].name = #facilityId

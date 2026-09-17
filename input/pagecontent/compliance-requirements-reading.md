@@ -763,13 +763,13 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-29">SRD-29</p>
                 </td>
                 <td>
-                    <p>Extemporaneously Compounded (EC) Items</p>
+                    <p>Extemporaneously Compounded Products (ECPs)</p>
                 </td>
                 <td>
-                    <p>Medications data returned containing Extemporaneously Compounded records</p>
+                    <p>Medications data returned containing records for Extemporaneously Compounded Products</p>
                 </td>
                 <td>
-                    <p>Extemporaneously compounded medication records can contain a list of ingredients within the record. All ingredients must be displayed in the SEHR UI rather than displaying only the label which may not fully reflect the ingredients in the compounded medication.</p>
+                    <p>Extemporaneously compounded product records can contain a list of ingredients within the record. All ingredients must be displayed in the SEHR UI rather than displaying only the label which may not fully reflect the ingredients in the compounded medication.</p>
                 </td>
                 <td>
                     <p>Yes</p>

@@ -24,5 +24,6 @@ Extension: HNZGlobalOptOutReasonExtension
 Id: hnz-global-opt-out-reason-extension
 Title: "HNZ Global Opt Out Reason"
 Description: "Records the reason for an HNZ global opt-off decision."
-* valueCodeableConcept 1..1
-* valueCodeableConcept from SDHRHNZOptOutReasonValueSet (required)
+* value[x] only code
+* valueCode 1..1
+* valueCode from SDHRHNZOptOutReasonValueSet (required)

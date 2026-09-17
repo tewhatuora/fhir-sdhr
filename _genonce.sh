@@ -19,11 +19,13 @@ export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -Dfile.encoding=UTF-8"
 publisher=$input_cache_path/$publisher_jar
 if test -f "$publisher"; then
 	java -jar $publisher -ig . $txoption $*
+	./scripts/postprocess-artifacts.sh
 
 else
 	publisher=../$publisher_jar
 	if test -f "$publisher"; then
 		java -jar $publisher -go-publish -ig . $txoption $*
+		./scripts/postprocess-artifacts.sh
 	else
 		echo IG Publisher NOT FOUND in input-cache or parent folder.  Please run _updatePublisher.  Aborting...
 	fi

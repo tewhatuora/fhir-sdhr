@@ -9,7 +9,7 @@ name: nz-shared-digital-health-record
 title: NZ Shared Digital Health Record API
 description: NZ Shared Digital Health Record API
 status: active # draft | active | retired | unknown
-version: 1.0.2
+version: 1.1.4
 fhirVersion: 4.0.1 # https://www.hl7.org/fhir/valueset-FHIR-version.html
 copyrightYear: 2025+
 releaseLabel: release # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use
@@ -40,7 +40,15 @@ dependencies:
   #tewhatuora.fhir.nzps: current
   fhir.org.nz.ig.base: 3.0.0
   tewhatuora.digitaltooling: 0.0.11
-  
+
+# Do not add versions to otherwise-unversioned canonicals. This does not remove
+# versions already present in dependencies or the base R4 specification. Patient
+# references that must remain unversioned also use the Publisher's explicit `|*`
+# directive in RuleSets.fsh.
+parameters:
+  pin-canonicals: pin-none
+
+
 # The pages property corresponds to IG.definition.page. SUSHI can
 # auto-generate the page list, but if the author includes pages in
 # this file, it is assumed that the author will fully manage the
@@ -55,18 +63,34 @@ dependencies:
 pages:
   index.md:
     title: NZ Shared Digital Health Record API
-  use-cases.md:
-    title: Use cases
-  consent-based-access.md:
-    title: Consent based access control
-  artifacts.html:
-    title: FHIR Artifacts
+  contribute-information.md:
+    title: Contribute Information to SDHR
+  access-information.md:
+    title: Access Information from SDHR
+  data-overview.md:
+    title: Data Overview
+    conditions.md:
+      title: Conditions
+    allergies-intolerances.md:
+      title: Allergies & Intolerances
+    observations.md:
+      title: Observations
+    medications.md:
+      title: Medications
+    immunisations.md:
+      title: Immunisations
+    data-models.md:
+      title: Data Models
+  api.md:
+    title: API Documentation
   compliance-requirements.md:
     title: Compliance Requirements - for Systems Sharing Data
-  data-models.md:
-    title: Data Models
-  api.md:
-    title: API Docs
+  compliance-requirements-reading.md:
+    title: Compliance Requirements - for Systems Reading Data
+  artifacts.html:
+    title: FHIR Artifacts
+  consent-based-access.md:
+    title: Consent based access control
   test-data.md:
     title: Test Data
 #
@@ -94,12 +118,22 @@ pages:
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
 menu:
   Home: index.html
-  Use cases: use-cases.html
+  Use Cases:
+    Contribute Information to SDHR: contribute-information.html
+    Access Information from SDHR: access-information.html
+  Data:
+    Overview: data-overview.html
+    Conditions: conditions.html
+    Allergies & Intolerances: allergies-intolerances.html
+    Observations: observations.html
+    Medications: medications.html
+    Immunisations: immunisations.html
+    Data Models: data-models.html
   # Consent-based access control: consent-based-access.html
-  Artifacts: artifacts.html
-  Data Models: data-models.html
   API: api.html
-  Compliance: compliance-requirements.html
+  Compliance:
+    For systems sharing data: compliance-requirements.html
+    For systems reading data: compliance-requirements-reading.html
   Support:
     View FHIR OpenAPI: new-tab https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+FHIR+API
     View Bulk OpenAPI: new-tab https://fhir-ig.digital.health.nz/openapi/index.html?urls.primaryName=Shared+Digital+Health+Record+Bulk+Data+API

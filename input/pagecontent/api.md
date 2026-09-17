@@ -545,20 +545,7 @@ The operation is intended to be called by a healthcare provider on behalf of the
 
 Request example:
 
-```json
-{
-  "resourceType": "Parameters",
-  "parameter": [
-    {
-      "name": "patient",
-      "valueReference": {
-        "reference": "https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZXK9000",
-        "type": "Patient"
-      }
-    }
-  ]
-}
-```
+- [Participation status request `Parameters`](./Parameters-ParametersParticipationStatusRequest.html)
 
 Response examples:
 

@@ -3,12 +3,15 @@ InstanceOf: OperationDefinition
 Description: """
 This operation allows Shared Electronic Health Record (SEHR) systems to retrieve a patient's Shared Digital Health Record participation status.
 
+To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participation-status`).
+
+For an example request payload, see:
+- [Parameters resource for participation status request](./Parameters-ParametersParticipationStatusRequest.html) : This example shows the `Parameters` resource to POST to this operation.
+
 For example response payloads for this operation see:
 - [Parameters resource for participation status response - not participating](./Parameters-ParametersParticipationStatusNotParticipatingResponse.html) : This example shows the `Parameters` resource returned when the patient is not participating in the Shared Digital Health Record service.
 - [Parameters resource for participation status response - participating](./Parameters-ParametersParticipationStatusParticipatingResponse.html) : This example shows the `Parameters` resource returned when the patient is participating in the Shared Digital Health Record service.
 - [OperationOutcome for invalid patient reference](./OperationOutcome-OperationOutcomeParticipationStatusInvalidPatient.html) : This example shows the `OperationOutcome` returned when the `patient` reference does not match the required NHI Patient URL format.
-
-To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participation-status`).
 
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
 The operation returns a `Parameters` resource containing the patient reference and participation status indicators when validation succeeds.

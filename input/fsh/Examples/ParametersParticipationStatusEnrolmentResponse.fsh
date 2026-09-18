@@ -9,6 +9,8 @@ Description: "Example parameters content returned by the Participation Status op
 * parameter[=].valueBoolean = true
 * parameter[+].name = "hnzParticipationIndicator"
 * parameter[=].valueBoolean = false
+* parameter[+].name = "hnzOptOutReasonCode"
+* parameter[=].valueCode = #patient-choice
 * parameter[+].name = "hasActiveRecords"
 * parameter[=].valueBoolean = false
 * parameter[+].name = "hasArchivedRecords"

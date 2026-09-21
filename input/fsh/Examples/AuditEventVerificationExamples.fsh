@@ -14,7 +14,7 @@ Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
 * agent[=].who.identifier.value = "1234"
 * entity[0].what.identifier.system = "https://standards.digital.health.nz/ns/nhi"
 * entity[=].what.identifier.value = "ZKC7284"
-* entity[+].what = Reference(Condition/ConditionRespiratoryExample)
+* entity[+].what = Reference(ConditionRespiratoryExample)
 * entity[=].detail[+].type = "correlationId"
 * entity[=].detail[=].valueString = "c500dae6-ac65-4e4f-a4c1-5aa222a6a807"
 * source.observer.display = "HNZ API Gateway"
@@ -35,7 +35,7 @@ Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
 * agent[=].who.identifier.value = "1234"
 * entity[+].what.identifier.system = "https://standards.digital.health.nz/ns/nhi"
 * entity[=].what.identifier.value = "ZKC7284"
-* entity[+].what = Reference(AllergyIntolerance/AllergyIntoleranceExample)
+* entity[+].what = Reference(AllergyIntoleranceExample)
 * entity[=].detail[+].type = "correlationId"
 * entity[=].detail[=].valueString = "c500dae6-ac65-4e4f-a4c1-5aa222a6a807"
 * source.observer.display = "HNZ API Gateway"
@@ -101,11 +101,11 @@ Usage: #example
 Description: "DRAFT EXAMPLE ONLY: Parameters response returned from the verification submissions operation."
 * parameter[0].name = "verificationSubmissionResult"
 * parameter[=].part[0].name = "auditEvent"
-* parameter[=].part[=].valueReference = Reference(AuditEvent/AuditEventVerificationSampleOne)
+* parameter[=].part[=].valueReference = Reference(AuditEventVerificationSampleOne)
 * parameter[=].part[+].name = "status"
 * parameter[=].part[=].valueCode = #processed
 * parameter[+].name = "verificationSubmissionResult"
 * parameter[=].part[0].name = "auditEvent"
-* parameter[=].part[=].valueReference = Reference(AuditEvent/AuditEventVerificationSampleTwo)
+* parameter[=].part[=].valueReference = Reference(AuditEventVerificationSampleTwo)
 * parameter[=].part[+].name = "status"
 * parameter[=].part[=].valueCode = #processed

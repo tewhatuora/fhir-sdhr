@@ -27,6 +27,8 @@ Description: "Consent resource created to reflect a patient's preferences with r
 * provision.period.end ^short = "The date and time the Consent is considered to be expired"
 * provision.action 1..*
 * provision.action ^short = "The action that is being permitted or denied"
+* provision.extension contains HNZGlobalOptOutReasonExtension named HNZGlobalOptOutReasonExtension 0..1
+* provision.extension[HNZGlobalOptOutReasonExtension] ^short = "The reason for the HNZ global opt-off"
 // Add the extension at provision.provision
 * provision.provision.extension contains FacilityParticipationExtension named FacilityParticipationExtension 0..1
 * provision.provision.extension[FacilityParticipationExtension] ^short = "Indicates the patient has opted out of participation entirely at the facility"

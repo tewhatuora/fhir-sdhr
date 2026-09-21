@@ -36,8 +36,15 @@ row_pattern2 = re.compile(
     re.DOTALL,
 )
 
+# Remove the technical HIP reference target stub bundle row from the public artifacts page.
+row_pattern3 = re.compile(
+    r'\s*<tr>\s*<td style="column-width:30%">\s*<a href="Bundle-HIPReferenceTargets\.html".*?</tr>',
+    re.DOTALL,
+)
+
 updated_html, replacements = row_pattern.subn("", html, count=1)
 updated_html2, replacements2 = row_pattern2.subn("", updated_html, count=1)
+updated_html3, replacements3 = row_pattern3.subn("", updated_html2, count=1)
 
-artifacts_path.write_text(updated_html2, encoding="utf-8")
+artifacts_path.write_text(updated_html3, encoding="utf-8")
 PY

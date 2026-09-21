@@ -1,0 +1,66 @@
+@startuml
+
+title SDHR Information Access Sequence Diagram
+
+autonumber "<color:Black>[00]"
+
+skinparam ActorFontSize 16
+skinparam ArrowFontSize 12
+skinparam ArrowFontSize 16
+skinparam BoxPadding 5
+skinparam DatabaseFontSize 16
+skinparam dpi 400
+skinparam EntityFontSize 16
+skinparam MaxMessageSize 375
+skinparam NoteFontSize 14
+skinparam ParticipantFontSize 16
+skinparam ParticipantPadding 5
+skinparam responseMessageBelowArrow true
+skinparam roundcorner 15
+skinparam sequenceArrowThickness 2
+skinparam SequenceBoxFontSize 16
+skinparam sequencegroupfontsize 14
+skinparam SequenceMessageAlignment left
+skinparam sequenceStyle uml2
+skinparam TitleFontSize 20
+skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
+
+scale max 260 width
+
+actor "Health Practitioner" as USER
+participant "SEHR" as APP #Orange
+control "SDHR FHIR API" as FHIRAPI #LightBlue
+database "SDHR Primary Care\nCollection" as PCC #LightGreen
+participant "National Health\nInformation Source" as NHS #LightGreen
+
+USER -> APP : Select patient and request information
+APP -> APP : Establish patient, user,\norganisation, and facility context
+
+opt Check global participation status
+    APP -> FHIRAPI : Check global participation\nPOST /$participation-status
+    FHIRAPI -> FHIRAPI : Authorise and audit request
+    FHIRAPI --> APP : Return Parameters with\nhnzParticipationIndicator
+end
+
+APP -> FHIRAPI : Search or read patient information\nwith required access context
+FHIRAPI -> FHIRAPI : Authorise and audit request
+FHIRAPI -> FHIRAPI : Apply participation, privacy,\nconfidentiality, and access controls
+
+alt Primary care information requested
+    FHIRAPI -> PCC : Retrieve permitted records
+    PCC --> FHIRAPI : Return available records
+else National information requested
+    FHIRAPI -> NHS : Retrieve permitted information
+    NHS --> FHIRAPI : Return available information
+end
+
+alt Request completed
+    FHIRAPI --> APP : Return FHIR Bundle or resource
+    APP -> APP : Retain required audit and source context
+    APP --> USER : Present information safely
+else Request cannot be completed
+    FHIRAPI --> APP : Return error outcome
+    APP -> APP : Handle error explicitly
+end
+
+@enduml

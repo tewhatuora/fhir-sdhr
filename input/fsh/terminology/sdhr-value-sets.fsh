@@ -49,3 +49,15 @@ Id: sdhr-participation-reason-valueset
 Title: "ValueSet for SDHR Participation Reason"
 Description: "A ValueSet containing all codes from the SDHR Participation Reason system."
 * include codes from system sdhr-participation-reason
+
+ValueSet: SDHRHNZOptOutReasonValueSet
+Id: sdhr-hnz-opt-out-reason-valueset
+Title: "ValueSet for HNZ Global Opt Out Reason"
+Description: "A ValueSet containing the allowed reasons for HNZ global opt-off."
+* include codes from system hnz-global-opt-out-reason
+
+ValueSet: SDHRVerificationResultValueSet
+Id: sdhr-verification-result-valueset
+Title: "ValueSet for SDHR Verification Result"
+Description: "A ValueSet containing all codes from the SDHR Verification Result system."
+* include codes from system sdhr-verification-result

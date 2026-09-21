@@ -47,29 +47,30 @@ RuleSet: APIStandardsDocumentation
   | **Context property**     | **Mandatory** | **Value**                                                                                                                          |
   |:-------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|
   | `userIdentifier`         | Yes         | The userid of the user as authenticated by the PMS/health application                                                                                   |
-  | `secondaryIdentifier`    | Yes         | The secondary identifier for the user - this **MUST** be the end users Common Person Number (aka HPI Practitioner identifier) of the practitioner using the application where available. Otherwise, any secondary identifier that is held for the user |
-  | `purposeOfUse`           | Yes         | One of [ "PATRQT", "TREAT", "ETREAT", "FAMRQT", "RECORDMGT" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                                 |
+  | `secondaryIdentifier`    | Yes         | The secondary identifier for the user. Must be a JSON object with: `use` (one of `usual`, `official`, `temp`, `secondary`, `old`), `system` (must be `https://standards.digital.health.nz/ns/hpi-person-id`), and a non-empty `value` |
+  | `purposeOfUse`           | Yes         | Exactly one of `[ "TREAT", "ETREAT" ]`. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                                 |
   | `userFullName`           | Yes         | Full name of the user of the PMS/health application.                                                                                                     |
-  | `userRole`               | Yes         | Role of the user of the PMS/health application. Set to `"PROV"` (Provider) or `"PAT"` (Patient)                                                         |
-  | `orgIdentifier`          | Yes         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
-  | `facilityIdentifier`     | Yes         | The HPI Facility identifier for the facility where the record is being sourced / accessed.                                                                                                |
+  | `userRole`               | Yes         | Role of the user of the PMS/health application. Set to `"PROV"` (Provider)                                                         |
+  | `orgIdentifier`          | Yes         | The HPI Organisation Number for the organisation in which the API consumer application is deployed. Must match the format `G[A-Z0-9]{5}-[A-Z]` (e.g. `G00001-G`)                     |
+  | `facilityIdentifier`     | Yes         | The HPI Facility identifier for the facility where the record is being sourced / accessed. Must match the format `F[A-Z0-9]{5}-[A-Z]` (e.g. `FZZ999-B`)                                                                                                |
 
   #### Requests with system context
   | **Context property**     | **Mandatory** | **Value**                                                                                                                          |
   |:-------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|
   | `userIdentifier`         | Yes         | The oAuth clientId of the system submitting data to the API                                                                                   |
-  | `purposeOfUse`           | Yes         | [ "RECORDMGT" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                              |
+  | `secondaryIdentifier`    | No (forbidden) | Must not be included in system-context requests                                                                                   |
+  | `purposeOfUse`           | Yes         | Must be exactly `[ "RECORDMGT" ]`. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                              |
   | `userFullName`           | Yes         | Name of the PMS/health application.                                                                                                    |
   | `userRole`               | Yes         | Role of the PMS/health application. Set to `"110150"` (Application)                                                 |
-  | `orgIdentifier`          | Yes         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
-  | `facilityIdentifier`     | Yes         | HPI identifier for the facility where the user is located                                                                                                |
+  | `orgIdentifier`          | Yes         | The HPI Organisation Number for the organisation in which the API consumer application is deployed. Must match the format `G[A-Z0-9]{5}-[A-Z]` (e.g. `G00001-G`)                     |
+  | `facilityIdentifier`     | Yes         | The HPI Facility identifier for the facility. Must match the format `F[A-Z0-9]{5}-[A-Z]` (e.g. `FZZ999-B`)                                                                                                |
 
   A schema definition and examples for `Request-Context` can be [found here](https://github.com/tewhatuora/schemas/blob/main/json-schema/Request-Context.json)
 
   #### Example Request-Context Header Payload for a clinical user searching for a patient's Conditions
   **Base64 Encoded**
   ```
-  ewogICJ1c2VySWRlbnRpZmllciI6ICJwbXMtaWQtMTIzIiwKICAidXNlclJvbGUiOiAiUFJPViIsCiAgInNlY29uZGFyeUlkZW50aWZpZXIiOiB7CiAgICAidXNlIjogIm9mZmljaWFsIiwKICAgICJzeXN0ZW0iOiAiaHR0cHM6Ly9zdGFuZGFyZHMuZGlnaXRhbC5oZWFsdGgubnovbnMvaHBpLXBlcnNvbi1pZCIsCiAgICAidmFsdWUiOiAiOTlaWlpTIgogIH0sCiAgInB1cnBvc2VPZlVzZSI6IFsKICAgICJQT1BITFRIIgogIF0sCiAgInVzZXJGdWxsTmFtZSI6ICJCZXZlcmx5IENydXNoZXIiLAogICJvcmdJZGVudGlmaWVyIjogIkcwMDAwMS1HIiwKICAiZmFjaWxpdHlJZGVudGlmaWVyIjogIkZaWjk5OS1CIgp9
+  ewogICJ1c2VySWRlbnRpZmllciI6ICJwbXMtaWQtMTIzIiwKICAidXNlclJvbGUiOiAiUFJPViIsCiAgInNlY29uZGFyeUlkZW50aWZpZXIiOiB7CiAgICAidXNlIjogIm9mZmljaWFsIiwKICAgICJzeXN0ZW0iOiAiaHR0cHM6Ly9zdGFuZGFyZHMuZGlnaXRhbC5oZWFsdGgubnovbnMvaHBpLXBlcnNvbi1pZCIsCiAgICAidmFsdWUiOiAiOTlaWlpTIgogIH0sCiAgInB1cnBvc2VPZlVzZSI6IFsKICAgICJUUkVBVCIKICBdLAogICJ1c2VyRnVsbE5hbWUiOiAiQmV2ZXJseSBDcnVzaGVyIiwKICAib3JnSWRlbnRpZmllciI6ICJHMDAwMDEtRyIsCiAgImZhY2lsaXR5SWRlbnRpZmllciI6ICJGWlo5OTktQiIKfQ==
   ```
   **Decoded JSON**
   ```json
@@ -82,7 +83,7 @@ RuleSet: APIStandardsDocumentation
       "value": "99ZZZS"
     },
     "purposeOfUse": [
-      "POPHLTH"
+      "TREAT"
     ],
     "userFullName": "Beverly Crusher",
     "orgIdentifier": "G00001-G",

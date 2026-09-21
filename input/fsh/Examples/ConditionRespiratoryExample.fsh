@@ -3,7 +3,7 @@ InstanceOf: SDHRCondition
 Description: "Example Respiratory Condition"
 Usage: #example
 * meta.lastUpdated = "2024-01-26T10:03:26+13:00"
-
+* id = "276c6f2a0-d5fb-42c0-a16d-3625e3c87204"
 * meta insert HPIFacility(F38006-B)
 
 * insert LocalIdentifierExample

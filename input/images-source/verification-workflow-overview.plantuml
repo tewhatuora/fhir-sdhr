@@ -1,0 +1,55 @@
+@startuml
+
+title SDHR Audit Access Records Sequence Diagram
+
+autonumber "<color:Black>[00]"
+
+skinparam ActorFontSize 16
+skinparam ArrowFontSize 12
+skinparam ArrowFontSize 16
+skinparam BoxPadding 5
+skinparam DatabaseFontSize 16
+skinparam dpi 400
+skinparam EntityFontSize 16
+skinparam MaxMessageSize 375
+skinparam NoteFontSize 14
+skinparam ParticipantFontSize 16
+skinparam ParticipantPadding 5
+skinparam responseMessageBelowArrow true
+skinparam roundcorner 15
+skinparam sequenceArrowThickness 2
+skinparam SequenceBoxFontSize 16
+skinparam sequencegroupfontsize 14
+skinparam SequenceMessageAlignment left
+skinparam sequenceStyle uml2
+skinparam TitleFontSize 20
+skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
+
+scale max 260 width
+
+actor "Health Practitioner" as USER
+participant "SEHR" as APP #Orange
+control "SDHR FHIR API" as FHIRAPI #LightBlue
+
+== Record access ==
+
+USER -> APP : Select patient and request information
+APP -> APP : Record user action and request context\nin local audit record
+APP -> FHIRAPI : Search or read patient information\nwith required access context
+FHIRAPI -> FHIRAPI : Authorise and audit request
+FHIRAPI -> FHIRAPI : Record access event
+FHIRAPI --> APP : Return FHIR response or error outcome
+APP -> APP : Correlate response with local audit record
+
+== Verify sampled access records ==
+
+loop Ongoing access verification
+    APP -> FHIRAPI : GET /AuditEvent/$verification-samples
+    FHIRAPI -> FHIRAPI : Identify eligible outstanding samples
+    FHIRAPI --> APP : Bundle of sampled AuditEvent resources
+    APP -> APP : Review each sample using an\nautomated or manual process
+    APP -> FHIRAPI : POST /AuditEvent/$verification-submissions\nParameters with verification decisions
+    FHIRAPI --> APP : Parameters with processing results
+end
+
+@enduml

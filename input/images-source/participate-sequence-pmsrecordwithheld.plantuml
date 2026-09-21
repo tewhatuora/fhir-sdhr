@@ -27,8 +27,7 @@ skinparam TitleFontSize 20
 ' see https://sarafian.github.io/tips/2021/03/11/plantuml-tips-tricks-1.html#:~:text=responseMessageBelowArrow-,Semi,-transparent%20group%20backgrounds
 skinparam SequenceGroupBodyBackgroundColor #EEEEFF50
 
-scale max 400 width
-scale 300*500
+scale max 260 width
 
 actor "Health Practitioner" as USER
 participant "PMS" as APIC #Orange
@@ -72,7 +71,7 @@ end
 ORCHESTRATOR -> FHIRAPI : Search Resource (e.g. Condition)
 FHIRAPI -> SDHR : Query Resource
 SDHR -> FHIRAPI : Return
-FHIRAPI -> ORCHESTRATOR : Return Search result with OperationOutcome\nindicating that the patient has witheld records at source
+FHIRAPI -> ORCHESTRATOR : Return Search result with OperationOutcome\nindicating that the patient has withheld records at source
 note right of ORCHESTRATOR
 {
   "resourceType" : "OperationOutcome",
@@ -105,7 +104,7 @@ alt check SDHR for resource
   ORCHESTRATOR -> FHIRAPI : Search for Resource by Patient, Facility and LocalID
   FHIRAPI -> SDHR : Query Resource
   SDHR -> FHIRAPI : Return
-  FHIRAPI -> ORCHESTRATOR : Return Search result with OperationOutcome\nindicating that the patient has witheld records at source
+  FHIRAPI -> ORCHESTRATOR : Return Search result with OperationOutcome\nindicating that the patient has withheld records at source
   note right of ORCHESTRATOR
     "type" : "searchset",
     "total" : 0,

@@ -11,11 +11,11 @@ Description: "An example payload for a Primary Care AllergyIntolerance resource 
 * insert LocalIdentifierExample
 
 * type = #allergy
-* clinicalStatus = $sct#443601000210103 "Active Phase"
-* verificationStatus = $sct#410605003 "Confirmed present"
+* clinicalStatus = http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical#active "Active"
+* verificationStatus = http://terminology.hl7.org/CodeSystem/allergyintolerance-verification#confirmed "Confirmed"
 * code = $sct#91936005 "Allergy to penicillin (finding)"
 * code.coding.userSelected = true
-* category = $sct#62014003 "Adverse reaction caused by drug (disorder)"
+* category = #medication
 
 * patient insert Patient(ZKC7284, Sage Westbrook)
 
@@ -36,6 +36,6 @@ Description: "An example payload for a Primary Care AllergyIntolerance resource 
 * verificationStatus = http://terminology.hl7.org/CodeSystem/allergyintolerance-verification#confirmed "Confirmed"
 * code = http://snomed.info/sct#227493005 "Cashew nuts"
 * code.coding.userSelected = true
-* category = $sct#370540009 "Adverse reaction caused by food (disorder)"
+* category = #food
 * patient insert Patient(ZKC7284, Sage Westbrook)
 * recorder insert Practitioner(91ZZXN, DR Julian Subatoi Bashir)

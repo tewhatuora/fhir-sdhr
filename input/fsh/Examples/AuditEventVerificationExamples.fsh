@@ -3,6 +3,8 @@ InstanceOf: SDHRAuditEvent
 Usage: #example
 Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
 * id = "b3f9de58-2da4-427c-a39c-07147eac3615"
+* extension[sourceAuditEventIdentifier].valueIdentifier.system = "https://api.uat.auditevents.digital.health.nz/fhir/AuditEvent"
+* extension[sourceAuditEventIdentifier].valueIdentifier.value = "source-audit-event-001"
 * type = http://terminology.hl7.org/CodeSystem/audit-event-type#rest "Restful Operation"
 * subtype[0] = http://hl7.org/fhir/restful-interaction#read "read"
 * action = #R
@@ -24,6 +26,8 @@ InstanceOf: SDHRAuditEvent
 Usage: #example
 Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
 * id = "6ebffb1a-61a1-4646-857e-51d4153b698d"
+* extension[sourceAuditEventIdentifier].valueIdentifier.system = "https://api.uat.auditevents.digital.health.nz/fhir/AuditEvent"
+* extension[sourceAuditEventIdentifier].valueIdentifier.value = "source-audit-event-002"
 * type = http://terminology.hl7.org/CodeSystem/audit-event-type#rest "Restful Operation"
 * subtype[0] = http://hl7.org/fhir/restful-interaction#search-type "search-type"
 * action = #E
@@ -44,7 +48,7 @@ Instance: BundleVerificationSamplesResponseExample
 InstanceOf: Bundle
 Usage: #example
 Description: "DRAFT EXAMPLE ONLY: Bundle returned from the verification samples operation."
-* type = #collection
+* type = #searchset
 * timestamp = "2026-07-03T10:00:00+12:00"
 * total = 2
 * link[0].relation = "self"

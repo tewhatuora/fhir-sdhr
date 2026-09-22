@@ -445,6 +445,8 @@ The SDHR service includes the following FHIR custom operations.
 
 SEHR systems need to periodically retrieve sampled access events from SDHR, review whether those accesses were valid, and submit the verification decisions. Samples are represented as FHIR `AuditEvent` resources that conform to the [SDHR AuditEvent profile](./StructureDefinition-SDHRAuditEvent.html).
 
+SDHR samples up to the configured maximum number of access events for each data viewer over the preceding 24-hour window. Sampling is deterministic for that viewer and window. If a sampling run is retried, SDHR counts samples already stored for the same viewer and window and resumes from that point. Sampled resources receive a new SDHR logical id; the source-system AuditEvent id is retained in the [Source AuditEvent Identifier extension](./StructureDefinition-source-audit-event-identifier.html).
+
 This workflow is performed on an ongoing basis so that newly sampled access events continue to be reviewed and verified over time.
 
 The end-to-end sequence and corresponding processing steps are documented in the [audit access records workflow](./access-information.html#audit-access-records-workflow).

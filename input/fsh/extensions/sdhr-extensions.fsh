@@ -19,3 +19,12 @@ Description: "Indicates whether the patient has opted out or opted in to partici
 * valueCodeableConcept 1..1
 * valueCodeableConcept from SDHRParticipationReasonValueSet (required)
 * valueCodeableConcept ^short = "Use sdhr-facility-opt-out if the patient has opted out, sdhr-facility-opt-in if the patient has opted in"
+
+Extension: SourceAuditEventIdentifierExtension
+Id: source-audit-event-identifier
+Title: "Source AuditEvent Identifier"
+Context: AuditEvent
+Description: "Identifies the source-system AuditEvent from which an SDHR verification sample was created. SDHR assigns a separate local logical id to the sampled resource."
+* value[x] only Identifier
+* valueIdentifier.system 1..1
+* valueIdentifier.value 1..1

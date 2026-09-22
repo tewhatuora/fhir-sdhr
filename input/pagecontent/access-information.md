@@ -176,6 +176,8 @@ The access-verification workflow is draft and subject to change.
 
 Access verification is a required assurance activity for systems accessing SDHR information. Accessing systems are expected to periodically retrieve sampled access events, assess whether the access was appropriate, and submit verification outcomes back to SDHR.
 
+SDHR creates a deterministic daily sample for each accessing system from the preceding 24-hour window. A retried sampling run resumes after the number of samples already stored for that system and window. Each stored sample has a new SDHR logical id and retains its source-system AuditEvent id as a secondary identifier.
+
 This process supports ongoing monitoring, auditing, and assurance activities.
 
 The SEHR is also responsible for maintaining appropriate local audit and traceability where required. 

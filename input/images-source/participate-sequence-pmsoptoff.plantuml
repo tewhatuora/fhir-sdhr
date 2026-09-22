@@ -156,31 +156,17 @@ Bundle does not carry a REDACTED security label.
 end note
 
 ==GET a Single Resource by ID==
-ORCHESTRATOR -> FHIRAPI : GET **ANY** Resource by ID (e.g. /Condition/{ID})
-FHIRAPI -> SDHR : Query Resource by ID
-SDHR -> FHIRAPI : Return 403
-FHIRAPI -> ORCHESTRATOR : Return OperationOutcome UNAUTHORIZED
+ORCHESTRATOR -> FHIRAPI : GET archived Resource by ID (e.g. /Condition/{ID})
+FHIRAPI -> SDHR : Query active Resource by ID
+SDHR -> FHIRAPI : Return no active resource
+FHIRAPI -> ORCHESTRATOR : Return 404 Not Found with OperationOutcome
 note right of ORCHESTRATOR
-{
-  "resourceType" : "OperationOutcome",
-  "id" : "OperationOutcomeFacilityDenyExample",
-  "issue" : [
-    {
-      "severity" : "error",
-      "code" : "suppressed",
-      "details" : {
-        "coding" : [
-          {
-            "system" : "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes",
-            "code" : "sdhr-participation-status-denied-facility",
-            "display" : "SDHR Participation Status Denied at Facility"
-          }
-        ],
-        "text" : "Patient has opted out of participating in the shared digital health record service at this facility."
-      }
-    }
-  ]
-}
+  Resource is not known.
+
+  The resource was archived when the patient opted out at the facility.
+  This applies to previously stored confidential and unrestricted resources.
+  The read cannot resolve the archived resource ID to its former facility,
+  so it does not return the facility participation-denied 403 outcome.
 end note
 
 ==Create a Resource==

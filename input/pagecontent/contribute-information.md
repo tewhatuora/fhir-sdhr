@@ -126,6 +126,17 @@ The following diagram covers the facility participation scenarios:
 
 When the facility opt-out is recorded, SDHR archives the patient's active contributed resources from that facility. Archived resources are retained by SDHR but are not returned by normal search or read interactions. The PMS must immediately prevent new or changed local records for the patient from being written. See [Reload after a patient opts back in](#reload-after-a-patient-opts-back-in) for the historical information process that follows an opt-back-in.
 
+For the example above, where the patient had one contributed `Condition` and then opted out at the facility:
+
+| Interaction after facility opt-out | Expected response |
+| --- | --- |
+| Read the archived resource by ID | `404 Not Found` with an `OperationOutcome` reporting “Resource is not known”. This applies to previously stored confidential and unrestricted resources. |
+| Search for the archived resource | An empty search Bundle with `total: 0`, no `REDACTED` label in `meta.security`, and no `OperationOutcome` caused by the facility opt-out. |
+
+Archiving removes the resource from normal reads and searches. A read by ID can no longer resolve the resource to its former facility, so it does not return `403` with `sdhr-participation-status-denied-facility`. The archived resource does not contribute to the search match count, including when the search uses its exact EHR key (`identifier`) with `patient` and `_source`.
+
+An exact search that matches a record registered as **withheld at source** can still return `total: 0` and an `OperationOutcome` with `sdhr-records-withheld-at-source`, without a `REDACTED` security label. This outcome describes the source withholding registration, rather than an archived clinical resource. See [Record withheld at source behaviour](./api.html#record-withheld-at-source-behaviour).
+
 #### Set record-level confidentiality
 
 {% include participate-sequence-pmsrecordwithheld.svg %}

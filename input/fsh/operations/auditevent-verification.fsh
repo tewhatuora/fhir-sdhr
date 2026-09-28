@@ -5,14 +5,16 @@ DRAFT OPERATION: This operation returns `AuditEvent` resources that have been sa
 
 The operation is invoked on the `AuditEvent` type using `GET /AuditEvent/$verification-samples`.
 
-The response is a `Bundle` containing sampled `AuditEvent` resources that:
+The response is a searchset `Bundle` containing slim `SDHRAuditEvent` samples. Each sample carries its local logical ID for verification submissions, the request correlation ID and NHI, plus the required FHIR AuditEvent envelope. NHI and correlation ID are returned as string-valued `entity.detail` entries with types `nhi` and `correlationId`; `entity.what` is omitted. FHIR R4 requires `source.observer`, so it contains only the neutral display "SDHR verification samples". Internal source-system identity, verification tags and unrelated audit content are omitted.
+
+Samples:
 - are pending verification
 - are eligible for the authenticated caller
 - have not already been marked as verified by the data viewer application
 
 The operation supports optional paging parameters:
 - `_count` to limit the maximum number of samples returned in a single response
-- `_offset` to skip a number of matching samples before returning results
+- `_getpagesoffset` to skip a number of matching samples before returning results
 """
 Usage: #definition
 * url = "https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRVerificationSamplesOperation"
@@ -33,7 +35,7 @@ Usage: #definition
 * parameter[=].type = #integer
 * parameter[=].documentation = "Optional page size. Limits the maximum number of sampled AuditEvent resources returned in the Bundle."
 
-* parameter[+].name = #_offset
+* parameter[+].name = #_getpagesoffset
 * parameter[=].use = #in
 * parameter[=].min = 0
 * parameter[=].max = "1"
@@ -45,7 +47,7 @@ Usage: #definition
 * parameter[=].min = 1
 * parameter[=].max = "1"
 * parameter[=].type = #Bundle
-* parameter[=].documentation = "Bundle of sampled AuditEvent resources requiring verification by the authenticated data viewer application. When paging is used, the Bundle may include paging links such as `self` and `next`."
+* parameter[=].documentation = "Bundle of slim AuditEvent resources conforming to SDHRAuditEvent, requiring verification by the authenticated data viewer application. When paging is used, the Bundle may include paging links such as `self` and `next`."
 
 Instance: SDHRVerificationSubmissionsOperation
 InstanceOf: OperationDefinition
@@ -54,7 +56,7 @@ DRAFT OPERATION: This operation allows the data viewer application to submit one
 
 The operation is invoked on the `AuditEvent` type using `POST /AuditEvent/$verification-submissions` with a `Parameters` resource in the request body.
 
-Each repeating `verification` parameter identifies an `AuditEvent` sample and the verification result being submitted for that sample.
+Each repeating `verification` parameter identifies an `AuditEvent` sample and the verification result being submitted for that sample. A request may contain 1 to 100 `verification` parameters; requests above this limit are rejected before any decisions are processed.
 """
 Usage: #definition
 * url = "https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRVerificationSubmissionsOperation"
@@ -74,7 +76,7 @@ Usage: #definition
 * parameter[0].name = #verification
 * parameter[=].use = #in
 * parameter[=].min = 1
-* parameter[=].max = "*"
+* parameter[=].max = "100"
 * parameter[=].part[0].name = #auditEvent
 * parameter[=].part[=].use = #in
 * parameter[=].part[=].min = 1

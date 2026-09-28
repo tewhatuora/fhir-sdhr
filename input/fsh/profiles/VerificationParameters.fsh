@@ -6,7 +6,7 @@ Description: "Parameters profile for AuditEvent verification submission payloads
 * parameter ^slicing.discriminator.type = #value
 * parameter ^slicing.discriminator.path = "name"
 * parameter ^slicing.rules = #open
-* parameter contains verification 1..*
+* parameter contains verification 1..100
 
 * parameter[verification].name = "verification"
 * parameter[verification].part 2..2

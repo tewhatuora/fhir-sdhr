@@ -445,7 +445,7 @@ The SDHR service includes the following FHIR custom operations.
 
 SEHR systems need to periodically retrieve sampled access events from SDHR, review whether those accesses were valid, and submit the verification decisions. Samples are represented as FHIR `AuditEvent` resources that conform to the [SDHR AuditEvent profile](./StructureDefinition-SDHRAuditEvent.html).
 
-SDHR samples up to the configured maximum number of access events for each data viewer over the preceding 24-hour window. Sampling is deterministic for that viewer and window. If a sampling run is retried, SDHR counts samples already stored for the same viewer and window and resumes from that point. Sampled resources receive a new SDHR logical id; the source-system AuditEvent id is retained in the [Source AuditEvent Identifier extension](./StructureDefinition-source-audit-event-identifier.html).
+SDHR samples up to the configured maximum number of access events for each data viewer over the preceding 24-hour window. Sampling is deterministic for that viewer and window. If a sampling run is retried, SDHR reselects the same deterministic offsets and checks the source-system ID and exact viewer identity before inserting each sample, avoiding duplicate samples. Sampled resources receive a new SDHR logical ID. SDHR retains the source-system ID as internal `_sourceSystemId` storage data and strips it from public responses. Stored samples also retain internal ownership in `agent.who.display` and verification metadata; these fields are omitted from public samples.
 
 This workflow is performed on an ongoing basis so that newly sampled access events continue to be reviewed and verified over time.
 
@@ -453,9 +453,11 @@ The end-to-end sequence and corresponding processing steps are documented in the
 
 ##### Retrieve verification samples
 
-The SEHR calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation supports `_count` and `_offset` query parameters for paging, for example:
+Each sample includes its SDHR logical ID and string-valued `entity.detail` entries with types `nhi` and `correlationId`. `entity.what` is omitted. FHIR R4 requires `source.observer`; samples therefore retain only its neutral display, "SDHR verification samples", without internal source identity.
 
-`GET /AuditEvent/$verification-samples?_count=1&_offset=0`
+The SEHR calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation supports `_count` and `_getpagesoffset` query parameters for paging, for example:
+
+`GET /AuditEvent/$verification-samples?_count=1&_getpagesoffset=0`
 
 See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSamplesOperation.html).
 
@@ -472,7 +474,7 @@ The SEHR reviews the returned `AuditEvent` resources using either an automated p
 
 ##### Submit verification decisions
 
-The SEHR calls `POST /AuditEvent/$verification-submissions` with the defined `Parameters` payload to submit one or more verification decisions.
+The SEHR calls `POST /AuditEvent/$verification-submissions` with the defined `Parameters` payload to submit 1 to 100 verification decisions per request. Requests containing more than 100 `verification` parameters return HTTP 400 before any decisions are processed. For larger sets, submit multiple requests.
 
 See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificationSubmissionsOperation.html), the [SDHRVerificationSubmissionParameters profile](./StructureDefinition-SDHRVerificationSubmissionParameters.html), and the [SDHRVerificationSubmissionResponseParameters profile](./StructureDefinition-SDHRVerificationSubmissionResponseParameters.html).
 

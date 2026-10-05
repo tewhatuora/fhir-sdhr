@@ -555,6 +555,33 @@ Response examples:
 
 SEHR systems should use the result to determine whether to continue with an information request. If `hnzParticipationIndicator` is `false`, the patient is globally opted out of SDHR and no information will be available for that patient.
 
+### Global participation denial API behaviour
+{: .underlined}
+
+When a resource read, vread, or search request is rejected by the global participation consent check, SDHR returns HTTP `403` with an `OperationOutcome` rather than clinical data. This applies to contributed resources and proxied national datasets, including AIR immunisations.
+
+The global opt-out reason is recorded in the root `Consent.provision.extension` with URL `https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-global-opt-out-reason-extension`. When `Consent.provision.type` is `deny` and the extension's `valueCode` is `patient-deceased`, the response uses `sdhr-participation-status-denied-deceased` from the [SDHR outcome CodeSystem](./CodeSystem-sdhr-outcome-codes.html).
+
+The response message is:
+
+> Patient data is unavailable in the Shared Digital Health Record as they are deceased.
+
+Response status: `403`
+
+Response body:
+
+{% fragment OperationOutcome/OperationOutcomeGlobalDenyDeceasedExample JSON %}
+
+[See deceased global-denial example](./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html)
+
+Global opt-outs with other reasons, including `patient-choice` and `imported-external-consent`, or without a recorded reason, retain the [generic global-denial outcome](./OperationOutcome-OperationOutcomeGlobalDenyExample.html) with code `sdhr-participation-status-denied`. Write requests also retain the generic global-denial outcome, including when the recorded reason is `patient-deceased`.
+
+This response reflects a recorded global consent decision; it does not perform a new deceased-status lookup. A death reason on a permitting consent does not trigger this response. Archived contributed records remain unavailable through normal reads, and a read rejected before consent evaluation does not necessarily return this outcome.
+
+The `$hnz-participate` operation still returns its normal success outcome when it records the opt-out. The `$participation-status` operation remains unchanged: it returns `Parameters` containing the participation indicator and does not expose the global opt-out reason.
+
+Accessing systems must use the outcome code to distinguish deceased global denial from other global opt-outs and inform clinical users as required by [SRD-16](./compliance-requirements-reading.html#SRD-16).
+
 ### SDHR confidential record API behaviour
 {: .underlined}
 

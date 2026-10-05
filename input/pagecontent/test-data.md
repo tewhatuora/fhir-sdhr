@@ -6,7 +6,7 @@ The SDHR UAT environment contains some fixed data to support specific testing us
 ### Patients
 {: .underlined}
 
-The globally opted-out patients below support testing of API behaviour after a Health NZ channel has recorded a global opt-out and SDHR has archived their active contributed resources. Requests for protected resources receive an HTTP 403 response containing the Global Deny `OperationOutcome`.
+The globally opted-out patients below support testing of API behaviour after a Health NZ channel has recorded a global opt-out and SDHR has archived their active contributed resources. Requests rejected by the global consent check receive an HTTP 403 response containing the Global Deny `OperationOutcome`, except that read and search requests rejected for reason `patient-deceased` receive the [deceased global-denial OperationOutcome](./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html). See [global participation denial API behaviour](./api.html#global-participation-denial-api-behaviour). The fixture table does not identify a patient seeded with reason `patient-deceased`; confirm the recorded reason before using a fixture to test that outcome.
 
 | Identifiers | Description | OperationOutcome |
 | -------- | ------- | ------- |

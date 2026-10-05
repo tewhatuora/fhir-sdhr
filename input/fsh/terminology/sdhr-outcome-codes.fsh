@@ -20,6 +20,7 @@ See [SDHR Participate Operation](https://fhir-ig.digital.health.nz/sdhr/Operatio
 
 * #sdhr-records-withheld-at-source "Records withheld at source" "This code is used when the patient has records that are withheld from the Shared Digital Health Record service at source, for example, a GP practice or hospital."
 * #sdhr-participation-status-denied "SDHR Participation Status Denied" "This code is used when the patient has opted out of participating in the Shared Digital Health Record service."
+* #sdhr-participation-status-denied-deceased "SDHR Participation Status Denied - Patient Deceased" "This code is used when a read or search request is denied by a global opt-out with reason patient-deceased. Patient data is unavailable in the Shared Digital Health Record as they are deceased."
 * #sdhr-participation-status-denied-facility "SDHR Participation Status Denied at Facility" "This code is used when the patient has opted out of participating in the Shared Digital Health Record service at a specific facility."
 * #sdhr-invalid-patient "SDHR Invalid Patient" "This code is used when the patient parameter is invalid for the Shared Digital Health Record service operation. Please ensure the patient is correctly specified and matches the required NHI Patient URL format."
 * #sdhr-parameter-missing "SDHR Required parameter missing" "This code is used when a required parameter is missing in the request, such as the reasonCode parameter."

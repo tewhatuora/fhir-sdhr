@@ -491,10 +491,10 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Inform clinical users of deceased patients</p>
                 </td>
                 <td>
-                    <p>Deceased patient message returned from SDHR</p>
+                    <p>HTTP 403 with outcome code <code>sdhr-participation-status-denied-deceased</code>. See the <a href="./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html">deceased global-denial example</a>.</p>
                 </td>
                 <td>
-                    <p>The SEHR system must inform clinical users when the patient is deceased. Note that SDHR will not return clinical data for deceased patients.</p>
+                    <p>The SEHR system must inform clinical users when SDHR rejects a read or search because a global opt-out records the patient as deceased. The response message is "Patient data is unavailable in the Shared Digital Health Record as they are deceased." The SEHR must identify this outcome by its code rather than message text. See <a href="./api.html#global-participation-denial-api-behaviour">global participation denial API behaviour</a>.</p>
                 </td>
                 <td>
                     <p>Yes</p>

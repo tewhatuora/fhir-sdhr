@@ -176,7 +176,7 @@ The access-verification workflow is draft and subject to change.
 
 Access verification is a required assurance activity for systems accessing SDHR information. Accessing systems are expected to periodically retrieve sampled access events, assess whether the access was appropriate, and submit verification outcomes back to SDHR.
 
-SDHR creates a deterministic daily sample for each accessing system from the preceding 24-hour window. A retried sampling run resumes after the number of samples already stored for that system and window. Each stored sample has a new SDHR logical id and retains its source-system AuditEvent id as a secondary identifier.
+SDHR creates a deterministic daily sample for each accessing system from the preceding 24-hour window. A retried sampling run resumes after the number of samples already stored for that system and window. Each stored sample has a new SDHR logical id and retains its source-system AuditEvent id as a secondary identifier. Public samples preserve the original agent array unchanged, alongside the recorded time and available NHI and correlation ID details. The application agent identifies the Keycloak client UUID, the separate healthworker agent identifies the clinician by HPI person identifier, and an organisation agent may also be present. Ownership checks use the application’s dataprocessor role and identity, not the requestor flag. The accessing system uses the clinician identity and patient NHI to assess whether that clinician had a valid reason to access that patient’s information.
 
 This process supports ongoing monitoring, auditing, and assurance activities.
 

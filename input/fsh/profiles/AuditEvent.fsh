@@ -1,6 +1,6 @@
 Profile: SDHRAuditEvent
 Parent: AuditEvent
-Description: "Slim AuditEvent returned by the SDHR verification samples operation. Contains the local verification reference, NHI and correlation ID with the minimal required FHIR AuditEvent envelope. Internal source identity and verification state are not exposed."
+Description: "Slim AuditEvent returned by the SDHR verification samples operation. Contains the local verification reference, original agents, NHI and correlation ID with the minimal required FHIR AuditEvent envelope. Internal source identity and verification state are not exposed."
 * ^status = #draft
 * id 1..1
 * meta 0..0
@@ -22,18 +22,8 @@ Description: "Slim AuditEvent returned by the SDHR verification samples operatio
 * outcomeDesc 0..0
 * purposeOfEvent 0..0
 * recorded ^short = "Time of the sampled access event."
-* agent 1..1
-* agent.requestor = true
-* agent.type 0..0
-* agent.role 0..0
-* agent.who 0..0
-* agent.altId 0..0
-* agent.name 0..0
-* agent.location 0..0
-* agent.policy 0..0
-* agent.media 0..0
-* agent.network 0..0
-* agent.purposeOfUse 0..0
+* agent 1..*
+* agent ^short = "Original agents retained unchanged from the sampled access event."
 * source.site 0..0
 * source.type 0..0
 * source.observer.display = "SDHR verification samples"

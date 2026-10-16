@@ -445,7 +445,7 @@ The SDHR service includes the following FHIR custom operations.
 
 SEHR systems need to periodically retrieve sampled access events from SDHR, review whether those accesses were valid, and submit the verification decisions. Samples are represented as FHIR `AuditEvent` resources that conform to the [SDHR AuditEvent profile](./StructureDefinition-SDHRAuditEvent.html).
 
-SDHR samples up to the configured maximum number of access events for each data viewer over the preceding 24-hour window. Sampling is deterministic for that viewer and window. If a sampling run is retried, SDHR reselects the same deterministic offsets and checks the source-system ID and exact viewer identity before inserting each sample, avoiding duplicate samples. Sampled resources receive a new SDHR logical ID. SDHR retains the source-system ID as internal `_sourceSystemId` storage data and strips it from public responses. Stored samples also retain internal ownership in `agent.who.display` and verification metadata; these fields are omitted from public samples.
+SDHR samples up to the configured maximum number of access events for each data viewer over the preceding 24-hour window. Sampling is deterministic for that viewer and window. If a sampling run is retried, SDHR reselects the same deterministic offsets and checks the source-system ID and exact viewer identity before inserting each sample, avoiding duplicate samples. Sampled resources receive a new SDHR logical ID. SDHR retains the source-system ID as internal `_sourceSystemId` storage data and strips it from public responses. Source-system identity and verification state remain internal. The application identity remains in the original agent array.
 
 This workflow is performed on an ongoing basis so that newly sampled access events continue to be reviewed and verified over time.
 
@@ -453,7 +453,7 @@ The end-to-end sequence and corresponding processing steps are documented in the
 
 ##### Retrieve verification samples
 
-Each sample includes its SDHR logical ID and string-valued `entity.detail` entries with types `nhi` and `correlationId`. `entity.what` is omitted. FHIR R4 requires `source.observer`; samples therefore retain only its neutral display, "SDHR verification samples", without internal source identity.
+Each sample includes its SDHR logical ID, event type, recorded time and the original `agent` array, unchanged. This preserves each agent’s roles, requestor flag, identity and other supplied fields. The application agent has the `dataprocessor` role and carries its Keycloak client UUID in `who.identifier`; source events that use `who.display` retain that representation. Client ownership is checked against this application agent, not against the requestor flag. The separate healthworker agent carries the clinician’s HPI person identifier, and an organisation agent may carry its HPI organisation identifier. Use the clinician identity together with the patient NHI and recorded time to assess whether the clinician had a valid reason to access the patient’s information. Samples include string-valued `entity.detail` entries with types `nhi` and `correlationId`. `entity.what` is omitted. FHIR R4 requires `source.observer`; samples therefore retain only its neutral display, "SDHR verification samples", without internal source identity.
 
 The SEHR calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation supports `_count` and `_getpagesoffset` query parameters for paging, for example:
 

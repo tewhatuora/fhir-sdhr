@@ -100,28 +100,63 @@ Instance: ParametersVerificationSubmissionRequestExample
 InstanceOf: SDHRVerificationSubmissionParameters
 Usage: #example
 Description: "DRAFT EXAMPLE ONLY: Parameters payload posted to the verification submissions operation."
-* parameter[0].name = "verification"
-* parameter[=].part[0].name = "auditEvent"
-* parameter[=].part[=].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615"
-* parameter[=].part[+].name = "result"
-* parameter[=].part[=].valueCode = #validated
-* parameter[+].name = "verification"
-* parameter[=].part[0].name = "auditEvent"
-* parameter[=].part[=].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/6ebffb1a-61a1-4646-857e-51d4153b698d"
-* parameter[=].part[+].name = "result"
-* parameter[=].part[=].valueCode = #validation-failed	
+* parameter[verification][0].name = "verification"
+* parameter[verification][0].part[auditEvent].name = "auditEvent"
+* parameter[verification][0].part[auditEvent].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615"
+* parameter[verification][0].part[result].name = "result"
+* parameter[verification][0].part[result].valueCode = #validated
+* parameter[verification][1].name = "verification"
+* parameter[verification][1].part[auditEvent].name = "auditEvent"
+* parameter[verification][1].part[auditEvent].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/6ebffb1a-61a1-4646-857e-51d4153b698d"
+* parameter[verification][1].part[result].name = "result"
+* parameter[verification][1].part[result].valueCode = #validation-failed
 
 Instance: ParametersVerificationSubmissionResponseExample
 InstanceOf: SDHRVerificationSubmissionResponseParameters
 Usage: #example
 Description: "DRAFT EXAMPLE ONLY: Parameters response returned from the verification submissions operation."
-* parameter[0].name = "verificationSubmissionResult"
-* parameter[=].part[0].name = "auditEvent"
-* parameter[=].part[=].valueReference = Reference(AuditEvent/AuditEventVerificationSampleOne)
-* parameter[=].part[+].name = "status"
-* parameter[=].part[=].valueCode = #processed
-* parameter[+].name = "verificationSubmissionResult"
-* parameter[=].part[0].name = "auditEvent"
-* parameter[=].part[=].valueReference = Reference(AuditEvent/AuditEventVerificationSampleTwo)
-* parameter[=].part[+].name = "status"
-* parameter[=].part[=].valueCode = #processed
+* parameter[verificationSubmissionResult][0].name = "verificationSubmissionResult"
+* parameter[verificationSubmissionResult][0].part[auditEvent].name = "auditEvent"
+* parameter[verificationSubmissionResult][0].part[auditEvent].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615"
+* parameter[verificationSubmissionResult][0].part[status].name = "status"
+* parameter[verificationSubmissionResult][0].part[status].valueCode = #processed
+* parameter[verificationSubmissionResult][1].name = "verificationSubmissionResult"
+* parameter[verificationSubmissionResult][1].part[auditEvent].name = "auditEvent"
+* parameter[verificationSubmissionResult][1].part[auditEvent].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/6ebffb1a-61a1-4646-857e-51d4153b698d"
+* parameter[verificationSubmissionResult][1].part[status].name = "status"
+* parameter[verificationSubmissionResult][1].part[status].valueCode = #processed
+
+Instance: OperationOutcomeVerificationSamplingStartedExample
+InstanceOf: OperationOutcome
+Usage: #example
+Description: "Informational response when the authenticated client is first registered for sampling. The client polls the verification samples operation again to retrieve available samples."
+* issue[0].severity = #information
+* issue[=].code = #informational
+* issue[=].details.coding[0].system = "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes"
+* issue[=].details.coding[=].code = #sdhr-audit-event-sampling-in-progress
+* issue[=].details.text = "AuditEvent sampling has started. Please check back soon."
+
+Instance: BundleVerificationSamplesEmptyResponseExample
+InstanceOf: Bundle
+Usage: #example
+Description: "Search Bundle returned for an already registered client when no samples are pending verification."
+* type = #searchset
+* timestamp = "2026-07-03T10:05:00+12:00"
+* total = 0
+* link[0].relation = "self"
+* link[=].url = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/$verification-samples"
+
+Instance: ParametersVerificationSubmissionRepeatedResponseExample
+InstanceOf: SDHRVerificationSubmissionResponseParameters
+Usage: #example
+Description: "Response when the submission request example is repeated after both decisions have been processed. Each reference is echoed unchanged and each sample is now not-pending, including the sample whose result was validation-failed."
+* parameter[verificationSubmissionResult][0].name = "verificationSubmissionResult"
+* parameter[verificationSubmissionResult][0].part[auditEvent].name = "auditEvent"
+* parameter[verificationSubmissionResult][0].part[auditEvent].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615"
+* parameter[verificationSubmissionResult][0].part[status].name = "status"
+* parameter[verificationSubmissionResult][0].part[status].valueCode = #not-pending
+* parameter[verificationSubmissionResult][1].name = "verificationSubmissionResult"
+* parameter[verificationSubmissionResult][1].part[auditEvent].name = "auditEvent"
+* parameter[verificationSubmissionResult][1].part[auditEvent].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/6ebffb1a-61a1-4646-857e-51d4153b698d"
+* parameter[verificationSubmissionResult][1].part[status].name = "status"
+* parameter[verificationSubmissionResult][1].part[status].valueCode = #not-pending

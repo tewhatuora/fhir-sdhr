@@ -5,23 +5,29 @@ DRAFT OPERATION: This operation returns `AuditEvent` resources that have been sa
 
 The operation is invoked on the `AuditEvent` type using `GET /AuditEvent/$verification-samples`.
 
-The response is a searchset `Bundle` containing slim `SDHRAuditEvent` samples. Each sample carries its local logical ID for verification submissions, the original agent array, the request correlation ID and NHI, plus the required FHIR AuditEvent envelope. Agents are retained unchanged, including their roles, requestor flags, identities and other supplied fields. The application agent has the `dataprocessor` role and identifies the Keycloak client UUID in `who.identifier` or, for source events using that representation, `who.display`. The separate healthworker agent carries the clinician’s HPI person identifier; an organisation agent may also be present. Client ownership is determined from the application agent, not from the requestor flag. Use the clinician identity, patient NHI and recorded time to assess whether the clinician had a valid reason to access that patient. NHI and correlation ID are returned as string-valued `entity.detail` entries with types `nhi` and `correlationId`; `entity.what` is omitted. FHIR R4 requires `source.observer`, so it contains only the neutral display "SDHR verification samples". Internal source-system identity, verification tags and unrelated audit content are omitted.
+An authorised request registers the authenticated `client_id` for sampling if it is not already registered. A newly registered client receives HTTP 200 with an informational `OperationOutcome`, code `sdhr-audit-event-sampling-in-progress` from `https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes`, and should poll again later. Registration uses the authenticated identity, never a request parameter.
+
+For an already registered client, the response is a searchset `Bundle` containing slim `SDHRAuditEvent` samples. Each sample carries its local logical ID for verification submissions, the original agent array, the available request correlation ID and NHI details, plus the required FHIR AuditEvent envelope. Agents are retained unchanged, including their roles, requestor flags, identities and other supplied fields. The application agent has the `dataprocessor` role and identifies the Keycloak client UUID in `who.identifier` or, for source events using that representation, `who.display`. The separate healthworker agent carries the clinician’s HPI person identifier; an organisation agent may also be present. Client ownership is determined from the application agent, not from the requestor flag. Use the clinician identity, patient NHI and recorded time to assess whether the clinician had a valid reason to access that patient. NHI and correlation ID are returned as string-valued `entity.detail` entries with types `nhi` and `correlationId`; `entity.what` is omitted. FHIR R4 requires `source.observer`, so it contains only the neutral display "SDHR verification samples". Internal source-system identity, verification tags and unrelated audit content are omitted.
 
 Samples:
 - are pending verification
-- are eligible for the authenticated caller
+- belong to the authenticated `client_id`
 - have not already been marked as verified by the data viewer application
 
 The operation supports optional paging parameters:
 - `_count` to limit the maximum number of samples returned in a single response
 - `_getpagesoffset` to skip a number of matching samples before returning results
+
+Only these paging parameters are forwarded to the sample search. The server fixes the client and pending-verification filters. Follow the returned paging links, which point back to this operation; links may be relative in the development environment. An empty searchset Bundle means no pending samples are currently available.
+
+The required operation scope is `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRVerificationSamplesOperation`. Generic AuditEvent read, search and write routes are unavailable.
 """
 Usage: #definition
 * url = "https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRVerificationSamplesOperation"
 * name = "VerificationSamples"
 * status = #draft
 * kind = #operation
-* affectsState = false
+* affectsState = true
 * code = #verification-samples
 * system = false
 * type = true
@@ -46,8 +52,8 @@ Usage: #definition
 * parameter[=].use = #out
 * parameter[=].min = 1
 * parameter[=].max = "1"
-* parameter[=].type = #Bundle
-* parameter[=].documentation = "Bundle of slim AuditEvent resources conforming to SDHRAuditEvent, requiring verification by the authenticated data viewer application. When paging is used, the Bundle may include paging links such as `self` and `next`."
+* parameter[=].type = #Resource
+* parameter[=].documentation = "A searchset Bundle of slim AuditEvent resources conforming to SDHRAuditEvent for the authenticated client, or an informational OperationOutcome when sampling registration has just been created. Bundle paging links return to this operation."
 
 Instance: SDHRVerificationSubmissionsOperation
 InstanceOf: OperationDefinition
@@ -57,6 +63,18 @@ DRAFT OPERATION: This operation allows the data viewer application to submit one
 The operation is invoked on the `AuditEvent` type using `POST /AuditEvent/$verification-submissions` with a `Parameters` resource in the request body.
 
 Each repeating `verification` parameter identifies an `AuditEvent` sample and the verification result being submitted for that sample. A request may contain 1 to 100 `verification` parameters; requests above this limit are rejected before any decisions are processed.
+
+The required operation scope is `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRVerificationSubmissionsOperation`. References may be relative (`AuditEvent/{id}`) or absolute HTTP(S) URLs ending in `/AuditEvent/{id}`; the logical ID identifies a local sample. Versioned references, query strings and fragments are not accepted.
+
+Each item is processed independently, in request order. Accepted result codes are `validated` and `validation-failed`; both mark a pending sample as verified and remove it from subsequent sample responses. The response contains one `verificationSubmissionResult` per submitted verification, with the submitted reference and one status:
+- `processed`: the decision was saved
+- `invalid`: the reference or result is missing or invalid
+- `not-found`: the local sample does not exist
+- `not-eligible`: the sample does not belong to the authenticated client
+- `not-pending`: the sample is no longer pending verification
+- `error`: persistence failed for this item
+
+A failure for one item does not stop the remaining items. An invalid Parameters envelope, no verification items, or more than 100 verification items causes a request-level error.
 """
 Usage: #definition
 * url = "https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRVerificationSubmissionsOperation"
@@ -82,7 +100,7 @@ Usage: #definition
 * parameter[=].part[=].min = 1
 * parameter[=].part[=].max = "1"
 * parameter[=].part[=].type = #Reference
-* parameter[=].part[=].documentation = "Reference to the sampled AuditEvent being verified."
+* parameter[=].part[=].documentation = "Relative AuditEvent/{id} reference or absolute HTTP(S) URL ending in /AuditEvent/{id}. The ID identifies a local sample; versioned references, query strings and fragments are not supported."
 * parameter[=].part[+].name = #result
 * parameter[=].part[=].use = #in
 * parameter[=].part[=].min = 1

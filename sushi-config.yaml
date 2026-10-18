@@ -47,6 +47,10 @@ dependencies:
 # directive in RuleSets.fsh.
 parameters:
   pin-canonicals: pin-none
+  # Verification samples deliberately omit narrative in their public profile.
+  no-narrative:
+    - AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615
+    - AuditEvent/6ebffb1a-61a1-4646-857e-51d4153b698d
 
 
 # The pages property corresponds to IG.definition.page. SUSHI can

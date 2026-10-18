@@ -45,11 +45,16 @@ APP -> APP : Correlate response with local audit record
 
 loop Ongoing access verification
     APP -> FHIRAPI : GET /AuditEvent/$verification-samples
+    alt Client newly registered
+        FHIRAPI -> FHIRAPI : Register authenticated client for sampling
+        FHIRAPI --> APP : Informational OperationOutcome\nRetry later
+    else Client already registered
     FHIRAPI -> FHIRAPI : Identify eligible outstanding samples
     FHIRAPI --> APP : Bundle of sampled AuditEvent resources
     APP -> APP : Review each sample using an\nautomated or manual process
     APP -> FHIRAPI : POST /AuditEvent/$verification-submissions\nParameters with verification decisions
     FHIRAPI --> APP : Parameters with processing results
+    end
 end
 
 @enduml

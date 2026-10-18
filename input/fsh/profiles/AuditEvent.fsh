@@ -26,10 +26,13 @@ Description: "Slim AuditEvent returned by the SDHR verification samples operatio
 * agent ^short = "Original agents retained unchanged from the sampled access event."
 * source.site 0..0
 * source.type 0..0
+* source.observer.display 1..1
 * source.observer.display = "SDHR verification samples"
 * source.observer.reference 0..0
 * source.observer.identifier 0..0
 * source.observer.type 0..0
+* entity 0..1
+* entity.detail 1..*
 * entity.type 0..0
 * entity.role 0..0
 * entity.lifecycle 0..0

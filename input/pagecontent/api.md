@@ -445,7 +445,7 @@ The SDHR service includes the following FHIR custom operations.
 
 SEHR systems need to periodically retrieve sampled access events from SDHR, review whether those accesses were valid, and submit the verification decisions. Samples are represented as FHIR `AuditEvent` resources that conform to the [SDHR AuditEvent profile](./StructureDefinition-SDHRAuditEvent.html).
 
-SDHR samples up to the configured maximum number of access events for each data viewer over the preceding 24-hour window. Sampling is deterministic for that viewer and window. If a sampling run is retried, SDHR reselects the same deterministic offsets and checks the source-system ID and exact viewer identity before inserting each sample, avoiding duplicate samples. Sampled resources receive a new SDHR logical ID. SDHR retains the source-system ID as internal `_sourceSystemId` storage data and strips it from public responses. Source-system identity and verification state remain internal. The application identity remains in the original agent array.
+SDHR requests a sample from the upstream AuditEvents service for each registered data viewer over the preceding 24-hour window, scoped to the deployed SDHR service. The configured sampling proportion defaults to 0.02 (2%). SDHR checks each returned event for the matching client and a single identified clinician requestor before importing it. It checks the source-system ID and exact viewer identity to avoid importing the same event again. Each imported sample receives a new SDHR logical ID. Source-system identity and verification state remain internal. The application identity remains in the original agent array.
 
 This workflow is performed on an ongoing basis so that newly sampled access events continue to be reviewed and verified over time.
 
@@ -453,11 +453,15 @@ The end-to-end sequence and corresponding processing steps are documented in the
 
 ##### Retrieve verification samples
 
-Each sample includes its SDHR logical ID, event type, recorded time and the original `agent` array, unchanged. This preserves each agent’s roles, requestor flag, identity and other supplied fields. The application agent has the `dataprocessor` role and carries its Keycloak client UUID in `who.identifier`; source events that use `who.display` retain that representation. Client ownership is checked against this application agent, not against the requestor flag. The separate healthworker agent carries the clinician’s HPI person identifier, and an organisation agent may carry its HPI organisation identifier. Use the clinician identity together with the patient NHI and recorded time to assess whether the clinician had a valid reason to access the patient’s information. Samples include string-valued `entity.detail` entries with types `nhi` and `correlationId`. `entity.what` is omitted. FHIR R4 requires `source.observer`; samples therefore retain only its neutral display, "SDHR verification samples", without internal source identity.
+Each sample includes its SDHR logical ID, event type, recorded time and the original `agent` array, unchanged. This preserves each agent’s roles, requestor flag, identity and other supplied fields. The application agent has the `dataprocessor` role and carries its Keycloak client UUID in `who.identifier`; source events that use `who.display` retain that representation. Client ownership is checked against this application agent, not against the requestor flag. The separate healthworker agent carries the clinician’s HPI person identifier, and an organisation agent may carry its HPI organisation identifier. Use the clinician identity together with the patient NHI and recorded time to assess whether the clinician had a valid reason to access the patient’s information. When available, NHI and request correlation IDs appear as string-valued `entity.detail` entries with types `nhi` and `correlationId` in a single entity. Repeated identical type/value pairs are removed; missing details are omitted. `entity.what` is omitted. FHIR R4 requires `source.observer`; samples therefore retain only its neutral display, "SDHR verification samples", without internal source identity.
 
 The SEHR calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation supports `_count` and `_getpagesoffset` query parameters for paging, for example:
 
 `GET /AuditEvent/$verification-samples?_count=1&_getpagesoffset=0`
+
+The caller is identified by the authenticated `client_id`; callers cannot select another client through request parameters. On the first authorised request for an unregistered client, SDHR registers the client for sampling and returns HTTP 200 with an informational `OperationOutcome` carrying `sdhr-audit-event-sampling-in-progress`. Retry later to retrieve samples. Registration does not mean a sampling run has already completed. Subsequent requests return a `searchset` Bundle, which may be empty.
+
+Follow the returned paging links, which remain on `$verification-samples`, rather than constructing generic AuditEvent searches. Generic AuditEvent read, search and write routes are unavailable. Pending results change after submissions, so retrieve all pages before submitting decisions, or restart at the first page after submissions rather than continuing an old offset.
 
 See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSamplesOperation.html).
 
@@ -468,6 +472,15 @@ See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSam
 
 </details>
 
+<details>
+<summary><b><u>Click to view first-request registration outcome</u></b></summary>
+
+{% fragment OperationOutcome/OperationOutcomeVerificationSamplingStartedExample JSON %}
+
+</details>
+
+An [empty samples Bundle](./Bundle-BundleVerificationSamplesEmptyResponseExample.html) is a normal response for a registered client with no pending samples.
+
 ##### Review sampled access events
 
 The SEHR reviews the returned `AuditEvent` resources using either an automated process or a manual workflow to determine whether each recorded access was valid.
@@ -475,6 +488,20 @@ The SEHR reviews the returned `AuditEvent` resources using either an automated p
 ##### Submit verification decisions
 
 The SEHR calls `POST /AuditEvent/$verification-submissions` with the defined `Parameters` payload to submit 1 to 100 verification decisions per request. Requests containing more than 100 `verification` parameters return HTTP 400 before any decisions are processed. For larger sets, submit multiple requests.
+
+Submit `validated` or `validation-failed` for each sample, referencing its local `AuditEvent/{id}` (a full HTTP(S) URL ending in that path is also accepted). Each item is processed independently and its response is returned in submission order. A `processed` decision removes that sample from the pending set for either result. Repeating a decision for an already verified sample returns `not-pending`.
+
+| Submission status | Meaning |
+| --- | --- |
+| `processed` | Decision saved. |
+| `not-found` | No sample exists with that local ID. |
+| `not-eligible` | Sample belongs to another client. |
+| `not-pending` | Sample is no longer pending verification. |
+| `invalid` | Reference or result is missing or invalid. |
+| `error` | An unexpected persistence failure prevented processing this item. |
+{: .grid}
+
+A response may contain mixed statuses; inspect every item rather than treating HTTP success as confirmation that all decisions were saved.
 
 See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificationSubmissionsOperation.html), the [SDHRVerificationSubmissionParameters profile](./StructureDefinition-SDHRVerificationSubmissionParameters.html), and the [SDHRVerificationSubmissionResponseParameters profile](./StructureDefinition-SDHRVerificationSubmissionResponseParameters.html).
 
@@ -491,6 +518,8 @@ See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificatio
 {% fragment Parameters/ParametersVerificationSubmissionResponseExample JSON %}
 
 </details>
+
+For a repeated submission, see the [not-pending response example](./Parameters-ParametersVerificationSubmissionRepeatedResponseExample.html).
 
 #### Participate operation
 

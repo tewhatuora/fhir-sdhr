@@ -123,7 +123,7 @@ RuleSet: APIStandardsDocumentation
   |304|NOT MODIFIED       |Your client's cached version of the representation is still up to date|
   |400|BAD REQUEST        |Missing or bad `Request-Context` custom header; FHIR request payload does not validate against Implementation Guide|
   |401|UNAUTHORIZED       |The supplied credentials, if any, are not sufficient to access the resource|
-  |403|FORBIDDEN          |Insufficient privilege to access the requested FHIR resource/operation|
+  |403|FORBIDDEN          |Insufficient privilege or participation denial. See [global denial](./OperationOutcome-OperationOutcomeGlobalDenyExample.html) and [global denial due to patient-deceased opt-out](./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html).|
   |404|NOT FOUND          |The requested representation was not found. Retrying this request is unlikely to be successful|
   |429|TOO MANY REQUESTS  |Your application is sending too many simultaneous requests|
   |500|SERVER ERROR       |An internal server error prevented return of the representation response|
@@ -137,7 +137,7 @@ RuleSet: APIStandardsDocumentation
   |302|FOUND              |No |A common redirect response; you can GET the representation at the URI in the Location response header|
   |400|BAD REQUEST        |Yes|Missing or bad `Request-Context` custom header;<br>FHIR request payload does not validate against Implementation Guide|
   |401|UNAUTHORIZED       |Yes|The supplied credentials, if any, are not sufficient to access the resource|
-  |403|FORBIDDEN          |Yes|Insufficient privilege to access the requested FHIR resource/operation. See [OperationOutcome-APIError-Unauthorised](./OperationOutcome-APIError-Unauthorised.html)|
+  |403|FORBIDDEN          |Yes|Insufficient privilege or participation denial. See [OperationOutcome-APIError-Unauthorised](./OperationOutcome-APIError-Unauthorised.html), [global denial](./OperationOutcome-OperationOutcomeGlobalDenyExample.html), and [global denial due to patient-deceased opt-out](./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html).|
   |429|TOO MANY REQUESTS  |No |Your application is sending too many simultaneous requests|
   |500|SERVER ERROR       |No |An internal server error prevented return of the representation response|
   |503|SERVICE UNAVAILABLE|No |The server is temporarily unable to return the representation. Please wait and try again later|

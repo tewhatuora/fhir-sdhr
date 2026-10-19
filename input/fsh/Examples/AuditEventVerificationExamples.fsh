@@ -30,7 +30,7 @@ Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
 Instance: AuditEventVerificationSampleTwo
 InstanceOf: SDHRAuditEvent
 Usage: #example
-Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
+Description: "Sampled AuditEvent returned for verification."
 * id = "6ebffb1a-61a1-4646-857e-51d4153b698d"
 * type.system = "http://terminology.hl7.org/CodeSystem/audit-event-type"
 * type.code = #rest
@@ -59,7 +59,7 @@ Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
 Instance: BundleVerificationSamplesResponseExample
 InstanceOf: Bundle
 Usage: #example
-Description: "DRAFT EXAMPLE ONLY: Bundle returned from the verification samples operation."
+Description: "Bundle returned from the verification samples operation."
 * type = #searchset
 * timestamp = "2026-07-03T10:00:00+12:00"
 * total = 2
@@ -87,7 +87,7 @@ Description: "DRAFT EXAMPLE ONLY: first page Bundle returned from the verificati
 Instance: BundleVerificationSamplesPageTwoResponseExample
 InstanceOf: Bundle
 Usage: #example
-Description: "DRAFT EXAMPLE ONLY: second page Bundle returned from the verification samples operation using _count and _getpagesoffset."
+Description: "Second page Bundle returned from the verification samples operation using _count and _getpagesoffset."
 * type = #searchset
 * timestamp = "2026-07-03T10:00:05+12:00"
 * total = 2
@@ -99,7 +99,7 @@ Description: "DRAFT EXAMPLE ONLY: second page Bundle returned from the verificat
 Instance: ParametersVerificationSubmissionRequestExample
 InstanceOf: SDHRVerificationSubmissionParameters
 Usage: #example
-Description: "DRAFT EXAMPLE ONLY: Parameters payload posted to the verification submissions operation."
+Description: "Parameters payload posted to the verification submissions operation."
 * parameter[verification][0].name = "verification"
 * parameter[verification][0].part[auditEvent].name = "auditEvent"
 * parameter[verification][0].part[auditEvent].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615"
@@ -114,7 +114,7 @@ Description: "DRAFT EXAMPLE ONLY: Parameters payload posted to the verification 
 Instance: ParametersVerificationSubmissionResponseExample
 InstanceOf: SDHRVerificationSubmissionResponseParameters
 Usage: #example
-Description: "DRAFT EXAMPLE ONLY: Parameters response returned from the verification submissions operation."
+Description: "Parameters response returned from the verification submissions operation."
 * parameter[verificationSubmissionResult][0].name = "verificationSubmissionResult"
 * parameter[verificationSubmissionResult][0].part[auditEvent].name = "auditEvent"
 * parameter[verificationSubmissionResult][0].part[auditEvent].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615"

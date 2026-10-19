@@ -31,7 +31,6 @@ actor "Health Practitioner" as USER
 participant "SEHR" as APP #Orange
 control "SDHR FHIR API" as FHIRAPI #LightBlue
 control "SDHR Sampler" as SAMPLER #LightBlue
-participant "Keycloak" as KC
 
 == Record access ==
 
@@ -45,9 +44,6 @@ APP -> APP : Correlate response with local audit record
 
 == Sample access records independently ==
 
-SAMPLER -> KC : Get service-account users\nwith SDHR_Audit role
-KC --> SAMPLER : Service-account users
-SAMPLER -> SAMPLER : Resolve owning application client UUIDs
 SAMPLER -> SAMPLER : Sample access events for eligible systems
 
 == Verify sampled access records ==

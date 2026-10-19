@@ -9,7 +9,7 @@ Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
 * agent[0].role[0].coding[0].system = "http://terminology.hl7.org/CodeSystem/extra-security-role-type"
 * agent[0].role[0].coding[0].code = #dataprocessor
 * agent[0].requestor = false
-* agent[0].who.identifier.system = "https://identity.example.org/realms/sdhr/clients"
+* agent[0].who.identifier.system = "https://api.auth.digital.health.nz/realms/hnz-integration/clients"
 * agent[0].who.identifier.value = "2b628d46-bdad-4f91-a3b0-c26e058c7d24"
 * agent[1].role[0].coding[0].system = "http://terminology.hl7.org/CodeSystem/v3-RoleClass"
 * agent[1].role[0].coding[0].code = #PROV
@@ -38,7 +38,7 @@ Description: "Sampled AuditEvent returned for verification."
 * agent[0].role[0].coding[0].system = "http://terminology.hl7.org/CodeSystem/extra-security-role-type"
 * agent[0].role[0].coding[0].code = #dataprocessor
 * agent[0].requestor = false
-* agent[0].who.identifier.system = "https://identity.example.org/realms/sdhr/clients"
+* agent[0].who.identifier.system = "https://api.auth.digital.health.nz/realms/hnz-integration/clients"
 * agent[0].who.identifier.value = "2b628d46-bdad-4f91-a3b0-c26e058c7d24"
 * agent[1].role[0].coding[0].system = "http://terminology.hl7.org/CodeSystem/v3-RoleClass"
 * agent[1].role[0].coding[0].code = #PROV

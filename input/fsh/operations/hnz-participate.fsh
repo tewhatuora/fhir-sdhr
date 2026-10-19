@@ -71,7 +71,7 @@ Allowed values:
 * parameter[=].min = 0
 * parameter[=].max = "1"
 * parameter[=].type = #Reference
-* parameter[=].documentation = "Optional for global opt-in. Reference must be an HPI Location URL for the enrolled provider, with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ999-B. If provided, pmsIdentifier is required. Records are sourced only when the patient is already opted in at this facility; otherwise global opt-in succeeds without a load. Only Medtech schedules a historic load. This operation never changes facility participation. Not supported for global opt-out."
+* parameter[=].documentation = "Optional for global opt-in. Reference must be an HPI Location URL for the enrolled provider, with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ999-B. If provided, pmsIdentifier is required. Records are sourced only when the patient is already opted in at this facility; otherwise global opt-in succeeds without a load. A historic load is scheduled only for Pull based acquisition. This operation never changes facility participation. Not supported for global opt-out."
 
 * parameter[+].name = #pmsIdentifier
 * parameter[=].use = #in

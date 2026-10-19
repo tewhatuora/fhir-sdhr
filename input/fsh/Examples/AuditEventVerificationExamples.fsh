@@ -139,14 +139,14 @@ Description: "Search Bundle returned for the authenticated client when no sample
 Instance: ParametersVerificationSubmissionRepeatedResponseExample
 InstanceOf: SDHRVerificationSubmissionResponseParameters
 Usage: #example
-Description: "Response when the submission request example is repeated after both decisions have been processed. Each reference is echoed unchanged and each sample is now not-pending, including the sample whose result was validation-failed."
+Description: "Response when the submission request example is repeated after both decisions have been processed. Each reference is echoed unchanged and each sample returns already-processed, including the sample whose result was validation-failed. The saved decisions are unchanged."
 * parameter[verificationSubmissionResult][0].name = "verificationSubmissionResult"
 * parameter[verificationSubmissionResult][0].part[auditEvent].name = "auditEvent"
 * parameter[verificationSubmissionResult][0].part[auditEvent].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615"
 * parameter[verificationSubmissionResult][0].part[status].name = "status"
-* parameter[verificationSubmissionResult][0].part[status].valueCode = #not-pending
+* parameter[verificationSubmissionResult][0].part[status].valueCode = #already-processed
 * parameter[verificationSubmissionResult][1].name = "verificationSubmissionResult"
 * parameter[verificationSubmissionResult][1].part[auditEvent].name = "auditEvent"
 * parameter[verificationSubmissionResult][1].part[auditEvent].valueReference.reference = "https://api.uat.sdhr.digital.health.nz/s2s/AuditEvent/6ebffb1a-61a1-4646-857e-51d4153b698d"
 * parameter[verificationSubmissionResult][1].part[status].name = "status"
-* parameter[verificationSubmissionResult][1].part[status].valueCode = #not-pending
+* parameter[verificationSubmissionResult][1].part[status].valueCode = #already-processed

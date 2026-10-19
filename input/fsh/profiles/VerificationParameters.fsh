@@ -56,6 +56,6 @@ Description: "Parameters profile for AuditEvent verification submission response
 * parameter[verificationSubmissionResult].part[status].name = "status"
 * parameter[verificationSubmissionResult].part[status].value[x] only code
 * parameter[verificationSubmissionResult].part[status].valueCode 1..1
-* parameter[verificationSubmissionResult].part[status].valueCode ^short = "processed | invalid | not-found | not-eligible | not-pending | error"
-* parameter[verificationSubmissionResult].part[status].valueCode ^definition = "processed: decision saved; invalid: reference or result is invalid; not-found: sample does not exist; not-eligible: sample belongs to another client; not-pending: sample is no longer pending; error: persistence failed for this item."
+* parameter[verificationSubmissionResult].part[status].valueCode ^short = "processed | invalid | not-found | already-processed | error"
+* parameter[verificationSubmissionResult].part[status].valueCode ^definition = "processed: decision saved; invalid: reference or result is invalid; not-found: no local sample is available to the authenticated client; already-processed: the sample decision was already processed and the saved decision is unchanged; error: persistence failed for this item."
 * parameter[verificationSubmissionResult].part[status].resource 0..0

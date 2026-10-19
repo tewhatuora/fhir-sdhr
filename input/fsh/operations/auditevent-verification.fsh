@@ -5,7 +5,7 @@ DRAFT OPERATION: This operation returns `AuditEvent` resources that have been sa
 
 The operation is invoked on the `AuditEvent` type using `GET /AuditEvent/$verification-samples`.
 
-Sampling runs independently of this retrieval operation. SDHR obtains the eligible accessing systems from Keycloak service-account users with the `SDHR_Audit` role and resolves each user to its owning application’s client UUID. Clients do not register for sampling by calling this operation.
+Sampling runs independently of this retrieval operation.
 
 A successful response is always a searchset `Bundle` containing slim `SDHRAuditEvent` samples. Each sample carries its local logical ID for verification submissions, the original agent array, the available request correlation ID and NHI details, plus the required FHIR AuditEvent envelope. Agents are retained unchanged, including their roles, requestor flags, identities and other supplied fields. The application agent has the `dataprocessor` role and identifies the Keycloak client UUID in `who.identifier` or, for source events using that representation, `who.display`. The separate healthworker agent carries the clinician’s HPI person identifier; an organisation agent may also be present. Client ownership is determined from the application agent, not from the requestor flag. Use the clinician identity, patient NHI and recorded time to assess whether the clinician had a valid reason to access that patient. NHI and correlation ID are returned as string-valued `entity.detail` entries with types `nhi` and `correlationId`; `entity.what` is omitted. FHIR R4 requires `source.observer`, so it contains only the neutral display "SDHR verification samples". Internal source-system identity, verification tags and unrelated audit content are omitted.
 
@@ -69,9 +69,8 @@ The required operation scope is `https://fhir-ig.digital.health.nz/sdhr/Operatio
 Each item is processed independently, in request order. Accepted result codes are `validated` and `validation-failed`; both mark a pending sample as verified and remove it from subsequent sample responses. The response contains one `verificationSubmissionResult` per submitted verification, with the submitted reference and one status:
 - `processed`: the decision was saved
 - `invalid`: the reference or result is missing or invalid
-- `not-found`: the local sample does not exist
-- `not-eligible`: the sample does not belong to the authenticated client
-- `not-pending`: the sample is no longer pending verification
+- `not-found`: no local sample is available to the authenticated client
+- `already-processed`: the sample decision was already processed; the saved decision is unchanged
 - `error`: persistence failed for this item
 
 A failure for one item does not stop the remaining items. An invalid Parameters envelope, no verification items, or more than 100 verification items causes a request-level error.

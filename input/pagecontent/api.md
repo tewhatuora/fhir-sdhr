@@ -484,14 +484,13 @@ The SEHR reviews the returned `AuditEvent` resources using either an automated p
 
 The SEHR calls `POST /AuditEvent/$verification-submissions` with the defined `Parameters` payload to submit 1 to 100 verification decisions per request. Requests containing more than 100 `verification` parameters return HTTP 400 before any decisions are processed. For larger sets, submit multiple requests.
 
-Submit `validated` or `validation-failed` for each sample, referencing its local `AuditEvent/{id}` (a full HTTP(S) URL ending in that path is also accepted). Each item is processed independently and its response is returned in submission order. A `processed` decision removes that sample from the pending set for either result. Repeating a decision for an already verified sample returns `not-pending`.
+Submit `validated` or `validation-failed` for each sample, referencing its local `AuditEvent/{id}` (a full HTTP(S) URL ending in that path is also accepted). Each item is processed independently and its response is returned in submission order. A `processed` decision removes that sample from the pending set for either result. Repeating a decision for an already verified sample returns `already-processed`; the saved decision is unchanged.
 
 | Submission status | Meaning |
 | --- | --- |
 | `processed` | Decision saved. |
-| `not-found` | No sample exists with that local ID. |
-| `not-eligible` | Sample belongs to another client. |
-| `not-pending` | Sample is no longer pending verification. |
+| `not-found` | No local sample is available to the authenticated client.
+| `already-processed` | The sample decision was already processed; the saved decision is unchanged. |
 | `invalid` | Reference or result is missing or invalid. |
 | `error` | An unexpected persistence failure prevented processing this item. |
 {: .grid}
@@ -514,7 +513,7 @@ See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificatio
 
 </details>
 
-For a repeated submission, see the [not-pending response example](./Parameters-ParametersVerificationSubmissionRepeatedResponseExample.html).
+For a repeated submission, see the [already-processed response example](./Parameters-ParametersVerificationSubmissionRepeatedResponseExample.html).
 
 #### Participate operation
 

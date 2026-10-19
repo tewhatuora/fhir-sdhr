@@ -421,8 +421,7 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].extension[=].extension[=].valueString = "patient"
 // Only the search parameters and modifiers described below are accepted. Any other parameter, modifier
 // or date comparator is rejected with a 400 OperationOutcome (it is not silently
-// ignored). target-disease, status and status-reason are applied by AIR; date,
-// location, vaccine-code, product and sorting are applied by SDHR over the AIR result set.
+// ignored).
 * rest.resource[=].searchParam[+].name = "patient"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
 * rest.resource[=].searchParam[=].type = #reference
@@ -430,34 +429,34 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[+].name = "date"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-date"
 * rest.resource[=].searchParam[=].type = #date
-* rest.resource[=].searchParam[=].documentation = "Vaccination (occurrence) date. Comparators eq, ge, gt, le, lt are supported; two `date` parameters may be combined for a range. Applied by SDHR."
+* rest.resource[=].searchParam[=].documentation = "Vaccination (occurrence) date. Comparators eq, ge, gt, le, lt are supported; two `date` parameters may be combined for a range."
 * rest.resource[=].searchParam[+].name = "location"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-location"
 * rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Facility (HPI) where the vaccination was administered. Applied by SDHR."
+* rest.resource[=].searchParam[=].documentation = "Facility (HPI) where the vaccination was administered."
 * rest.resource[=].searchParam[+].name = "vaccine-code"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-vaccine-code"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Vaccine product administered. Supports `system|code` or bare `code`, and the `:text` modifier for name search. Applied by SDHR."
+* rest.resource[=].searchParam[=].documentation = "Vaccine product administered. Supports `system|code` or bare `code`, and the `:text` modifier for name search."
 * rest.resource[=].searchParam[+].name = "target-disease"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-target-disease"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Disease targeted by the vaccination (protocolApplied.targetDisease, SNOMED). Applied by AIR."
+* rest.resource[=].searchParam[=].documentation = "Disease targeted by the vaccination (protocolApplied.targetDisease, SNOMED)."
 * rest.resource[=].searchParam[+].name = "status"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-status"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Immunisation event status. Applied by AIR. Records with status `entered-in-error` are excluded from search results."
+* rest.resource[=].searchParam[=].documentation = "Immunisation event status. Records with status `entered-in-error` are excluded from search results."
 * rest.resource[=].searchParam[+].name = "status-reason"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-status-reason"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Reason a vaccination was not administered. Applied by AIR."
+* rest.resource[=].searchParam[=].documentation = "Reason a vaccination was not administered."
 
 * rest.resource[=].searchParam[+].name = "product"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Administered product from the AIR administered-product extension, distinct from vaccine-code. Supports system|code or bare code, and :text for case-insensitive substring matching against text or coding display. Applied by SDHR."
+* rest.resource[=].searchParam[=].documentation = "Administered product from the AIR administered-product extension, distinct from vaccine-code. Supports system|code or bare code, and :text for case-insensitive substring matching against text or coding display."
 * rest.resource[=].searchParam[+].name = "_sort"
 * rest.resource[=].searchParam[=].type = #string
-* rest.resource[=].searchParam[=].documentation = "Sort by occurrence date: date for ascending or -date for descending. Default: -date. Applied by SDHR."
+* rest.resource[=].searchParam[=].documentation = "Sort by occurrence date: date for ascending or -date for descending. Default: -date."
 
 // MedicationRequest
 * rest.resource[+].type = #MedicationRequest
@@ -484,19 +483,19 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[=].documentation = "Status filter, limited to active, on-hold, completed, stopped, draft and unknown. If no permitted status remains, the result is empty."
 * rest.resource[=].searchParam[+].name = "code"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Medication code, forwarded to MDR."
+* rest.resource[=].searchParam[=].documentation = "Medication code."
 * rest.resource[=].searchParam[+].name = "location"
 * rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Location filter, forwarded to MDR."
+* rest.resource[=].searchParam[=].documentation = "Location filter."
 * rest.resource[=].searchParam[+].name = "_count"
 * rest.resource[=].searchParam[=].type = #number
-* rest.resource[=].searchParam[=].documentation = "Requested page size, an integer from 0 to 1000. Forwarded to MDR; filtered pages can contain fewer entries."
+* rest.resource[=].searchParam[=].documentation = "Requested page size, an integer from 0 to 1000. Filtered pages can contain fewer entries."
 * rest.resource[=].searchParam[+].name = "ct"
 * rest.resource[=].searchParam[=].type = #string
-* rest.resource[=].searchParam[=].documentation = "Opaque MDR continuation token. Use the returned SDHR paging links."
+* rest.resource[=].searchParam[=].documentation = "Continuation token returned in the next-page URL in Bundle.link. Request that URL to retrieve the next page; it includes ct and the search parameters."
 * rest.resource[=].searchParam[+].name = "authoredon"
 * rest.resource[=].searchParam[=].type = #date
-* rest.resource[=].searchParam[=].documentation = "Prescription date filter, forwarded to MDR."
+* rest.resource[=].searchParam[=].documentation = "Prescription date filter."
 * rest.resource[=].searchParam[+].name = "_sort"
 * rest.resource[=].searchParam[=].type = #string
 * rest.resource[=].searchParam[=].documentation = "Sort by authoredon or -authoredon. Default: -authoredon."
@@ -527,22 +526,22 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[=].documentation = "Status filter, limited to completed. If no permitted status remains, the result is empty."
 * rest.resource[=].searchParam[+].name = "code"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Medication code, forwarded to MDR."
+* rest.resource[=].searchParam[=].documentation = "Medication code."
 * rest.resource[=].searchParam[+].name = "location"
 * rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Location filter, forwarded to MDR."
+* rest.resource[=].searchParam[=].documentation = "Location filter."
 * rest.resource[=].searchParam[+].name = "_count"
 * rest.resource[=].searchParam[=].type = #number
-* rest.resource[=].searchParam[=].documentation = "Requested page size, an integer from 0 to 1000. Forwarded to MDR; filtered pages can contain fewer entries."
+* rest.resource[=].searchParam[=].documentation = "Requested page size, an integer from 0 to 1000. Filtered pages can contain fewer entries."
 * rest.resource[=].searchParam[+].name = "ct"
 * rest.resource[=].searchParam[=].type = #string
-* rest.resource[=].searchParam[=].documentation = "Opaque MDR continuation token. Use the returned SDHR paging links."
+* rest.resource[=].searchParam[=].documentation = "Continuation token returned in the next-page URL in Bundle.link. Request that URL to retrieve the next page; it includes ct and the search parameters."
 * rest.resource[=].searchParam[+].name = "whenprepared"
 * rest.resource[=].searchParam[=].type = #date
-* rest.resource[=].searchParam[=].documentation = "Dispense preparation date filter, forwarded to MDR."
+* rest.resource[=].searchParam[=].documentation = "Dispense preparation date filter."
 * rest.resource[=].searchParam[+].name = "whenhandedover"
 * rest.resource[=].searchParam[=].type = #date
-* rest.resource[=].searchParam[=].documentation = "Dispense handover date filter, forwarded to MDR."
+* rest.resource[=].searchParam[=].documentation = "Dispense handover date filter."
 * rest.resource[=].searchParam[+].name = "_sort"
 * rest.resource[=].searchParam[=].type = #string
 * rest.resource[=].searchParam[=].documentation = "Sort by whenprepared or whenhandedover, optionally prefixed with - for descending order. Default: -whenprepared."

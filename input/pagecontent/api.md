@@ -447,9 +447,9 @@ The SDHR service includes the following FHIR custom operations.
 
 SEHR systems need to periodically retrieve sampled access events from SDHR, review whether those accesses were valid, and submit the verification decisions. Samples are represented as FHIR `AuditEvent` resources that conform to the [SDHR AuditEvent profile](./StructureDefinition-SDHRAuditEvent.html).
 
-SDHR requests a sample from the upstream AuditEvents service for each registered data viewer over the preceding 24-hour window, scoped to the deployed SDHR service. The configured sampling proportion defaults to 0.02 (2%). SDHR checks each returned event for the matching client and a single identified clinician requestor before importing it. It checks the source-system ID and exact viewer identity to avoid importing the same event again. Each imported sample receives a new SDHR logical ID. Source-system identity and verification state remain internal. The application identity remains in the original agent array.
+SDHR identifies eligible data viewers from Keycloak service-account users with the `SDHR_Audit` role, resolving each service-account user to its owning application’s client UUID. For each eligible viewer, it requests a sample from the upstream AuditEvents service over the preceding 24-hour window, scoped to the deployed SDHR service. The configured sampling proportion defaults to 0.02 (2%). SDHR checks each returned event for the matching client and a single identified clinician requestor before importing it. It checks the source-system ID and exact viewer identity to avoid importing the same event again. Each imported sample receives a new SDHR logical ID. Source-system identity and verification state remain internal. The application identity remains in the original agent array.
 
-This workflow is performed on an ongoing basis so that newly sampled access events continue to be reviewed and verified over time.
+Sampling runs independently of retrieval requests. This workflow is performed on an ongoing basis so that newly sampled access events continue to be reviewed and verified over time.
 
 The end-to-end sequence and corresponding processing steps are documented in the [audit access records workflow](./access-information.html#audit-access-records-workflow).
 
@@ -461,7 +461,7 @@ The SEHR calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of
 
 `GET /AuditEvent/$verification-samples?_count=1&_getpagesoffset=0`
 
-The caller is identified by the authenticated `client_id`; callers cannot select another client through request parameters. On the first authorised request for an unregistered client, SDHR registers the client for sampling and returns HTTP 200 with an informational `OperationOutcome` carrying `sdhr-audit-event-sampling-in-progress`. Retry later to retrieve samples. Registration does not mean a sampling run has already completed. Subsequent requests return a `searchset` Bundle, which may be empty.
+The caller is identified by the authenticated `client_id`; callers cannot select another client through request parameters. Successful requests always return a `searchset` Bundle, which may be empty. Retrieval does not register clients or initiate sampling.
 
 Follow the returned paging links, which remain on `$verification-samples`, rather than constructing generic AuditEvent searches. Generic AuditEvent read, search and write routes are unavailable. Pending results change after submissions, so retrieve all pages before submitting decisions, or restart at the first page after submissions rather than continuing an old offset.
 
@@ -474,14 +474,7 @@ See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSam
 
 </details>
 
-<details>
-<summary><b><u>Click to view first-request registration outcome</u></b></summary>
-
-{% fragment OperationOutcome/OperationOutcomeVerificationSamplingStartedExample JSON %}
-
-</details>
-
-An [empty samples Bundle](./Bundle-BundleVerificationSamplesEmptyResponseExample.html) is a normal response for a registered client with no pending samples.
+An [empty samples Bundle](./Bundle-BundleVerificationSamplesEmptyResponseExample.html) is a normal response when no samples are pending for the authenticated client.
 
 ##### Review sampled access events
 

@@ -5,9 +5,9 @@ DRAFT OPERATION: This operation returns `AuditEvent` resources that have been sa
 
 The operation is invoked on the `AuditEvent` type using `GET /AuditEvent/$verification-samples`.
 
-An authorised request registers the authenticated `client_id` for sampling if it is not already registered. A newly registered client receives HTTP 200 with an informational `OperationOutcome`, code `sdhr-audit-event-sampling-in-progress` from `https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes`, and should poll again later. Registration uses the authenticated identity, never a request parameter.
+Sampling runs independently of this retrieval operation. SDHR obtains the eligible accessing systems from Keycloak service-account users with the `SDHR_Audit` role and resolves each user to its owning application’s client UUID. Clients do not register for sampling by calling this operation.
 
-For an already registered client, the response is a searchset `Bundle` containing slim `SDHRAuditEvent` samples. Each sample carries its local logical ID for verification submissions, the original agent array, the available request correlation ID and NHI details, plus the required FHIR AuditEvent envelope. Agents are retained unchanged, including their roles, requestor flags, identities and other supplied fields. The application agent has the `dataprocessor` role and identifies the Keycloak client UUID in `who.identifier` or, for source events using that representation, `who.display`. The separate healthworker agent carries the clinician’s HPI person identifier; an organisation agent may also be present. Client ownership is determined from the application agent, not from the requestor flag. Use the clinician identity, patient NHI and recorded time to assess whether the clinician had a valid reason to access that patient. NHI and correlation ID are returned as string-valued `entity.detail` entries with types `nhi` and `correlationId`; `entity.what` is omitted. FHIR R4 requires `source.observer`, so it contains only the neutral display "SDHR verification samples". Internal source-system identity, verification tags and unrelated audit content are omitted.
+A successful response is always a searchset `Bundle` containing slim `SDHRAuditEvent` samples. Each sample carries its local logical ID for verification submissions, the original agent array, the available request correlation ID and NHI details, plus the required FHIR AuditEvent envelope. Agents are retained unchanged, including their roles, requestor flags, identities and other supplied fields. The application agent has the `dataprocessor` role and identifies the Keycloak client UUID in `who.identifier` or, for source events using that representation, `who.display`. The separate healthworker agent carries the clinician’s HPI person identifier; an organisation agent may also be present. Client ownership is determined from the application agent, not from the requestor flag. Use the clinician identity, patient NHI and recorded time to assess whether the clinician had a valid reason to access that patient. NHI and correlation ID are returned as string-valued `entity.detail` entries with types `nhi` and `correlationId`; `entity.what` is omitted. FHIR R4 requires `source.observer`, so it contains only the neutral display "SDHR verification samples". Internal source-system identity, verification tags and unrelated audit content are omitted.
 
 Samples:
 - are pending verification
@@ -27,7 +27,7 @@ Usage: #definition
 * name = "VerificationSamples"
 * status = #draft
 * kind = #operation
-* affectsState = true
+* affectsState = false
 * code = #verification-samples
 * system = false
 * type = true
@@ -52,8 +52,8 @@ Usage: #definition
 * parameter[=].use = #out
 * parameter[=].min = 1
 * parameter[=].max = "1"
-* parameter[=].type = #Resource
-* parameter[=].documentation = "A searchset Bundle of slim AuditEvent resources conforming to SDHRAuditEvent for the authenticated client, or an informational OperationOutcome when sampling registration has just been created. Bundle paging links return to this operation."
+* parameter[=].type = #Bundle
+* parameter[=].documentation = "A searchset Bundle of slim AuditEvent resources conforming to SDHRAuditEvent for the authenticated client, including an empty Bundle when no samples are pending. Bundle paging links return to this operation."
 
 Instance: SDHRVerificationSubmissionsOperation
 InstanceOf: OperationDefinition

@@ -126,20 +126,10 @@ Description: "DRAFT EXAMPLE ONLY: Parameters response returned from the verifica
 * parameter[verificationSubmissionResult][1].part[status].name = "status"
 * parameter[verificationSubmissionResult][1].part[status].valueCode = #processed
 
-Instance: OperationOutcomeVerificationSamplingStartedExample
-InstanceOf: OperationOutcome
-Usage: #example
-Description: "Informational response when the authenticated client is first registered for sampling. The client polls the verification samples operation again to retrieve available samples."
-* issue[0].severity = #information
-* issue[=].code = #informational
-* issue[=].details.coding[0].system = "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-outcome-codes"
-* issue[=].details.coding[=].code = #sdhr-audit-event-sampling-in-progress
-* issue[=].details.text = "AuditEvent sampling has started. Please check back soon."
-
 Instance: BundleVerificationSamplesEmptyResponseExample
 InstanceOf: Bundle
 Usage: #example
-Description: "Search Bundle returned for an already registered client when no samples are pending verification."
+Description: "Search Bundle returned for the authenticated client when no samples are pending verification."
 * type = #searchset
 * timestamp = "2026-07-03T10:05:00+12:00"
 * total = 0

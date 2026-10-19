@@ -30,16 +30,16 @@ Description: "DRAFT PROFILE: MedicationRequest resource for Shared Digital Healt
 * subject ^definition = "The patient who is the subject of this medication request."
 * subject.display 0..0
 
-* status ^short = "Item status for the NZePS prescription item"
-* status ^definition = "The status of the medication request, mapped from the NZePS item status and legacy item status extensions when present."
+* status ^short = "Status of the medication request"
+* status ^definition = "The FHIR MedicationRequest.status supplied by MDR, retained unchanged. SDHR uses this value for medication status filtering. The separate NZePS item-status extension may provide additional detail for active prescriptions and does not replace this status."
 
 * extension contains
 	http://hl7.org.nz/fhir/StructureDefinition/nzeps-long-term-medication named LongTermMedication 0..1 and
 	http://hl7.org.nz/fhir/StructureDefinition/nzeps-instructions-modified named InstructionsModified 0..1 and
 	http://hl7.org.nz/fhir/StructureDefinition/nzeps-medication-modified named MedicationModified 0..1 and
-	http://hl7.org.nz/fhir/StructureDefinition/nzeps-status-type named ItemStatus 0..0
-* extension[ItemStatus] ^short = "Legacy extension no longer supported"
-* extension[ItemStatus] ^definition = "Legacy MDR status extension. If present, this is mapped to status during ingestion, but it is not exposed in SEHR content."
+	http://hl7.org.nz/fhir/StructureDefinition/nzeps-item-status named ItemStatus 0..1
+* extension[ItemStatus] ^short = "NZePS item status, including sub-status for active prescriptions"
+* extension[ItemStatus] ^definition = "The NZePS item status supplied by MDR, returned separately from MedicationRequest.status. For active prescriptions it may indicate whether repeats remain. SEHRs may use it to display a repeats-remaining flag; SDHR status filtering uses MedicationRequest.status."
 
 * category 0..*
 * category ^short = "Medication request usage category"

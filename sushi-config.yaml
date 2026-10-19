@@ -47,6 +47,8 @@ dependencies:
 # directive in RuleSets.fsh.
 parameters:
   pin-canonicals: pin-none
+  special-url:
+    - http://hl7.org.nz/fhir/StructureDefinition/nzeps-item-status
   # Verification samples deliberately omit narrative in their public profile.
   no-narrative:
     - AuditEvent/b3f9de58-2da4-427c-a39c-07147eac3615

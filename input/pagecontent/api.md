@@ -82,6 +82,8 @@ The Shared Digital Health Record FHIR API supports the [FHIR search pattern](htt
 
 Supported search parameters are listed in the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html#resourcesCap1).
 
+Medication and immunisation searches have source-specific filters, ordering, linked resources, paging and privacy responses. See [medication search and paging behaviour](./medications.html#search-and-paging-behaviour) and [immunisation search and result behaviour](./immunisations.html#search-and-result-behaviour).
+
 See below for some example search queries.
 
 #### Search for Conditions by patient and source
@@ -604,7 +606,7 @@ SEHR systems should use the result to determine whether to continue with an info
 ### SDHR confidential record API behaviour
 {: .underlined}
 
-SDHR represents two distinct confidentiality cases: an SDHR resource carrying a restrictive FHIR security label, and a source record registered as withheld through `$participate` where the clinical resource is not stored in SDHR. Their API responses differ.
+SDHR represents two distinct confidentiality cases: an SDHR resource carrying a restrictive FHIR security label, and a source record registered as withheld through `$participate` where the clinical resource is not stored in SDHR. Their API responses differ. National-source proxy responses also have specific rules: see [medication privacy responses](./medications.html#privacy-response-behaviour) and [AIR restricted access responses](./immunisations.html#restricted-access-responses).
 
 #### Stored resource security-label behaviour
 
@@ -634,7 +636,7 @@ Response body:
 
 </details>
 
-This search requests `AllergyIntolerance` resources for a patient. Because the search matches a confidential resource, that resource is omitted and the server adds a `REDACTED` tag to `Bundle.meta.security`. The tag tells the API consumer that the result set has been filtered. `Bundle.total` reports the number of matches before confidentiality filtering.
+This search requests `AllergyIntolerance` resources for a patient. Because the search matches a confidential resource, that resource is omitted and the server adds a `REDACTED` tag to `Bundle.meta.security`. The tag tells the API consumer that the result set has been filtered. For this stored-resource example, `Bundle.total` reports the number of matches before confidentiality filtering. Medication searches omit the total when SDHR removes entries; AIR totals follow the immunisation rules linked above.
 
 ##### Read and vread response
 

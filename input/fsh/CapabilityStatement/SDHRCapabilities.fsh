@@ -419,10 +419,10 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].extension[=].extension[=].valueCode = #SHALL
 * rest.resource[=].extension[=].extension[+].url = "required"
 * rest.resource[=].extension[=].extension[=].valueString = "patient"
-// Only the search parameters below are accepted. Any other parameter, modifier
+// Only the search parameters and modifiers described below are accepted. Any other parameter, modifier
 // or date comparator is rejected with a 400 OperationOutcome (it is not silently
 // ignored). target-disease, status and status-reason are applied by AIR; date,
-// location and vaccine-code are applied by SDHR over the AIR result set.
+// location, vaccine-code, product and sorting are applied by SDHR over the AIR result set.
 * rest.resource[=].searchParam[+].name = "patient"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
 * rest.resource[=].searchParam[=].type = #reference
@@ -446,11 +446,18 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[+].name = "status"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-status"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Immunisation event status. Applied by AIR. Records with status `entered-in-error` are never returned."
+* rest.resource[=].searchParam[=].documentation = "Immunisation event status. Applied by AIR. Records with status `entered-in-error` are excluded from search results."
 * rest.resource[=].searchParam[+].name = "status-reason"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-status-reason"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "Reason a vaccination was not administered. Applied by AIR."
+
+* rest.resource[=].searchParam[+].name = "product"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Administered product from the AIR administered-product extension, distinct from vaccine-code. Supports system|code or bare code, and :text for case-insensitive substring matching against text or coding display. Applied by SDHR."
+* rest.resource[=].searchParam[+].name = "_sort"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "Sort by occurrence date: date for ascending or -date for descending. Default: -date. Applied by SDHR."
 
 // MedicationRequest
 * rest.resource[+].type = #MedicationRequest
@@ -474,11 +481,26 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[+].name = "status"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-status"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Status of the prescription."
-* rest.resource[=].searchParam[+].name = "_lastUpdated"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
+* rest.resource[=].searchParam[=].documentation = "Status filter, limited to active, on-hold, completed, stopped, draft and unknown. If no permitted status remains, the result is empty."
+* rest.resource[=].searchParam[+].name = "code"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Medication code, forwarded to MDR."
+* rest.resource[=].searchParam[+].name = "location"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "Location filter, forwarded to MDR."
+* rest.resource[=].searchParam[+].name = "_count"
+* rest.resource[=].searchParam[=].type = #number
+* rest.resource[=].searchParam[=].documentation = "Requested page size, an integer from 0 to 1000. Forwarded to MDR; filtered pages can contain fewer entries."
+* rest.resource[=].searchParam[+].name = "ct"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "Opaque MDR continuation token. Use the returned SDHR paging links."
+* rest.resource[=].searchParam[+].name = "authoredon"
 * rest.resource[=].searchParam[=].type = #date
-* rest.resource[=].searchParam[=].documentation = "When the resource version last changed."
+* rest.resource[=].searchParam[=].documentation = "Prescription date filter, forwarded to MDR."
+* rest.resource[=].searchParam[+].name = "_sort"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "Sort by authoredon or -authoredon. Default: -authoredon."
+* rest.resource[=].searchRevInclude = "MedicationDispense:prescription"
 
 // MedicationDispense
 * rest.resource[+].type = #MedicationDispense
@@ -502,8 +524,26 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[+].name = "status"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-status"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Status of the dispense."
-* rest.resource[=].searchParam[+].name = "_lastUpdated"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
+* rest.resource[=].searchParam[=].documentation = "Status filter, limited to completed. If no permitted status remains, the result is empty."
+* rest.resource[=].searchParam[+].name = "code"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Medication code, forwarded to MDR."
+* rest.resource[=].searchParam[+].name = "location"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "Location filter, forwarded to MDR."
+* rest.resource[=].searchParam[+].name = "_count"
+* rest.resource[=].searchParam[=].type = #number
+* rest.resource[=].searchParam[=].documentation = "Requested page size, an integer from 0 to 1000. Forwarded to MDR; filtered pages can contain fewer entries."
+* rest.resource[=].searchParam[+].name = "ct"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "Opaque MDR continuation token. Use the returned SDHR paging links."
+* rest.resource[=].searchParam[+].name = "whenprepared"
 * rest.resource[=].searchParam[=].type = #date
-* rest.resource[=].searchParam[=].documentation = "When the resource version last changed."
+* rest.resource[=].searchParam[=].documentation = "Dispense preparation date filter, forwarded to MDR."
+* rest.resource[=].searchParam[+].name = "whenhandedover"
+* rest.resource[=].searchParam[=].type = #date
+* rest.resource[=].searchParam[=].documentation = "Dispense handover date filter, forwarded to MDR."
+* rest.resource[=].searchParam[+].name = "_sort"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "Sort by whenprepared or whenhandedover, optionally prefixed with - for descending order. Default: -whenprepared."
+* rest.resource[=].searchInclude = "MedicationDispense:prescription"

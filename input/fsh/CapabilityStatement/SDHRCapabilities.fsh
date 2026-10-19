@@ -77,6 +77,16 @@ For a global opt-in request where the patient is enrolled with a provider, the r
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 
+* rest.operation[+].name = "hnz-domain-participate"
+* rest.operation[=].definition = Canonical(SDHRHNZDomainParticipateOperation)
+* rest.operation[=].documentation = """
+Authorised Health NZ channels may POST to `/s2s/$hnz-domain-participate` with scope `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRHNZDomainParticipateOperation`.
+Supply exactly one NHI `patient` reference and one or more `domainParticipation` groups. Each group contains exactly one `domain` valueCode (`SDHRMedications` or `SDHRImmunisations`) and one `hnzParticipationIndicator` valueBoolean. Domains must be unique. No other top-level parameters or group parts are supported.
+This synchronous, idempotent operation changes only the supplied domain consent choices. It does not change global or facility participation, archive or restore resources, or trigger historic loading. Omitted domains remain unchanged. Global opt-off dominates access even when a domain is opted in.
+The response is an OperationOutcome. Batch invocation is prohibited.
+See the [domain participation contract](./OperationDefinition-SDHRHNZDomainParticipateOperation.html), [opt-in example](./Parameters-ParametersHNZDomainParticipateOptIn.html), [opt-out example](./Parameters-ParametersHNZDomainParticipateOptOut.html), and [multiple-domain example](./Parameters-ParametersHNZDomainParticipateMultiple.html).
+"""
+
 // hnz participation status operation
 * rest.operation[+].name = "hnz-participation-status"
 * rest.operation[=].definition = Canonical(SDHRHNZParticipationStatusOperation)

@@ -35,7 +35,7 @@ Allergy, condition, and observation information is contributed to the SDHR Prima
 
 | Resource | Interaction | HTTP verb and relative URL | Profile or definition | Detailed behaviour |
 | --- | --- | --- | --- | --- |
-| Bundle | batch | `POST /` | [SDHR Batch Bundle](./StructureDefinition-SDHRBatchBundle.html) | The Bundle must use `type = batch`; transaction processing and participation operations within the Bundle are not supported. |
+| Bundle | batch | `POST /` | [SDHR Batch Bundle](./StructureDefinition-SDHRBatchBundle.html) | The Bundle must use `type = batch`; transactions and `$participate`, `$hnz-participate`, or `$hnz-domain-participate` requests within the Bundle are not supported. |
 {: .grid}
 
 #### National source resource interactions
@@ -655,4 +655,21 @@ The search response contains an `OperationOutcome` entry with `"mode":"outcome"`
 ### Internal-only operations
 {: .underlined}
 
-The `$hnz-participate` and `$hnz-participation-status` operations are restricted to authorised Health NZ internal channels and are not available to external API consumers.
+The `$hnz-participate`, `$hnz-domain-participate`, and `$hnz-participation-status` operations are restricted to authorised Health NZ internal channels and are not available to external API consumers.
+
+#### HNZ domain participation operation
+
+`POST /s2s/$hnz-domain-participate` records domain-only participation choices. It requires scope `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRHNZDomainParticipateOperation`. See the [operation definition](./OperationDefinition-SDHRHNZDomainParticipateOperation.html).
+
+The FHIR `Parameters` request MUST contain:
+
+- Exactly one `patient` parameter with an NHI `valueReference.reference` in the form `https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZZZ1111` or `https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZZZ11AA`.
+- One or more repeated `domainParticipation` parameters, each with exactly two `part` entries: `domain` with `valueCode` equal to `SDHRMedications` or `SDHRImmunisations`, and `hnzParticipationIndicator` with `valueBoolean` equal to `true` or `false`.
+
+Domains MUST be unique in the request. No other top-level parameters or group parts are accepted. In particular, a top-level `hnzParticipationIndicator`, `hnzOptOutReasonCode`, `facilityId`, or `pmsIdentifier` is not permitted. Linked-group requests are not supported.
+
+Processing is synchronous and idempotent. Only the supplied domain consent choices change; omitted domains, global participation, and facility participation remain unchanged. This operation does not archive or restore resources or trigger historic loading. A domain opt-in does not override a global opt-off: global opt-off continues to deny access.
+
+On success, the response is HTTP 200 with an `OperationOutcome` body. Invalid requests return HTTP 400 with an `OperationOutcome`. This operation cannot be invoked within a batch Bundle. The existing global `$hnz-participate` contract remains separate and unchanged.
+
+Examples: [domain opt-in](./Parameters-ParametersHNZDomainParticipateOptIn.html), [domain opt-out](./Parameters-ParametersHNZDomainParticipateOptOut.html), and [multiple domain choices](./Parameters-ParametersHNZDomainParticipateMultiple.html).

@@ -31,7 +31,7 @@ To write patient health information from a participating PMS to the SDHR Primary
     </tr>
     <tr>
       <td>Health NZ participation channel</td>
-      <td>Records a patient's global participation choice through operations restricted to authorised Health NZ callers.</td>
+      <td>Records a patient's global participation choice, or separate domain choices through <a href="./OperationDefinition-SDHRHNZDomainParticipateOperation.html">$hnz-domain-participate</a>, using operations restricted to authorised Health NZ callers.</td>
     </tr>
   </tbody>
 </table>

@@ -636,7 +636,7 @@ Response body:
 
 </details>
 
-This search requests `AllergyIntolerance` resources for a patient. Because the search matches a confidential resource, that resource is omitted and the server adds a `REDACTED` tag to `Bundle.meta.security`. The tag tells the API consumer that the result set has been filtered. For this stored-resource example, `Bundle.total` reports the number of matches before confidentiality filtering. Medication searches omit the total when SDHR removes entries; AIR totals follow the immunisation rules linked above.
+This search requests `AllergyIntolerance` resources for a patient. Because the search matches a confidential resource, that resource is omitted and the server adds a `REDACTED` tag to `Bundle.meta.security`. The tag tells the API consumer that the result set has been filtered. For this stored-resource example, `Bundle.total` reports the number of matches before confidentiality filtering. Medication searches return `Bundle.total` only for `_count=0`; otherwise it is omitted. AIR totals follow the immunisation rules linked above.
 
 ##### Read and vread response
 

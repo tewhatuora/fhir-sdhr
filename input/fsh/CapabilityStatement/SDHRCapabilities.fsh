@@ -489,7 +489,7 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[=].documentation = "Location filter."
 * rest.resource[=].searchParam[+].name = "_count"
 * rest.resource[=].searchParam[=].type = #number
-* rest.resource[=].searchParam[=].documentation = "Requested page size, an integer from 0 to 1000. Filtered pages can contain fewer entries."
+* rest.resource[=].searchParam[=].documentation = "Integer from 0 to 1000. With _count=0, the response contains Bundle.total and no medication entries. Otherwise Bundle.total is omitted."
 * rest.resource[=].searchParam[+].name = "ct"
 * rest.resource[=].searchParam[=].type = #string
 * rest.resource[=].searchParam[=].documentation = "Continuation token returned in the next-page URL in Bundle.link. Request that URL to retrieve the next page; it includes ct and the search parameters."
@@ -532,7 +532,7 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[=].documentation = "Location filter."
 * rest.resource[=].searchParam[+].name = "_count"
 * rest.resource[=].searchParam[=].type = #number
-* rest.resource[=].searchParam[=].documentation = "Requested page size, an integer from 0 to 1000. Filtered pages can contain fewer entries."
+* rest.resource[=].searchParam[=].documentation = "Integer from 0 to 1000. With _count=0, the response contains Bundle.total and no medication entries. Otherwise Bundle.total is omitted."
 * rest.resource[=].searchParam[+].name = "ct"
 * rest.resource[=].searchParam[=].type = #string
 * rest.resource[=].searchParam[=].documentation = "Continuation token returned in the next-page URL in Bundle.link. Request that URL to retrieve the next page; it includes ct and the search parameters."

@@ -67,7 +67,7 @@ Medication searches require `patient`. Supply a valid NHI, `Patient/{NHI}`, or a
 | `authoredon` | MedicationRequest prescription date filter. |
 | `whenprepared`, `whenhandedover` | MedicationDispense date filters. |
 | `_sort` | One date field: `authoredon` for requests; `whenprepared` or `whenhandedover` for dispenses. Prefix with `-` for descending order. |
-| `_count` | Integer from 0 to 1000, forwarded to MDR. `0` requests a count-only response; MDR determines whether a total is supplied. |
+| `_count` | Integer from 0 to 1000. `_count=0` returns `Bundle.total` without medication entries. Other medication search responses omit `Bundle.total`. |
 | `_include` | Dispense searches support `MedicationDispense:prescription`. |
 | `_revinclude` | Request searches support `MedicationDispense:prescription`. |
 | `ct` | Continuation token supplied through a returned paging link. |
@@ -80,7 +80,7 @@ MedicationRequest.status is retained as supplied by MDR and is the value used fo
 
 SDHR always requests related prescriptions for dispense searches and related dispenses for request searches, even when the caller omits the include parameter. Consumers must distinguish matching entries from included resources using `entry.search.mode`.
 
-Follow the returned Bundle paging links, which use SDHR URLs; treat continuation tokens as opaque. Filtering occurs within each MDR page. SDHR does not retrieve replacement records to fill a short page. An empty page does not establish that later pages contain no visible records. A total supplied by MDR is retained only when SDHR has not removed entries; status or privacy filtering can remove `Bundle.total`. Do not infer the complete visible record count from page length.
+Follow the returned Bundle paging links, which use SDHR URLs; treat continuation tokens as opaque. Filtering occurs within each MDR page. SDHR does not retrieve replacement records to fill a short page. An empty page does not establish that later pages contain no visible records. Medication search responses omit `Bundle.total` unless `_count=0` is requested. For `_count=0`, `Bundle.total` is the total number of query matches, not a page size. Do not infer the total from page length.
 
 ### Privacy response behaviour
 {: .underlined}
@@ -89,7 +89,7 @@ Global SDHR participation checks apply across linked NHIs. Medication resources 
 
 Prescriptions and dispenses are assessed together. A withheld prescription causes linked dispenses to be withheld. A confidential or otherwise disallowed dispense can also cause its linked prescription to be withheld. When facility opt-outs exist, a dispense is withheld if its prescription references cannot be resolved to suitable prescriptions in the search Bundle. Direct dispense reads resolve the prescriptions through MDR and deny access when the required consent checks cannot be satisfied.
 
-When SDHR removes entries for medication privacy, the search response remains HTTP 200, carries `Bundle.meta.security` code `REDACTED`, includes an informational `OperationOutcome` entry with issue code `suppressed`, and omits `Bundle.total`. Consumers should show that information was withheld, rather than treating the result as a complete medication history. Direct reads denied by consent return HTTP 403.
+When SDHR removes entries for medication privacy, the search response remains HTTP 200, carries `Bundle.meta.security` code `REDACTED`, and includes an informational `OperationOutcome` entry with issue code `suppressed`. Consumers should show that information was withheld, rather than treating the result as a complete medication history. Direct reads denied by consent return HTTP 403.
 
 ### Clinical safety considerations
 {: .underlined}

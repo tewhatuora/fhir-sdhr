@@ -274,7 +274,7 @@ The operation returns a `Parameters` resource containing only `hnzParticipationI
 * rest.resource[=].documentation = "AuditEvent supports DRAFT custom operations for data viewer application verification workflows."
 * rest.resource[=].operation[+].name = "verification-samples"
 * rest.resource[=].operation[=].definition = Canonical(SDHRVerificationSamplesOperation)
-* rest.resource[=].operation[=].documentation = "DRAFT OPERATION: Returns sampled AuditEvent resources that are still outstanding for verification by the authenticated data viewer application. Successful requests return a searchset Bundle, which may be empty. Sampling eligibility is managed in Keycloak through the SDHR_Audit role. Supports optional `_count` and `_getpagesoffset` query parameters for paging. Generic AuditEvent interactions are not supported."
+* rest.resource[=].operation[=].documentation = "Returns sampled AuditEvent resources that are still outstanding for verification by the authenticated data viewer application. Successful requests return a searchset Bundle, which may be empty. Supports optional `_count` and `_getpagesoffset` query parameters for paging. Generic AuditEvent interactions are not supported."
 * rest.resource[=].operation[+].name = "verification-submissions"
 * rest.resource[=].operation[=].definition = Canonical(SDHRVerificationSubmissionsOperation)
 * rest.resource[=].operation[=].documentation = "DRAFT OPERATION: Accepts a Parameters payload containing one or more verification decisions for sampled AuditEvent resources."

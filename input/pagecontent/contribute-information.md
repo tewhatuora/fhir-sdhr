@@ -126,6 +126,10 @@ The following diagram covers the facility participation scenarios:
 
 When the facility opt-out is recorded, SDHR archives the patient's active contributed resources from that facility. Archived resources are retained by SDHR but are not returned by normal search or read interactions. The PMS must immediately prevent new or changed local records for the patient from being written. See [Reload after a patient opts back in](#reload-after-a-patient-opts-back-in) for the historical information process that follows an opt-back-in.
 
+After facility opt-out archive processing completes, a read of an archived resource by ID returns `404 Not Found` with an `OperationOutcome` reporting “Resource is not known”. A search matching only archived resources returns an empty Bundle with `total: 0`; the facility opt-out alone does not add a `REDACTED` security label or an `OperationOutcome`. These results assume no other access restriction applies. A global opt-out can still cause a `403` from the global consent check; see [global participation denial](./api.html#global-participation-denial-api-behaviour).
+
+An exact search can separately match a **withheld-at-source registration** and return `sdhr-records-withheld-at-source` without a `REDACTED` label. That registration is distinct from an archived clinical resource; see [withheld-at-source behaviour](./api.html#record-withheld-at-source-behaviour).
+
 #### Set record-level confidentiality
 
 {% include participate-sequence-pmsrecordwithheld.svg %}
@@ -143,6 +147,10 @@ When a global opt-out is recorded, SDHR archives the patient's active contribute
 If the global opt-out reason is `patient-deceased`, read or search requests rejected by the global consent check return a deceased-specific outcome. Recording the opt-out still returns the normal operation success response. See [global participation denial API behaviour](./api.html#global-participation-denial-api-behaviour).
 
 When a patient restores global participation, the enrolled PMS must be notified so the applicable historical reload can be initiated. See [Reload after a patient opts back in](#reload-after-a-patient-opts-back-in).
+
+For a global opt-in request where the patient is enrolled with a provider, the request may include the enrolled provider `facilityId` and must then include `pmsIdentifier`. Sourcing from this facility requires the patient to be already opted in at that facility. If the facility preference is absent or opted out, global opt-in still succeeds without sourcing records, changing facility participation, or locking that facility. When sourcing is eligible, only `Medtech` schedules a historic load; `Indici` and `MyPractice` use an enrolment-data email instead. If `facilityId` is omitted, `pmsIdentifier` must also be omitted and no historic load is scheduled.
+
+When a historic load is scheduled, the returned OperationOutcome includes the informational `sdhr-historic-load-scheduled` issue. This confirms scheduling, not successful completion. The issue is absent when no load is scheduled, including an unchanged repeated request. See [historic-load scheduling outcome](./OperationOutcome-OperationOutcomeParticipateLoadScheduled.html).
 
 ### Load historical information
 {: .underlined}

@@ -14,7 +14,8 @@ For example response payloads for this operation see:
 - [OperationOutcome for invalid patient reference](./OperationOutcome-OperationOutcomeParticipationStatusInvalidPatient.html) : This example shows the `OperationOutcome` returned when the `patient` reference does not match the required NHI Patient URL format.
 
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
-The operation returns a `Parameters` resource containing the patient reference and participation status indicators when validation succeeds.
+This operation requires the SMART on FHIR scope `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRParticipationStatusOperation`.
+The operation returns a `Parameters` resource containing only `hnzParticipationIndicator`. A patient with no recorded global participation preference is considered to be participating and returns `true`.
 If the `patient` reference is invalid, the operation returns a `400` response with an `OperationOutcome` carrying the `sdhr-invalid-patient` outcome code.
 """
 Usage: #definition
@@ -39,4 +40,4 @@ Usage: #definition
 * parameter[=].min = 1
 * parameter[=].max = "1"
 * parameter[=].type = #boolean
-* parameter[=].documentation = "Indicates whether the patient is currently participating in the Shared Digital Health Record service."
+* parameter[=].documentation = "Indicates global participation. Returns true when no global participation preference has been recorded."

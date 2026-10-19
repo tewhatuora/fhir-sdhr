@@ -24,7 +24,7 @@ Description: "DRAFT PROFILE: MedicationDispense resource for Shared Digital Heal
 
 * identifier 1..1
 * identifier ^short = "NZePS prescription item ID (SCID + item sequence number)"
-* identifier ^definition = "NZePS SCID + item sequence number. This identifier links dispense records to the originating prescription item and excludes GTIM barcode values."
+* identifier ^definition = "NZePS SCID + item sequence number. This identifier links dispense records to the originating prescription item and excludes GTIN barcode values."
 
 * status 1..1
 * status = #completed
@@ -46,22 +46,9 @@ Description: "DRAFT PROFILE: MedicationDispense resource for Shared Digital Heal
 * quantity ^short = "Dispensed quantity"
 * quantity ^definition = "The quantity of medication dispensed in this dispense event."
 
-* daysSupply 0..1
-* daysSupply ^short = "Days of supply"
-* daysSupply ^definition = "The expected number of days of medication supplied."
-
 * whenHandedOver 0..1
 * whenHandedOver ^short = "Time the medication was handed to the patient"
 * whenHandedOver ^definition = "The date and time when the dispensed medication was handed over to the patient."
-
-* destination 0..1
-* destination only Reference(Location)
-* destination ^short = "Dispense destination location"
-* destination ^definition = "The destination location for the dispensed medication."
-
-* receiver 0..1
-* receiver ^short = "Person who received the dispense"
-* receiver ^definition = "The individual who received the medication from the dispenser."
 
 * dosageInstruction.patientInstruction 0..1
 * dosageInstruction.patientInstruction ^short = "Patient instructions"
@@ -79,3 +66,42 @@ Description: "DRAFT PROFILE: MedicationDispense resource for Shared Digital Heal
 * performer 0..0
 * subject.display 0..0
 
+// Closed clinical subset (MED-220 / MED-230). Unlisted MDR fields are not surfaced.
+* modifierExtension 0..0
+* partOf 0..0
+* statusReason[x] 0..0
+* context 0..0
+* supportingInformation 0..0
+* daysSupply 0..0
+* destination 0..0
+* receiver 0..0
+* note 0..0
+* substitution 0..0
+* detectedIssue 0..0
+* eventHistory 0..0
+
+* meta.id 0..0
+* meta.extension 0..0
+* identifier.system 1..1
+* identifier.system = "https://standards.digital.health.nz/ns/nzeps-scid-item-id"
+* medication[x] only CodeableConcept
+* medicationCodeableConcept.id 0..0
+* medicationCodeableConcept.extension 0..0
+* medicationCodeableConcept.coding.id 0..0
+* medicationCodeableConcept.coding.extension 0..0
+* medicationCodeableConcept.coding.version 0..0
+* medicationCodeableConcept.coding.userSelected 0..0
+* dosageInstruction.id 0..0
+* dosageInstruction.extension 0..0
+* dosageInstruction.modifierExtension 0..0
+* dosageInstruction.sequence 0..0
+* dosageInstruction.text 0..0
+* dosageInstruction.additionalInstruction 0..0
+* dosageInstruction.timing 0..0
+* dosageInstruction.asNeeded[x] 0..0
+* dosageInstruction.site 0..0
+* dosageInstruction.method 0..0
+* dosageInstruction.doseAndRate 0..0
+* dosageInstruction.maxDosePerPeriod 0..0
+* dosageInstruction.maxDosePerAdministration 0..0
+* dosageInstruction.maxDosePerLifetime 0..0

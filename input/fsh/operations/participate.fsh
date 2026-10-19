@@ -23,6 +23,7 @@ The operation is idempotent, meaning that multiple requests with the same parame
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
 When `participationIndicator` is `false`, SDHR records the facility opt-out and archives the patient's active contributed resources from the supplied facility. Archived resources are not returned by normal search or read interactions.
 For an opt-in request, a Medtech PMS may set `enrolledPatient` to `true` to indicate that the patient is enrolled at the supplied facility and that a historic load should be triggered. If `enrolledPatient` is omitted, the API treats the caller as non-Medtech or unknown and updates consent without triggering a historic load.
+When a historic load is scheduled, the returned OperationOutcome includes the informational `sdhr-historic-load-scheduled` issue. This confirms scheduling, not successful completion. The issue is absent when no load is scheduled, including an unchanged repeated request. See [historic-load scheduling outcome](./OperationOutcome-OperationOutcomeParticipateLoadScheduled.html).
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 Usage: #definition

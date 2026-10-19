@@ -71,7 +71,7 @@ Medication resources retain their MDR resource `id`; they do not use the server-
 | [MedicationDispense](./StructureDefinition-SDHRMedicationDispense.html) | NZePS prescription SCID plus item sequence number plus dispense sequence number | NZePS prescription SCID plus item sequence number |
 {: .grid}
 
-For example, two dispenses for the same prescription item have different resource IDs but share the prescription-item business identifier. Use the returned resource `id` in `GET /MedicationRequest/{id}` or `GET /MedicationDispense/{id}`. Use `identifier` to search for the prescription item; it does not identify one particular dispense. These identifiers exclude GTIM barcode values. Follow the returned `authorizingPrescription` reference to identify the linked request rather than constructing a reference from an ID.
+For example, two dispenses for the same prescription item have different resource IDs but share the prescription-item business identifier. Use the returned resource `id` in `GET /MedicationRequest/{id}` or `GET /MedicationDispense/{id}`. Use `identifier` to search for the prescription item; it does not identify one particular dispense. These identifiers exclude GTIN barcode values. Follow the returned `authorizingPrescription` reference to identify the linked request rather than constructing a reference from an ID.
 
 ### SDHR ID
 {: .underlined}

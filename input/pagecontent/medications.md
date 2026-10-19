@@ -14,6 +14,18 @@ This domain provides a clinically focused, longitudinal view of prescribed and d
 > - [Resource interactions](./api.html#resource-interaction-catalogue)
 > - [FHIR artifact catalogue](./artifacts.html)
 
+### MDR response translation
+{: .underlined}
+
+SDHR narrows MDR MedicationRequest and MedicationDispense responses to the clinical subset defined by the medication profiles. This applies to reads, versioned reads and search entries.
+
+- Business identifiers use `https://standards.digital.health.nz/ns/nzeps-scid-item-id`; GTIN and other identifier systems are excluded.
+- Request extensions are limited to long-term medication, instructions-modified, medication-modified and the optional NZePS item status. Dispenses retain the instructions-modified and medication-modified flags.
+- Narrative, contained resources, private notes and fields outside the clinical subset are omitted. Dosage instructions retain patient instructions and route; request supply details retain quantity, repeats and expiry date.
+- Relative and absolute MDR Patient references containing an NHI are normalized to `https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/{NHI}`, with an uppercase NHI and `subject.type` set to `Patient`. Patient display text is omitted.
+- Both dispense dates are retained. Consumers should use `whenHandedOver` when available and otherwise `whenPrepared`.
+- Search links and medication entry URLs point to SDHR. Bundle redaction metadata and OperationOutcome entries are preserved.
+
 ### Clinical description
 {: .underlined}
 
@@ -70,26 +82,26 @@ Medication searches require `patient`. Supply a valid NHI, `Patient/{NHI}`, or a
 | `whenprepared`, `whenhandedover` | MedicationDispense date filters. |
 | `_sort` | One date field: `authoredon` for requests; `whenprepared` or `whenhandedover` for dispenses. Prefix with `-` for descending order. |
 | `_count` | Integer from 0 to 1000. `_count=0` returns `Bundle.total` without medication entries. Other medication search responses omit `Bundle.total`. |
-| `_include` | Dispense searches support `MedicationDispense:prescription`. |
-| `_revinclude` | Request searches support `MedicationDispense:prescription`. |
+| `_include` | Required for dispense searches, with value `MedicationDispense:prescription`. |
+| `_revinclude` | Required for request searches, with value `MedicationDispense:prescription`. |
 | `ct` | Continuation token supplied through a returned paging link. |
 
-Unsupported parameters, including `_lastUpdated`, and empty parameter values return HTTP 400. Identifier, medication-code and facility matching are performed by MDR; SDHR does not reinterpret these values. Date matching is also performed by MDR.
+Unsupported parameters, including `_lastUpdated`, and empty parameter values return HTTP 400. Missing required include parameters, unsupported include values and invalid `_sort` values also return HTTP 400. Sort values must name one supported date field for the resource type; repeated or comma-separated sort fields are rejected. Identifier, medication-code and facility matching are performed by MDR; SDHR does not reinterpret these values. Date matching is also performed by MDR.
 
 Use repeated date parameters to express a range, for example:
 
-- `GET /MedicationRequest?patient=ZZZ9994&authoredon=ge2024-01-01&authoredon=le2026-12-31`
-- `GET /MedicationDispense?patient=ZZZ9994&whenprepared=ge2024-01-01&whenprepared=le2026-12-31`
+- `GET /MedicationRequest?patient=ZZZ9994&_revinclude=MedicationDispense:prescription&authoredon=ge2024-01-01&authoredon=le2026-12-31`
+- `GET /MedicationDispense?patient=ZZZ9994&_include=MedicationDispense:prescription&whenprepared=ge2024-01-01&whenprepared=le2026-12-31`
 
-Here `ge` includes dates on or after the lower bound, and `le` includes dates on or before the upper bound. For an identifier, code or facility search, supply the corresponding MDR search value, for example `GET /MedicationRequest?patient=ZZZ9994&identifier={prescription-item-identifier}`. Replace the placeholder with the actual identifier and URL-encode the query value.
+Here `ge` includes dates on or after the lower bound, and `le` includes dates on or before the upper bound. For an identifier, code or facility search, supply the corresponding MDR search value, for example `GET /MedicationRequest?patient=ZZZ9994&_revinclude=MedicationDispense:prescription&identifier={prescription-item-identifier}`. Replace the placeholder with the actual identifier and URL-encode the query value.
 
-Request searches default to `_sort=-authoredon` and statuses `active`, `on-hold`, `completed`, `stopped`, `draft` and `unknown`. Dispense searches default to `_sort=-whenprepared` and status `completed`. A supplied status filter is intersected with these sets; if no permitted status remains, the result is empty. SDHR also removes returned requests whose FHIR `status` is `cancelled`, `entered-in-error` or `error`, and non-completed dispenses. These status exclusions apply to searches; direct reads and version reads apply projection and consent checks but do not apply this search filter.
+Request searches default to `_sort=-authoredon` and statuses `active`, `on-hold`, `completed` and `stopped`. Dispense searches default to `_sort=-whenprepared` and status `completed`. A supplied status filter is intersected with these sets; if no permitted status remains, the result is empty. SDHR also removes returned requests whose FHIR `status` is outside these four permitted statuses, and non-completed dispenses. These status exclusions apply to searches; direct reads and version reads apply projection and consent checks but do not apply this search filter.
 
 MedicationRequest.status is retained as supplied by MDR and is the value used for status filtering. SDHR also returns the optional `http://hl7.org.nz/fhir/StructureDefinition/nzeps-item-status` extension separately. Its value normally matches the standard status; for active prescriptions it may give a sub-status indicating whether repeats remain. SEHRs may use this additional detail to display a repeats-remaining flag. It does not replace or override the standard status.
 
-SDHR always requests related prescriptions for dispense searches and related dispenses for request searches, even when the caller omits the include parameter. Consumers must distinguish matching entries from included resources using `entry.search.mode`.
+Callers must supply `_include=MedicationDispense:prescription` for dispense searches and `_revinclude=MedicationDispense:prescription` for request searches. This ensures that prescriptions and dispenses are assessed together for confidentiality and facility opt-outs. Consumers must distinguish matching entries from included resources using `entry.search.mode`.
 
-Follow the returned Bundle paging links, which use SDHR URLs; treat continuation tokens as opaque. Filtering occurs within each MDR page. SDHR does not retrieve replacement records to fill a short page. An empty page does not establish that later pages contain no visible records. Medication search responses omit `Bundle.total` unless `_count=0` is requested. For `_count=0`, `Bundle.total` is the total number of query matches, not a page size. Do not infer the total from page length.
+Follow the returned Bundle paging links, which use SDHR URLs and retain the patient search context needed for consent checks; treat continuation tokens as opaque. Filtering occurs within each MDR page. SDHR does not retrieve replacement records to fill a short page. An empty page does not establish that later pages contain no visible records. Medication search responses omit `Bundle.total` unless `_count=0` is requested. For `_count=0`, `Bundle.total` is the total number of query matches, not a page size. Do not infer the total from page length.
 
 ### Privacy response behaviour
 {: .underlined}

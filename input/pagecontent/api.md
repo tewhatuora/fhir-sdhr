@@ -557,7 +557,7 @@ See [Manage participation](./contribute-information.html#manage-participation) f
 
 #### Participation status operation
 
-The `$participation-status` operation allows an SEHR system to check whether a patient is globally participating in SDHR before requesting health information. It returns the patient's NHI reference and the `hnzParticipationIndicator` boolean. The operation does not change the patient's participation preference and does not return clinical information.
+The `$participation-status` operation allows an SEHR system to check whether a patient is globally participating in SDHR before requesting health information. It returns only the `hnzParticipationIndicator` boolean. The operation does not change the patient's participation preference and does not return clinical information.
 
 | Contract element | Requirement |
 | --- | --- |
@@ -565,8 +565,9 @@ The `$participation-status` operation allows an SEHR system to check whether a p
 | HTTP request | `POST /$participation-status` |
 | Definition | [SDHR Participation Status Operation](./OperationDefinition-SDHRParticipationStatusOperation.html) |
 | Request body | FHIR `Parameters` containing one NHI `patient` reference |
-| Response body | FHIR `Parameters` containing the patient reference and `hnzParticipationIndicator` |
-| `hnzParticipationIndicator` | `true` indicates global participation; `false` indicates that the patient has opted out globally |
+| Required SMART scope | `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRParticipationStatusOperation` |
+| Response body | FHIR `Parameters` containing only `hnzParticipationIndicator` |
+| `hnzParticipationIndicator` | `true` indicates global participation, including when no global preference is recorded; `false` indicates that the patient has opted out globally |
 {: .grid}
 
 The operation is intended to be called by a healthcare provider on behalf of the patient. The patient must be identified by an NHI. The status returned is global; it does not represent a facility-level participation preference.

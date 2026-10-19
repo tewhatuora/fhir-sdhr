@@ -57,6 +57,8 @@ Immunisation information from SDHR should be treated as shared clinical context 
 
 Immunization searches require `patient`. AIR receives the originally requested NHI and resolves linked NHIs for its records. SDHR does not combine separate AIR searches for linked NHIs.
 
+For this patient search, AIR returns the patient's full immunisation history in one response, subject to AIR's filters and access restrictions. SDHR applies its additional filters and sorts the results locally in memory. SDHR does not paginate the results: it returns all remaining matches in a single Bundle.
+
 | Parameter | Supported behaviour |
 | --- | --- |
 | `date` | Occurrence date filter, applied by SDHR. Supports `eq`, `ge`, `gt`, `le` and `lt`; repeat the parameter for a range. Unprefixed values use `eq`, matching the UTC calendar day. |
@@ -65,11 +67,11 @@ Immunization searches require `patient`. AIR receives the originally requested N
 | `product` | Token match against the AIR administered-product extension, using `system\|code` or bare `code`; distinct from `vaccine-code`. |
 | `vaccine-code:text`, `product:text` | Case-insensitive substring match against the relevant concept text or coding display, applied by SDHR. |
 | `target-disease`, `status`, `status-reason` | Forwarded to AIR. |
-| `_sort` | `date` for oldest first or `-date` for newest first. Default: newest first. |
+| `_sort` | Applied locally by SDHR: `date` for oldest first or `-date` for newest first. Default: newest first. |
 
 Other parameters and modifiers, or unsupported date comparators, return HTTP 400. In particular, `_count`, `_include` and `_revinclude` are not accepted. Records marked `entered-in-error` are removed from search results. Records without a parseable occurrence date sort last in descending order and first in ascending order.
 
-SDHR filters the Bundle returned by one AIR call and does not retrieve extra pages or create SDHR pages. Any paging links supplied by AIR are passed through without rewriting them for the local filters. Normally, `Bundle.total` is the number of visible Immunization entries after filtering. If AIR supplies `meta.security`, SDHR retains AIR's total, or uses zero when AIR omits it; the total may therefore differ from the number of visible entries.
+Because AIR returns the full patient history in one response, SDHR does not retrieve extra pages or create SDHR pages. Any paging links supplied by AIR are passed through without rewriting them for the local filters; their presence does not mean SDHR implements pagination. Normally, `Bundle.total` is the number of visible Immunization entries after filtering. If AIR supplies `meta.security`, SDHR retains AIR's total, or uses zero when AIR omits it; the total may therefore differ from the number of visible entries.
 
 ### Restricted access responses
 {: .underlined}

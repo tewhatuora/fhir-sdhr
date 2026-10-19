@@ -641,4 +641,4 @@ The search response contains an `OperationOutcome` entry with `"mode":"outcome"`
 ### Internal-only operations
 {: .underlined}
 
-The `$hnz-participate` and `$hnz-participation-status` operations are restricted to authorised Health NZ internal channels and are not available to external API consumers.
+The `$hnz-participate`, `$hnz-domain-participate` and `$hnz-participation-status` operations are restricted to authorised Health NZ internal channels and are not available to external API consumers.

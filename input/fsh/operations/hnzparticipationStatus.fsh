@@ -135,3 +135,37 @@ Usage: #definition
 * parameter[=].part[=].max = "1"
 * parameter[=].part[=].type = #boolean
 * parameter[=].part[=].documentation = "Whether the patient is participating at this facility."
+
+* parameter[+].name = #domainParticipation
+* parameter[=].use = #out
+* parameter[=].min = 0
+* parameter[=].max = "*"
+* parameter[=].documentation = "Current domain choice per requested or linked NHI. Deny on any linked NHI wins for access; values here describe the individual NHI."
+* parameter[=].part[0].name = #patient
+* parameter[=].part[=].use = #out
+* parameter[=].part[=].min = 1
+* parameter[=].part[=].max = "1"
+* parameter[=].part[=].type = #Reference
+* parameter[=].part[+].name = #domain
+* parameter[=].part[=].use = #out
+* parameter[=].part[=].min = 1
+* parameter[=].part[=].max = "1"
+* parameter[=].part[=].type = #code
+* parameter[=].part[+].name = #preference
+* parameter[=].part[=].use = #out
+* parameter[=].part[=].min = 1
+* parameter[=].part[=].max = "1"
+* parameter[=].part[=].type = #code
+* parameter[=].part[=].documentation = "In or Out. Absence of a recorded choice is In."
+* parameter[=].part[+].name = #choiceRecorded
+* parameter[=].part[=].use = #out
+* parameter[=].part[=].min = 1
+* parameter[=].part[=].max = "1"
+* parameter[=].part[=].type = #boolean
+* parameter[=].part[=].documentation = "False for default participation; true for an explicitly recorded deny or permit."
+* parameter[=].part[+].name = #lastUpdated
+* parameter[=].part[=].use = #out
+* parameter[=].part[=].min = 0
+* parameter[=].part[=].max = "1"
+* parameter[=].part[=].type = #instant
+* parameter[=].part[=].documentation = "Timestamp of the last change to this recorded choice; absent for default participation. Not an effective date."

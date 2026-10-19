@@ -74,6 +74,10 @@ For a global opt-in request where the patient is enrolled with a provider, the r
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 
+* rest.operation[+].name = "hnz-domain-participate"
+* rest.operation[=].definition = Canonical(SDHRHNZDomainParticipateOperation)
+* rest.operation[=].documentation = "Records one or more domain choices on exactly one patient's Consent through authorised Health NZ channels. Supply one patient and one domains parameter with named boolean parts. Linked Consents are unchanged; any linked domain deny blocks access for the group. Global participation remains managed through $hnz-participate."
+
 // hnz participation status operation
 * rest.operation[+].name = "hnz-participation-status"
 * rest.operation[=].definition = Canonical(SDHRHNZParticipationStatusOperation)

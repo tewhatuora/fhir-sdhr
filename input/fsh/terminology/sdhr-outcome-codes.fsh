@@ -30,3 +30,4 @@ See [SDHR Participate Operation](https://fhir-ig.digital.health.nz/sdhr/Operatio
 * #sdhr-facility-locked "SDHR Facility Locked" "This code is used when a facility has been temporarily locked due to a background load process"
 * #sdhr-patient-locked "SDHR Patient Locked" "This code is used when a patient has been temporarily locked due to a background load process"
 * #sdhr-facility-unknown "SDHR Facility Unknown" "This code is used when a facility has not been onboarded to SDHR"
+* #sdhr-domain-participation-denied "Domain participation denied" "The patient has opted off this SDHR domain or AIR has returned Restricted Access."

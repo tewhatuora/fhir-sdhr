@@ -61,7 +61,9 @@ Scenarios where this operation might be used include:
 - A patient chooses not to participate in the Shared Digital Health Record service and informs Health NZ of this choice via appropriate digital or assisted channels.
 
 For example payloads that might be used with this operation see:
-- [Parameters resource for total non-participation](./Parameters-ParametersHNZParticipateOptOut.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
+- [Parameters resource for total non-participation (patient choice)](./Parameters-ParametersHNZParticipateOptOut.html) : This example shows a global opt-out using reason `patient-choice`.
+- [Parameters resource for total non-participation (patient deceased)](./Parameters-ParametersHNZParticipateOptOutDeceased.html) : This example shows a global opt-out using reason `patient-deceased`.
+- [Parameters resource for total non-participation (imported external consent)](./Parameters-ParametersHNZParticipateOptOutImportedExternalConsent.html) : This example shows a global opt-out using reason `imported-external-consent`.
 - [Parameters resource for participation](./Parameters-ParametersHNZParticipateOptIn.html) : This example shows how to indicate that a patient wishes to participate in the Shared Digital Health Record service.
 - [Parameters resource for linked group participation](./Parameters-ParametersHNZParticipateLinkedGroupOptIn.html) : This example shows how to indicate that all patients in a linked NHI group wish to participate in the Shared Digital Health Record service.
 
@@ -69,10 +71,15 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI. For a global opt-in request, one or more `patient` parameters may be supplied. Multiple `patient` parameters are only supported when all supplied NHIs are already linked in the same NHI group and the request supplies the complete linked group. Multiple `patient` parameters are not supported for global opt-out requests.
-When `hnzParticipationIndicator` is `false`, SDHR records the global opt-out and archives the patient's active contributed resources across all facilities. Archived resources are not returned by normal search or read interactions.
+When `hnzParticipationIndicator` is `false`, SDHR requires `hnzOptOutReasonCode`, records the global opt-out reason, and archives the patient's active contributed resources across all facilities. Archived resources are not returned by normal search or read interactions.
+When the recorded reason is `patient-deceased`, subsequent resource read or search requests rejected by the global consent check return HTTP 403 with the [deceased global-denial OperationOutcome](./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html): "Patient data is unavailable in the Shared Digital Health Record as they are deceased." This is not the response to a successful `$hnz-participate` request; see [global participation denial API behaviour](./api.html#global-participation-denial-api-behaviour).
 For a global opt-in request where the patient is enrolled with a provider, the request may include the enrolled provider `facilityId` and must include `pmsIdentifier`. If `facilityId` is not provided, `pmsIdentifier` must not be provided and the operation updates consent without triggering a historic load.
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
+
+* rest.operation[+].name = "hnz-domain-participate"
+* rest.operation[=].definition = Canonical(SDHRHNZDomainParticipateOperation)
+* rest.operation[=].documentation = "Records one or more domain choices on exactly one patient's Consent through authorised Health NZ channels. Supply one patient and one domains parameter with named boolean parts. Linked Consents are unchanged; any linked domain deny blocks access for the group. Global participation remains managed through $hnz-participate."
 
 // hnz participation status operation
 * rest.operation[+].name = "hnz-participation-status"
@@ -80,7 +87,7 @@ The operation will return an OperationOutcome resource indicating the result of 
 * rest.operation[=].documentation = """
 This operation retrieves a patient's Shared Digital Health Record participation status.
 This operation should be used by data providers in the Shared Digital Health Record ecosystem such as Patient Management Systems (PMS) or Electronic Health Record (EHR) systems.
-It returns whether the patient is participating in the service, whether enrolment information was found, and whether the patient has active, archived, or any records available in the service. The scope of the status returned is the API consumer, for example an HPI Facility where patient data is held.
+It returns whether the patient is participating in the service, the global opt-out reason when applicable, whether enrolment information was found, and whether the patient has active, archived, or any records available in the service. The scope of the status returned is the API consumer, for example an HPI Facility where patient data is held.
 
 This operation requires the SMART on FHIR scope `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRHNZParticipationStatusOperation`.
 
@@ -476,17 +483,17 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[+].name = "identifier"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
+* rest.resource[=].searchParam[=].documentation = "NZePS prescription-item business identifier (SCID plus item sequence number). Dispenses for the same prescription item share this identifier; it is distinct from the MDR dispense resource id."
 * rest.resource[=].searchParam[+].name = "status"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-status"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "Status filter, limited to active, on-hold, completed, stopped, draft and unknown. If no permitted status remains, the result is empty."
 * rest.resource[=].searchParam[+].name = "code"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Medication code."
+* rest.resource[=].searchParam[=].documentation = "Medication code, forwarded unchanged to MDR for matching."
 * rest.resource[=].searchParam[+].name = "location"
 * rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Location filter."
+* rest.resource[=].searchParam[=].documentation = "Facility search value, forwarded unchanged to MDR for matching."
 * rest.resource[=].searchParam[+].name = "_count"
 * rest.resource[=].searchParam[=].type = #number
 * rest.resource[=].searchParam[=].documentation = "Integer from 0 to 1000. With _count=0, the response contains Bundle.total and no medication entries. Otherwise Bundle.total is omitted."
@@ -519,17 +526,17 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[+].name = "identifier"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
+* rest.resource[=].searchParam[=].documentation = "NZePS prescription-item business identifier (SCID plus item sequence number). Dispenses for the same prescription item share this identifier; it is distinct from the MDR dispense resource id."
 * rest.resource[=].searchParam[+].name = "status"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-status"
 * rest.resource[=].searchParam[=].type = #token
 * rest.resource[=].searchParam[=].documentation = "Status filter, limited to completed. If no permitted status remains, the result is empty."
 * rest.resource[=].searchParam[+].name = "code"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Medication code."
+* rest.resource[=].searchParam[=].documentation = "Medication code, forwarded unchanged to MDR for matching."
 * rest.resource[=].searchParam[+].name = "location"
 * rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Location filter."
+* rest.resource[=].searchParam[=].documentation = "Facility search value, forwarded unchanged to MDR for matching."
 * rest.resource[=].searchParam[+].name = "_count"
 * rest.resource[=].searchParam[=].type = #number
 * rest.resource[=].searchParam[=].documentation = "Integer from 0 to 1000. With _count=0, the response contains Bundle.total and no medication entries. Otherwise Bundle.total is omitted."

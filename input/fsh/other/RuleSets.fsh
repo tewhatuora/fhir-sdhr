@@ -163,9 +163,9 @@ Severity: #error
 Expression: "entry.resource.descendants().where($this is Reference).reference.where(matches('(^|.*/)?Patient/[^/]+$')).exists() and entry.resource.descendants().where($this is Reference).reference.where(matches('(^|.*/)?Patient/[^/]+$')).distinct().count() = 1"
 
 Invariant: no-participation-ops
-Description: "Bundle entries MUST NOT invoke $participate or $hnz-participate."
+Description: "Bundle entries MUST NOT invoke $participate, $hnz-participate or $hnz-domain-participate."
 Severity: #error
-Expression: "entry.request.url.where($this.matches('[$](participate|hnz-participate)')).exists().not()"
+Expression: "entry.request.url.where($this.matches('[$](participate|hnz-participate|hnz-domain-participate)')).exists().not()"
 
 Invariant: value-or-dataabsentreason-required
 Description: "Observations must have a root or component value[x], or a root or component dataAbsentReason."

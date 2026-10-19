@@ -8,3 +8,5 @@ Description: "Example parameters content to POST to the HNZ Participate (`$hnz-p
 * parameter[=].valueReference.type = "Patient"
 * parameter[+].name = "hnzParticipationIndicator"
 * parameter[=].valueBoolean = false
+* parameter[+].name = "hnzOptOutReasonCode"
+* parameter[=].valueCode = #patient-choice

@@ -491,10 +491,10 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Inform clinical users of deceased patients</p>
                 </td>
                 <td>
-                    <p>Deceased patient message returned from SDHR</p>
+                    <p>HTTP 403 with outcome code <code>sdhr-participation-status-denied-deceased</code>. See the <a href="./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html">deceased global-denial example</a>.</p>
                 </td>
                 <td>
-                    <p>The SEHR system must inform clinical users when the patient is deceased. Note that SDHR will not return clinical data for deceased patients.</p>
+                    <p>The SEHR system must inform clinical users when SDHR rejects a read or search because a global opt-out records the patient as deceased. The response message is "Patient data is unavailable in the Shared Digital Health Record as they are deceased." The SEHR must identify this outcome by its code rather than message text. See <a href="./api.html#global-participation-denial-api-behaviour">global participation denial API behaviour</a>.</p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -749,7 +749,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Medications data returned containing both prescribed and dispensed records</p>
                 </td>
                 <td>
-                    <p>Dispensing record data must take precedence over prescribed record data where both exist for a given medication record. Dispensed data is a more accurate depiction of what the patient received, therefore viewing prescription data without access to corresponding dispensing data can lead to misinterpretations about what the patient received. </p>
+                    <p>SEHR systems that display prescription data must also display dispensing data. Displaying prescription data alone is not permitted. Prescribed and dispensed records must remain clearly distinguishable; dispensing record data must take precedence when interpreting what the patient received. Dispensed data is a more accurate depiction of what the patient received, therefore viewing prescription data without access to corresponding dispensing data can lead to misinterpretations about what the patient received. </p>
                 </td>
                 <td>
                     <p>Yes</p>
@@ -763,13 +763,13 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p class="requirement-ref" id="SRD-29">SRD-29</p>
                 </td>
                 <td>
-                    <p>Extemporaneously Compounded (EC) Items</p>
+                    <p>Extemporaneously Compounded Products (ECPs)</p>
                 </td>
                 <td>
-                    <p>Medications data returned containing Extemporaneously Compounded records</p>
+                    <p>Medications data returned containing records for Extemporaneously Compounded Products</p>
                 </td>
                 <td>
-                    <p>Extemporaneously compounded medication records can contain a list of ingredients within the record. All ingredients must be displayed in the SEHR UI rather than displaying only the label which may not fully reflect the ingredients in the compounded medication.</p>
+                    <p>Extemporaneously compounded product records can contain a list of ingredients within the record. All ingredients must be displayed in the SEHR UI rather than displaying only the label which may not fully reflect the ingredients in the compounded medication.</p>
                 </td>
                 <td>
                     <p>Yes</p>

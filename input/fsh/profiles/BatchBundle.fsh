@@ -6,7 +6,7 @@ Description: """
 SDHR allows Bundle posts with the following restrictions:
 - The Bundle type must be `batch` (transactions are not supported).
 - All Patient references in the Bundle must target a single Patient.
-- The Bundle must not contain any $participate or $hnz-participate requests.
+- The Bundle must not contain any $participate, $hnz-participate or $hnz-domain-participate requests.
 """
 * type = #batch (exactly)
 * obeys one-patient-only

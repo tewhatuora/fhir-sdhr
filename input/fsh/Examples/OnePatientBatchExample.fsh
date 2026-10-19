@@ -34,9 +34,9 @@ Usage: #inline
 * subject.type = "Patient"
 * onsetDateTime = "2011-02-05T00:00:00+13:00"
 * recordedDate = "2023-11-26T10:02:45+13:00"
-* recorder = Reference(https://api.hip.digital.health.nz/fhir/Practitioner/99ZZZZ) "Dottie McStuffins"
+* recorder = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/99ZZZZ) "Dottie McStuffins"
 * recorder.type = "Practitioner"
-* asserter = Reference(https://api.hip.digital.health.nz/fhir/Practitioner/91ZZXN) "DR Julian Subatoi Bashir"
+* asserter = Reference(https://api.hip.digital.health.nz/fhir/hpi/v1/Practitioner/91ZZXN) "DR Julian Subatoi Bashir"
 * asserter.type = "Practitioner"
 
 Instance: Inline-Condition-2

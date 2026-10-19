@@ -140,6 +140,8 @@ A patient can record a global opt-out or restore global participation through an
 
 When a global opt-out is recorded, SDHR archives the patient's active contributed resources across all facilities. Those archived resources are retained but are not available through normal search or read interactions.
 
+If the global opt-out reason is `patient-deceased`, read or search requests rejected by the global consent check return a deceased-specific outcome. Recording the opt-out still returns the normal operation success response. See [global participation denial API behaviour](./api.html#global-participation-denial-api-behaviour).
+
 When a patient restores global participation, the enrolled PMS must be notified so the applicable historical reload can be initiated. See [Reload after a patient opts back in](#reload-after-a-patient-opts-back-in).
 
 ### Load historical information

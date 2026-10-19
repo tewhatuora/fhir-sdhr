@@ -143,13 +143,15 @@ Examples include:
 | Patient does not participate in SDHR | The patient has chosen not to participate in the Shared Digital Health Record service. |
 | Information withheld at source | Information may have been withheld by the source system according to patient preferences or source-system rules. |
 | Information type not shared | The patient has chosen not to share a particular type of information. |
-| Deceased patient | The patient record is unavailable because the patient is deceased. |
+| Deceased patient | A read or search rejected by a global opt-out with reason `patient-deceased` returns HTTP `403` and code `sdhr-participation-status-denied-deceased`. See the [deceased global-denial example](./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html). |
 | Temporary record lock | Information is temporarily unavailable while background processing is occurring. |
 | Technical access limits | The request could not be completed because a technical usage limit was reached. |
 
 Implementers should use the coded response supplied by SDHR when determining how to handle these situations rather than relying solely on displayed message text.
 
 The detailed response structures and operation outcomes are described in the [API documentation](./api.html).
+
+For deceased global denial, the response message is "Patient data is unavailable in the Shared Digital Health Record as they are deceased." This reflects the recorded global opt-out reason, not a new deceased-status lookup. See [global participation denial API behaviour](./api.html#global-participation-denial-api-behaviour).
 
 ### Audit and user context
 {: .underlined}

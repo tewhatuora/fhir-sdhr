@@ -1,9 +1,9 @@
 Instance: SDHRHNZParticipationStatusOperation
 InstanceOf: OperationDefinition
 Description: """
-This internal use operation retrieves a patient's Shared Digital Health Record participation status and returns whether the patient is participating in the service, whether enrolment information was found, and whether the patient has active, archived, or any records available in the service.
+This internal use operation retrieves a patient's Shared Digital Health Record participation status and returns whether the patient is participating in the service, whether enrolment information was found, whether the patient has active, archived, or any records available in the service, and the opt-out reason when the patient is globally opted out.
 
-For an example response payload for this operation see:
+For example response payloads for this operation see:
 - [Parameters resource for participation status response - not participating](./Parameters-ParametersParticipationStatusResponse.html) : No consent, enrolment, or records found for the patient.
 - [Parameters resource for participation status response - opted out with archived records](./Parameters-ParametersParticipationStatusEnrolmentResponse.html) : The enrolled patient is not currently participating and has archived records from before the opt-out.
 - [Parameters resource for participation status response - actively participating](./Parameters-ParametersParticipationStatusActiveResponse.html) : Patient is actively participating with active records at a facility.
@@ -11,7 +11,7 @@ For an example response payload for this operation see:
 
 To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$hnz-participation-status`).
 
-The operation will return a `Parameters` resource containing the patient reference and participation status indicators.
+The operation will return a `Parameters` resource containing the patient reference, participation status indicators, and the global opt-out reason when the patient is globally opted out.
 """
 Usage: #definition
 * url = "https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRHNZParticipationStatusOperation"
@@ -50,6 +50,15 @@ Usage: #definition
 * parameter[=].max = "1"
 * parameter[=].type = #boolean
 * parameter[=].documentation = "Indicates whether the patient is currently participating in the Shared Digital Health Record service."
+
+* parameter[+].name = #hnzOptOutReasonCode
+* parameter[=].use = #out
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #code
+* parameter[=].binding.strength = #required
+* parameter[=].binding.valueSet = Canonical(SDHRHNZOptOutReasonValueSet)
+* parameter[=].documentation = "The global opt-out reason when hnzParticipationIndicator is false. Allowed values: patient-choice, patient-deceased, imported-external-consent."
 
 * parameter[+].name = #hasActiveRecords
 * parameter[=].use = #out

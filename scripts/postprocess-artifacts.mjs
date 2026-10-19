@@ -10,14 +10,15 @@ if (!fs.existsSync(artifactsPath)) {
 console.log(`Post-processing artifacts page: ${artifactsPath}`);
 const html = fs.readFileSync(artifactsPath, 'utf8');
 fs.copyFileSync(artifactsPath, path.join(path.dirname(artifactsPath), 'artifacts-internal.html'));
-const internalOperations = [
-  'SDHRHNZParticipateOperation',
-  'SDHRHNZDomainParticipateOperation',
-  'SDHRHNZParticipationStatusOperation'
+const internalArtifacts = [
+  'OperationDefinition-SDHRHNZParticipateOperation',
+  'OperationDefinition-SDHRHNZDomainParticipateOperation',
+  'OperationDefinition-SDHRHNZParticipationStatusOperation',
+  'Bundle-HIPReferenceTargets'
 ];
 let publicHtml = html;
-for (const operation of internalOperations) {
-  const row = new RegExp(`\\s*<tr>\\s*<td style="column-width:30%">\\s*<a href="OperationDefinition-${operation}\\.html"[\\s\\S]*?</tr>`);
+for (const artifact of internalArtifacts) {
+  const row = new RegExp(`\\s*<tr>\\s*<td style="column-width:30%">\\s*<a href="${artifact}\\.html"[\\s\\S]*?</tr>`);
   publicHtml = publicHtml.replace(row, '');
 }
 fs.writeFileSync(artifactsPath, publicHtml);

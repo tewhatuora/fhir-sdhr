@@ -66,12 +66,7 @@ Each repeating `verification` parameter identifies an `AuditEvent` sample and th
 
 The required operation scope is `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRVerificationSubmissionsOperation`. References may be relative (`AuditEvent/{id}`) or absolute HTTP(S) URLs ending in `/AuditEvent/{id}`; the logical ID identifies a local sample. Versioned references, query strings and fragments are not accepted.
 
-Each item is processed independently, in request order. Accepted result codes are `validated` and `validation-failed`; both mark a pending sample as verified and remove it from subsequent sample responses. The response contains one `verificationSubmissionResult` per submitted verification, with the submitted reference and one status:
-- `processed`: the decision was saved
-- `invalid`: the reference or result is missing or invalid
-- `not-found`: no local sample is available to the authenticated client
-- `already-processed`: the sample decision was already processed; the saved decision is unchanged
-- `error`: persistence failed for this item
+Each item is processed independently, in request order. Accepted result codes are `validated` and `validation-failed`; both mark a pending sample as verified and remove it from subsequent sample responses. The response contains one `verificationSubmissionResult` per submitted verification, with the submitted reference and a status from the [SDHR Verification Submission Status CodeSystem](CodeSystem-sdhr-verification-submission-status.html).
 
 A failure for one item does not stop the remaining items. An invalid Parameters envelope, no verification items, or more than 100 verification items causes a request-level error.
 """

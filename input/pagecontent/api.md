@@ -486,14 +486,7 @@ The SEHR calls `POST /AuditEvent/$verification-submissions` with the defined `Pa
 
 Submit `validated` or `validation-failed` for each sample, referencing its local `AuditEvent/{id}` (a full HTTP(S) URL ending in that path is also accepted). Each item is processed independently and its response is returned in submission order. A `processed` decision removes that sample from the pending set for either result. Repeating a decision for an already verified sample returns `already-processed`; the saved decision is unchanged.
 
-| Submission status | Meaning |
-| --- | --- |
-| `processed` | Decision saved. |
-| `not-found` | No local sample is available to the authenticated client.
-| `already-processed` | The sample decision was already processed; the saved decision is unchanged. |
-| `invalid` | Reference or result is missing or invalid. |
-| `error` | An unexpected persistence failure prevented processing this item. |
-{: .grid}
+{% include CodeSystem-sdhr-verification-submission-status-content.xhtml %}
 
 A response may contain mixed statuses; inspect every item rather than treating HTTP success as confirmation that all decisions were saved.
 

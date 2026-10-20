@@ -97,6 +97,8 @@ pages:
     title: FHIR Artifacts
   consent-based-access.md:
     title: Consent based access control
+  postman.md:
+    title: Postman Onboarding
   test-data.md:
     title: Test Data
 #
@@ -147,6 +149,7 @@ menu:
     Artefacts (JSON): definitions.json.zip
     Artefacts (XML): definitions.xml.zip
     Download IG: full-ig.zip
+    Postman Onboarding: postman.html
     Test Data: test-data.html
 
 # ╭───────────────────────────Less Common Implementation Guide Properties──────────────────────────╮

@@ -7,6 +7,8 @@ The collection contains 73 requests based on the SDHR Bruno collection: resource
 
 The environment contains dummy identifiers and blank credentials. Its UAT API and authentication URLs are populated; replace the dummy values with test identities and client details supplied during onboarding. Dummy identifiers are illustrative and do not establish that a patient, practitioner, or facility exists or is available to your client.
 
+Domain opt-out is still in development. Its development workflow examples are not included in this collection.
+
 ### Configure the environment
 {: .underlined}
 

@@ -1,6 +1,6 @@
 Instance: OperationOutcomeParticipateLoadScheduled
 InstanceOf: OperationOutcome
-Description: "Successful participation response when a Medtech historic load has been scheduled. Scheduling does not confirm completion."
+Description: "Successful participation response when a historic load has been scheduled for pull-based acquisition. Scheduling does not confirm completion."
 Usage: #example
 * issue[0].severity = #information
 * issue[0].code = #informational

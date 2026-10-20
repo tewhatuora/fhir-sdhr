@@ -22,7 +22,7 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
 When `participationIndicator` is `false`, SDHR records the facility opt-out and archives the patient's active contributed resources from the supplied facility. Archived resources are not returned by normal search or read interactions.
-For an opt-in request, a Medtech PMS may set `enrolledPatient` to `true` to indicate that the patient is enrolled at the supplied facility and that a historic load should be triggered. If `enrolledPatient` is omitted, the API treats the caller as non-Medtech or unknown and updates consent without triggering a historic load.
+For an opt-in request using pull-based acquisition, the PMS may set `enrolledPatient` to `true` to indicate that the patient is enrolled at the supplied facility and that a historic load should be triggered. If `enrolledPatient` is omitted, the API updates consent without triggering a historic load.
 When a historic load is scheduled, the returned OperationOutcome includes the informational `sdhr-historic-load-scheduled` issue. This confirms scheduling, not successful completion. The issue is absent when no load is scheduled, including an unchanged repeated request. See [historic-load scheduling outcome](./OperationOutcome-OperationOutcomeParticipateLoadScheduled.html).
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
@@ -77,8 +77,8 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].min = 0
 * parameter[=].max = "1"
 * parameter[=].type = #boolean
-* parameter[=].documentation = """Optional for facility opt-in requests. Medtech callers may set this to `true` when the patient is enrolled at the supplied facility and historic load should be triggered.
-If omitted, the caller is treated as non-Medtech or unknown and the operation updates consent without triggering a historic load."""
+* parameter[=].documentation = """Optional for facility opt-in requests using pull-based acquisition. Set this to `true` when the patient is enrolled at the supplied facility and a historic load should be triggered.
+If omitted, the operation updates consent without triggering a historic load."""
 
 * parameter[+].name = #localResourceId
 * parameter[=].use = #in

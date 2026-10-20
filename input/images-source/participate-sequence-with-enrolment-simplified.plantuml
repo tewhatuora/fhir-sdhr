@@ -53,7 +53,7 @@ ORCHESTRATOR -> PARTICIPATE : Invoke participate operation
     - patient: Patient ID (NHI)
     - facilityId: Facility ID (HPI FacilityID)
     - participationIndicator: true
-    - enrolledPatient: true (Medtech only, when enrolled and a historic load is required)
+    - enrolledPatient: true (pull-based acquisition, when enrolled and a historic load is required)
   end note
 PARTICIPATE -> FHIRAPI : Write Participation
 FHIRAPI -> SDHR : Persist

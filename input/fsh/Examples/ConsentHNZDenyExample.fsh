@@ -1,6 +1,6 @@
 Instance: ConsentHNZDenyExample
 InstanceOf: SDHRConsent
-Usage: #example
+Usage: #inline
 Description: "Consent example submitted to allow a patient to opt out of sharing their information. This example shows a Consent resource created as the result of an HNZ opt out."
 
 * status = #active

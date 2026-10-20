@@ -34,3 +34,40 @@ Description: "This code system defines the reasons for a patient to participate 
 * #sdhr-facility-opt-in "Facility opt in" "Patient has opted in to participation at the facility. This means that records will be shared from that facility."
 * #sdhr-hnz-opt-out "HNZ opt out" "Patient has opted out of participation entirely with Health NZ. This means that no records will be shared from any facility."
 * #sdhr-hnz-opt-in "HNZ opt in" "Patient has opted in to participation with Health NZ. This means that records will be shared from all facilities."
+
+CodeSystem: HNZGlobalOptOutReason
+Id: hnz-global-opt-out-reason
+Title: "HNZ Global Opt Out Reason Codes"
+Description: "This code system defines the reasons for an HNZ global opt-off decision."
+* ^meta.versionId = "1"
+* ^experimental = false
+* ^publisher = "Health NZ | Te Whatu Ora"
+* #patient-choice "Patient choice" "Global opt-off was recorded based on patient choice."
+* #patient-deceased "Patient deceased" "Global opt-off was recorded because the patient is deceased."
+* #imported-external-consent "Imported external consent" "Global opt-off was imported from an external consent source."
+
+CodeSystem: SDHRVerificationResult
+Id: sdhr-verification-result
+Title: "SDHR Verification Result Codes"
+Description: "This code system defines the result codes used when a data viewer application submits verification decisions for sampled AuditEvent resources."
+* ^meta.versionId = "1"
+* ^status = #draft
+* ^experimental = false
+* ^publisher = "Health NZ | Te Whatu Ora"
+* #validated "Validated" "The data viewer application has confirmed the sampled AuditEvent is valid."
+* #validation-failed "Validation failed" "The data viewer application has determined the sampled AuditEvent failed verification."
+
+CodeSystem: SDHRVerificationSubmissionStatus
+Id: sdhr-verification-submission-status
+Title: "SDHR Verification Submission Status Codes"
+Description: "Status codes returned for individual AuditEvent verification submissions."
+* ^status = #draft
+* ^experimental = false
+* ^publisher = "Health NZ | Te Whatu Ora"
+* ^caseSensitive = true
+* ^content = #complete
+* #processed "Processed" "Decision saved."
+* #not-found "Not found" "No local sample is available to the authenticated client."
+* #already-processed "Already processed" "The sample decision was already processed; the saved decision is unchanged."
+* #invalid "Invalid" "Reference or result is missing or invalid."
+* #error "Error" "An unexpected persistence failure prevented processing this item."

@@ -40,7 +40,7 @@ fork
         stop
     endif
 fork again
-    :PMS is Medtech;
+    :PMS uses pull-based acquisition;
     repeat:Search for record in SDHR;
     if(ETL Complete\nPractice in whitelist) then (Yes)
         if(Record already in SDHR) then (Yes)
@@ -55,9 +55,6 @@ fork again
     endif
     repeat while (Holds record for (x) hours)
     detach
-' fork again
-'     :PMS is Indici;
-'     :Indici holds extract/load job;\
 
 
         @enduml

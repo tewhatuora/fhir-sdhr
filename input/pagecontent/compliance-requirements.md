@@ -1,42 +1,46 @@
-### Important information about Compliance requirements
+### Important information about compliance requirements
 
-#### Use cases & the two step accreditation process
+#### Scope and accreditation
 
-These compliance requirements are for data source systems integrating with the Shared Digital Health Record to share data. In the first instance this is limited to Practice Management Systems (PMS). They do not cover the compliance tests for systems (including PMSs) that use SDHR APIs to fetch and display data for a clinical user to view. Requirements for those systems are covered separately.
+These compliance requirements apply to data source systems that create or update information in SDHR. Initially, this scope is limited to PMS products.
 
-<img src="flow.png" width="100%"/>
+These requirements cover the system's role in sharing data with SDHR. A system that also retrieves and displays SDHR information to clinical users must separately meet the [compliance requirements for systems reading data](./compliance-requirements-reading.html). Systems that perform both roles are assessed against both sets of requirements.
 
-Fig 1: Applications are assessed separately for their compliance with requirements to share and view SDHR information.
+<img src="flow.png" width="100%" alt="Separate assessment pathways for systems sharing data with and reading data from SDHR"/>
+
+Fig 1: Applications that both share and read data are assessed separately for each role.
 
 #### Bulk acquisition design
 
-There are two designs for the initial bulk acquisition of historical data from a facility when it first is connected to SDHR. These are referred to as either the Push-based or the Pull-based;
+There are two designs for the initial bulk acquisition of historical data when a facility first connects to SDHR:
 
-- **Pull-based** is where SHDR performs and initial bulk data load for a facility on the behalf of an application
-- **Push-based** is where the application is in control of the request and uses a bulk API
+- **Pull-based**: SDHR performs the initial bulk data load for a facility on behalf of an application.
+- **Push-based**: The application controls the request and uses a bulk API.
 
-Each digital subscriber will only use one of these. If a requirement is intended to apply specifically to either Push-based or Pull-based, then this will be denoted in the requirements table. It is not intended that an application need comply with both designs.
+Each digital subscriber uses only one of these designs. Requirements that apply specifically to either push-based or pull-based acquisition are identified in the requirements table. An application is not expected to comply with both designs.
 
-There may be some requirements that are not appropriate for every application. In this situation, provide a **written statement** for why the requirement does apply and/or a justification for an alternative outcome.
+Some requirements may not apply to every application. In that situation, provide a **written statement** explaining why the requirement does not apply and, where relevant, justify the alternative outcome.
 
-<img src="components.png" width="100%"/>
+<img src="components.png" width="100%" alt="Components involved in acquiring source data for SDHR"/>
 
-Fig 2. Data acquisition solution components
+Fig 2: Data acquisition solution components.
 
-#### Types of Evidence
+#### Types of evidence
 
 For each requirement, please provide appropriate evidence as per the guidance below.
 
 <style>
-/* Styles for the "Types of Evidence" table */
+.joplin-table-wrapper {
+  overflow-x: auto;
+}
 .joplin-table-wrapper.evidence-table table {
   border-collapse: collapse;
   width: 100%;
-  table-layout: auto; /* allow columns to size to content */
+  table-layout: auto;
 }
 .joplin-table-wrapper.evidence-table th,
 .joplin-table-wrapper.evidence-table td {
-  border: 1px solid #4a5568; /* subtle gray border */
+  border: 1px solid #4a5568;
   padding: 8px;
   vertical-align: top;
   word-break: break-word;
@@ -47,62 +51,41 @@ For each requirement, please provide appropriate evidence as per the guidance be
   background-color: #008080;
   color: #ffffff;
 }
-
-/* Styles for the Compliance Requirements table */
-.joplin-table-wrapper.ssd-ref-table {
-  overflow-x: auto; /* prevent the table from overflowing the page, adds horizontal scroll only if needed */
-}
-.joplin-table-wrapper.ssd-ref-table table {
+.joplin-table-wrapper.compliance-ref-table table {
   border-collapse: collapse;
   width: 100%;
-  table-layout: auto; /* let browser auto-size columns, but respect width hints */
-  counter-reset: ssd-counter;
+  table-layout: auto;
 }
-
-/* border + basic cell styling */
-.joplin-table-wrapper.ssd-ref-table th,
-.joplin-table-wrapper.ssd-ref-table td {
+.joplin-table-wrapper.compliance-ref-table th,
+.joplin-table-wrapper.compliance-ref-table td {
   border: 1px solid #0e6655;
   padding: 8px;
   vertical-align: top;
-  /* word-break: break-word;       break long words/URLs */
-  overflow-wrap: break-word;     /* ensure text wraps instead of spilling out */
-  white-space: normal;         /* allow wrapping */
+  overflow-wrap: break-word;
+  white-space: normal;
 }
-
-/* teal header */
-.joplin-table-wrapper.ssd-ref-table thead th {
+.joplin-table-wrapper.compliance-ref-table thead th {
   background-color: #008080;
   color: #ffffff;
 }
-
-/* hide existing ordered-list marker in first column */
-.joplin-table-wrapper.ssd-ref-table td:first-child ol {
-  list-style: none;
+.joplin-table-wrapper.compliance-ref-table th:first-child,
+.joplin-table-wrapper.compliance-ref-table td:has(> .requirement-ref) {
+  width: 5.5rem;
+  min-width: 5.5rem;
+  white-space: nowrap;
+}
+.joplin-table-wrapper.compliance-ref-table .requirement-ref {
   margin: 0;
-  padding: 0;
-}
-
-/* Only increment the SSD counter for rows that contain the first-column ol. */
-.joplin-table-wrapper.ssd-ref-table tbody tr:has(td:first-child ol) {
-  counter-increment: ssd-counter;
-}
-
-/* Only render the auto-number on the first-column cell that actually contains the ol */
-.joplin-table-wrapper.ssd-ref-table td:first-child::before {
-  content: none;
-}
-.joplin-table-wrapper.ssd-ref-table td:first-child:has(ol)::before {
-  content: "SSD-" counter(ssd-counter);
   font-weight: 600;
   color: #0e6655;
-  display: inline-block;
-  margin-right: 0.5rem;
 }
-
-/* keep layout predictable when rows use rowspan/split cells */
-.joplin-table-wrapper.ssd-ref-table table td,
-.joplin-table-wrapper.ssd-ref-table table th {
+.joplin-table-wrapper.compliance-ref-table .category-row td {
+  background-color: #e6f4f1;
+  color: #0e6655;
+  font-weight: 600;
+}
+.joplin-table-wrapper.compliance-ref-table table td,
+.joplin-table-wrapper.compliance-ref-table table th {
   box-sizing: border-box;
 }
 </style>
@@ -112,7 +95,7 @@ For each requirement, please provide appropriate evidence as per the guidance be
         <thead>
             <tr>
                 <th>
-                    <p><strong>Types of Evidence</strong></p>
+                    <p><strong>Types of evidence</strong></p>
                 </th>
                 <th>
                     <p><strong>Guidance</strong></p>
@@ -122,17 +105,17 @@ For each requirement, please provide appropriate evidence as per the guidance be
         <tbody>
             <tr>
                 <td>
-                    <p><strong>HNZ test scenario</strong></p>
+                    <p><strong>Health NZ test scenario</strong></p>
                 </td>
                 <td>
-                    <p>A test scenario, and sample data, will be provided by an HNZ tester, run by vendor, and the
+                    <p>A test scenario, and sample data, will be provided by a Health NZ tester, run by vendor, and the
                         output will be provided. Please use the SDHR UAT environment to create the relevant test data to
                         complete each test.</p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p><strong>Design &amp; Test evidence from the Vendor</strong></p>
+                    <p><strong>Design and test evidence from the vendor</strong></p>
                 </td>
                 <td>
                     <p>Please provide suitable evidence of vendor design and testing, showing that the application meets
@@ -177,7 +160,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
 
 ### Compliance requirements
 
-<div class="joplin-table-wrapper ssd-ref-table">
+<div class="joplin-table-wrapper compliance-ref-table">
     <table>
         <thead>
             <tr>
@@ -197,23 +180,26 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p><strong>Mandatory</strong></p>
                 </th>
                 <th>
-                    <p><strong>Types of Evidence</strong></p>
+                    <p><strong>Types of evidence</strong></p>
                 </th>
             </tr>
         </thead>
         <tbody>
+            <tr class="category-row">
+                <td colspan="6">
+                    <p><strong>Access boundaries and integration safety</strong></p>
+                </td>
+            </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-1">SSD-1</p>
                 </td>
                 <td>
                     <p>The application<strong> </strong>does not implement the ability to browse or persist data from
                         SDHR that it does not already hold locally (this capability requires separate compliance
                         testing)</p>
                     <p></p>
-                    <p><strong>Please Note</strong>: HNZ expects to use monitoring-based controls to ensure that the
+                    <p><strong>Please note</strong>: Health NZ expects to use monitoring-based controls to ensure that the
                         applications that are only accredited for sharing data to SDHR are not accessing data for
                         reasons other than record management.</p>
                 </td>
@@ -233,9 +219,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-2">SSD-2</p>
                 </td>
                 <td>
                     <p>The application does not modify records in SDHR that it does not already hold locally (for
@@ -256,11 +240,14 @@ The SDHR team will assess your responses and discuss with you if any further cla
                         mastered at that practice</p>
                 </td>
             </tr>
+            <tr class="category-row">
+                <td colspan="6">
+                    <p><strong>Resilience and error handling</strong></p>
+                </td>
+            </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-3">SSD-3</p>
                 </td>
                 <td>
                     <p>The application adequately handles rate limits enforced by the SDHR API, and implements queuing,
@@ -282,9 +269,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td rowspan="3">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-4">SSD-4</p>
                 </td>
                 <td rowspan="3">
                     <p>The application adequately handles error codes and responses from the SDHR API</p>
@@ -325,7 +310,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <p>Information can be provided to HNZ on request to support diagnostics, including the
+                    <p>Information can be provided to Health NZ on request to support diagnostics, including the
                         x-correlation-id header</p>
                 </td>
                 <td>
@@ -337,9 +322,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td rowspan="2">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-5">SSD-5</p>
                 </td>
                 <td rowspan="2">
                     <p>The application ensures requests are delivered if a transient error message is received from the
@@ -368,7 +351,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <p>Information can be provided to HNZ on request to support diagnostics, including the
+                    <p>Information can be provided to Health NZ on request to support diagnostics, including the
                         x-correlation-id header</p>
                 </td>
                 <td>
@@ -380,9 +363,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-6">SSD-6</p>
                 </td>
                 <td>
                     <p>The application ensures that requests to create or update records are re-attempted as soon as
@@ -406,9 +387,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-7">SSD-7</p>
                 </td>
                 <td>
                     <p>The application ensures that requests to create or update records for a patient are re-attempted
@@ -433,9 +412,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-8">SSD-8</p>
                 </td>
                 <td>
                     <p>Where an application loads patient history and real time data concurrently, the application
@@ -457,9 +434,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-9">SSD-9</p>
                 </td>
                 <td>
                     <p>Where the application batches records for creation or updating in SDHR, the application ensures
@@ -480,17 +455,20 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Design and test output from vendor</p>
                 </td>
             </tr>
+            <tr class="category-row">
+                <td colspan="6">
+                    <p><strong>Identity and request context</strong></p>
+                </td>
+            </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-10">SSD-10</p>
                 </td>
                 <td>
                     <p>The application supports the user to correctly identify and associate the appropriate NHI for the
                         patient before information is sent to SDHR.</p>
                     <p></p>
-                    <p>Please note: HNZ have process controls to ensure practices are correctly using NHIs to identify
+                    <p>Please note: Health NZ has process controls to ensure practices are correctly using NHIs to identify
                         patients.</p>
                 </td>
                 <td>
@@ -515,16 +493,14 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-11">SSD-11</p>
                 </td>
                 <td>
                     <p>The application subscribes to the outcome of NHI linking operations and applies the results to
                         any applicable NHI held in the local patient record.</p>
                 </td>
                 <td>
-                    <p>The existing NHI on a patient record is linked to another NHI by HNZ (e.g. HNZ identify the
+                    <p>The existing NHI on a patient record is linked to another NHI by Health NZ (e.g. Health NZ identifies the
                         person has two NHI numbers).</p>
                 </td>
                 <td>
@@ -541,9 +517,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td rowspan="2">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-12">SSD-12</p>
                 </td>
                 <td rowspan="2">
                     <p>The application correctly specifies the system-context request header with appropriate values</p>
@@ -561,7 +535,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -572,14 +546,17 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Mandatory</p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
+                </td>
+            </tr>
+            <tr class="category-row">
+                <td colspan="6">
+                    <p><strong>Confidentiality and participation</strong></p>
                 </td>
             </tr>
             <tr>
                 <td rowspan="4">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-13">SSD-13</p>
                 </td>
                 <td rowspan="4">
                     <p>The application correctly manages <em>Condition</em> and <em>Observation</em> resources if they
@@ -598,7 +575,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -611,7 +588,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -627,7 +604,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -640,14 +617,12 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
                 <td rowspan="7">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-14">SSD-14</p>
                 </td>
                 <td rowspan="7">
                     <p>When accommodating<strong> Facility level participation</strong>, the application correctly
@@ -679,7 +654,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td rowspan="2">
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -705,7 +680,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                     <p></p>
                 </td>
             </tr>
@@ -721,7 +696,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                     <p></p>
                 </td>
             </tr>
@@ -735,7 +710,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Mandatory</p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -749,20 +724,18 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                     <p></p>
                 </td>
             </tr>
             <tr>
                 <td rowspan="3">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-15">SSD-15</p>
                 </td>
                 <td rowspan="3">
                     <p>When accommodating<strong> Global participation (opt out),</strong> the application correctly
                         handles patient non-participation choices, for patients who choose to opt out of SDHR entirely
-                        (via HNZ opt out channel)</p>
+                        (via Health NZ opt out channel)</p>
                 </td>
                 <td rowspan="3">
                     <p>A patient has chosen to not participate in SDHR data sharing at a national level</p>
@@ -778,7 +751,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -791,7 +764,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
@@ -804,23 +777,21 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p></p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-16">SSD-16</p>
                 </td>
                 <td>
                     <p>When accommodating<strong> Global participation (opt back in),</strong> the application has a
-                        mechanism to receive a notification from HNZ when a patient chooses to opt back into SDHR, to
+                        mechanism to receive a notification from Health NZ when a patient chooses to opt back into SDHR, to
                         initiate a bulk load of that patient’s information from their enrolled practice</p>
                 </td>
                 <td>
-                    <p>A patient who has previously chosen to opt-out via the HNZ opt out channel, chooses to opt back
-                        in again via HNZ.</p>
+                    <p>A patient who has previously chosen to opt-out via the Health NZ opt out channel, chooses to opt back
+                        in again via Health NZ.</p>
                 </td>
                 <td>
                     <p>The application implements an API endpoint to trigger a bulk historic load for an enrolled
@@ -835,19 +806,17 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Mandatory</p>
                 </td>
                 <td>
-                    <p>Test scenarios from HNZ tester run by vendor and output provided</p>
+                    <p>Test scenarios from a Health NZ tester run by vendor and output provided</p>
                 </td>
             </tr>
-            <tr>
+            <tr class="category-row">
                 <td colspan="6">
-                    <p><strong>Onboarding facilities and historic bulk load</strong></p>
+                    <p><strong>Facility onboarding and historical data load</strong></p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-17">SSD-17</p>
                 </td>
                 <td>
                     <p>The application does not send any information to SDHR until formal authorisation is received via
@@ -870,9 +839,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-18">SSD-18</p>
                 </td>
                 <td>
                     <p>The application supports sending a historic bulk load of information for only enrolled patients
@@ -894,9 +861,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-19">SSD-19</p>
                 </td>
                 <td>
                     <p>The application restricts the historic bulk load of information to only those patients that are
@@ -919,7 +884,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td rowspan="2">
-                    <p>SSD-19.1</p>
+                    <p class="requirement-ref" id="SSD-19.1">SSD-19.1</p>
                 </td>
                 <td rowspan="2">
                     <p>The application applies any existing opt-off setting recorded in the PMS for a patient to
@@ -950,9 +915,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-20">SSD-20</p>
                 </td>
                 <td>
                     <p>The application does not apply time limits for which local records are included in the historic
@@ -974,9 +937,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-21">SSD-21</p>
                 </td>
                 <td>
                     <p>The application excludes Condition and Observation resources marked as confidential from the
@@ -997,11 +958,14 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Design and test output from vendor</p>
                 </td>
             </tr>
+            <tr class="category-row">
+                <td colspan="6">
+                    <p><strong>Data submission and resource lifecycle</strong></p>
+                </td>
+            </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-22">SSD-22</p>
                 </td>
                 <td>
                     <p>The application ensures the correct HPI Facility ID is used in the meta.source attribute on each
@@ -1024,9 +988,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td rowspan="2">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-23">SSD-23</p>
                 </td>
                 <td rowspan="2">
                     <p>The application creates or updates records in SDHR as close to real-time as practical</p>
@@ -1063,9 +1025,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td rowspan="3">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-24">SSD-24</p>
                 </td>
                 <td rowspan="3">
                     <p>The application only sends records to SDHR if the patient has a valid and active NHI</p>
@@ -1121,9 +1081,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-25">SSD-25</p>
                 </td>
                 <td>
                     <p>The application ensures that if a patient NHI changes, all records in SDHR for that patient at
@@ -1147,9 +1105,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-26">SSD-26</p>
                 </td>
                 <td>
                     <p>The application ensures that if a practitioner HPI identifier changes, all records in SDHR for
@@ -1173,9 +1129,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td rowspan="3">
-                    <ol>
-                        <li><a id="_Ref208256530"></a></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-27">SSD-27</p>
                 </td>
                 <td rowspan="3">
                     <p>The application can create a new <em>Resource</em> in SDHR from a local record</p>
@@ -1217,9 +1171,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td rowspan="3">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-28">SSD-28</p>
                 </td>
                 <td rowspan="3">
                     <p>The application can update an existing SDHR <em>Resource</em> from a local record, including
@@ -1268,9 +1220,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td rowspan="2">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-29">SSD-29</p>
                 </td>
                 <td rowspan="2">
                     <p>The application retains the SDHR_ID provided by SDHR when a local record is created or updated.
@@ -1303,9 +1253,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-30">SSD-30</p>
                 </td>
                 <td>
                     <p>The application takes all practical steps to avoid creating system-generated duplicate records
@@ -1331,9 +1279,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-31">SSD-31</p>
                 </td>
                 <td>
                     <p>The application includes the SDHR_ID in exports of local records to another system (e.g. a
@@ -1356,9 +1302,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-32">SSD-32</p>
                 </td>
                 <td>
                     <p>The application uses the SDHR_ID, if present, to identify existing records that are imported from
@@ -1378,11 +1322,14 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Desing and Test output showing the SDHR ID is accepted</p>
                 </td>
             </tr>
+            <tr class="category-row">
+                <td colspan="6">
+                    <p><strong>Condition resources</strong></p>
+                </td>
+            </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-33">SSD-33</p>
                 </td>
                 <td>
                     <p>The application can create a new <em>Condition</em> resource in SDHR from a local record</p>
@@ -1402,9 +1349,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-34">SSD-34</p>
                 </td>
                 <td>
                     <p>The application can update an existing <em>Condition </em>resource and the resulting SDHR record
@@ -1431,9 +1376,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td rowspan="2">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-35">SSD-35</p>
                 </td>
                 <td rowspan="2">
                     <p>The application creates and updates active and inactive <em>Condition</em> resources in SDHR.</p>
@@ -1461,16 +1404,14 @@ The SDHR team will assess your responses and discuss with you if any further cla
                         updated</p>
                 </td>
             </tr>
-            <tr>
+            <tr class="category-row">
                 <td colspan="6">
-                    <p><strong>Observation Resources</strong></p>
+                    <p><strong>Observation resources</strong></p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-36">SSD-36</p>
                 </td>
                 <td>
                     <p>The application can create a new <em>Observation</em> resource in SDHR from a local record</p>
@@ -1490,9 +1431,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-37">SSD-37</p>
                 </td>
                 <td>
                     <p>The application can update an existing <em>Observation </em>resource and the resulting SDHR
@@ -1512,16 +1451,14 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Design and Test output from vendor</p>
                 </td>
             </tr>
-            <tr>
+            <tr class="category-row">
                 <td colspan="6">
-                    <p><strong>Allergies &amp; Intolerances Resources</strong></p>
+                    <p><strong>AllergyIntolerance resources</strong></p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-38">SSD-38</p>
                 </td>
                 <td>
                     <p>The application can create a new <em>AllergyIntolerance</em> resource in SDHR from a local record
@@ -1542,9 +1479,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td>
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-39">SSD-39</p>
                 </td>
                 <td>
                     <p>The application can update an existing <em>AllergyIntolerance </em>resource and the resulting
@@ -1566,9 +1501,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
             </tr>
             <tr>
                 <td rowspan="2">
-                    <ol>
-                        <li></li>
-                    </ol>
+                    <p class="requirement-ref" id="SSD-40">SSD-40</p>
                 </td>
                 <td rowspan="2">
                     <p>The application creates and updates active and inactive <em>AllergyIntolerance</em> resources in

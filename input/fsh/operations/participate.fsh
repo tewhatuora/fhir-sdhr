@@ -21,6 +21,9 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
+When `participationIndicator` is `false`, SDHR records the facility opt-out and archives the patient's active contributed resources from the supplied facility. Archived resources are not returned by normal search or read interactions.
+For an opt-in request using pull-based acquisition, the PMS may set `enrolledPatient` to `true` to indicate that the patient is enrolled at the supplied facility and that a historic load should be triggered. If `enrolledPatient` is omitted, the API updates consent without triggering a historic load.
+When a historic load is scheduled, the returned OperationOutcome includes the informational `sdhr-historic-load-scheduled` issue. This confirms scheduling, not successful completion. The issue is absent when no load is scheduled, including an unchanged repeated request. See [historic-load scheduling outcome](./OperationOutcome-OperationOutcomeParticipateLoadScheduled.html).
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 Usage: #definition
@@ -42,12 +45,12 @@ Usage: #definition
 
 * parameter[+].name = #participationIndicator
 * parameter[=].use = #in
-* parameter[=].min = 1
+* parameter[=].min = 0
 * parameter[=].max = "1"
 * parameter[=].type = #boolean
-* parameter[=].documentation = """Indicates global participation in the Shared Digital Health Record service (true/false)
+* parameter[=].documentation = """Indicates facility participation in the Shared Digital Health Record service (true/false).
 If false, the patient does not wish to participate in the service and their resources will not be shared.
-This parameter is mandatory when indicating global participation but is not required when indicating partial participation with withheld records (see `resourceType` and `localResourceId` parameters).
+This parameter is mandatory when indicating facility participation but is omitted when indicating a withheld or released record (see `resourceType`, `localResourceId`, and `reasonCode`).
 If an API consumer attempts to POST a record for a patient that has not opted in, the API will return an OperationOutcome with an error message indicating that the patient has not indicated their participation preferences.
 """
 
@@ -58,7 +61,7 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].type = #string
 * parameter[=].documentation = """The resource type that is being withheld. Must be a valid FHIR resource type supported by the SDHR service, such as `Condition`, `Observation` etc. Note that `AllergyIntolerance` resources MUST NOT be withheld.
     This parameter is optional and should only be used to specify the type of resource that is withheld from the Shared Digital Health Record service.
-    When this paramter is used the request MUST contain a `reasonCode` parameter and a `localResourceId` parameter."""
+    When this parameter is used the request MUST contain a `reasonCode` parameter and a `localResourceId` parameter."""
 
 * parameter[+].name = #facilityId
 * parameter[=].use = #in
@@ -69,6 +72,14 @@ If an API consumer attempts to POST a record for a patient that has not opted in
     This parameter is mandatory and must be provided to indicate the healthcare provider that is withholding the resource from the Shared Digital Health Record service.
     The HPI Facility ID must be a valid HPI Facility ID in the format `https://api.hip.digital.health.nz/fhir/hpi/v1/Location/{hpi-facility-id}`."""
 
+* parameter[+].name = #enrolledPatient
+* parameter[=].use = #in
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #boolean
+* parameter[=].documentation = """Optional for facility opt-in requests using pull-based acquisition. Set this to `true` when the patient is enrolled at the supplied facility and a historic load should be triggered.
+If omitted, the operation updates consent without triggering a historic load."""
+
 * parameter[+].name = #localResourceId
 * parameter[=].use = #in
 * parameter[=].min = 0
@@ -76,7 +87,7 @@ If an API consumer attempts to POST a record for a patient that has not opted in
 * parameter[=].type = #string
 * parameter[=].documentation = """The local resource ID that is withheld from the Shared Digital Health Record service.
     This parameter is optional and should only be used to specify the local ID of the resource that is withheld.
-    When this paramter is used the request MUST contain a `reasonCode` parameter and a `resourceType` parameter."""
+    When this parameter is used the request MUST contain a `reasonCode` parameter and a `resourceType` parameter."""
 
 * parameter[+].name = #reasonCode
 * parameter[=].use = #in

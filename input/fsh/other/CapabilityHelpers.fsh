@@ -4,7 +4,6 @@ RuleSet: GenericCRUDInteractions
 * interaction[+].code = #read
 //* interaction[+].code = #update
 //* interaction[+].code = #delete
-//* interaction[+].code = #vread
 * interaction[+].code = #search-type
 * versioning = #versioned
 * readHistory = false
@@ -47,29 +46,30 @@ RuleSet: APIStandardsDocumentation
   | **Context property**     | **Mandatory** | **Value**                                                                                                                          |
   |:-------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|
   | `userIdentifier`         | Yes         | The userid of the user as authenticated by the PMS/health application                                                                                   |
-  | `secondaryIdentifier`    | Yes         | The secondary identifier for the user - this **MUST** be the end users Common Person Number (aka HPI Practitioner identifier) of the practitioner using the application where available. Otherwise, any secondary identifier that is held for the user |
-  | `purposeOfUse`           | Yes         | One of [ "PATRQT", "TREAT", "ETREAT", "FAMRQT", "RECORDMGT" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                                 |
+  | `secondaryIdentifier`    | Yes         | The secondary identifier for the user. Must be a JSON object with: `use` (one of `usual`, `official`, `temp`, `secondary`, `old`), `system` (must be `https://standards.digital.health.nz/ns/hpi-person-id`), and a non-empty `value` |
+  | `purposeOfUse`           | Yes         | Exactly one of `[ "TREAT", "ETREAT" ]`. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                                 |
   | `userFullName`           | Yes         | Full name of the user of the PMS/health application.                                                                                                     |
-  | `userRole`               | Yes         | Role of the user of the PMS/health application. Set to `"PROV"` (Provider) or `"PAT"` (Patient)                                                         |
-  | `orgIdentifier`          | Yes         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
-  | `facilityIdentifier`     | Yes         | The HPI Facility identifier for the facility where the record is being sourced / accessed.                                                                                                |
+  | `userRole`               | Yes         | Role of the user of the PMS/health application. Set to `"PROV"` (Provider)                                                         |
+  | `orgIdentifier`          | Yes         | The HPI Organisation Number for the organisation in which the API consumer application is deployed. Must match the format `G[A-Z0-9]{5}-[A-Z]` (e.g. `G00001-G`)                     |
+  | `facilityIdentifier`     | Yes         | The HPI Facility identifier for the facility where the record is being sourced / accessed. Must match the format `F[A-Z0-9]{5}-[A-Z]` (e.g. `FZZ999-B`)                                                                                                |
 
   #### Requests with system context
   | **Context property**     | **Mandatory** | **Value**                                                                                                                          |
   |:-------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|
   | `userIdentifier`         | Yes         | The oAuth clientId of the system submitting data to the API                                                                                   |
-  | `purposeOfUse`           | Yes         | [ "RECORDMGT" ]. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                              |
+  | `secondaryIdentifier`    | No (forbidden) | Must not be included in system-context requests                                                                                   |
+  | `purposeOfUse`           | Yes         | Must be exactly `[ "RECORDMGT" ]`. For descriptions of the values, see [Audit Events](https://fhir-ig.digital.health.nz/auditevents/ValueSet-purposeofuse.html)                                                                              |
   | `userFullName`           | Yes         | Name of the PMS/health application.                                                                                                    |
   | `userRole`               | Yes         | Role of the PMS/health application. Set to `"110150"` (Application)                                                 |
-  | `orgIdentifier`          | Yes         | The HPI Organisation Number (aka HPI Organisation identifier) for the organisation in which the API consumer application is deployed                     |
-  | `facilityIdentifier`     | Yes         | HPI identifier for the facility where the user is located                                                                                                |
+  | `orgIdentifier`          | Yes         | The HPI Organisation Number for the organisation in which the API consumer application is deployed. Must match the format `G[A-Z0-9]{5}-[A-Z]` (e.g. `G00001-G`)                     |
+  | `facilityIdentifier`     | Yes         | The HPI Facility identifier for the facility. Must match the format `F[A-Z0-9]{5}-[A-Z]` (e.g. `FZZ999-B`)                                                                                                |
 
   A schema definition and examples for `Request-Context` can be [found here](https://github.com/tewhatuora/schemas/blob/main/json-schema/Request-Context.json)
 
   #### Example Request-Context Header Payload for a clinical user searching for a patient's Conditions
   **Base64 Encoded**
   ```
-  ewogICJ1c2VySWRlbnRpZmllciI6ICJwbXMtaWQtMTIzIiwKICAidXNlclJvbGUiOiAiUFJPViIsCiAgInNlY29uZGFyeUlkZW50aWZpZXIiOiB7CiAgICAidXNlIjogIm9mZmljaWFsIiwKICAgICJzeXN0ZW0iOiAiaHR0cHM6Ly9zdGFuZGFyZHMuZGlnaXRhbC5oZWFsdGgubnovbnMvaHBpLXBlcnNvbi1pZCIsCiAgICAidmFsdWUiOiAiOTlaWlpTIgogIH0sCiAgInB1cnBvc2VPZlVzZSI6IFsKICAgICJQT1BITFRIIgogIF0sCiAgInVzZXJGdWxsTmFtZSI6ICJCZXZlcmx5IENydXNoZXIiLAogICJvcmdJZGVudGlmaWVyIjogIkcwMDAwMS1HIiwKICAiZmFjaWxpdHlJZGVudGlmaWVyIjogIkZaWjk5OS1CIgp9
+  ewogICJ1c2VySWRlbnRpZmllciI6ICJwbXMtaWQtMTIzIiwKICAidXNlclJvbGUiOiAiUFJPViIsCiAgInNlY29uZGFyeUlkZW50aWZpZXIiOiB7CiAgICAidXNlIjogIm9mZmljaWFsIiwKICAgICJzeXN0ZW0iOiAiaHR0cHM6Ly9zdGFuZGFyZHMuZGlnaXRhbC5oZWFsdGgubnovbnMvaHBpLXBlcnNvbi1pZCIsCiAgICAidmFsdWUiOiAiOTlaWlpTIgogIH0sCiAgInB1cnBvc2VPZlVzZSI6IFsKICAgICJUUkVBVCIKICBdLAogICJ1c2VyRnVsbE5hbWUiOiAiQmV2ZXJseSBDcnVzaGVyIiwKICAib3JnSWRlbnRpZmllciI6ICJHMDAwMDEtRyIsCiAgImZhY2lsaXR5SWRlbnRpZmllciI6ICJGWlo5OTktQiIKfQ==
   ```
   **Decoded JSON**
   ```json
@@ -82,7 +82,7 @@ RuleSet: APIStandardsDocumentation
       "value": "99ZZZS"
     },
     "purposeOfUse": [
-      "POPHLTH"
+      "TREAT"
     ],
     "userFullName": "Beverly Crusher",
     "orgIdentifier": "G00001-G",
@@ -122,7 +122,7 @@ RuleSet: APIStandardsDocumentation
   |304|NOT MODIFIED       |Your client's cached version of the representation is still up to date|
   |400|BAD REQUEST        |Missing or bad `Request-Context` custom header; FHIR request payload does not validate against Implementation Guide|
   |401|UNAUTHORIZED       |The supplied credentials, if any, are not sufficient to access the resource|
-  |403|FORBIDDEN          |Insufficient privilege to access the requested FHIR resource/operation|
+  |403|FORBIDDEN          |Insufficient privilege or participation denial. See [global denial](./OperationOutcome-OperationOutcomeGlobalDenyExample.html) and [global denial due to patient-deceased opt-out](./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html).|
   |404|NOT FOUND          |The requested representation was not found. Retrying this request is unlikely to be successful|
   |429|TOO MANY REQUESTS  |Your application is sending too many simultaneous requests|
   |500|SERVER ERROR       |An internal server error prevented return of the representation response|
@@ -136,7 +136,7 @@ RuleSet: APIStandardsDocumentation
   |302|FOUND              |No |A common redirect response; you can GET the representation at the URI in the Location response header|
   |400|BAD REQUEST        |Yes|Missing or bad `Request-Context` custom header;<br>FHIR request payload does not validate against Implementation Guide|
   |401|UNAUTHORIZED       |Yes|The supplied credentials, if any, are not sufficient to access the resource|
-  |403|FORBIDDEN          |Yes|Insufficient privilege to access the requested FHIR resource/operation. See [OperationOutcome-APIError-Unauthorised](./OperationOutcome-APIError-Unauthorised.html)|
+  |403|FORBIDDEN          |Yes|Insufficient privilege or participation denial. See [OperationOutcome-APIError-Unauthorised](./OperationOutcome-APIError-Unauthorised.html), [global denial](./OperationOutcome-OperationOutcomeGlobalDenyExample.html), and [global denial due to patient-deceased opt-out](./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html).|
   |429|TOO MANY REQUESTS  |No |Your application is sending too many simultaneous requests|
   |500|SERVER ERROR       |No |An internal server error prevented return of the representation response|
   |503|SERVICE UNAVAILABLE|No |The server is temporarily unable to return the representation. Please wait and try again later|
@@ -150,6 +150,8 @@ RuleSet: APIStandardsDocumentation
   |400|BAD REQUEST        |Yes|Missing or bad `Request-Context` custom header;<br>FHIR request payload does not validate against Implementation Guide|
   |401|UNAUTHORIZED       |Yes|The supplied credentials, if any, are not sufficient to access the resource|
   |403|FORBIDDEN          |Yes|Insufficient privilege to access the requested FHIR resource/operation. See [OperationOutcome-APIError-Unauthorised](./OperationOutcome-APIError-Unauthorised.html)|
+  |404|NOT FOUND          |Yes|The update target does not exist. Updating a missing resource does not create it|
+  |409|CONFLICT           |Yes|A concurrent write or resource lock prevented the operation|
   |429|TOO MANY REQUESTS  |Yes |Your application is sending too many simultaneous requests|
   |500|SERVER ERROR       |Yes |An internal server error prevented return of the representation response|
   |503|SERVICE UNAVAILABLE|No |The server is temporarily unable to return the representation. Please wait and try again later|

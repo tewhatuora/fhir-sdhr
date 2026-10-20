@@ -14,7 +14,9 @@
 */
 RuleSet: ProfilePatient(property)
 * {property} 1..1
-* {property} only Reference(Patient)
+// `|*` is an IG Publisher directive: emit an unversioned targetProfile and mark
+// it for "latest" resolution, even if canonical pinning defaults change.
+* {property} only Reference(http://hl7.org/fhir/StructureDefinition/Patient|*)
 * {property}.reference ^short = "Must be an absolute URL reference to the patient on the NHI system. See constraints for details."
 * {property}.type = "Patient"
 * {property}.type 1..1
@@ -161,9 +163,9 @@ Severity: #error
 Expression: "entry.resource.descendants().where($this is Reference).reference.where(matches('(^|.*/)?Patient/[^/]+$')).exists() and entry.resource.descendants().where($this is Reference).reference.where(matches('(^|.*/)?Patient/[^/]+$')).distinct().count() = 1"
 
 Invariant: no-participation-ops
-Description: "Bundle entries MUST NOT invoke $participate or $hnz-participate."
+Description: "Bundle entries MUST NOT invoke $participate, $hnz-participate or $hnz-domain-participate."
 Severity: #error
-Expression: "entry.request.url.where($this.matches('[$](participate|hnz-participate)')).exists().not()"
+Expression: "entry.request.url.where($this.matches('[$](participate|hnz-participate|hnz-domain-participate)')).exists().not()"
 
 Invariant: value-or-dataabsentreason-required
 Description: "Observations must have a root or component value[x], or a root or component dataAbsentReason."

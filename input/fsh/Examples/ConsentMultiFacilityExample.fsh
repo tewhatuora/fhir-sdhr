@@ -1,6 +1,6 @@
 Instance: ConsentMultiFacilityExample
 InstanceOf: SDHRConsent
-Usage: #example
+Usage: #inline
 Description: "Consent example illustrating a patient stating participation preferences forsharing their information with SDHR at multiple facilities."
 
 * status = #active

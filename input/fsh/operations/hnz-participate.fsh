@@ -6,16 +6,24 @@ This operation should only be used by HNZ channels.
 
 Scenarios where this operation might be used include:
 - A patient has opted in to the Shared Digital Health Record service by contacting Health NZ via appropriate digital or assisted channels.
+- A linked group of patients has opted in to the Shared Digital Health Record service by contacting Health NZ via appropriate digital or assisted channels.
 - A patient chooses not to participate in the Shared Digital Health Record service and informs Health NZ of this choice via appropriate digital or assisted channels.
 
 For example payloads that might be used with this operation see:
-- [Parameters resource for total non-participation](./Parameters-ParametersHNZParticipateOptOut.html) : This example shows how to indicate that a patient does not wish to participate in the Shared Digital Health Record service (has opted out).
+- [Parameters resource for total non-participation (patient choice)](./Parameters-ParametersHNZParticipateOptOut.html) : This example shows a global opt-out using reason `patient-choice`.
+- [Parameters resource for total non-participation (patient deceased)](./Parameters-ParametersHNZParticipateOptOutDeceased.html) : This example shows a global opt-out using reason `patient-deceased`.
+- [Parameters resource for total non-participation (imported external consent)](./Parameters-ParametersHNZParticipateOptOutImportedExternalConsent.html) : This example shows a global opt-out using reason `imported-external-consent`.
 - [Parameters resource for participation](./Parameters-ParametersHNZParticipateOptIn.html) : This example shows how to indicate that a patient wishes to participate in the Shared Digital Health Record service.
+- [Parameters resource for linked group participation](./Parameters-ParametersHNZParticipateLinkedGroupOptIn.html) : This example shows how to indicate that all patients in a linked NHI group wish to participate in the Shared Digital Health Record service.
 
 To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$hnz-participate`).
 
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
-The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI.
+The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI. For a global opt-in request, one or more `patient` parameters may be supplied. Multiple `patient` parameters are only supported when all supplied NHIs are already linked in the same NHI group and the request supplies the complete linked group. Multiple `patient` parameters are not supported for global opt-out requests.
+When `hnzParticipationIndicator` is `false`, SDHR records the global opt-out reason (`hnzOptOutReasonCode`) and archives the patient's active contributed resources across all facilities. Archived resources are not returned by normal search or read interactions.
+When the recorded reason is `patient-deceased`, subsequent resource read or search requests rejected by the global consent check return HTTP 403 with the [deceased global-denial OperationOutcome](./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html): "Patient data is unavailable in the Shared Digital Health Record as they are deceased." This is not the response to a successful `$hnz-participate` request; see [global participation denial API behaviour](./api.html#global-participation-denial-api-behaviour).
+For a global opt-in request where the patient is enrolled with a provider, the request may include the enrolled provider `facilityId` and must then include `pmsIdentifier`. Sourcing from this facility requires the patient to be already opted in at that facility. If the facility preference is absent or opted out, global opt-in still succeeds without sourcing records, changing facility participation, or locking that facility. When sourcing is eligible, a historic load is scheduled only for pull-based acquisition. Other acquisition methods use an enrolment-data email instead. If `facilityId` is omitted, `pmsIdentifier` must also be omitted and no historic load is scheduled.
+When a historic load is scheduled, the returned OperationOutcome includes the informational `sdhr-historic-load-scheduled` issue. This confirms scheduling, not successful completion. The issue is absent when no load is scheduled, including an unchanged repeated request. See [historic-load scheduling outcome](./OperationOutcome-OperationOutcomeParticipateLoadScheduled.html).
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 Usage: #definition
@@ -31,9 +39,9 @@ Usage: #definition
 * parameter[0].name = #patient
 * parameter[=].use = #in
 * parameter[=].min = 1
-* parameter[=].max = "1"
+* parameter[=].max = "*"
 * parameter[=].type = #Reference
-* parameter[=].documentation = "Reference must be an NHI Patient URL with format https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZZZ1111 or ZZZ11AA"
+* parameter[=].documentation = "Reference must be an NHI Patient URL with format https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZZZ1111 or ZZZ11AA. For global opt-in, repeat this parameter to opt in the complete linked NHI group. For global opt-out, exactly one patient parameter is supported."
 
 * parameter[+].name = #hnzParticipationIndicator
 * parameter[=].use = #in
@@ -43,6 +51,34 @@ Usage: #definition
 * parameter[=].documentation = """Indicates global participation in the Shared Digital Health Record service (true/false)
 If false, the patient does not wish to participate in the service and their resources will not be shared.
 """
+
+* parameter[+].name = #hnzOptOutReasonCode
+* parameter[=].use = #in
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #code
+* parameter[=].binding.strength = #required
+* parameter[=].binding.valueSet = Canonical(SDHRHNZOptOutReasonValueSet)
+* parameter[=].documentation = """Required when hnzParticipationIndicator is false. Not supported when hnzParticipationIndicator is true.
+Allowed values:
+- `patient-choice`
+- `patient-deceased`
+- `imported-external-consent`
+"""
+
+* parameter[+].name = #facilityId
+* parameter[=].use = #in
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #Reference
+* parameter[=].documentation = "Optional for global opt-in. Reference must be an HPI Location URL for the enrolled provider, with format https://api.hip.digital.health.nz/fhir/hpi/v1/Location/FZZ999-B. If provided, pmsIdentifier is required. Records are sourced only when the patient is already opted in at this facility; otherwise global opt-in succeeds without a load. A historic load is scheduled only for Pull based acquisition. This operation never changes facility participation. Not supported for global opt-out."
+
+* parameter[+].name = #pmsIdentifier
+* parameter[=].use = #in
+* parameter[=].min = 0
+* parameter[=].max = "1"
+* parameter[=].type = #string
+* parameter[=].documentation = "Required when facilityId is provided, otherwise omitted. Supply the configured PMS identifier used to select the historic load method. Not supported for global opt-out."
 
 * parameter[+].name = #return
 * parameter[=].use = #out

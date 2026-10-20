@@ -2,7 +2,7 @@ Profile: SDHRConsent
 Parent: Consent
 Description: "Consent resource created to reflect a patient's preferences with regard to sharing their information with authorised health workers via the shared digital health record service.
             Note that this is a protected resource and scopes required to manage this resource are not provisioned to most API consumers.
-            A patient's participation preferences should be managed by the [Participate Operation](./OperationDefinition-SDHRParticipateOperation.html).
+            Facility participation preferences are managed by the [Participate Operation](./OperationDefinition-SDHRParticipateOperation.html). Health NZ channels manage global choices through [HNZ Participate](./OperationDefinition-SDHRHNZParticipateOperation.html) and independent domain choices through [HNZ Domain Participate](./OperationDefinition-SDHRHNZDomainParticipateOperation.html).
             For more details on the participate operation see [SDHR Custom Operations](./api.html#sdhr-custom-operations)."
 
 * status ^short = "The state of the Consent. This must be active to release data from the server"
@@ -27,9 +27,25 @@ Description: "Consent resource created to reflect a patient's preferences with r
 * provision.period.end ^short = "The date and time the Consent is considered to be expired"
 * provision.action 1..*
 * provision.action ^short = "The action that is being permitted or denied"
+* provision.extension contains HNZGlobalOptOutReasonExtension named HNZGlobalOptOutReasonExtension 0..1
+* provision.extension[HNZGlobalOptOutReasonExtension] ^short = "The reason for the HNZ global opt-off"
 // Add the extension at provision.provision
 * provision.provision.extension contains FacilityParticipationExtension named FacilityParticipationExtension 0..1
 * provision.provision.extension[FacilityParticipationExtension] ^short = "Indicates the patient has opted out of participation entirely at the facility"
 
 * scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 //* category = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
+
+// Independent domain choices. Absence permits; explicit permit records opt-back-in.
+* provision obeys sdhr-unique-domain
+* provision.provision ^slicing.discriminator.type = #value
+* provision.provision ^slicing.discriminator.path = "class.system"
+* provision.provision ^slicing.rules = #open
+* provision.provision contains domainParticipation 0..*
+* provision.provision[domainParticipation].class 1..1
+* provision.provision[domainParticipation].class.system = "https://fhir-ig.digital.health.nz/sdhr/CodeSystem/sdhr-domains"
+* provision.provision[domainParticipation].class from SDHRDomainValues (required)
+* provision.provision[domainParticipation].type 1..1
+* provision.provision[domainParticipation].actor 0..0
+* provision.provision[domainParticipation].data 0..0
+* provision.provision[domainParticipation].extension contains DomainParticipationLastUpdated named lastUpdated 1..1

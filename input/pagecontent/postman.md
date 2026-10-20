@@ -1,7 +1,7 @@
 ### Import the collection
 {: .underlined}
 
-Download the [UAT SDHR Postman collection](postman/UAT-SDHR.postman_collection.json) and [example environment](postman/UAT-SDHR-example.postman_environment.json), then import both files into Postman. Select **UAT SDHR Example** as the active environment and make a local copy for your own settings.
+Download the <a href="postman/UAT-SDHR.postman_collection.json" download="UAT-SDHR.postman_collection.json">UAT SDHR Postman collection</a> and <a href="postman/UAT-SDHR-example.postman_environment.json" download="UAT-SDHR-example.postman_environment.json">example environment</a>, then import both files into Postman. Select **UAT SDHR Example** as the active environment and make a local copy for your own settings.
 
 The collection contains 73 requests based on the SDHR Bruno collection: resource reads and searches, contribution examples, participation operations, audit event verification, and ordered workflows. Version reads (`vread`, with `/_history/{version}` in the URL) are excluded from this collection for now.
 

@@ -75,6 +75,14 @@ System_Boundary(HNZ,"Health NZ | Te Whatu Ora") {
                 Observation
                 methods(GET, POST, PUT)
               }
+              interface "SDHR MedicationRequest FHIR API" as sdhrmedicationrequestapi {
+                MedicationRequest
+                methods(GET)
+              }
+              interface "SDHR MedicationDispense FHIR API" as sdhrmedicationdispenseapi {
+                MedicationDispense
+                methods(GET)
+              }
               interface "SDHR AllergyIntolerance FHIR API" as sdhrallergyintolleranceapi {
                 AllergyIntolerance
                 methods(GET, POST, PUT)
@@ -87,9 +95,10 @@ System_Boundary(HNZ,"Health NZ | Te Whatu Ora") {
             Immunization
             methods(GET, POST, PUT)
         }
-        interface "Medicine Data Repository FHIR API" as mdr {
-            Medication
-            methods(GET, POST, PUT)
+        interface "Medicines Data Repository FHIR API" as mdr {
+            MedicationRequest
+            MedicationDispense
+            methods(GET)
         }
         interface "Medical Warning System FHIR API" as mws {
             Alert
@@ -115,6 +124,8 @@ APIConsumers --> FHIRAPIs
 APIConsumers --> NationalFHIRAPIs
 pco --> FHIRAPIs
 pco --> NationalFHIRAPIs
+sdhrmedicationrequestapi --> mdr : GET prescriptions
+sdhrmedicationdispenseapi --> mdr : GET dispenses
 
 
 

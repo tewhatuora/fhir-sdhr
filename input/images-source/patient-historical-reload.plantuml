@@ -47,7 +47,7 @@ alt Patient opts back in at facility
       - patient: Patient ID (NHI)
       - facilityId: Facility ID (HPI FacilityID)
       - participationIndicator: true
-      - enrolledPatient: true (Medtech only, when enrolled)
+      - enrolledPatient: true (pull-based acquisition, when enrolled)
     end note
     PARTICIPATE -> FHIRAPI : Write Participation
     FHIRAPI -> SDHR : Persist

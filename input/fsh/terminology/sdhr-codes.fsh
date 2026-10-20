@@ -56,3 +56,18 @@ Description: "This code system defines the result codes used when a data viewer 
 * ^publisher = "Health NZ | Te Whatu Ora"
 * #validated "Validated" "The data viewer application has confirmed the sampled AuditEvent is valid."
 * #validation-failed "Validation failed" "The data viewer application has determined the sampled AuditEvent failed verification."
+
+CodeSystem: SDHRVerificationSubmissionStatus
+Id: sdhr-verification-submission-status
+Title: "SDHR Verification Submission Status Codes"
+Description: "Status codes returned for individual AuditEvent verification submissions."
+* ^status = #draft
+* ^experimental = false
+* ^publisher = "Health NZ | Te Whatu Ora"
+* ^caseSensitive = true
+* ^content = #complete
+* #processed "Processed" "Decision saved."
+* #not-found "Not found" "No local sample is available to the authenticated client."
+* #already-processed "Already processed" "The sample decision was already processed; the saved decision is unchanged."
+* #invalid "Invalid" "Reference or result is missing or invalid."
+* #error "Error" "An unexpected persistence failure prevented processing this item."

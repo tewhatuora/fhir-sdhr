@@ -121,7 +121,7 @@ The detailed structure, validation rules, and technical implementation of reques
 #### Response and error handling
 
 - A successful search returns a FHIR `Bundle`; a successful read or vread returns the requested resource.
-- A successful `$participation-status` request returns a FHIR `Parameters` resource containing the patient reference and `hnzParticipationIndicator`.
+- A successful `$participation-status` request returns a FHIR `Parameters` resource containing only `hnzParticipationIndicator`. A patient with no recorded global preference returns `true`.
 - If `hnzParticipationIndicator` is `false`, the SEHR must treat the patient as globally opted out and indicate this to the end user.
 - An empty result may mean that SDHR has no matching information available to the requester. It must not be presented as proof that the clinical information does not exist.
 - Patient identity should be established using local or authoritative identity services. Patient names returned with SDHR information should not be treated as the authoritative source of patient identity.
@@ -177,6 +177,8 @@ The access-verification workflow is draft and subject to change.
 8. The SEHR repeats the verification workflow so newly sampled access events continue to be reviewed.
 
 Access verification is a required assurance activity for systems accessing SDHR information. Accessing systems are expected to periodically retrieve sampled access events, assess whether the access was appropriate, and submit verification outcomes back to SDHR.
+
+SDHR requests a sample for each eligible system from the preceding 24-hour window. Several `agent` entries are provided: the application agent identifies the requesting client UUID, the separate healthworker agent identifies the clinician by HPI person identifier, and an organisation agent may also be present. The verifying system then checks the clinician identity and patient NHI to assess whether that clinician had a valid reason to access that patient’s information. Sampling runs independently of retrieval requests. Successful retrieval requests always return a searchset `Bundle`, including an empty Bundle when no samples are pending.
 
 This process supports ongoing monitoring, auditing, and assurance activities.
 

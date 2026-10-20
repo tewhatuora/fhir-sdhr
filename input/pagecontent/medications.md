@@ -14,6 +14,18 @@ This domain provides a clinically focused, longitudinal view of prescribed and d
 > - [Resource interactions](./api.html#resource-interaction-catalogue)
 > - [FHIR artifact catalogue](./artifacts.html)
 
+### MDR response translation
+{: .underlined}
+
+SDHR narrows MDR MedicationRequest and MedicationDispense responses to the clinical subset defined by the medication profiles. This applies to reads, versioned reads and search entries.
+
+- Business identifiers use `https://standards.digital.health.nz/ns/nzeps-scid-item-id`; GTIN and other identifier systems are excluded.
+- Request extensions are limited to long-term medication, instructions-modified, medication-modified and the optional NZePS item status. Dispenses retain the instructions-modified and medication-modified flags.
+- Narrative, contained resources, private notes and fields outside the clinical subset are omitted. Dosage instructions retain patient instructions and route; request supply details retain quantity, repeats and expiry date.
+- Relative and absolute MDR Patient references containing an NHI are normalized to `https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/{NHI}`, with an uppercase NHI and `subject.type` set to `Patient`. Patient display text is omitted.
+- Both dispense dates are retained. Consumers should use `whenHandedOver` when available and otherwise `whenPrepared`.
+- Search links and medication entry URLs point to SDHR. Bundle redaction metadata and OperationOutcome entries are preserved.
+
 ### Clinical description
 {: .underlined}
 
@@ -54,6 +66,57 @@ Medication Dispenses represent medicines supplied. They are a stronger indicator
 - Medication information can reveal sensitive details relating to mental health, oncology, infectious disease, reproductive health, pain management, or substance dependence.
 - Inappropriate access, disclosure, or interpretation may contribute to stigma or bias and affect patient trust.
 - Access must be auditable and meet the [compliance requirements for systems reading data](./compliance-requirements-reading.html).
+
+### Search and paging behaviour
+{: .underlined}
+
+Medication searches require `patient`. Supply a valid NHI, `Patient/{NHI}`, or an absolute reference under `https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/`. Comma-separated patient values are accepted; repeated patient parameters are rejected.
+
+| Parameter | Supported behaviour |
+| --- | --- |
+| `identifier` | Prescription-item business identifier, forwarded unchanged to MDR. See [medication resource IDs](./data-overview.html#medication-resource-ids). |
+| `code` | Medication code, forwarded unchanged to MDR for matching. |
+| `location` | Facility search value, forwarded unchanged to MDR for matching. |
+| `status` | Restricted to the visible statuses described below. |
+| `authoredon` | MedicationRequest prescription date filter. |
+| `whenprepared`, `whenhandedover` | MedicationDispense date filters. |
+| `_sort` | One date field: `authoredon` for requests; `whenprepared` or `whenhandedover` for dispenses. Prefix with `-` for descending order. |
+| `_count` | Integer from 0 to 1000. `_count=0` returns `Bundle.total` without medication entries. Other medication search responses omit `Bundle.total`. |
+| `_include` | Required for dispense searches, with value `MedicationDispense:prescription`. |
+| `_revinclude` | Required for request searches, with value `MedicationDispense:prescription`. |
+| `ct` | Continuation token supplied through a returned paging link. |
+
+Unsupported parameters, including `_lastUpdated`, and empty parameter values return HTTP 400. Missing required include parameters, unsupported include values and invalid `_sort` values also return HTTP 400. Sort values must name one supported date field for the resource type; repeated or comma-separated sort fields are rejected. Identifier, medication-code and facility matching are performed by MDR; SDHR does not reinterpret these values. Date matching is also performed by MDR.
+
+Use repeated date parameters to express a range, for example:
+
+- `GET /MedicationRequest?patient=ZZZ9994&_revinclude=MedicationDispense:prescription&authoredon=ge2024-01-01&authoredon=le2026-12-31`
+- `GET /MedicationDispense?patient=ZZZ9994&_include=MedicationDispense:prescription&whenprepared=ge2024-01-01&whenprepared=le2026-12-31`
+
+Here `ge` includes dates on or after the lower bound, and `le` includes dates on or before the upper bound. For an identifier, code or facility search, supply the corresponding MDR search value, for example `GET /MedicationRequest?patient=ZZZ9994&_revinclude=MedicationDispense:prescription&identifier={prescription-item-identifier}`. Replace the placeholder with the actual identifier and URL-encode the query value.
+
+Request searches default to `_sort=-authoredon` and statuses `active`, `on-hold`, `completed` and `stopped`. Dispense searches default to `_sort=-whenprepared` and status `completed`. A supplied status filter is intersected with these sets; if no permitted status remains, the result is empty. SDHR also removes returned requests whose FHIR `status` is outside these four permitted statuses, and non-completed dispenses. These status exclusions apply to searches; direct reads and version reads apply projection and consent checks but do not apply this search filter.
+
+MedicationRequest.status is retained as supplied by MDR and is the value used for status filtering. SDHR also returns the optional `http://hl7.org.nz/fhir/StructureDefinition/nzeps-item-status` extension separately. Its value normally matches the standard status; for active prescriptions it may give a sub-status indicating whether repeats remain. SEHRs may use this additional detail to display a repeats-remaining flag. It does not replace or override the standard status.
+
+Callers must supply `_include=MedicationDispense:prescription` for dispense searches and `_revinclude=MedicationDispense:prescription` for request searches. This ensures that prescriptions and dispenses are assessed together for confidentiality and facility opt-outs. Consumers must distinguish matching entries from included resources using `entry.search.mode`.
+
+Follow the returned Bundle paging links, which use SDHR URLs and retain the patient search context needed for consent checks; treat continuation tokens as opaque. Filtering occurs within each MDR page. SDHR does not retrieve replacement records to fill a short page. An empty page does not establish that later pages contain no visible records. Medication search responses omit `Bundle.total` unless `_count=0` is requested. For `_count=0`, `Bundle.total` is the total number of query matches, not a page size. Do not infer the total from page length.
+
+### Privacy response behaviour
+{: .underlined}
+
+Global SDHR participation checks apply across linked NHIs. Medication [domain participation](./consent-based-access.html#domain-participation) covers MedicationRequest and MedicationDispense together; a medication-domain opt-out denies access to both resource types. Medication resources labelled `R` or `V`, or belonging to a patient outside the linked patient group, are withheld. Facility opt-outs are checked against the prescription's `supportingInformation` location references. When any facility opt-out applies, prescriptions without usable facility information are also withheld.
+
+Prescriptions and dispenses are assessed together. A withheld prescription causes linked dispenses to be withheld. A confidential or otherwise disallowed dispense can also cause its linked prescription to be withheld. When facility opt-outs exist, a dispense is withheld if its prescription references cannot be resolved to suitable prescriptions in the search Bundle.
+
+Medication reads first retrieve the requested resource to identify its patient and check consent across linked NHIs. When a facility opt-out exists anywhere in that linked group, SDHR also obtains the related medication resources needed for privacy checks. For an unversioned read, SDHR performs an internal MDR search by resource ID with the appropriate include or revinclude, assesses prescriptions and dispenses together, and returns only the permitted target resource. An incomplete or source-redacted relationship response cannot establish permission and access is denied. When no facility opt-out exists in the linked group, SDHR applies consent and confidentiality checks directly to the read resource without retrieving related resources.
+
+Versioned reads retain the requested historical resource for consent checks and the response. A versioned dispense read resolves the prescriptions referenced by that historical dispense separately; a versioned request read uses related dispenses from an internal MDR search while retaining the historical prescription as the target. These additional checks apply when a facility opt-out exists in the linked group. Callers do not supply include or revinclude parameters for reads or versioned reads; the mandatory include parameters above apply to searches.
+
+Whenever any facility opt-out exists for the patient or a linked NHI, medication searches include the [records-withheld-at-source OperationOutcome](./OperationOutcome-OperationOutcomeMedicationFacilityOptOut.html), even if no medication entries were removed or the search has no medication matches. This warning indicates that the history may be incomplete. It does not establish that this particular page had records removed.
+
+When SDHR removes entries for medication privacy, the search response remains HTTP 200, carries `Bundle.meta.security` code `REDACTED`, and includes an informational `OperationOutcome` entry with issue code `suppressed`. Consumers should show that information was withheld, rather than treating the result as a complete medication history. Direct reads denied by consent return HTTP 403.
 
 ### Clinical safety considerations
 {: .underlined}

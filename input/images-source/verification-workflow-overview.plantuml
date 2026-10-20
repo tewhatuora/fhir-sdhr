@@ -30,6 +30,7 @@ scale max 260 width
 actor "Health Practitioner" as USER
 participant "SEHR" as APP #Orange
 control "SDHR FHIR API" as FHIRAPI #LightBlue
+control "SDHR Sampler" as SAMPLER #LightBlue
 
 == Record access ==
 
@@ -41,12 +42,16 @@ FHIRAPI -> FHIRAPI : Record access event
 FHIRAPI --> APP : Return FHIR response or error outcome
 APP -> APP : Correlate response with local audit record
 
+== Sample access records independently ==
+
+SAMPLER -> SAMPLER : Sample access events for eligible systems
+
 == Verify sampled access records ==
 
 loop Ongoing access verification
     APP -> FHIRAPI : GET /AuditEvent/$verification-samples
     FHIRAPI -> FHIRAPI : Identify eligible outstanding samples
-    FHIRAPI --> APP : Bundle of sampled AuditEvent resources
+    FHIRAPI --> APP : Searchset Bundle of sampled AuditEvent resources\nEmpty when no samples are pending
     APP -> APP : Review each sample using an\nautomated or manual process
     APP -> FHIRAPI : POST /AuditEvent/$verification-submissions\nParameters with verification decisions
     FHIRAPI --> APP : Parameters with processing results

@@ -45,7 +45,8 @@ To make a request to this operation the API Consumer must POST a `Parameters` pa
 The operation is idempotent, meaning that multiple requests with the same parameters will have the same effect as a single request.
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
 When `participationIndicator` is `false`, SDHR records the facility opt-out and archives the patient's active contributed resources from the supplied facility. Archived resources are not returned by normal search or read interactions.
-For an opt-in request, a Medtech PMS may set `enrolledPatient` to `true` to indicate that the patient is enrolled at the supplied facility and that a historic load should be triggered. If `enrolledPatient` is omitted, the API treats the caller as non-Medtech or unknown and updates consent without triggering a historic load.
+For an opt-in request using pull-based acquisition, the PMS may set `enrolledPatient` to `true` to indicate that the patient is enrolled at the supplied facility and that a historic load should be triggered. If `enrolledPatient` is omitted, the API updates consent without triggering a historic load.
+When a historic load is scheduled, the returned OperationOutcome includes the informational `sdhr-historic-load-scheduled` issue. This confirms scheduling, not successful completion. The issue is absent when no load is scheduled, including an unchanged repeated request. See [historic-load scheduling outcome](./OperationOutcome-OperationOutcomeParticipateLoadScheduled.html).
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 // HNZ participate operation
@@ -73,7 +74,8 @@ The operation is idempotent, meaning that multiple requests with the same parame
 The operation is expected to be called by a Health NZ channel system on behalf of the patient, and the patient must be identified by their NHI. For a global opt-in request, one or more `patient` parameters may be supplied. Multiple `patient` parameters are only supported when all supplied NHIs are already linked in the same NHI group and the request supplies the complete linked group. Multiple `patient` parameters are not supported for global opt-out requests.
 When `hnzParticipationIndicator` is `false`, SDHR requires `hnzOptOutReasonCode`, records the global opt-out reason, and archives the patient's active contributed resources across all facilities. Archived resources are not returned by normal search or read interactions.
 When the recorded reason is `patient-deceased`, subsequent resource read or search requests rejected by the global consent check return HTTP 403 with the [deceased global-denial OperationOutcome](./OperationOutcome-OperationOutcomeGlobalDenyDeceasedExample.html): "Patient data is unavailable in the Shared Digital Health Record as they are deceased." This is not the response to a successful `$hnz-participate` request; see [global participation denial API behaviour](./api.html#global-participation-denial-api-behaviour).
-For a global opt-in request where the patient is enrolled with a provider, the request may include the enrolled provider `facilityId` and must include `pmsIdentifier`. If `facilityId` is not provided, `pmsIdentifier` must not be provided and the operation updates consent without triggering a historic load.
+For a global opt-in request where the patient is enrolled with a provider, the request may include the enrolled provider `facilityId` and must then include `pmsIdentifier`. Sourcing from this facility requires the patient to be already opted in at that facility. If the facility preference is absent or opted out, global opt-in still succeeds without sourcing records, changing facility participation, or locking that facility. When sourcing is eligible, a historic load is scheduled only for pull-based acquisition. Other acquisition methods use an enrolment-data email instead. If `facilityId` is omitted, `pmsIdentifier` must also be omitted and no historic load is scheduled.
+When a historic load is scheduled, the returned OperationOutcome includes the informational `sdhr-historic-load-scheduled` issue. This confirms scheduling, not successful completion. The issue is absent when no load is scheduled, including an unchanged repeated request. See [historic-load scheduling outcome](./OperationOutcome-OperationOutcomeParticipateLoadScheduled.html).
 The operation will return an OperationOutcome resource indicating the result of the operation.
 """
 
@@ -115,7 +117,8 @@ For an example response payload for this operation see:
 To make a request to this operation the API Consumer must POST a `Parameters` payload to the operation URL (e.g. `POST https://api.sdhr.digital.health.nz/s2s/$participation-status`).
 
 The operation is expected to be called by a healthcare provider on behalf of the patient, and the patient must be identified by their NHI.
-The operation will return a `Parameters` resource containing the patient reference and participation status indicators.
+This operation requires the SMART on FHIR scope `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRParticipationStatusOperation`.
+The operation returns a `Parameters` resource containing only `hnzParticipationIndicator`. A patient with no recorded global participation preference is considered to be participating and returns `true`.
 """
 
 * rest.security.cors = true
@@ -271,7 +274,7 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].documentation = "AuditEvent supports DRAFT custom operations for data viewer application verification workflows."
 * rest.resource[=].operation[+].name = "verification-samples"
 * rest.resource[=].operation[=].definition = Canonical(SDHRVerificationSamplesOperation)
-* rest.resource[=].operation[=].documentation = "DRAFT OPERATION: Returns sampled AuditEvent resources that are still outstanding for verification by the authenticated data viewer application. Supports optional `_count` and `_offset` query parameters for paging."
+* rest.resource[=].operation[=].documentation = "Returns sampled AuditEvent resources that are still outstanding for verification by the authenticated data viewer application. Successful requests return a searchset Bundle, which may be empty. Supports optional `_count` and `_getpagesoffset` query parameters for paging. Generic AuditEvent interactions are not supported."
 * rest.resource[=].operation[+].name = "verification-submissions"
 * rest.resource[=].operation[=].definition = Canonical(SDHRVerificationSubmissionsOperation)
 * rest.resource[=].operation[=].documentation = "DRAFT OPERATION: Accepts a Parameters payload containing one or more verification decisions for sampled AuditEvent resources."
@@ -426,10 +429,9 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].extension[=].extension[=].valueCode = #SHALL
 * rest.resource[=].extension[=].extension[+].url = "required"
 * rest.resource[=].extension[=].extension[=].valueString = "patient"
-// Only the search parameters below are accepted. Any other parameter, modifier
+// Only the search parameters and modifiers described below are accepted. Any other parameter, modifier
 // or date comparator is rejected with a 400 OperationOutcome (it is not silently
-// ignored). target-disease, status and status-reason are applied by AIR; date,
-// location and vaccine-code are applied by SDHR over the AIR result set.
+// ignored).
 * rest.resource[=].searchParam[+].name = "patient"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-patient"
 * rest.resource[=].searchParam[=].type = #reference
@@ -437,27 +439,34 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[+].name = "date"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-date"
 * rest.resource[=].searchParam[=].type = #date
-* rest.resource[=].searchParam[=].documentation = "Vaccination (occurrence) date. Comparators eq, ge, gt, le, lt are supported; two `date` parameters may be combined for a range. Applied by SDHR."
+* rest.resource[=].searchParam[=].documentation = "Vaccination (occurrence) date. Comparators eq, ge, gt, le, lt are supported; two `date` parameters may be combined for a range."
 * rest.resource[=].searchParam[+].name = "location"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-location"
 * rest.resource[=].searchParam[=].type = #reference
-* rest.resource[=].searchParam[=].documentation = "Facility (HPI) where the vaccination was administered. Applied by SDHR."
+* rest.resource[=].searchParam[=].documentation = "Facility (HPI) where the vaccination was administered."
 * rest.resource[=].searchParam[+].name = "vaccine-code"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-vaccine-code"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Vaccine product administered. Supports `system|code` or bare `code`, and the `:text` modifier for name search. Applied by SDHR."
+* rest.resource[=].searchParam[=].documentation = "Vaccine product administered. Supports `system|code` or bare `code`, and the `:text` modifier for name search."
 * rest.resource[=].searchParam[+].name = "target-disease"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-target-disease"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Disease targeted by the vaccination (protocolApplied.targetDisease, SNOMED). Applied by AIR."
+* rest.resource[=].searchParam[=].documentation = "Disease targeted by the vaccination (protocolApplied.targetDisease, SNOMED)."
 * rest.resource[=].searchParam[+].name = "status"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-status"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Immunisation event status. Applied by AIR. Records with status `entered-in-error` are never returned."
+* rest.resource[=].searchParam[=].documentation = "Immunisation event status. Records with status `entered-in-error` are excluded from search results."
 * rest.resource[=].searchParam[+].name = "status-reason"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Immunization-status-reason"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Reason a vaccination was not administered. Applied by AIR."
+* rest.resource[=].searchParam[=].documentation = "Reason a vaccination was not administered."
+
+* rest.resource[=].searchParam[+].name = "product"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Administered product from the AIR administered-product extension, distinct from vaccine-code. Supports system|code or bare code, and :text for case-insensitive substring matching against text or coding display."
+* rest.resource[=].searchParam[+].name = "_sort"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "Sort by occurrence date: date for ascending or -date for descending. Default: -date."
 
 // MedicationRequest
 * rest.resource[+].type = #MedicationRequest
@@ -477,15 +486,33 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[+].name = "identifier"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
+* rest.resource[=].searchParam[=].documentation = "NZePS prescription-item business identifier (SCID plus item sequence number). Dispenses for the same prescription item share this identifier; it is distinct from the MDR dispense resource id."
 * rest.resource[=].searchParam[+].name = "status"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-status"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Status of the prescription."
-* rest.resource[=].searchParam[+].name = "_lastUpdated"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
+* rest.resource[=].searchParam[=].documentation = "Status filter, limited to active, on-hold, completed and stopped. If no permitted status remains, the result is empty."
+* rest.resource[=].searchParam[+].name = "code"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Medication code, forwarded unchanged to MDR for matching."
+* rest.resource[=].searchParam[+].name = "location"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "Facility search value, forwarded unchanged to MDR for matching."
+* rest.resource[=].searchParam[+].name = "_count"
+* rest.resource[=].searchParam[=].type = #number
+* rest.resource[=].searchParam[=].documentation = "Integer from 0 to 1000. With _count=0, the response contains Bundle.total and no medication entries. Otherwise Bundle.total is omitted."
+* rest.resource[=].searchParam[+].name = "ct"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "Continuation token returned in the next-page URL in Bundle.link. Request that URL to retrieve the next page; it includes ct and the search parameters."
+* rest.resource[=].searchParam[+].name = "authoredon"
 * rest.resource[=].searchParam[=].type = #date
-* rest.resource[=].searchParam[=].documentation = "When the resource version last changed."
+* rest.resource[=].searchParam[=].documentation = "Prescription date filter."
+* rest.resource[=].searchParam[+].name = "_sort"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "Sort by authoredon or -authoredon. Default: -authoredon. Invalid values, repeated parameters and multiple sort fields return HTTP 400."
+* rest.resource[=].searchRevInclude = "MedicationDispense:prescription"
+* rest.resource[=].searchParam[+].name = "_revinclude"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n Supply MedicationDispense:prescription so prescriptions and dispenses can be assessed together for confidentiality and facility opt-outs. Missing or unsupported values return HTTP 400."
 
 // MedicationDispense
 * rest.resource[+].type = #MedicationDispense
@@ -505,12 +532,33 @@ The operation will return a `Parameters` resource containing the patient referen
 * rest.resource[=].searchParam[+].name = "identifier"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/clinical-identifier"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "A unique identifier assigned to this resource."
+* rest.resource[=].searchParam[=].documentation = "NZePS prescription-item business identifier (SCID plus item sequence number). Dispenses for the same prescription item share this identifier; it is distinct from the MDR dispense resource id."
 * rest.resource[=].searchParam[+].name = "status"
 * rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/medications-status"
 * rest.resource[=].searchParam[=].type = #token
-* rest.resource[=].searchParam[=].documentation = "Status of the dispense."
-* rest.resource[=].searchParam[+].name = "_lastUpdated"
-* rest.resource[=].searchParam[=].definition = "http://hl7.org/fhir/SearchParameter/Resource-lastUpdated"
+* rest.resource[=].searchParam[=].documentation = "Status filter, limited to completed. If no permitted status remains, the result is empty."
+* rest.resource[=].searchParam[+].name = "code"
+* rest.resource[=].searchParam[=].type = #token
+* rest.resource[=].searchParam[=].documentation = "Medication code, forwarded unchanged to MDR for matching."
+* rest.resource[=].searchParam[+].name = "location"
+* rest.resource[=].searchParam[=].type = #reference
+* rest.resource[=].searchParam[=].documentation = "Facility search value, forwarded unchanged to MDR for matching."
+* rest.resource[=].searchParam[+].name = "_count"
+* rest.resource[=].searchParam[=].type = #number
+* rest.resource[=].searchParam[=].documentation = "Integer from 0 to 1000. With _count=0, the response contains Bundle.total and no medication entries. Otherwise Bundle.total is omitted."
+* rest.resource[=].searchParam[+].name = "ct"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "Continuation token returned in the next-page URL in Bundle.link. Request that URL to retrieve the next page; it includes ct and the search parameters."
+* rest.resource[=].searchParam[+].name = "whenprepared"
 * rest.resource[=].searchParam[=].type = #date
-* rest.resource[=].searchParam[=].documentation = "When the resource version last changed."
+* rest.resource[=].searchParam[=].documentation = "Dispense preparation date filter."
+* rest.resource[=].searchParam[+].name = "whenhandedover"
+* rest.resource[=].searchParam[=].type = #date
+* rest.resource[=].searchParam[=].documentation = "Dispense handover date filter."
+* rest.resource[=].searchParam[+].name = "_sort"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "Sort by whenprepared or whenhandedover, optionally prefixed with - for descending order. Default: -whenprepared. Invalid values, repeated parameters and multiple sort fields return HTTP 400."
+* rest.resource[=].searchInclude = "MedicationDispense:prescription"
+* rest.resource[=].searchParam[+].name = "_include"
+* rest.resource[=].searchParam[=].type = #string
+* rest.resource[=].searchParam[=].documentation = "**MANDATORY**\n Supply MedicationDispense:prescription so prescriptions and dispenses can be assessed together for confidentiality and facility opt-outs. Missing or unsupported values return HTTP 400."

@@ -1,6 +1,6 @@
 @startuml
 
-title: Historic Load Sequence - Indici
+title: Historic Load Sequence - Push-based Acquisition
 
 ' skinparam dpi 100
 ' scale max 700 width
@@ -40,7 +40,7 @@ fork
     '     stop
     ' endif
 fork again
-    :PMS is Indici;
+    :PMS uses push-based acquisition;
     repeat:Search for record in SDHR;
     if(ETL Complete\nPractice in whitelist) then (Yes)
         if(Record already in SDHR) then (Yes)
@@ -55,8 +55,5 @@ fork again
     endif
     repeat while (Holds record for (x) hours)
     detach
-' fork again
-'     :PMS is Indici;
-'     :Indici holds extract/load job;
 
         @enduml

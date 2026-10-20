@@ -82,6 +82,8 @@ The Shared Digital Health Record FHIR API supports the [FHIR search pattern](htt
 
 Supported search parameters are listed in the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement.html#resourcesCap1).
 
+Medication and immunisation searches have source-specific filters, ordering, linked resources, paging and privacy responses. See [medication search and paging behaviour](./medications.html#search-and-paging-behaviour) and [immunisation search and result behaviour](./immunisations.html#search-and-result-behaviour).
+
 See below for some example search queries.
 
 #### Search for Conditions by patient and source
@@ -445,15 +447,23 @@ The SDHR service includes the following FHIR custom operations.
 
 SEHR systems need to periodically retrieve sampled access events from SDHR, review whether those accesses were valid, and submit the verification decisions. Samples are represented as FHIR `AuditEvent` resources that conform to the [SDHR AuditEvent profile](./StructureDefinition-SDHRAuditEvent.html).
 
-This workflow is performed on an ongoing basis so that newly sampled access events continue to be reviewed and verified over time.
+SDHR identifies eligible data viewers from Keycloak service-account users with the `SDHR_Audit` role, resolving each service-account user to its owning application’s client UUID. For each eligible viewer, it requests a sample from the upstream AuditEvents service over the preceding 24-hour window, scoped to the deployed SDHR service. The configured sampling proportion defaults to 0.02 (2%). SDHR checks each returned event for the matching client and a single identified clinician requestor before importing it. It checks the source-system ID and exact viewer identity to avoid importing the same event again. Each imported sample receives a new SDHR logical ID. Source-system identity and verification state remain internal. The application identity remains in the original agent array.
+
+Sampling runs independently of retrieval requests. This workflow is performed on an ongoing basis so that newly sampled access events continue to be reviewed and verified over time.
 
 The end-to-end sequence and corresponding processing steps are documented in the [audit access records workflow](./access-information.html#audit-access-records-workflow).
 
 ##### Retrieve verification samples
 
-The SEHR calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation supports `_count` and `_offset` query parameters for paging, for example:
+Each sample includes its SDHR logical ID, event type, recorded time and the original `agent` array, unchanged. This preserves each agent’s roles, requestor flag, identity and other supplied fields. The application agent has the `dataprocessor` role and carries its Keycloak client UUID in `who.identifier`; source events that use `who.display` retain that representation. Client ownership is checked against this application agent, not against the requestor flag. The separate healthworker agent carries the clinician’s HPI person identifier, and an organisation agent may carry its HPI organisation identifier. Use the clinician identity together with the patient NHI and recorded time to assess whether the clinician had a valid reason to access the patient’s information. When available, NHI and request correlation IDs appear as string-valued `entity.detail` entries with types `nhi` and `correlationId` in a single entity. Repeated identical type/value pairs are removed; missing details are omitted. `entity.what` is omitted. FHIR R4 requires `source.observer`; samples therefore retain only its neutral display, "SDHR verification samples", without internal source identity.
 
-`GET /AuditEvent/$verification-samples?_count=1&_offset=0`
+The SEHR calls `GET /AuditEvent/$verification-samples` to retrieve a `Bundle` of sampled `AuditEvent` resources that require verification. The operation supports `_count` and `_getpagesoffset` query parameters for paging, for example:
+
+`GET /AuditEvent/$verification-samples?_count=1&_getpagesoffset=0`
+
+The caller is identified by the authenticated `client_id`; callers cannot select another client through request parameters. Successful requests always return a `searchset` Bundle, which may be empty. Retrieval does not register clients or initiate sampling.
+
+Follow the returned paging links, which remain on `$verification-samples`, rather than constructing generic AuditEvent searches. Generic AuditEvent read, search and write routes are unavailable. Pending results change after submissions, so retrieve all pages before submitting decisions, or restart at the first page after submissions rather than continuing an old offset.
 
 See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSamplesOperation.html).
 
@@ -464,13 +474,21 @@ See [SDHRVerificationSamplesOperation](./OperationDefinition-SDHRVerificationSam
 
 </details>
 
+An [empty samples Bundle](./Bundle-BundleVerificationSamplesEmptyResponseExample.html) is a normal response when no samples are pending for the authenticated client.
+
 ##### Review sampled access events
 
 The SEHR reviews the returned `AuditEvent` resources using either an automated process or a manual workflow to determine whether each recorded access was valid.
 
 ##### Submit verification decisions
 
-The SEHR calls `POST /AuditEvent/$verification-submissions` with the defined `Parameters` payload to submit one or more verification decisions.
+The SEHR calls `POST /AuditEvent/$verification-submissions` with the defined `Parameters` payload to submit 1 to 100 verification decisions per request. Requests containing more than 100 `verification` parameters return HTTP 400 before any decisions are processed. For larger sets, submit multiple requests.
+
+Submit `validated` or `validation-failed` for each sample, referencing its local `AuditEvent/{id}` (a full HTTP(S) URL ending in that path is also accepted). Each item is processed independently and its response is returned in submission order. A `processed` decision removes that sample from the pending set for either result. Repeating a decision for an already verified sample returns `already-processed`; the saved decision is unchanged.
+
+{% include CodeSystem-sdhr-verification-submission-status-content.xhtml %}
+
+A response may contain mixed statuses; inspect every item rather than treating HTTP success as confirmation that all decisions were saved.
 
 See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificationSubmissionsOperation.html), the [SDHRVerificationSubmissionParameters profile](./StructureDefinition-SDHRVerificationSubmissionParameters.html), and the [SDHRVerificationSubmissionResponseParameters profile](./StructureDefinition-SDHRVerificationSubmissionResponseParameters.html).
 
@@ -487,6 +505,8 @@ See [SDHRVerificationSubmissionsOperation](./OperationDefinition-SDHRVerificatio
 {% fragment Parameters/ParametersVerificationSubmissionResponseExample JSON %}
 
 </details>
+
+For a repeated submission, see the [already-processed response example](./Parameters-ParametersVerificationSubmissionRepeatedResponseExample.html).
 
 #### Participate operation
 
@@ -529,7 +549,7 @@ See [Manage participation](./contribute-information.html#manage-participation) f
 
 #### Participation status operation
 
-The `$participation-status` operation allows an SEHR system to check whether a patient is globally participating in SDHR before requesting health information. It returns the patient's NHI reference and the `hnzParticipationIndicator` boolean. The operation does not change the patient's participation preference and does not return clinical information.
+The `$participation-status` operation allows an SEHR system to check whether a patient is globally participating in SDHR before requesting health information. It returns only the `hnzParticipationIndicator` boolean. The operation does not change the patient's participation preference and does not return clinical information.
 
 | Contract element | Requirement |
 | --- | --- |
@@ -537,8 +557,9 @@ The `$participation-status` operation allows an SEHR system to check whether a p
 | HTTP request | `POST /$participation-status` |
 | Definition | [SDHR Participation Status Operation](./OperationDefinition-SDHRParticipationStatusOperation.html) |
 | Request body | FHIR `Parameters` containing one NHI `patient` reference |
-| Response body | FHIR `Parameters` containing the patient reference and `hnzParticipationIndicator` |
-| `hnzParticipationIndicator` | `true` indicates global participation; `false` indicates that the patient has opted out globally |
+| Required SMART scope | `https://fhir-ig.digital.health.nz/sdhr/OperationDefinition/SDHRParticipationStatusOperation` |
+| Response body | FHIR `Parameters` containing only `hnzParticipationIndicator` |
+| `hnzParticipationIndicator` | `true` indicates global participation, including when no global preference is recorded; `false` indicates that the patient has opted out globally |
 {: .grid}
 
 The operation is intended to be called by a healthcare provider on behalf of the patient. The patient must be identified by an NHI. The status returned is global; it does not represent a facility-level participation preference.
@@ -585,7 +606,7 @@ Accessing systems must use the outcome code to distinguish deceased global denia
 ### SDHR confidential record API behaviour
 {: .underlined}
 
-SDHR represents two distinct confidentiality cases: an SDHR resource carrying a restrictive FHIR security label, and a source record registered as withheld through `$participate` where the clinical resource is not stored in SDHR. Their API responses differ.
+SDHR represents two distinct confidentiality cases: an SDHR resource carrying a restrictive FHIR security label, and a source record registered as withheld through `$participate` where the clinical resource is not stored in SDHR. Their API responses differ. National-source proxy responses also have specific rules: see [medication privacy responses](./medications.html#privacy-response-behaviour) and [AIR restricted access responses](./immunisations.html#restricted-access-responses).
 
 #### Stored resource security-label behaviour
 
@@ -615,7 +636,7 @@ Response body:
 
 </details>
 
-This search requests `AllergyIntolerance` resources for a patient. Because the search matches a confidential resource, that resource is omitted and the server adds a `REDACTED` tag to `Bundle.meta.security`. The tag tells the API consumer that the result set has been filtered. `Bundle.total` reports the number of matches before confidentiality filtering.
+This search requests `AllergyIntolerance` resources for a patient. Because the search matches a confidential resource, that resource is omitted and the server adds a `REDACTED` tag to `Bundle.meta.security`. The tag tells the API consumer that the result set has been filtered. For this stored-resource example, `Bundle.total` reports the number of matches before confidentiality filtering. Medication searches return `Bundle.total` only for `_count=0`; otherwise it is omitted. AIR totals follow the immunisation rules linked above.
 
 ##### Read and vread response
 

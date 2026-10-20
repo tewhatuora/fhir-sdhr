@@ -749,7 +749,7 @@ The SDHR team will assess your responses and discuss with you if any further cla
                     <p>Medications data returned containing both prescribed and dispensed records</p>
                 </td>
                 <td>
-                    <p>Dispensing record data must take precedence over prescribed record data where both exist for a given medication record. Dispensed data is a more accurate depiction of what the patient received, therefore viewing prescription data without access to corresponding dispensing data can lead to misinterpretations about what the patient received. </p>
+                    <p>SEHR systems that display prescription data must also display dispensing data. Displaying prescription data alone is not permitted. Prescribed and dispensed records must remain clearly distinguishable; dispensing record data must take precedence when interpreting what the patient received. Dispensed data is a more accurate depiction of what the patient received, therefore viewing prescription data without access to corresponding dispensing data can lead to misinterpretations about what the patient received. </p>
                 </td>
                 <td>
                     <p>Yes</p>

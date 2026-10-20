@@ -61,3 +61,11 @@ Id: sdhr-verification-result-valueset
 Title: "ValueSet for SDHR Verification Result"
 Description: "A ValueSet containing all codes from the SDHR Verification Result system."
 * include codes from system sdhr-verification-result
+
+ValueSet: SDHRVerificationSubmissionStatusValueSet
+Id: sdhr-verification-submission-status-valueset
+Title: "ValueSet for SDHR Verification Submission Status"
+Description: "Allowed statuses for individual AuditEvent verification submission responses."
+* ^status = #draft
+* ^experimental = false
+* include codes from system SDHRVerificationSubmissionStatus

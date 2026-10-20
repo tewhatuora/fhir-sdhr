@@ -1,6 +1,6 @@
 Instance: ConsentExample
 InstanceOf: SDHRConsent
-Usage: #example
+Usage: #inline
 Description: "Consent example submitted to allow a patient to opt in to sharing their information, originating from a practice management system"
 
 * status = #active

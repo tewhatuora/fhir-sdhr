@@ -31,7 +31,7 @@ Description: "HTTP 403 response for SDHR domain Opt-off or AIR Restricted Access
 
 Instance: ConsentDomainChoices
 InstanceOf: SDHRConsent
-Usage: #example
+Usage: #inline
 Description: "Medications opted off and Immunisations explicitly opted back in."
 * status = #active
 * patient.reference = "https://api.hip.digital.health.nz/fhir/nhi/v1/Patient/ZKC7284"

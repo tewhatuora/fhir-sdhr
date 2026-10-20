@@ -17,7 +17,7 @@ This domain provides a clinically focused, longitudinal view of prescribed and d
 ### MDR response translation
 {: .underlined}
 
-SDHR narrows MDR MedicationRequest and MedicationDispense responses to the clinical subset defined by the medication profiles. This applies to reads, versioned reads and search entries.
+SDHR narrows MDR MedicationRequest and MedicationDispense responses to the clinical subset defined by the medication profiles. This applies to reads and search entries.
 
 - Business identifiers use `https://standards.digital.health.nz/ns/nzeps-scid-item-id`; GTIN and other identifier systems are excluded.
 - Request extensions are limited to long-term medication, instructions-modified, medication-modified and the optional NZePS item status. Dispenses retain the instructions-modified and medication-modified flags.
@@ -110,9 +110,9 @@ Global SDHR participation checks apply across linked NHIs. Medication [domain pa
 
 Prescriptions and dispenses are assessed together. A withheld prescription causes linked dispenses to be withheld. A confidential or otherwise disallowed dispense can also cause its linked prescription to be withheld. When facility opt-outs exist, a dispense is withheld if its prescription references cannot be resolved to suitable prescriptions in the search Bundle.
 
-Medication reads first retrieve the requested resource to identify its patient and check consent across linked NHIs. When a facility opt-out exists anywhere in that linked group, SDHR also obtains the related medication resources needed for privacy checks. For an unversioned read, SDHR performs an internal MDR search by resource ID with the appropriate include or revinclude, assesses prescriptions and dispenses together, and returns only the permitted target resource. An incomplete or source-redacted relationship response cannot establish permission and access is denied. When no facility opt-out exists in the linked group, SDHR applies consent and confidentiality checks directly to the read resource without retrieving related resources.
+Medication reads first retrieve the requested resource to identify its patient and check consent across linked NHIs. When a facility opt-out exists anywhere in that linked group, SDHR also obtains the related medication resources needed for privacy checks. For a read, SDHR performs an internal MDR search by resource ID with the appropriate include or revinclude, assesses prescriptions and dispenses together, and returns only the permitted target resource. An incomplete or source-redacted relationship response cannot establish permission and access is denied. When no facility opt-out exists in the linked group, SDHR applies consent and confidentiality checks directly to the read resource without retrieving related resources.
 
-Versioned reads retain the requested historical resource for consent checks and the response. A versioned dispense read resolves the prescriptions referenced by that historical dispense separately; a versioned request read uses related dispenses from an internal MDR search while retaining the historical prescription as the target. These additional checks apply when a facility opt-out exists in the linked group. Callers do not supply include or revinclude parameters for reads or versioned reads; the mandatory include parameters above apply to searches.
+Callers do not supply include or revinclude parameters for reads; the mandatory include parameters above apply to searches.
 
 Whenever any facility opt-out exists for the patient or a linked NHI, medication searches include the [records-withheld-at-source OperationOutcome](./OperationOutcome-OperationOutcomeMedicationFacilityOptOut.html), even if no medication entries were removed or the search has no medication matches. This warning indicates that the history may be incomplete. It does not establish that this particular page had records removed.
 

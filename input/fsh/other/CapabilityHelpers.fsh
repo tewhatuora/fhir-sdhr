@@ -4,7 +4,6 @@ RuleSet: GenericCRUDInteractions
 * interaction[+].code = #read
 //* interaction[+].code = #update
 //* interaction[+].code = #delete
-//* interaction[+].code = #vread
 * interaction[+].code = #search-type
 * versioning = #versioned
 * readHistory = false

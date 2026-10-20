@@ -1,6 +1,6 @@
 Instance: ConsentExampleRecordsWithheld
 InstanceOf: SDHRConsent
-Usage: #example
+Usage: #inline
 Description: "Consent example to allow a patient to opt in to sharing their information, while withholding some records from the service"
 
 * status = #active

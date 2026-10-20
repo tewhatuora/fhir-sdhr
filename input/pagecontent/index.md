@@ -54,7 +54,7 @@ To begin integrating with SDHR:
 - Review the [API documentation](./api.html).
 - Explore the [FHIR artifacts](./artifacts.html) and [data models](./data-models.html).
 - Review the requirements for systems [accessing](./compliance-requirements-reading.html) or [contributing](./compliance-requirements.html) SDHR information.
-- Download the [UAT Postman collection](postman/UAT-SDHR.postman_collection.json) and [example environment](postman/UAT-SDHR-example.postman_environment.json).
+- Follow [Postman onboarding](./postman.html) to download the collection and example environment, configure your client and scopes, and send test requests.
 
 ### Additional information
 {: .underlined}

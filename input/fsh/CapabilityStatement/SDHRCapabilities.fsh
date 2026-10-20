@@ -422,7 +422,6 @@ The operation returns a `Parameters` resource containing only `hnzParticipationI
 // Immunisations are a read-only proxy of the Aotearoa Immunisation Register (AIR);
 // no create/update/delete is supported.
 * rest.resource[=].interaction[0].code = #read
-* rest.resource[=].interaction[+].code = #vread
 * rest.resource[=].interaction[+].code = #search-type
 * rest.resource[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
 * rest.resource[=].extension[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation"

@@ -120,7 +120,7 @@ The detailed structure, validation rules, and technical implementation of reques
 
 #### Response and error handling
 
-- A successful search returns a FHIR `Bundle`; a successful read or vread returns the requested resource.
+- A successful search returns a FHIR `Bundle`; a successful read returns the requested resource.
 - A successful `$participation-status` request returns a FHIR `Parameters` resource containing only `hnzParticipationIndicator`. A patient with no recorded global preference returns `true`.
 - If `hnzParticipationIndicator` is `false`, the SEHR must treat the patient as globally opted out and indicate this to the end user.
 - An empty result may mean that SDHR has no matching information available to the requester. It must not be presented as proof that the clinical information does not exist.
@@ -209,7 +209,7 @@ See the [API Capability Statement](./CapabilityStatement-SDHRCapabilityStatement
       <td><a href="./api.html#contributed-resource-interactions">Contributed resource interactions</a></td>
     </tr>
     <tr>
-      <td>Search, read, and vread — national information</td>
+      <td>Search and read — national information</td>
       <td>Retrieve information made available from supported national health information sources.</td>
       <td><a href="./api.html#national-source-resource-interactions">National source resource interactions</a></td>
     </tr>

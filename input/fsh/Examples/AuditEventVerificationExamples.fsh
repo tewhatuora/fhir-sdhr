@@ -1,7 +1,7 @@
 Instance: AuditEventVerificationSampleOne
 InstanceOf: SDHRAuditEvent
 Usage: #example
-Description: "DRAFT EXAMPLE ONLY: sampled AuditEvent returned for verification."
+Description: "Sampled AuditEvent returned for verification."
 * id = "b3f9de58-2da4-427c-a39c-07147eac3615"
 * type.system = "http://terminology.hl7.org/CodeSystem/audit-event-type"
 * type.code = #rest
@@ -73,7 +73,7 @@ Description: "Bundle returned from the verification samples operation."
 Instance: BundleVerificationSamplesPageOneResponseExample
 InstanceOf: Bundle
 Usage: #example
-Description: "DRAFT EXAMPLE ONLY: first page Bundle returned from the verification samples operation using _count and _getpagesoffset."
+Description: "First page Bundle returned from the verification samples operation using _count and _getpagesoffset."
 * type = #searchset
 * timestamp = "2026-07-03T10:00:00+12:00"
 * total = 2

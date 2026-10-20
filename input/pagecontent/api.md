@@ -46,7 +46,7 @@ Medication and immunisation information is read-only through SDHR. It is sourced
 | --- | --- | --- | --- | --- |
 | MedicationRequest | search, read | `GET /MedicationRequest`<br>`GET /MedicationRequest/{id}` | [SDHR MedicationRequest](./StructureDefinition-SDHRMedicationRequest.html) | [Search behaviour](#api-search-behaviour) |
 | MedicationDispense | search, read | `GET /MedicationDispense`<br>`GET /MedicationDispense/{id}` | [SDHR MedicationDispense](./StructureDefinition-SDHRMedicationDispense.html) | [Search behaviour](#api-search-behaviour) |
-| Immunization | search, read, vread | `GET /Immunization`<br>`GET /Immunization/{id}`<br>`GET /Immunization/{id}/_history/{vid}` | [SDHR Immunization](./StructureDefinition-SDHRImmunization.html) | [Search behaviour](#api-search-behaviour)<br>[Confidential record behaviour](#sdhr-confidential-record-api-behaviour) |
+| Immunization | search, read | `GET /Immunization`<br>`GET /Immunization/{id}` | [SDHR Immunization](./StructureDefinition-SDHRImmunization.html) | [Search behaviour](#api-search-behaviour)<br>[Confidential record behaviour](#sdhr-confidential-record-api-behaviour) |
 {: .grid}
 
 #### Participation operations
@@ -579,7 +579,7 @@ SEHR systems should use the result to determine whether to continue with an info
 ### Global participation denial API behaviour
 {: .underlined}
 
-When a resource read, vread, or search request is rejected by the global participation consent check, SDHR returns HTTP `403` with an `OperationOutcome` rather than clinical data. This applies to contributed resources and proxied national datasets, including AIR immunisations.
+When a resource read or search request is rejected by the global participation consent check, SDHR returns HTTP `403` with an `OperationOutcome` rather than clinical data. This applies to contributed resources and proxied national datasets, including AIR immunisations.
 
 The global opt-out reason is recorded in the root `Consent.provision.extension` with URL `https://fhir-ig.digital.health.nz/sdhr/StructureDefinition/hnz-global-opt-out-reason-extension`. When `Consent.provision.type` is `deny` and the extension's `valueCode` is `patient-deceased`, the response uses `sdhr-participation-status-denied-deceased` from the [SDHR outcome CodeSystem](./CodeSystem-sdhr-outcome-codes.html).
 
@@ -638,7 +638,7 @@ Response body:
 
 This search requests `AllergyIntolerance` resources for a patient. Because the search matches a confidential resource, that resource is omitted and the server adds a `REDACTED` tag to `Bundle.meta.security`. The tag tells the API consumer that the result set has been filtered. For this stored-resource example, `Bundle.total` reports the number of matches before confidentiality filtering. Medication searches return `Bundle.total` only for `_count=0`; otherwise it is omitted. AIR totals follow the immunisation rules linked above.
 
-##### Read and vread response
+##### Read response
 
 `GET /AllergyIntolerance/{id}`
 
